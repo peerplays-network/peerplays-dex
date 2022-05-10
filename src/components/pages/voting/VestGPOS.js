@@ -14,6 +14,7 @@ const VestGPOS = (props) => {
 	const { symbol_id, precision, symbol, totalGpos, getAssets } = props;
 	const { loginData, accountData } = getStore();
 	const [vestAmount, setVestAmount] = useState(0);
+	const [changes, setChanges] = useState(false);
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
@@ -87,11 +88,11 @@ const VestGPOS = (props) => {
 					// step={0.1}
 					precision={getBasicAsset().precision}
 					max={accBalance}
-					onChange={(value) => setVestAmount(value)}
+					onChange={(value) => {setVestAmount(value),setChanges(true)}}
 					value={vestAmount}
 				/>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount == 0) ? "block" : "none" }}>
+				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(vestAmount == null || vestAmount == 0)) ? "block" : "none" }}>
 					<Translate component="div" className="" content={"errors.requiredAndnotzero"} />
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount > accBalance) ? "block" : "none" }}>
@@ -104,7 +105,7 @@ const VestGPOS = (props) => {
 				</div>
 			</CardContent>
 			<CardActions style={{justifyContent:"end"}} >
-				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? "" : SubmitGposVesting()}>Vest</button>
+				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}>Vest</button>
 			</CardActions>
 		</Card>
 	)
