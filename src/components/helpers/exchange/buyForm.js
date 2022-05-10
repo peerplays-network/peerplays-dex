@@ -207,6 +207,7 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                     readOnly={true}
+                                    disabled={true}
                                     style={{cursor:"text"}}
                                 />
                                

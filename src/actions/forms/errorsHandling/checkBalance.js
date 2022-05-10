@@ -2,8 +2,8 @@ import {getAccountData} from "../../store";
 
 export const checkAmountToSell = ({type, buyAsset, sellAsset, amount_to_receive, amount_to_sell}) => {
   if(!amount_to_sell) {
-      return 'required';
-    } else {
+    return 'required';
+  } else {
       if(isNaN(amount_to_sell)){
         return 'isNan';
       }
@@ -31,6 +31,9 @@ export const checkAmountToReceive = async ({type, buyAsset, sellAsset, amount_to
   } else {
     if(isNaN(amount_to_receive)){
       return 'isNan';
+    }
+    if(amount_to_receive <= 0) {
+      return 'isZero';
     }
     if(type === 'sell') {
       const userAsset = getAccountData().assets.find(el => el.symbol === buyAsset);
