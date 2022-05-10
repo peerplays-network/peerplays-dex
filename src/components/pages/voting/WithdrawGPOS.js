@@ -4,13 +4,15 @@ import NumericInput from 'react-numeric-input';
 import Translate from 'react-translate-component';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
-import { getBasicAsset, getStore } from '../../../actions/store';
+import { getBasicAsset, getStore, getFees } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
 
 const WithdrawGPOS = (props) => {
 	const { loginData, accountData } = getStore();
 	const { symbol_id, precision, symbol, totalGpos, availableGpos, getAssets } = props;
 	const [withdrawAmount, setWithdrawAmount] = useState(0);
+	const [fee, setFee] = useState(0);
+	const [sended, setSended] = useState(false);
 	const [withdrawDisabled, setWithdrawDisabled] = useState(false);
 	const [language, setLanguage] = useState( localeFromStorage() )
 
@@ -50,6 +52,15 @@ const WithdrawGPOS = (props) => {
 			setWithdrawDisabled(false)
 		})
 	}
+
+	const handlChange = (value)=>{
+		setWithdrawAmount(value)
+		if(value >= 0.1){
+			setFee(getFees().vesting_balance_withdraw.fee/100000)
+		}else{setFee(0)}
+	}
+
+
 	return (
 		<Card mode="widget" >
 			<div className="card__title" style={{ paddingTop:"20px" , borderTopLeftRadius:"10px" , borderTopRightRadius:"10px"}}>
@@ -80,7 +91,7 @@ const WithdrawGPOS = (props) => {
 					min={0}
 					max={availableGpos}
 					precision={getBasicAsset().precision}
-					onChange={(value) => setWithdrawAmount(value)}
+					onChange={(value) => handlChange(value)}
 					value={withdrawAmount}
 				/>
 				</div>
@@ -96,7 +107,10 @@ const WithdrawGPOS = (props) => {
 				</div>
 				</div>
 			</CardContent>
-
+			<div className="info__row">
+			<span>Fee: {fee} TEST</span>
+			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+		  </div>
 			<CardActions style={{justifyContent:"end"}} >
 				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? "" : SubmitGposWithdrawal()}}>Withdraw</button>
 			</CardActions>

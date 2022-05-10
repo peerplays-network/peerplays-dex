@@ -5,7 +5,7 @@ import { connect, useSelector } from "react-redux";
 import Translate from 'react-translate-component';
 import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
-import { getStore,getAccountData, getBasicAsset } from '../../../actions/store';
+import { getStore,getAccountData, getBasicAsset , getFees} from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
 
 
@@ -47,7 +47,7 @@ const VestGPOS = (props) => {
 				balance_type: 'gpos'
 			}
 		};
-		setFee(trx.params.amount.amount/10000)
+		
 		getPassword(password => {
 			const activeKey = loginData.formPrivateKey(password, 'active');
 			trxBuilder([trx], [activeKey]).then(async() => {
@@ -62,6 +62,11 @@ const VestGPOS = (props) => {
 
 	const handlChange = (value)=>{
 		setVestAmount(value)
+		if(value >= 0.1){
+			setFee(getFees().vesting_balance_create.fee/100000)
+		}else{setFee(0)}
+
+		console.log("withdraw fees", getFees().vesting_balance_withdraw.fee)
 	}
 
 
