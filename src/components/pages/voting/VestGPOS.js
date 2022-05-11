@@ -62,12 +62,8 @@ const VestGPOS = (props) => {
 
 	const handlChange = (value)=>{
 		setVestAmount(value)
-		if(value >= 0.1){
-			setFee(getFees().vesting_balance_create.fee/100000)
-		}else{setFee(0)}
-
-		console.log("withdraw fees", getFees().vesting_balance_withdraw.fee)
-	}
+		setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		}
 
 
 	return (
@@ -101,7 +97,7 @@ const VestGPOS = (props) => {
 					}}
 					// step={0.1}
 					precision={getBasicAsset().precision}
-					max={accBalance}
+					max={accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision)}
 					onChange={(value) => handlChange(value)}
 					value={vestAmount}
 				/>
