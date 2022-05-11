@@ -102,7 +102,7 @@ const VestGPOS = (props) => {
 					value={vestAmount}
 				/>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount == 0) ? "block" : "none" }}>
+				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(vestAmount == null || vestAmount == 0)) ? "block" : "none" }}>
 					<Translate component="div" className="" content={"errors.requiredAndnotzero"} />
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount > accBalance) ? "block" : "none" }}>
@@ -119,7 +119,7 @@ const VestGPOS = (props) => {
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? "" : SubmitGposVesting()}>Vest</button>
+				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}>Vest</button>
 			</CardActions>
 		</Card>
 	)

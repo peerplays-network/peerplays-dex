@@ -14,6 +14,7 @@ const WithdrawGPOS = (props) => {
 	const [fee, setFee] = useState(0);
 	const [sended, setSended] = useState(false);
 	const [withdrawDisabled, setWithdrawDisabled] = useState(false);
+	const [changes, setChanges] = useState(false);
 	const [language, setLanguage] = useState( localeFromStorage() )
 
 	const SubmitGposWithdrawal = () => {
@@ -94,10 +95,10 @@ const WithdrawGPOS = (props) => {
 					value={withdrawAmount}
 				/>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (availableGpos == undefined || availableGpos == null || availableGpos <= 0) ? "block" : "none" }}>
+				<div style={{ marginTop: 12, color: "#ff444a", display: ( changes &&(availableGpos == undefined || availableGpos == null || availableGpos <= 0) ) ? "block" : "none" }}>
 					<Translate  className="" content={"voting.noGpos"} />
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (withdrawAmount == undefined || withdrawAmount == null || withdrawAmount <= 0) ? "block" : "none" }}>
+				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(withdrawAmount == undefined || withdrawAmount == null || withdrawAmount <= 0)) ? "block" : "none" }}>
 					<Translate  className="" content={"errors.withdrawError"} /> 
 				</div>
 				<div style={{ marginTop: 12 }}  className="input-cus-style">
@@ -111,7 +112,7 @@ const WithdrawGPOS = (props) => {
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? "" : SubmitGposWithdrawal()}}>Withdraw</button>
+				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}>Withdraw</button>
 			</CardActions>
 		</Card>
 	)
