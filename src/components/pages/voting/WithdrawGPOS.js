@@ -99,7 +99,7 @@ const WithdrawGPOS = (props) => {
 			</CardContent>
 
 			<CardActions style={{justifyContent:"end"}} >
-				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}>Withdraw</button>
+				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}><Translate className="" content={"voting.Withdraw"} /></button>
 			</CardActions>
 		</Card>
 	)

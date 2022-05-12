@@ -105,7 +105,7 @@ const VestGPOS = (props) => {
 				</div>
 			</CardContent>
 			<CardActions style={{justifyContent:"end"}} >
-				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}>Vest</button>
+				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}><Translate className="" content={"voting.Vest"} /></button>
 			</CardActions>
 		</Card>
 	)

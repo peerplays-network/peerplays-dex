@@ -364,6 +364,8 @@ export const en = {
         "title": "Voting & Vesting",
         "vestingTitle": "Vesting",
         "votingTitle": "Voting",
+        "Vest":"Vest",
+        "Withdraw":"Withdraw",
         "workers": {
             "title": "Workers"
         },
