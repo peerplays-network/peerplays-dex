@@ -77,6 +77,9 @@
   &__on-hover{
     opacity: 0;
     transition: $anim;
+    @media screen and (max-width: 768px) {
+      opacity: 1;
+    }
     button, a{
       border-radius: 50px;
       &:not(:first-child){

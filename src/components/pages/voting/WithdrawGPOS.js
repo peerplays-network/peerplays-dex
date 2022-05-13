@@ -4,7 +4,7 @@ import NumericInput from 'react-numeric-input';
 import Translate from 'react-translate-component';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
-import { getStore } from '../../../actions/store';
+import { getBasicAsset, getStore } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
 
 const WithdrawGPOS = (props) => {
@@ -80,7 +80,7 @@ const WithdrawGPOS = (props) => {
 					className="field__input form-control cpointer"
 					min={0}
 					max={availableGpos}
-					precision={accountData.assets[0].precision}
+					precision={getBasicAsset().precision}
 					onChange={(value) => {setWithdrawAmount(value),setChanges(true)}}
 					value={withdrawAmount}
 				/>
