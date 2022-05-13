@@ -16,6 +16,8 @@ const VestGPOS = (props) => {
 	const [vestAmount, setVestAmount] = useState(0);
 	const [fee, setFee] = useState(0);
 	const [sended, setSended] = useState(false);
+	const [changes, setChanges] = useState(false);
+
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
@@ -97,7 +99,7 @@ const VestGPOS = (props) => {
 					}}
 					// step={0.1}
 					precision={getBasicAsset().precision}
-					max={accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision)}
+					max={accBalance > getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) ? accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) : 0}
 					onChange={(value) => handlChange(value)}
 					value={vestAmount}
 				/>

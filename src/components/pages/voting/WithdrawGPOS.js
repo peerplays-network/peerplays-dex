@@ -89,7 +89,7 @@ const WithdrawGPOS = (props) => {
 					type="number"
 					className="field__input form-control cpointer"
 					min={0}
-					max={availableGpos - getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision)}
+					max={availableGpos > getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) ? availableGpos - getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) : 0}
 					precision={getBasicAsset().precision}
 					onChange={(value) => handlChange(value)}
 					value={withdrawAmount}
