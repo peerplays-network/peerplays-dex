@@ -5,16 +5,19 @@ import { connect, useSelector } from "react-redux";
 import Translate from 'react-translate-component';
 import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
-import { getStore,getAccountData, getBasicAsset } from '../../../actions/store';
+import { getStore,getAccountData, getBasicAsset , getFees} from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
 
 
 
 const VestGPOS = (props) => {
-	const { symbol_id, precision, symbol, totalGpos, getAssets } = props;
+    const { symbol_id, precision, symbol, totalGpos, getAssets } = props;
 	const { loginData, accountData } = getStore();
 	const [vestAmount, setVestAmount] = useState(0);
+	const [fee, setFee] = useState(0);
+	const [sended, setSended] = useState(false);
 	const [changes, setChanges] = useState(false);
+
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
@@ -46,17 +49,26 @@ const VestGPOS = (props) => {
 				balance_type: 'gpos'
 			}
 		};
+		
 		getPassword(password => {
 			const activeKey = loginData.formPrivateKey(password, 'active');
 			trxBuilder([trx], [activeKey]).then(async() => {
+				setSended(true)
 				getAssets();
 				setVestAmount(0);
 				updateAccount(await formAccount(account.name));
+				setTimeout(() => setSended(false), 5000)
 			});
-			
 		});
 		setChanges(false)
 	};
+
+	const handlChange = (value)=>{
+		setVestAmount(value)
+		setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		}
+
+
 	return (
 		<Card mode="widget" style={{ height:"100%"}}>
 			<div className="card__title" style={{ paddingTop:"20px" , borderTopLeftRadius:"10px" , borderTopRightRadius:"10px"}}>
@@ -88,8 +100,8 @@ const VestGPOS = (props) => {
 					}}
 					// step={0.1}
 					precision={getBasicAsset().precision}
-					max={accBalance}
-					onChange={(value) => {setVestAmount(value),setChanges(true)}}
+					max={accBalance > getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) ? accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) : 0}
+					onChange={(value) => handlChange(value)}
 					value={vestAmount}
 				/>
 				</div>
@@ -105,6 +117,10 @@ const VestGPOS = (props) => {
 					</div>
 				</div>
 			</CardContent>
+			<div className="info__row">
+			<span>Fee: {fee} TEST</span>
+			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+		  </div>
 			<CardActions style={{justifyContent:"end"}} >
 				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}><Translate className="" content={"voting.Vest"} /></button>
 			</CardActions>
