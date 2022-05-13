@@ -54,6 +54,7 @@ const VestGPOS = (props) => {
 			});
 			
 		});
+		setChanges(false)
 	};
 	return (
 		<Card mode="widget" style={{ height:"100%"}}>
