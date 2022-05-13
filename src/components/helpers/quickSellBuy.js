@@ -126,7 +126,7 @@ class QuickSellBuy extends Component {
                                     </div>
                                     <div className="info__row">
                                         <span>Fee: {data.fee} {data.sellAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>

@@ -387,6 +387,7 @@ export const en = {
             "crit": "Critical Low",
             "none": "No Rewards"
         },
+        "trans":"Transaction Completed",
         "percent": "Qualified Reward %",
         "potential": "Estimated Rake Reward %",
         "next_vote": "Next vote update",
