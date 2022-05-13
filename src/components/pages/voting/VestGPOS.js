@@ -5,7 +5,7 @@ import { connect, useSelector } from "react-redux";
 import Translate from 'react-translate-component';
 import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
-import { getStore,getAccountData, getBasicAsset } from '../../../actions/store';
+import { getStore,getAccountData, getBasicAsset,getFees } from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
 
 
@@ -87,7 +87,7 @@ const VestGPOS = (props) => {
 					}}
 					// step={0.1}
 					precision={getBasicAsset().precision}
-					max={accBalance}
+					max={accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision)}
 					onChange={(value) => {setVestAmount(value),setChanges(true)}}
 					value={vestAmount}
 				/>
