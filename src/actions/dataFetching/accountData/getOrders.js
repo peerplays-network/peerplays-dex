@@ -6,6 +6,8 @@ import {defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
 import ActionsBtn from "../../../components/helpers/buttons/actionsBtn";
 import {getAccountData} from "../../store";
+import Translate from 'react-translate-component';
+
 
 const defaultTableHead = [
     {
@@ -73,7 +75,7 @@ export const getOrders = async (context) => {
             ? <div className="actions__wrapper">
                 <ActionsBtn
                     actionsList={[
-                        <button onClick={() => openWarning('limit_order_cancel', el.id)}>Cancel Order</button>
+                        <button onClick={() => openWarning('limit_order_cancel', el.id)}><Translate className="" content={"tableInfo.limit_order_cancel.title"} /></button>
                     ]}
                 />
             </div>

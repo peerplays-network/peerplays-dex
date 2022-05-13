@@ -7,6 +7,8 @@ import {getAccountData} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
+import Translate from 'react-translate-component';
+
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
@@ -130,7 +132,7 @@ class QuickSellBuy extends Component {
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                            Buy
+                                        <Translate className="" content={"quickSellBuy.buy"} />
                                         </button>
                                     </div>
                                 </Fragment>
