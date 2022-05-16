@@ -726,7 +726,7 @@ export const en = {
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
             "firstLetter": "Account name should start with a letter",
-            "noSpecials": "Account name should have only letters, digits, or dashes",
+            "noSpecials": "Account name should have only small letters, digits, or dashes",
             "oneDash": "Account name should have only one dash in a row",
             "lastSymbol": "Account name should end with a letter or digit",
             "notCheap": "This is a premium name which is not supported by this faucet. Please enter a regular name containing least one dash, a number or no vowels.",
