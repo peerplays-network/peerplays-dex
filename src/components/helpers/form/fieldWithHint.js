@@ -77,12 +77,18 @@ class FieldWithHint extends Component{
   
     toggleDropdown = ()=>{
         this.setState({dropdown :!this.state.dropdown})
-    }
+        const obj = ReactDOM.findDOMNode(this);
 
-    toggleDropdown = ()=>{
-        this.setState({dropdown :!this.state.dropdown})
-    }
+        if (obj.matches('.open')) {
+            obj.classList.remove('open')
+        } else {
+            document.addEventListener('click', this.handleOutsideClick, false);
+            let arrDrops = Object.values(document.querySelectorAll('.dropdown.open'));
+            obj.classList.add('open')
+        }
 
+        this.props.openCallback && this.props.openCallback();
+    }
 
     render(){
 
@@ -107,6 +113,7 @@ class FieldWithHint extends Component{
                     {...this.props}
                 />
                 <Caret className='field__caret' onClick={()=>this.toggleDropdown()}/>
+                
                 { errors && errors[name] && <Translate content={`errors.${errors[name]}`} className="field__error" /> }
                 <div className="dropdown__body custom-scroll">
                     {hasHints && hints.map(e => (
