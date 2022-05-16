@@ -33,7 +33,7 @@ export const en = {
         "voteCount":"Vote Count",
         "key": "Key",
         "time": "Time",
-        "type": "Price (kbyte)",
+        "type": "Activity",
         "info": "Info",
         "id": "ID",
         "fee": "Fee",
@@ -364,6 +364,8 @@ export const en = {
         "title": "Voting & Vesting",
         "vestingTitle": "Vesting",
         "votingTitle": "Voting",
+        "Vest":"Vest",
+        "Withdraw":"Withdraw",
         "workers": {
             "title": "Workers"
         },
@@ -387,6 +389,7 @@ export const en = {
             "crit": "Critical Low",
             "none": "No Rewards"
         },
+        "trans":"Transaction Completed",
         "percent": "Qualified Reward %",
         "potential": "Estimated Rake Reward %",
         "next_vote": "Next vote update",
@@ -577,7 +580,7 @@ export const en = {
         "pendingTitle": "Pending Fees",
         "pendingDesc": "Fees paid by < %(name)s > are divided among the network, referrers, and registrars once every maintenance interval (%(interval)s seconds). The next maintenance time is %(nextMaintenance)s.",
         "vestingTitle": "Vesting Fees",
-        "vestingDesc": "Most fees are made available immediately, but fees over 100 TEST (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
+        "vestingDesc": "Most fees are made available immediately, but fees over 100 %(symbol)s (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
     },
     "search": {
         "users": "Users",
@@ -687,11 +690,13 @@ export const en = {
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
         "required": "This field is required.",
+        "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
+        "isTooBig": "Value is too big.",
         "isNan": "Amount is not a number.",
         "isNull": "You can't send a null.",
-        "isEmptyBalance": "You don't have token to pay fee.",
-        "isEmptyMarketBalance": "You don't have token to pay market fee.",
+        "isEmptyBalance": "You don't have balance to pay fee.",
+        "isEmptyMarketBalance": "You don't have balance to pay market fee.",
         "nullWeight": "Can\'t be null",
         "isNotEnough": "Balance is not enough.",
         "isZero": "Quantity should be greater than 0.",
@@ -705,6 +710,7 @@ export const en = {
         "needPassword": "Please, enter password first",
         "passwordsNotMatch": "Passwords don't match",
         "passwordLength": "Password should be at least 12 characters long",
+        "passwordNoBlank": "Password should not contain blank space",
         "usedWorkerName": "Worker name is already in use.",
         "beginFromToday": "Beginning date must start from today",
         "wrongEndDate": "End date must be after beginning",
@@ -723,6 +729,7 @@ export const en = {
         "sonError": "Server side error!! Try again later.",
         "keyExists": "Key already exists.",
         "newAcc": {
+            "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
             "firstLetter": "Account name should start with a small letter",

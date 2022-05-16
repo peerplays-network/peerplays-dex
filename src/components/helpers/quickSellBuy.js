@@ -7,27 +7,33 @@ import {getAccountData} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
+import Translate from 'react-translate-component';
+
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
 
-const getUserAssetsList = async (symbol) => (
-    getAccountData().assets
-        .filter(item?item.name.includes(symbol):[])
-        .map(item => item.name)
-);
+const getUserAssetsList = async (symbol) =>  {
+    if(getAccountData().assets && getAccountData().assets.length > 0) {
+        return getAccountData().assets
+        .filter(item => item ? item.symbol : [])
+        .map(item => item.symbol)
+    } else {
+        return [defaultToken]
+    }
+};
 
 class QuickSellBuy extends Component {
     state = {
         defaultData: false,
         userTokens: false,
-        sended: false
+        sended: false,
     };
 
     componentDidMount() {
         const userTokens = getAccountData().assets.map(e => e.symbol);
         const defaultData = {
-            asset_to_sell: userTokens && userTokens.length ? userTokens[0] : defaultToken,
+            sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
             buyAsset: defaultQuote,
             fee: 0,
             amount_to_sell: 0,
@@ -52,6 +58,8 @@ class QuickSellBuy extends Component {
         
     };
 
+  
+
     render() {
         const {defaultData, userTokens, sended} = this.state;
 
@@ -63,7 +71,7 @@ class QuickSellBuy extends Component {
                     type={'limit_order_create'}
                     className="form__sell-buy"
                     defaultData={defaultData}
-                    requiredFields={['amount_to_sell', 'amount_to_receive', 'asset_to_sell', 'buyAsset']}
+                    requiredFields={['amount_to_sell', 'amount_to_receive', 'sellAsset', 'buyAsset']}
                     action={sellBuy}
                     handleResult={this.handleTransfer}
                     needPassword
@@ -78,13 +86,14 @@ class QuickSellBuy extends Component {
                                             name="amount_to_sell"
                                             labelTag="field.labels.sellAmount"
                                             type="number"
+                                            min={0}
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint
-                                            name="asset_to_sell"
+                                            name="sellAsset"
                                             method={getUserAssetsList}
                                             hideLabel={true}
                                             handleChange={form.handleChange}
@@ -102,6 +111,7 @@ class QuickSellBuy extends Component {
                                             type="number"
                                             onChange={form.handleChange}
                                             error={errors}
+                                            min={0}
                                             defaultVal={data}
                                         />
                                         <div className="sellHint">
@@ -118,11 +128,11 @@ class QuickSellBuy extends Component {
                                     </div>
                                     <div className="info__row">
                                         <span>Fee: {data.fee} {data.sellAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                            Buy
+                                        <Translate className="" content={"quickSellBuy.buy"} />
                                         </button>
                                     </div>
                                 </Fragment>

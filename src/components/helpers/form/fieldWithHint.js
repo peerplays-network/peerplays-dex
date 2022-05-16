@@ -35,7 +35,6 @@ class FieldWithHint extends Component{
     handleChange = (val, name) => {
         let {data, timeout} = this.state;
         data[name] = val;
-
         if(timeout) clearTimeout(timeout);
 
         if(!val) {
@@ -75,6 +74,21 @@ class FieldWithHint extends Component{
         handleChange(val, name);
         this.close(data);
     };
+  
+    toggleDropdown = ()=>{
+        this.setState({dropdown :!this.state.dropdown})
+        const obj = ReactDOM.findDOMNode(this);
+
+        if (obj.matches('.open')) {
+            obj.classList.remove('open')
+        } else {
+            document.addEventListener('click', this.handleOutsideClick, false);
+            let arrDrops = Object.values(document.querySelectorAll('.dropdown.open'));
+            obj.classList.add('open')
+        }
+
+        this.props.openCallback && this.props.openCallback();
+    }
 
     render(){
 
@@ -84,21 +98,22 @@ class FieldWithHint extends Component{
         const hasHints = !!hints.length;
 
         return(
-            <div className={`dropdown dropdown--with-hint ${hasHints && 'open'}`}>
+            <div className={`dropdown dropdown--with-hint ${hasHints && this.state.dropdown && 'open'}`}>
                 <ControlledInput
                     name={name}
                     id={id}
                     labelParams={labelParams}
                     className={className}
                     hideLabel={hideLabel}
-                    onChange={this.handleChange}
+                    onChange={this.toggleDropdown}
                     onFocus={this.handleChange}
                     onClick={this.handleChange}
                     value={data}
                     readOnly={readOnly}
                     {...this.props}
                 />
-                <Caret className='field__caret' />
+                <Caret className='field__caret' onClick={()=>this.toggleDropdown()}/>
+                
                 { errors && errors[name] && <Translate content={`errors.${errors[name]}`} className="field__error" /> }
                 <div className="dropdown__body custom-scroll">
                     {hasHints && hints.map(e => (

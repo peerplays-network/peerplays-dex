@@ -2,10 +2,12 @@ import React, {Component, Fragment} from 'react';
 import Form from "../form/form";
 import UserBalance from "./userBalance";
 import ControlledInput from "../form/controlledInput";
+import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
 import {getBasicAsset} from "../../../actions/store";
+import { getAssetBySymbol } from "../../../actions/assets"
 
 const calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price)}`;
 const calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price)}`;
@@ -83,7 +85,11 @@ const formMutations = {
 class BuyForm extends Component{
 
     state = {
-        defaultData: false
+        defaultData: false,
+        precision: {
+            sellAsset: 0,
+            buyAsset: 0
+        }
     };
 
     componentDidMount(){
@@ -112,7 +118,17 @@ class BuyForm extends Component{
             defaultData.amount_to_sell = base;
         }
 
-        this.setState({defaultData})
+        this.setState({defaultData});
+        (async (obj) => {
+            const { precision: sellAssetPrecision } = await getAssetBySymbol(sellAsset)
+            const { precision: buyAssetPrecision } = await getAssetBySymbol(buyAsset)
+            obj.setState({
+                precision: {
+                    sellAsset: sellAssetPrecision,
+                    buyAsset: buyAssetPrecision
+                }
+            })
+        })(this)  
     };
 
     resetForm = (props) => this.setState({defaultData: false}, () => { this.setBasicData(props) });
@@ -140,27 +156,38 @@ class BuyForm extends Component{
                     form => {
                         const {errors, data} = form.state;
                         const handleChange = (value, name) => {
+                            if(name === 'price' || name === 'amount_to_receive') {
+                                const fractionLength = value.indexOf('.') === -1 
+                                                        ? 0 
+                                                        : (value.length - value.indexOf('.') - 1)
+                                const {sellAsset, buyAsset} = this.state.precision
+                                const precision = name === 'price' ? sellAsset : buyAsset
+                                if (fractionLength > precision)
+                                    form.form[name].value = parseFloat(value).toFixed(precision).toString()
+                            }
                             formMutations[name](form.form)
                             form.handleChange(value, name)
                         }
 
                         return (
                             <Fragment>
-                                <ControlledInput
+                                <Input
                                     id={`${type}-price`}
                                     name="price"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.price"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
                                     onChange={handleChange}
                                     value={data}
-                                    error={errors} 
+                                    error={errors}
                                 />
-                                <ControlledInput
+                                <Input
                                     id={`${type}-receive`}
                                     name="amount_to_receive"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.quantity"
                                     labelParams={{token: defaultData.buyAsset}}
                                     className="with-border"
@@ -168,10 +195,11 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                 />
-                                <ControlledInput
+                                <Input
                                     id={`${type}-sell`}
                                     name="amount_to_sell"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.total"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
@@ -179,7 +207,10 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                     readOnly={true}
+                                    disabled={true}
+                                    style={{cursor:"text"}}
                                 />
+                               
                                 <div className="exchange-form__info-wrapper">
                                     <div className="exchange-form__info">
                                         <Translate content="exchange.fee" />

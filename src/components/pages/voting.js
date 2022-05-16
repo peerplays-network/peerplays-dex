@@ -189,9 +189,11 @@ const Voting = (props) => {
         var utcNowMS = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()).getTime();
         var nextMtMS = new Date(maintenance.nextMaintenance).getTime();
         var _mt = Math.floor((nextMtMS - utcNowMS) / 1000 / 60);
-        var _ms = Math.floor((nextMtMS - utcNowMS - 60 * 1000 * _mt) / 1000);
+        var _hr = parseInt(_mt/60)
+        var _ms = Math.floor((nextMtMS - utcNowMS) / 1000);
+        var _mmt = "";
         if (nextMtMS <= utcNowMS) {
-            _mt = "0 Minute 0 Second";
+            _mmt = "0 Minute 0 Second";
             getGlobalData()
                 .then(({userData, globalData, notifications, lastBlockData}) => {
                     if(userData) {
@@ -212,14 +214,17 @@ const Voting = (props) => {
                 });
         } else {
             if (_mt === 0) {
-                _mt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
-            } else if (_mt === 1) {
-                _mt = _mt + " Minute " + _ms + " Seconds"
-            } else {
-                _mt = _mt + " Minutes " + _ms + " Seconds"
+                _mmt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
+            } else if (_hr === 0) {
+                _mmt = _mt + " Minute " +(_ms -(_mt*60)) + " Seconds"
+            }else  if(_hr > 0){
+                _mmt = _hr + " Hours " + (_mt-(_hr*60) ) + " Minutes " + (_ms -(_mt*60))+ " Seconds"
+            }
+             else {
+                _mmt = _mt + " Minutes " + _ms + " Seconds"
             }
         }
-        setGposSubPeriodStr(_mt)
+        setGposSubPeriodStr(_mmt)
     }
     useEffect(() => {
         setNewVotes(props.account.votes.map(el => el.vote_id))
