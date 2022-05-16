@@ -2,6 +2,7 @@ import {getStore} from "../store";
 import {trxBuilder} from "./trxBuilder";
 import {getDefaultFee} from "./getDefaultFee";
 import { getSidechainAccounts } from '../account/getSidechainAccounts';
+import { getSonNetworkStatus } from "../getSonNetworkStatus";
 
 export const generateSidechainAddress = async (data) => {
     const {loginData, accountData} = getStore();
@@ -18,6 +19,12 @@ export const generateSidechainAddress = async (data) => {
         callbackData:'',
         sidechainAccounts: {}
     };
+
+    const sonNetworkStatus = await getSonNetworkStatus();
+    if(!sonNetworkStatus.isSonNetworkOk){
+        result.errors = "ERROR";
+        return result;
+    }
 
     const trx = {
         type: 'sidechain_address_add',

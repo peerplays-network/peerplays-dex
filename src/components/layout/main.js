@@ -34,7 +34,7 @@ class Main extends Component {
                     <PrivateRoute exact path="/block/:number" component={Block} />
                     <PrivateRoute path="/asset/:symbol" component={AssetPage} />
                     <PrivateRoute path="/bitcoin" component={BitcoinTransactions} />
-                    <PrivateRoute path="/hive" component={HiveTransactions} />
+                    <PrivateRoute path="/hive-hbd" component={HiveTransactions} />
                 </Switch>
             </main>
         )

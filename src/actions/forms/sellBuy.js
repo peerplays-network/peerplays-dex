@@ -4,7 +4,7 @@ import {getStore} from "../store";
 import {getDefaultFee} from "./getDefaultFee";
 
 export const sellBuy = async (data, result) => {
-    if (data.asset_to_sell === data.buyAsset) {
+    if (data.sellAsset === data.buyAsset) {
         result.errors['buyAsset'] = 'sameAsset';
         result.errors['sellAsset'] = 'sameAsset';
         return result;

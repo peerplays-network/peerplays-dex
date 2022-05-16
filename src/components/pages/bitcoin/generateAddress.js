@@ -88,11 +88,12 @@ class GenerateAddress extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee.amount ? data.fee.amount : '0'} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
-                                        {errors === "ERROR" && <span className="clr--negative">Server side error!! Try again.</span>}
-                                        {errors === "DUPLICATE" && <h3 className="clr--negative">Key already exists.</h3>}
-                                        <button type="submit" className="btn-round btn-round--send">GENERATE</button>
+                                        <span>
+                                       </span>
+                                        {sended && <Translate component="span" className="clr--positive" content={"success.sidechainGenerated"}/>}
+                                        {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
+                                        {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/>}
+                                        <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.generate"}/>
                                     </div>
                                 </Fragment>
                             )

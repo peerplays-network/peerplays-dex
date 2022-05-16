@@ -3,24 +3,36 @@ import {dbApi} from "../nodes";
 import {trxBuilder} from "./trxBuilder";
 import {getStore} from "../store";
 import {getDefaultFee} from "./getDefaultFee";
+import { getSonNetworkStatus } from "../getSonNetworkStatus";
 
 export const transfer = async (data) => {
+    const result = {
+        success: false,
+        errors:{},
+        callbackData:'',
+    };
+    
     if(data.to === data.from){
         result.errors['to'] = 'sendYourself';
         return result;
     }
-
+    const gpo = await dbApi('get_global_properties');
+    const son_account = gpo.parameters.extensions.son_account;
+    if(data.to === "son-account" || data.to === son_account) {
+        const sonNetworkStatus = await getSonNetworkStatus();
+        if(!sonNetworkStatus.isSonNetworkOk){
+            result.errors['quantity'] = "sonNotAvailable";
+            return result;
+        }
+    }
+  
     const toAccount = await dbApi('get_account_by_name', [data.to]).then(e => e);
 
     if(!toAccount){
         result.errors['to'] = 'noAcc';
         return result;
     }
-    const result = {
-        success: false,
-        errors:{},
-        callbackData:'',
-    };
+
     const {loginData, accountData} = getStore();
     const asset = accountData.assets.find(e => e.symbol === data.quantityAsset);
     const fromAccount = await dbApi('get_account_by_name',[accountData.name]);

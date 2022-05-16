@@ -35,7 +35,7 @@ const basicTableHead = [
     },
     {
         key: 'value',
-        translateTag: 'valueWithToken',
+        translateTag: 'volume',
         translateParams: {
             token: defaultQuote
         },
@@ -87,7 +87,7 @@ export const getUserAssets = async (context) => {
 
     const {name, assets} = context.props.data;
 
-    if(!assets.length) return [];
+    if(!assets || !assets.length) return [];
 
     const userLogged = getAccountData().name;
     const isActiveUser = userLogged && userLogged === name;
@@ -100,20 +100,22 @@ export const getUserAssets = async (context) => {
 
         const symbol = asset.symbol;
         const available = asset.setPrecision();
+        const defaultQuoteAsset = await formAssetData({symbol: defaultQuote})
 
-        let latest, percent_change;
+        let latest = 0, percent_change = 0, value = 0;
 
-        if(symbol === defaultQuote) {
-          latest = 0;
-          percent_change = 0;
-        } else {
-          const tickerData = await dbApi('get_ticker', [symbol, defaultQuote]);
-          latest= tickerData.latest;
-          percent_change = tickerData.percent_change;
+        if(symbol !== defaultQuote) {
+            try{
+                const tickerData = await dbApi('get_ticker', [symbol, defaultQuote]);
+                if(tickerData) {
+                    latest= roundNum(tickerData.latest, defaultQuoteAsset.precision);
+                    percent_change = tickerData.percent_change;
+                    value = roundNum(tickerData.quote_volume, 3)
+                } 
+            } catch(e){}
         }
 
         const change = !percent_change || percent_change == 0 ? `0%` : percent_change > 0 ? `+${percent_change}%` : `-${percent_change}%`;
-        const value = roundNum(available / latest);
 
         const actions = userLogged && formActions(symbol, name, isActiveUser);
 

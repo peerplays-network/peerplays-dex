@@ -12,6 +12,7 @@ class SearchForm extends Component{
     };
     onClose = () => {
         this.props.handleClose();
+        this.setState({val:''});
         setTimeout(() => {
             document.getElementsByClassName('search__field')[0].value = this.state.val;
         }, 400);

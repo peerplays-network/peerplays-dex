@@ -92,7 +92,7 @@ svg .mask{
 }
 
 .title{
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
   &__text{
     font-family: $secondary-font;
     font-size: $fzXLG;
@@ -208,10 +208,16 @@ svg .mask{
     b {
       border: none !important;
       border-color: transparent !important;
+      &:hover {
+        background-color: #a49898 !important;
+      }
     }
   }
 }
 
 .input-cus-style span b{
   background:transparent !important;
+}
+.display-none{
+  display: none;
 }

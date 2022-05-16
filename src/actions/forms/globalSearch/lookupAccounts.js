@@ -14,7 +14,7 @@ export const lookupAccounts = async val => {
                 .then(userList => userList.map(({name, id}) => setAccountItem({name, id}))).catch(() => [])
             : []
         );
-    let result = await dbApi('lookup_accounts', [val, 20])
+    let result = await dbApi('lookup_accounts', [val, 1000])
         .then(result => result.filter(e => e[0].includes(val)).map(([name, id]) => setAccountItem({name, id})))
     const account = getAccountData();
     let filteredResult = [...result];

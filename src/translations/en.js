@@ -15,6 +15,7 @@ export const en = {
         "priceWithToken": "Price (%(token)s)",
         "amountWithToken": "Amount (%(token)s)",
         "change": "Change (24h)",
+        "volume": "Volume (asset/%(token)s)",
         "valueWithToken": "Value (%(token)s)",
         "value": "Value",
         "actions": "Actions",
@@ -29,9 +30,10 @@ export const en = {
         "lastBlock": "Last Block",
         "missingBlock": "Missing Block",
         "votes": "Votes",
+        "voteCount":"Vote Count",
         "key": "Key",
         "time": "Time",
-        "type": "Price (kbyte)",
+        "type": "Activity",
         "info": "Info",
         "id": "ID",
         "fee": "Fee",
@@ -286,7 +288,7 @@ export const en = {
         "title": "Exchange",
         "price": "Current Price",
         "change": "Change (24h)",
-        "value": "Value (24h)",
+        "value": "Volume (24h)",
         "feed": "Feed Price",
         "limit": "Call Limit",
         "margin": "Margin Call",
@@ -360,6 +362,10 @@ export const en = {
     },
     "voting": {
         "title": "Voting & Vesting",
+        "vestingTitle": "Vesting",
+        "votingTitle": "Voting",
+        "Vest":"Vest",
+        "Withdraw":"Withdraw",
         "workers": {
             "title": "Workers"
         },
@@ -383,6 +389,7 @@ export const en = {
             "crit": "Critical Low",
             "none": "No Rewards"
         },
+        "trans":"Transaction Completed",
         "percent": "Qualified Reward %",
         "potential": "Estimated Rake Reward %",
         "next_vote": "Next vote update",
@@ -573,7 +580,7 @@ export const en = {
         "pendingTitle": "Pending Fees",
         "pendingDesc": "Fees paid by < %(name)s > are divided among the network, referrers, and registrars once every maintenance interval (%(interval)s seconds). The next maintenance time is %(nextMaintenance)s.",
         "vestingTitle": "Vesting Fees",
-        "vestingDesc": "Most fees are made available immediately, but fees over 100 TEST (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
+        "vestingDesc": "Most fees are made available immediately, but fees over 100 %(symbol)s (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
     },
     "search": {
         "users": "Users",
@@ -587,6 +594,8 @@ export const en = {
     },
     "field": {
         "labels": {
+            "sellAmount": "Sell amount",
+            "buyAmount": "Buy amount",
             "login": "Login",
             "publicName": "Public Name",
             "brainkey": "Brainkey",
@@ -676,15 +685,18 @@ export const en = {
         "withdrawError":"The withdraw amount should be greater than 0",
         "Notexceed":"Value cannot exceed",
         "sendYourself": "You can\'t transfer tokens for yourself",
+        "sonNotAvailable": "SON network is not available now",
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
         "required": "This field is required.",
+        "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
+        "isTooBig": "Value is too big.",
         "isNan": "Amount is not a number.",
         "isNull": "You can't send a null.",
-        "isEmptyBalance": "You don't have token to pay fee.",
-        "isEmptyMarketBalance": "You don't have token to pay market fee.",
+        "isEmptyBalance": "You don't have balance to pay fee.",
+        "isEmptyMarketBalance": "You don't have balance to pay market fee.",
         "nullWeight": "Can\'t be null",
         "isNotEnough": "Balance is not enough.",
         "isZero": "Quantity should be greater than 0.",
@@ -698,6 +710,7 @@ export const en = {
         "needPassword": "Please, enter password first",
         "passwordsNotMatch": "Passwords don't match",
         "passwordLength": "Password should be at least 12 characters long",
+        "passwordNoBlank": "Password should not contain blank space",
         "usedWorkerName": "Worker name is already in use.",
         "beginFromToday": "Beginning date must start from today",
         "wrongEndDate": "End date must be after beginning",
@@ -713,7 +726,10 @@ export const en = {
         "conditionLength": "Condition is too long",
         "resolutionError": "Select another date",
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
+        "sonError": "Server side error!! Try again later.",
+        "keyExists": "Key already exists.",
         "newAcc": {
+            "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
             "firstLetter": "Account name should start with a letter",
@@ -738,6 +754,11 @@ export const en = {
             "end": "Asset name should end with a letter or number",
             "symbols": "Asset name should contain only letters numbers and perhaps a dot."
         }
+    },
+    "success":{
+        "transCompleted": "Transaction Completed",
+        "sidechainUpdated": "Sidechain address has been updated.",
+        "sidechainGenerated": "Sidechain address has been generated.",
     },
     "tabs": {
         "orderBook": "Order Book",
@@ -849,6 +870,8 @@ export const en = {
         "showAdditionalData": "Show Additional Data",
         "hideAdditionalData": "Hide Additional Data",
         "newContact": "+ New Contact",
+        "update": "Update",
+        "generate": "Generate",
     },
     "emptyPage": {
         "default": "No data",

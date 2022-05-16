@@ -21,6 +21,7 @@ class GlobalSearch extends Component{
         this.setState({searchType:searchTypes[0]})
         if(this.props.open === nextProps.open) return;
         blockContent(nextProps.open);
+        this.setState({result:[],value:''})
     }
 
     changeSearchType = searchType => this.getResult(searchType, this.state.value);

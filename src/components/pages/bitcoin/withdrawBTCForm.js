@@ -98,11 +98,11 @@ class WithdrawBTCForm extends Component {
 									/>
 								</div>
 								<div className="info__row">
-									{sended && <span className="clr--positive">Transaction Completed</span>}
-									<span>Fee: {data.fee} {data.feeAsset}</span>
+									{sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/>}
+									<span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
 								</div>
 								<div className="btn__row">
-									<button type="submit" className="btn-round btn-round--buy">Withdraw</button>
+									<Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.withdraw"}/>
 								</div>
 							</Fragment>
 						)

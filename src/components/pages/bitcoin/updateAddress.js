@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from "react";
 import Input from "../../helpers/form/input";
+import Translate from "react-translate-component";
 import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddress";
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";
@@ -71,13 +72,13 @@ class UpdateAddress extends Component {
                                     error={errors}
                                     value={data}/>
                                 <div className="info__row">
-                                    <span>Fee: {data.fee} {data.feeAsset}</span>
-                                    {errors === "ERROR" && <span className="clr--negative">Server side error!! Try again.</span>}
-                                    {errors === "DUPLICATE" && <h3 className="clr--negative">Key already exists.</h3>}
-                                    {updated && <span className="clr--positive">Sidechain address has been updated.</span>}
+                                    <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
+                                    {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
+                                    {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/> }
+                                    {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
                                 </div>
                                 <div className="btn__row">
-                                    <button type="submit"  className="btn-round btn-round--buy">Update</button>
+                                    <Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.update"}/>
                                 </div>
                             </Fragment>
                         )

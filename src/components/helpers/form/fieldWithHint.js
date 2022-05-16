@@ -98,7 +98,7 @@ class FieldWithHint extends Component{
         const hasHints = !!hints.length;
 
         return(
-            <div className={`dropdown dropdown--with-hint ${hasHints && 'open'}`}>
+            <div className={`dropdown dropdown--with-hint ${hasHints && this.state.dropdown && 'open'}`}>
                 <ControlledInput
                     name={name}
                     id={id}

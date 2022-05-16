@@ -50,7 +50,7 @@ class OrderBookTable extends Component{
     render(){
 
         const {type, threshold} = this.state;
-        const {sell, spread, buy} = this.state.newData;
+        const {sell, spread, buy} = this.props.data;
         return(
             <div className="order-book__table custom-scroll">
                 {['all', 'sell'].includes(type)

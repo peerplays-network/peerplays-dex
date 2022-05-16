@@ -3,26 +3,30 @@ import * as ReactDOM from "react-dom";
 
 class Dropdown extends Component {
     state = {
-        path: window.location.pathname
+        path: window.location.pathname,
+        display:true
     };
 
     open = () => {
         const obj = ReactDOM.findDOMNode(this);
-
         if (obj.matches('.open')) {
             obj.classList.remove('open')
+            this.setState({display : true})
         } else {
+            this.setState({display : false})
             document.addEventListener('click', this.handleOutsideClick, false);
             let arrDrops = Object.values(document.querySelectorAll('.dropdown.open'));
             // arrDrops.forEach(el => el.classList.remove("open"));
             obj.classList.add('open')
         }
-
+        
+        
         this.props.openCallback && this.props.openCallback();
     };
 
     close = () => {
         this.removeListener();
+        this.setState({display : true})
         ReactDOM.findDOMNode(this).classList.remove('open');
     };
 
@@ -57,7 +61,7 @@ class Dropdown extends Component {
         if(list.length){
             content = <Fragment>
                 {list.map((e, index) =>
-                    <div key={index} className="dropdown__item" onClick={this.close}>{e}</div>)
+                    <div key={index} className={`dropdown__item  ${this.state.display ? 'display-none' : ''}`}  onClick={this.close}>{e}</div>)
                 }
             </Fragment>
         }

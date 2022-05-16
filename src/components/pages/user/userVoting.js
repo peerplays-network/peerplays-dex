@@ -35,6 +35,7 @@ const tableHead = [
     },
     {
         key: 'vote_icon',
+        translateTag: 'actions',
         params: 'fit-content'
     }
 ];

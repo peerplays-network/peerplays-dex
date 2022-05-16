@@ -47,7 +47,7 @@ export const menuList = [
         icon: <IconBookOpen/>,
     },
     {
-        link: '/hive',
+        link: '/hive-hbd',
         tag: 'hive',
         icon: <Iconwithdrawal/>,
     }
