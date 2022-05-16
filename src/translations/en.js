@@ -725,7 +725,7 @@ export const en = {
         "newAcc": {
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
-            "firstLetter": "Account name should start with a letter",
+            "firstLetter": "Account name should start with a small letter",
             "noSpecials": "Account name should have only small letters, digits, or dashes",
             "oneDash": "Account name should have only one dash in a row",
             "lastSymbol": "Account name should end with a letter or digit",
@@ -733,8 +733,8 @@ export const en = {
             "inUse": "Account is already in use."
         },
         "newAccSegment": {
-            "firstLetter": "Each account segment should start with a letter",
-            "noSpecials": "Each account segment should have only letters, digits, or dashes",
+            "firstLetter": "Each account segment should start with a small letter",
+            "noSpecials": "Each account segment should have only small letters, digits, or dashes",
             "oneDash": "Each account segment should have only one dash in a row",
             "lastSymbol": "Each account segment should end with a letter or digit",
         },
