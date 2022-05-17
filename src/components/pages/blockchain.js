@@ -29,10 +29,10 @@ const blockchainMenu = [
         tag: 'committee',
         component: Committee
     },
-    {
-        link: '/markets',
-        tag: 'markets',
-    },
+    // {
+    //     link: '/markets',
+    //     tag: 'markets',
+    // },
     {
         link: '/fees',
         tag: 'fees',
