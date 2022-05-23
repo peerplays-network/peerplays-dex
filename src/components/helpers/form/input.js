@@ -21,7 +21,7 @@ const Input = (props) => {
         if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
              return e.preventDefault()
         }
-        if (type === 'password' && charCode === 32 ){
+        if (charCode === 32 || (type === 'password' && charCode === 32)){
             return e.preventDefault()
        }
         }

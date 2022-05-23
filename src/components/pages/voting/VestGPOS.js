@@ -16,6 +16,8 @@ const VestGPOS = (props) => {
 	const [vestAmount, setVestAmount] = useState(0);
 	const [fee, setFee] = useState(0);
 	const [sended, setSended] = useState(false);
+	const [changes, setChanges] = useState(false);
+
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
@@ -58,6 +60,7 @@ const VestGPOS = (props) => {
 				setTimeout(() => setSended(false), 5000)
 			});
 		});
+		setChanges(false)
 	};
 
 	const handlChange = (value)=>{
@@ -101,12 +104,12 @@ const VestGPOS = (props) => {
 					}}
 					// step={0.1}
 					precision={getBasicAsset().precision}
-					max={accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision)}
+					max={accBalance > getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) ? accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) : 0}
 					onChange={(value) => handlChange(value)}
 					value={vestAmount}
 				/>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount == 0) ? "block" : "none" }}>
+				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(vestAmount == null || vestAmount == 0)) ? "block" : "none" }}>
 					<Translate component="div" className="" content={"errors.requiredAndnotzero"} />
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount > accBalance) ? "block" : "none" }}>
@@ -123,7 +126,7 @@ const VestGPOS = (props) => {
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? "" : SubmitGposVesting()}>Vest</button>
+				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}><Translate className="" content={"voting.Vest"} /></button>
 			</CardActions>
 		</Card>
 	)
