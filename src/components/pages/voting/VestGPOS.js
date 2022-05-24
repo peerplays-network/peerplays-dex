@@ -60,12 +60,17 @@ const VestGPOS = (props) => {
 				setTimeout(() => setSended(false), 5000)
 			});
 		});
+		setChanges(false)
 	};
 
 	const handlChange = (value)=>{
 		setVestAmount(value)
-		setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		if(value > 0){
+			setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		}else{
+			setFee(0)
 		}
+}
 
 
 	return (
@@ -116,12 +121,12 @@ const VestGPOS = (props) => {
 					</div>
 				</div>
 			</CardContent>
-			<div className="info__row">
+			<div className="info__row margin">
 			<span>Fee: {fee} TEST</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}>Vest</button>
+				<button className="btn-round btn-round--buy" onClick={() => (vestAmount == null || vestAmount == 0 || vestAmount > accBalance) ? setChanges(true) : SubmitGposVesting()}><Translate className="" content={"voting.Vest"} /></button>
 			</CardActions>
 		</Card>
 	)

@@ -6,6 +6,8 @@ import Textarea from "./form/textarea";
 import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
+import Translate from 'react-translate-component';
+
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -143,9 +145,9 @@ class SendForm extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.feeAsset}</span>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--send">SEND</button>
+                                        <button type="submit" className="btn-round btn-round--send"><Translate className="" content={"block.send.title"} /></button>
                                     </div>
                                 </Fragment>
                             )

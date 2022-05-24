@@ -364,6 +364,8 @@ export const en = {
         "title": "Voting & Vesting",
         "vestingTitle": "Vesting",
         "votingTitle": "Voting",
+        "Vest":"Vest",
+        "Withdraw":"Withdraw",
         "workers": {
             "title": "Workers"
         },
@@ -730,16 +732,16 @@ export const en = {
             "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
-            "firstLetter": "Account name should start with a letter",
-            "noSpecials": "Account name should have only letters, digits, or dashes",
+            "firstLetter": "Account name should start with a small letter",
+            "noSpecials": "Account name should have only small letters, digits, or dashes",
             "oneDash": "Account name should have only one dash in a row",
             "lastSymbol": "Account name should end with a letter or digit",
             "notCheap": "This is a premium name which is not supported by this faucet. Please enter a regular name containing least one dash, a number or no vowels.",
             "inUse": "Account is already in use."
         },
         "newAccSegment": {
-            "firstLetter": "Each account segment should start with a letter",
-            "noSpecials": "Each account segment should have only letters, digits, or dashes",
+            "firstLetter": "Each account segment should start with a small letter",
+            "noSpecials": "Each account segment should have only small letters, digits, or dashes",
             "oneDash": "Each account segment should have only one dash in a row",
             "lastSymbol": "Each account segment should end with a letter or digit",
         },
