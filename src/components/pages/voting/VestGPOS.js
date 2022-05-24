@@ -122,7 +122,7 @@ const VestGPOS = (props) => {
 				</div>
 			</CardContent>
 			<div className="info__row margin">
-			<span>Fee: {fee} TEST</span>
+			<span>Fee: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
