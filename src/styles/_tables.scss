@@ -16,7 +16,10 @@
   &__row:hover{
     .actions__on-hover{
       opacity: 1;
-      button{width: 250px;
+      button{
+        width: 30px;
+        z-index: 99;
+        position: relative;
         display: flex;
         justify-content: right;}
     }
@@ -192,4 +195,6 @@
   .cardsTable {
     display: none;
   }
+
 }
+
