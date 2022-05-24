@@ -567,7 +567,7 @@ export const en = {
         "upgradeTitle": "Upgrade for 80% Cashback",
         "upgradeDesc": "Lifetime Members get 80% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
         "referralTitle": "Your referral link",
-        "referralDesc": "Give this to link to people you want to refer to BitShares: %(link)s/?r=%(name)s",
+        "referralDesc": "Give this to link to people you want to refer to Peerplays DEX: %(link)s/?r=%(name)s",
         "allocationTitle": "Fee Allocation",
         "allocationDesc": "Every time < %(name)s > pays a transaction fee, that fee is divided among several different accounts",
         "network": "Network",
