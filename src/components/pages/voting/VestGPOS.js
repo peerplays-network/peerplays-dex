@@ -65,8 +65,12 @@ const VestGPOS = (props) => {
 
 	const handlChange = (value)=>{
 		setVestAmount(value)
-		setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		if(value > 0){
+			setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		}else{
+			setFee(0)
 		}
+}
 
 
 	return (
@@ -117,8 +121,8 @@ const VestGPOS = (props) => {
 					</div>
 				</div>
 			</CardContent>
-			<div className="info__row">
-			<span>Fee: {fee} TEST</span>
+			<div className="info__row margin">
+			<span>Fee: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
