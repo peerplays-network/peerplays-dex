@@ -6,7 +6,7 @@ import { dbApi } from "../../nodes";
 export const createUser = async (data, result) => {
     const type = data.type ? data.type : 'cloud';
 
-    const {keys, additionalData} = formKeys[type](data);
+    const {keys, wifs, additionalData} = formKeys[type](data);
 
     const account = {
         name: data.newLogin,
@@ -30,7 +30,7 @@ export const createUser = async (data, result) => {
         result.success = true;
         const account = await dbApi('get_account_by_name', [newUserData.account.name])
         result.callbackData = await formAccountData[type](account, additionalData);
+        result.wifs = wifs;
     }
-
     return result;
 };

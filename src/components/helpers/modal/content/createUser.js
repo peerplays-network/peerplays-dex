@@ -10,10 +10,26 @@ import Submit from "../decoration/submit";
 import ModalTitle from "../decoration/modalTitle";
 import { getStorage } from "../../../../actions/storage";
 import { checkReferrer } from "../../../../actions/forms/errorsHandling/checkReferrer";
+import { generatePassword } from "../../password";
+import { IconCopy } from '../../../../svg';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+
+
 
 const CreateUser = () => {
     const referrer = getStorage('referrer', 'sessionStorage').name;
     const [referrerError, setReferrerError] = useState("");
+    const [randomPassword, setRandomPassword] = useState(()=> generatePassword());
+    const [copied, setCopied] = useState(false);
+
+    const copyPassword = () => {
+        navigator.clipboard.writeText(randomPassword);
+        setCopied(true)
+    }
+
+
+
     useEffect(() => {     
         checkReferrer({ referrer }).then(result => {
             setReferrerError(result);
@@ -24,7 +40,7 @@ const CreateUser = () => {
             <ModalTitle tag="createUser" />
             <Form
                 requiredFields={['newLogin', 'password', 'passwordCheck']}
-                defaultData={referrer ? {referrer} : {}}
+                defaultData={referrer ? {referrer, password: randomPassword} : {password: randomPassword}}
                 action={createUser}
                 handleResult={setNewAccount}
             >
@@ -39,13 +55,19 @@ const CreateUser = () => {
                                 value={form.state.data}
                             />
                             <InfoBlock tag="modal.createUser.aboutLogin" />
-                            <Input
-                                name="password"
-                                type="password"
-                                onChange={form.handleChange}
-                                error={form.state.errors}
-                                value={form.state.data}
-                            />
+                            <div className="copy-container">
+                                <Input
+                                    name="password"
+                                    onChange={form.handleChange}
+                                    error={form.state.errors}
+                                    value={form.state.data}
+                                    disabled={true}
+                                />
+                                <div style={{display: "flex", flexDirection: "column", marginLeft: '5px', alignItems: 'center', justifyContent: 'center'}}>
+                                    {copied && (<span style={{color: "green", fontSize: '12px', marginBottom: '5px'}}>Copied</span>)}
+                                    <IconCopy style={{cursor:"pointer"}} onClick={()=>{copyPassword()}}/>
+                                </div>
+                            </div>
                             <Input
                                 name="passwordCheck"
                                 type="password"
