@@ -2,9 +2,7 @@ import {getAccountData} from "../../store";
 
 export const checkAmountToSell = ({type, buyAsset, sellAsset, amount_to_receive, amount_to_sell}) => {
   const userAsset = getAccountData().assets.find(el => el.symbol === sellAsset);
-  if(amount_to_sell.length > userAsset.precision){
-    return 'maxLength';
-  }else{
+ 
     if(!amount_to_sell) {
       return 'required';
     } else {
@@ -21,14 +19,12 @@ export const checkAmountToSell = ({type, buyAsset, sellAsset, amount_to_receive,
       }
       return false; 
     }
-  }
+  
 }
 
 export const checkAmountToReceive = ({type, buyAsset, sellAsset, amount_to_sell, amount_to_receive}) => {
   const userAsset = getAccountData().assets.find(el => el.symbol === sellAsset);
-  if(amount_to_receive.length > userAsset.precision){
-    return 'maxLength';
-  }else{
+  
   if(!amount_to_receive) {
     return 'required';
    } else {
@@ -45,7 +41,6 @@ export const checkAmountToReceive = ({type, buyAsset, sellAsset, amount_to_sell,
     } 
     return false;
   }
-}
 }
 
 export const checkPrice = ({price}) => {

@@ -83,7 +83,8 @@ class QuickSellBuy extends Component {
                                         <Input
                                             name="amount_to_sell"
                                             labelTag="field.labels.sellAmount"
-                                            type="number"
+                                            type="text"
+                                            max={8}
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
@@ -105,7 +106,8 @@ class QuickSellBuy extends Component {
                                         <Input
                                             name="amount_to_receive"
                                             labelTag="field.labels.buyAmount"
-                                            type="number"
+                                            type="text"
+                                            max={8}
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}

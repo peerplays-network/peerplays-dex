@@ -11,6 +11,7 @@ const Input = (props) => {
         formData,
         onKeyPress,
         min,
+        max,
         onBlur
     } = props;
 
@@ -18,11 +19,12 @@ const Input = (props) => {
 
     let isNumberKey = (e,type)=>{
         var charCode = (e.which) ? e.which : e.keyCode
-        if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
+        const onlyNumber = /^[0-9\b]+$/;
+        if (type === 'text' && (!onlyNumber.test(e.key)) || (charCode === 43 || charCode === 32 || charCode === 45 || charCode === 101)){
              return e.preventDefault()
         }
         if (type === 'password' && charCode === 32 ){
-            return e.preventDefault()
+            return e.preventDefault(  )
        }
         }
 
@@ -43,6 +45,7 @@ const Input = (props) => {
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
                 placeholder=" "
                 min={min}
+                maxLength={max}
                 className="field__input"
                 autoComplete="off"
             />
