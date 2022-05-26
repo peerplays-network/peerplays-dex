@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {clearLayout} from "../../dispatch/layoutDispatch";
 
 const Overlay = ({overlay, modalProps}) => { 
-    console.log("modalProps", modalProps)
     return(
     <div
         className={`overlay${overlay ? ' open' : ''}`}

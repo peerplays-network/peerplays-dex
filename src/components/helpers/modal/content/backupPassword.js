@@ -1,11 +1,38 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { setNewAccount } from "../../../../actions/account";
 import InfoBlock from "../../infoBlock";
 import ModalTitle from "../decoration/modalTitle";
 
 
 
 
-const BackupPassword = () => {
+const BackupPassword = (data) => {
+    console.log(data)
+    const downloadPrivateKeys = (privateKeys, password) => {
+        const element = document.createElement("a");
+        const fileContents = `
+              \n  ###### Active key ######
+              \n ${privateKeys.active}
+              \n
+              \n  ###### Owner key ######
+              \n ${privateKeys.owner}
+              \n
+              \n ##### memo key #####
+              \n ${privateKeys.memo}
+              \n ##### master password #####
+              \n ${password}
+            `;
+        const file = new Blob([fileContents], {
+          type: "text/plain",
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = "Keys.txt";
+        element.id = "download-keys";
+        document.body.appendChild(element);
+        element.click();
+        element.remove();
+    };
+
 
     return (
         <Fragment>
@@ -16,7 +43,7 @@ const BackupPassword = () => {
                 <InfoBlock className="info-block__text info-block__marginBottom" tag="modal.backupPassword.keepSafe" />
 
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <button className="btn btn-round" onClick={() => {}} >Download, take me to dashboard</button>
+                    <button className="btn btn-round" onClick={() => {downloadPrivateKeys(data.wifs, data.password); setNewAccount(data)}} >Download, take me to dashboard</button>
                 </div>
         
 

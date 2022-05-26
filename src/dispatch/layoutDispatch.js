@@ -2,7 +2,6 @@ import {store} from "../index";
 import {blockContent} from "../actions/blockContent";
 
 const layoutDispatch = (type, payload = false, needToBlock = true) => {
-    console.log("ghasem")
     blockContent(needToBlock);
     store.dispatch({type, payload});
 };
