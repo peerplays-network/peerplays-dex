@@ -795,6 +795,12 @@ export const en = {
             "referrerError": "There is no account with %(referrer)s name",
             "referrerMembership": "%(referrer)s must be either a lifetime or annual subscriber."
         },
+        "backupPassword": {
+            "title": "Backup your keys",
+            "forgetPassword": "IMPORTANT: IF YOU FORGET YOUR PASSWORD YOU WILL BE UNABLE TO ACCESS YOUR ACCOUNT, WE CANNOT RESET OR RESTORE YOUR PASSWORD!",
+            "keyDetails": "Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
+            "keepSafe": "Please DOWNLOAD and keep safe your keys and password."
+        },
         "login": {
             "title": "Log in"
         },
@@ -843,6 +849,7 @@ export const en = {
         }
     },
     "buttons": {
+        "downloadAndDashboard": "Download, take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
         "sendFunds": "Send Funds",
@@ -872,6 +879,7 @@ export const en = {
         "newContact": "+ New Contact",
         "update": "Update",
         "generate": "Generate",
+
     },
     "emptyPage": {
         "default": "No data",

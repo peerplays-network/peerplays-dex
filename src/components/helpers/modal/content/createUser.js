@@ -3,17 +3,15 @@ import Form from "../../form/form";
 import Input from "../../form/input";
 import InfoBlock from "../../infoBlock";
 import Close from "../decoration/close";
-import RadioGroup from "../../form/radioGroup";
 import { createUser } from "../../../../actions/forms/createUser/index";
-import { setNewAccount } from "../../../../actions/account/index";
+import { showBackupPassword } from "../../../../actions/account";
 import Submit from "../decoration/submit";
 import ModalTitle from "../decoration/modalTitle";
 import { getStorage } from "../../../../actions/storage";
 import { checkReferrer } from "../../../../actions/forms/errorsHandling/checkReferrer";
 import { generatePassword } from "../../password";
 import { IconCopy } from '../../../../svg';
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
+
 
 
 
@@ -42,7 +40,7 @@ const CreateUser = () => {
                 requiredFields={['newLogin', 'password', 'passwordCheck']}
                 defaultData={referrer ? {referrer, password: randomPassword} : {password: randomPassword}}
                 action={createUser}
-                handleResult={setNewAccount}
+                handleResult={showBackupPassword}
             >
                 {
                     form => <Fragment>
@@ -55,7 +53,7 @@ const CreateUser = () => {
                                 value={form.state.data}
                             />
                             <InfoBlock tag="modal.createUser.aboutLogin" />
-                            <div className="copy-container">
+                            <div className="copy__container">
                                 <Input
                                     name="password"
                                     onChange={form.handleChange}

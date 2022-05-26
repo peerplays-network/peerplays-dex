@@ -30,7 +30,7 @@ export const createUser = async (data, result) => {
         result.success = true;
         const account = await dbApi('get_account_by_name', [newUserData.account.name])
         result.callbackData = await formAccountData[type](account, additionalData);
-        result.wifs = wifs;
+        result.callbackData.wifs = wifs;
     }
     return result;
 };
