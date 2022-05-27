@@ -57,6 +57,17 @@ class Form extends Component {
     submit = (e) => {
         e && e.preventDefault();
         const { errors, data } = this.state;
+        debugger;
+        if(!data.password){
+            getPassword(password => (
+                this.setState(
+                    { data: { password } },
+                )
+            
+            ),'',data);
+            return;
+        }
+        debugger;
         
          if (Object.keys(errors).length) return;
         

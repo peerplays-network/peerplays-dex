@@ -38,7 +38,8 @@ const checkPassword = async (data, result) => {
 class PasswordCheck extends Component {
 
     state = {
-        login: getAccountData().name
+        login: getAccountData().name,
+        data:this.props.data,
     };
 
     handleResult = (data) => {
