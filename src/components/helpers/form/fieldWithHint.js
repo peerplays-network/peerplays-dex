@@ -10,6 +10,29 @@ class FieldWithHint extends Component{
         hints: [],
         timeout: false,
         dropdown:false,
+        filterAsset:[
+            "AQSQFHZAJVZDTVAC",
+            "AXFMUJYATHGJSOIV",
+            "BSEBEIBGLWDPKMDB",
+            "CFQBVAIKFFJEEOOJ",
+            "DOQIBMVBUJYYDXXF",
+            "MCLUSD",
+            "BTFUN",
+            "SEUSD",
+            "FKGANJJRLRRSUNTR",
+            "HVVTNQNBHEFYPSJP",
+            "LTQCNISQAEWLEJVS",
+            "NGJZSUSFKIJBXKWJ",
+            "OPNQEXZYKBPOZAUP",
+            "RCDQHTNAHQNDHJXE",
+            "RYVCIRCYJSVAUESQ",
+            "TSKXLOICQJTCFPYY",
+            "UGQZISWHZJKNGVRC",
+            "UUCSGNDAXHJNRJUF",
+            "WGKGQTICUIYEYTWV",
+            "WNIPJIXZAFZGHGIC",
+            "WTFUN",
+        ]
     };
      
     componentDidMount(){
@@ -94,7 +117,8 @@ class FieldWithHint extends Component{
 
         const {name, hideLabel, labelParams, className, errors,id, readOnly} = this.props;
         const {data, hints} = this.state;
-
+        const filterAssetResult = hints.filter((item) => !this.state.filterAsset.find(asset => item === asset )) 
+        console.log("hints data", filterAssetResult)
         const hasHints = !!hints.length;
 
         return(
@@ -116,7 +140,7 @@ class FieldWithHint extends Component{
                 
                 { errors && errors[name] && <Translate content={`errors.${errors[name]}`} className="field__error" /> }
                 <div className="dropdown__body custom-scroll">
-                    {hasHints && hints.map(e => (
+                    {hasHints && filterAssetResult.map(e => (
                         data[name] != e && 
                         <div key={e} className="dropdown__item">
                             <span  className="cpointer" onClick={() => this.setNewVal(e)}>{e}</span>
