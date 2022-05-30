@@ -8,8 +8,8 @@ import Submit from "../modal/decoration/submit";
 
 const CloudLogin = ({handleLogin}) => (
     <Form
-        requiredFields={['login', 'password']}
-        defaultData={{remember: true}}
+        requiredFields={['login']}
+        defaultData={{remember: true, whaleVault: true}}
         action={authByLogin}
         handleResult={handleLogin}
     >
@@ -22,13 +22,24 @@ const CloudLogin = ({handleLogin}) => (
                         error={form.state.errors}
                         value={form.state.data}
                     />
-                    <Input
-                        name="password"
-                        type="password"
-                        className='modal__field'
-                        onChange={form.handleChange}
-                        error={form.state.errors}
+                    {!form.state.data.whaleVault ? (
+                        <Input
+                            name="password"
+                            type="password"
+                            labelTag="field.labels.loginPassword"
+                            className='modal__field'
+                            onChange={form.handleChange}
+                            error={form.state.errors}
+                            value={form.state.data}
+                        />
+                    ) : ""}
+                   
+                    <CheckBox
+                        name="whaleVault"
+                        id="whaleVault"
+                        labelTag="field.checkboxes.whaleVault"
                         value={form.state.data}
+                        onChange={form.handleChange}
                     />
                     <CheckBox
                         name="remember"

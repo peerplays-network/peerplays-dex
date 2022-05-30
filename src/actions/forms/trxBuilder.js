@@ -5,7 +5,10 @@ export const trxBuilder = async (trx, keys) => {
 
     await trx.forEach(elem => tr.add_type_operation(elem.type, elem.params));
     await tr.set_required_fees();
+    console.log("tr", tr)
     await keys.forEach(elem => tr.add_signer(elem));
+    console.log('tr after sign', tr);
+    //debugger
 
     return tr.broadcast();
 };

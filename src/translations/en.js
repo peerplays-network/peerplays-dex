@@ -594,6 +594,7 @@ export const en = {
     },
     "field": {
         "labels": {
+            "loginPassword": "password or a Peerplays key (ideally your memo key)",
             "sellAmount": "Sell amount",
             "buyAmount": "Buy amount",
             "login": "Login",
@@ -674,7 +675,8 @@ export const en = {
             "local": "Local wallet (advanced)"
         },
         "checkboxes": {
-            "remember": "Remember me"
+            "remember": "Remember me",
+            "whaleVault": "Use WhaleVault extension"
         },
         "upload": {
             "file": "Key File (%(fileSize)s)"
@@ -689,6 +691,7 @@ export const en = {
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
+        "whaleNotInstalled": "WhaleVault is not installed",
         "required": "This field is required.",
         "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
