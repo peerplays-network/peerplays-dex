@@ -80,6 +80,7 @@ class SendModal extends Component {
                     requiredFields={['to', 'quantity']}
                     action={transfer}
                     handleResult={this.handleSend}
+                    needPassword
                 >
                     {
                         form => {

@@ -57,17 +57,17 @@ class Form extends Component {
     submit = (e) => {
         e && e.preventDefault();
         const { errors, data } = this.state;
-        debugger;
-        if(!data.password){
-            getPassword(password => (
-                this.setState(
-                    { data: { password } },
-                )
+        // debugger;
+        // if(!data.password){
+        //     getPassword(password => (
+        //         this.setState(
+        //             { data: { password } },
+        //         )
             
-            ),'',data);
-            return;
-        }
-        debugger;
+        //     ),'',data);
+        //     return;
+        // }
+        // debugger;
         
          if (Object.keys(errors).length) return;
         
@@ -84,6 +84,7 @@ class Form extends Component {
             return;
         }
         const checkPassword = () => {
+            console.log(this.state)
             this.setState({ loading: false });
             getPassword(password => (
                 this.setState(
@@ -110,6 +111,8 @@ class Form extends Component {
 
     handleAction = () => {
         const data = this.state.data;
+        console.log(this.state);
+
         const { action, handleResult } = this.props;
         if (action) {
          const result = {
