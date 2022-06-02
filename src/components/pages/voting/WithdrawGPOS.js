@@ -56,7 +56,11 @@ const WithdrawGPOS = (props) => {
 
 	const handlChange = (value)=>{
 		setWithdrawAmount(value)
-			setFee(getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision))
+			if(value > 0){
+				setFee(getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision))
+			}else{
+				setFee(0)
+			}
 		
 	}
 
@@ -107,8 +111,8 @@ const WithdrawGPOS = (props) => {
 				</div>
 				</div>
 			</CardContent>
-			<div className="info__row">
-			<span>Fee: {fee} TEST</span>
+			<div className="info__row margin">
+			<span>Fee: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >

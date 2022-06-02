@@ -11,7 +11,7 @@ import SaveChangesCard from "../helpers/saveChangesCard";
 import { getPassword, updateAccount } from "../../actions/forms";
 import { dbApi } from "../../actions/nodes";
 import { clearVotes } from "../../dispatch/votesDispatch";
-import { getAccountData } from "../../actions/store";
+import { getAccountData, getBasicAsset } from "../../actions/store";
 import VestGPOS from './voting/VestGPOS';
 import WithdrawGPOS from './voting/WithdrawGPOS';
 import { getAsset } from '../../actions/assets/getAsset';
@@ -263,7 +263,7 @@ const Voting = (props) => {
     const handleSave = () => {
         let user = getAccountData();
         if (user.assets[0].amount / 100000 < 20) {
-            return toast.error('Insufficient test balance.')
+            return toast.error(`Insufficient ${getBasicAsset().symbol} balance.`)
         }
         if (totalGpos > 0) {
             getPassword(saveResult)
