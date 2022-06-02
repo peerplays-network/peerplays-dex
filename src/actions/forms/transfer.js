@@ -105,7 +105,8 @@ export const transfer = async (data) => {
     };
 
     const trxResult = await trxBuilder([trx], [activeKey]);
-
+    console.log("trxResult",trxResult)
+    debugger
     if(trxResult){
         result.success = true;
         result.callbackData = trxResult;

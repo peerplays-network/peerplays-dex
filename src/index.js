@@ -4,7 +4,7 @@ import {AppContainer} from 'react-hot-loader'
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from "react-router-redux";
 import {createBrowserHistory} from 'history';
-import {ChainConfig} from "peerplaysjs-lib";
+import {ChainConfig, WhaleVaultConfig} from "peerplaysjs-lib";
 
 import './styles/styles.scss';
 import "react-datepicker/dist/react-datepicker.css";
@@ -23,6 +23,9 @@ const history = createBrowserHistory();
 export const store = initStore(history);
 
 ChainConfig.setPrefix(defaultToken);
+console.log(ChainConfig)
+console.log(WhaleVaultConfig)
+WhaleVaultConfig.setWhaleVault(window.whalevault)
 //ChainConfig.networks[defaultNetwork] = defaultChainParams;
 
 initCache();
