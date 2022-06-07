@@ -166,6 +166,9 @@ svg .mask{
     font-size: $fzSM;
     line-height: 1.6rem;
   }
+  &__marginBottom{
+    margin-bottom: 32px;
+  }
 }
 
 .warning{
@@ -220,8 +223,4 @@ svg .mask{
 }
 .display-none{
   display: none;
-}
-
-.info-block__text.info-block__marginBottom {
-  margin-bottom: 20px;
 }

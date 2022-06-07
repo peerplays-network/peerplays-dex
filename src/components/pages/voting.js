@@ -266,7 +266,7 @@ const Voting = (props) => {
             return toast.error(`Insufficient ${getBasicAsset().symbol} balance.`)
         }
         if (totalGpos > 0) {
-            getPassword(saveResult)
+            getPassword(saveResult, 'active')
 
         } else {
             toast.error('You need to Vest some GPOS balance first')

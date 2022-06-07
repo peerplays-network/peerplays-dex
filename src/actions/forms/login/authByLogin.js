@@ -2,9 +2,9 @@ import {formAccount} from "../../account/formAccount";
 import {getFullAccount} from "../../account/getFullAccount";
 import CloudAccount from "../../../classes/cloudAccount";
 
-export const authByLogin = async ({login, password, remember, whaleVault}, result) => {
+export const authByLogin = async ({login, password, remember, isWhaleVault}, result) => {
     const fullAcc = await getFullAccount(login, true);
-    console.log("auth",whaleVault)
+
     if(!fullAcc){
         result.errors.login = 'noAcc';
         return result;
@@ -13,25 +13,37 @@ export const authByLogin = async ({login, password, remember, whaleVault}, resul
     const accData = fullAcc.account;
     const loginData = new CloudAccount();
     
-    if(!whaleVault) {
+    if(!isWhaleVault) {
         const checkPassword = loginData.checkPassword(password, accData); 
         if(!checkPassword){
             result.errors.password = 'wrongPass';
             return result;
         }
     } else {
-        if (window.whalevault) {
-            window.whalevault.requestSignBuffer("PPYDEX", login, "test", "", 
-            $("#sb_reason").val(), $("#sb_sigtype option:selected").text(),
-              function(response) {
-                  console.log('whalevault response: SignBuffer');
-                  console.log(response);
-              });
+        if (window.whalevault) {         
+            const res = await window.whalevault.promiseRequestPubKeys("dex", `ppy:${login}`)
+            const pubKeys = res.result[`ppy:${login}`];
+            if(res.success){
+                if(Object.keys(pubKeys).length){
+                    const checkWhaleVaultKeys = loginData.checkWhaleVaultPubKeys(pubKeys, accData);
+                    if(!checkWhaleVaultKeys){
+                        result.errors.login = 'wrongKeysAddedToWhale';
+                        return result;
+                    }
+                }else{
+                    result.errors.login = "notAddedToWhaleVault";
+                    return result;
+                }
+            } else{
+              result.errors.isWhaleVault = "whaleVaultConnectionError"  ;
+              return result;
+            }
+            
         } else {
-            result.errors.whaleVault = 'whaleNotInstalled';
+            result.errors.isWhaleVault = 'whaleNotInstalled';
             return result;
         }
-        debugger
+
     }
 
     const localData = {type: 'cloud', id: fullAcc.account.id, name: fullAcc.account.name};

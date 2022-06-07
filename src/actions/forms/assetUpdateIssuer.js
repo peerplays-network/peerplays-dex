@@ -23,13 +23,25 @@ export const assetUpdateIssuer = async (data, result) => {
         }
     };
 
-    const activeKey = loginData.formPrivateKey(data.password, 'owner');
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    let ownerKey = '';
+    const keyType = data.keyType
 
-    if (trxResult) {
-        result.success = true;
-        result.callbackData = trxResult;
+    if(keyType === 'password') {
+        ownerKey = loginData.formPrivateKey(password, 'owner');
+    } else if(keyType === 'owner') {
+        ownerKey = loginData.formPrivateKey(password);
     }
+    
+    try {
+        const trxResult = await trxBuilder([trx], [ownerKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+    } catch(e) {
+        result.errors['assetOwner'] = e.message;
+        return result;
+    }   
 
     return result;
 };

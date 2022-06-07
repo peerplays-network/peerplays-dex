@@ -67,6 +67,7 @@ class AssetUpdateIssuer extends Component {
                       defaultData={defaultData}
                       handleResult={this.handleAssetUpdateIssuer}
                       needPassword
+                      keyType="owner"
                 >
                     {
                         form => {

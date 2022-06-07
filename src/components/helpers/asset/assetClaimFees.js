@@ -55,6 +55,7 @@ class AssetClaimFees extends Component {
                       action={assetClaimFees}
                       handleResult={this.handleAssetClaimFees}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {

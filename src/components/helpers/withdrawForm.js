@@ -10,7 +10,7 @@ import Close from "./modal/decoration/close";
 import Submit from "./modal/decoration/submit";
 
 const withdrawTokens = async (data, result) => {
-    let {password, withdrawAddress, memo, gatewayWallet, withdrawCoin, withdrawAmount, minAmount, gateFee} = data;
+    let {password, keyType, withdrawAddress, memo, gatewayWallet, withdrawCoin, withdrawAmount, minAmount, gateFee} = data;
 
     if(Number(withdrawAmount) < (Number(minAmount) + Number(gateFee))){
         result.errors.withdrawAmount = 'belowMinAmount';
@@ -23,7 +23,8 @@ const withdrawTokens = async (data, result) => {
         quantityAsset: withdrawCoin,
         quantity: Number(withdrawAmount),
         memo: `${withdrawAddress}${memo ? '\n' + memo : ''}`,
-        password
+        password,
+        keyType
     });
 };
 
@@ -35,6 +36,7 @@ const WithdrawForm = ({defaultData, handleResult, depositData}) => (
         action={withdrawTokens}
         handleResult={handleResult}
         needPassword={!defaultData.password}
+        keyType="active"
     >
         {
             form => {

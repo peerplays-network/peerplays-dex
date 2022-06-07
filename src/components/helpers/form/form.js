@@ -74,25 +74,25 @@ class Form extends Component {
             this.setState({ loading: false, errors});
             return;
         }
-        const checkPassword = () => {
+        const checkPassword = (keyType) => {
             this.setState({ loading: false });
-            getPassword(password => (
+            getPassword((password, keyType) => (
                 this.setState(
-                    { data: { ...data, password } },
+                    { data: { ...data, password, keyType } },
                     () => this.handleAction()
                 )
-            ));
+            ), keyType);
             return;
         }
 
         if (this.props.orderConfirmation) {
             this.setState({ loading: false });
-            setModal(<OrderConfirmationModel onSuccess={checkPassword} data={this.props} grid={3} />)
+            setModal(<OrderConfirmationModel onSuccess={() => { checkPassword(this.props.keyType) }} data={this.props} grid={3} />)
             return;
         }
 
         if(this.props.needPassword){
-            checkPassword();
+            checkPassword(this.props.keyType);
             return;
         }
 

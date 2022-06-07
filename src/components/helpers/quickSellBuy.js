@@ -75,6 +75,7 @@ class QuickSellBuy extends Component {
                     action={sellBuy}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {

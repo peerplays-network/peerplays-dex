@@ -595,6 +595,8 @@ export const en = {
     "field": {
         "labels": {
             "loginPassword": "password or a Peerplays key (ideally your memo key)",
+            "transactionPassword": "password or %(keyType)s key",
+            "publicMemo": "Memo (this is public)",
             "sellAmount": "Sell amount",
             "buyAmount": "Buy amount",
             "login": "Login",
@@ -691,6 +693,11 @@ export const en = {
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
+        "wrongKey": "Wrong key has been used",
+        "user_cancel": "Request was canceled by the user",
+        "notAddedToWhaleVault":"This account is not added to whaleVault",
+        "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
+        "whaleVaultConnectionError": "Can not Send Request to whaleVault",
         "whaleNotInstalled": "WhaleVault is not installed",
         "required": "This field is required.",
         "invalidKey":"Invalid key.",
@@ -800,15 +807,17 @@ export const en = {
         },
         "backupPassword": {
             "title": "Backup your keys",
-            "forgetPassword": "IMPORTANT: IF YOU FORGET YOUR PASSWORD YOU WILL BE UNABLE TO ACCESS YOUR ACCOUNT, WE CANNOT RESET OR RESTORE YOUR PASSWORD!",
-            "keyDetails": "Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
-            "keepSafe": "Please DOWNLOAD and keep safe your keys and password."
+            "forgetPassword": "IMPORTANT: If you forget your password you will be unable to access your account, we cannot reset or restore your password!",
+            "keyDetails": "IMPORTANT: Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
+            "keepSafe": "IMPORTANT: Please download and keep safe your keys and password.",
+            "whaleVaultImport": "You can import these keys inside the WhaleVault extension and use them to login or sign your transactions",
+            "download": "Download, take me to dashboard"
         },
         "login": {
             "title": "Log in"
         },
         "unlock": {
-            "title": "Unlock Profile for %(login)s"
+            "title": "This transaction needs your %(keyType)s key"
         },
         "binRestore": {
             "title": "Restore account from .bin file"

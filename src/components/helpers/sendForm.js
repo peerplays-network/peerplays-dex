@@ -80,6 +80,7 @@ class SendForm extends Component {
                     action={transfer}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
@@ -142,6 +143,7 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            labelTag="field.labels.publicMemo"
                                         />
                                     </div>
                                     <div className="btn__row">

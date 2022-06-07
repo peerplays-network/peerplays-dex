@@ -3,17 +3,22 @@ import {store} from "../index";
 
 class Account{
     constructor(){
+        this.type = '';
         this.password = '';
         this.timeout = '';
     }
     updateReduxData(){
         ['CLEAR_LOGIN_DATA', 'UPDATE_LOGIN_DATA'].map(type => store.dispatch({type, payload: this}));
     }
-    savePassword(password){
+    savePassword(password, type){
         const expires = Number(getStorage('settings').walletLock);
+        this.type = type;
 
         if(this.timeout) clearTimeout(this.timeout);
-        if(!expires) return;
+        if(!expires) {
+            this.updateReduxData();
+            return;  
+        } 
 
         const passwordExpiration = expires * 60000;
 

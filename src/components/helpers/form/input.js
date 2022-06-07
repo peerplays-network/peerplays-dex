@@ -44,7 +44,7 @@ const Input = (props) => {
                 placeholder=" "
                 min={min}
                 className="field__input"
-                autoComplete="off"
+                autoComplete="new-password"
             />
         </FieldWrapper>
     );

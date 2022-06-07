@@ -7,65 +7,104 @@ import { getAccountData, getStore } from "../../../../actions/store/index";
 import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import { getGlobalData } from "../../../../actions/dataFetching/getGlobalData";
+import CheckBox from "../../form/checkbox";
 
-const checkPassword = async (data, result) => {
+
+
+const checkPassword = async (data, result, keyType) => {
     const { loginData, accountData } = getStore();
 
-    const checkPassword = loginData.checkPassword(data.password, accountData);
+    const checkPassword = loginData.checkPassword(data.password, accountData, keyType);
 
     if (!checkPassword) {
         result.errors.password = 'wrongPass';
         return result;
     }
-
+    
     result.success = true;
-    result.callbackData = { password: data.password };
-    if (result.success = true) {
-        setTimeout(() => {
-            getGlobalData()
-                .then(({ userData }) => {
-                    if (userData) {
-                        userData.loginData.savePassword(data.password);
-                    } 
-                })
-        }, 2000)
-
-    }
+    result.callbackData = { password: data.password, type: loginData.type };
 
     return result;
 };
 
-class PasswordCheck extends Component {
+const checkWhaleVault = async (data, result) => {    
+    if (window.whalevault) {         
+        result.success = true;
+        result.callbackData = { password: "", type: "whaleVault" };
+        return result;
+    } else {
+        result.errors.isWhaleVault = 'whaleNotInstalled';
+        return result;
+    }
+}
 
+class PasswordCheck extends Component {
     state = {
-        login: getAccountData().name
+        login: getAccountData().name,
+        whaleVaultChecked: false
     };
+
+
 
     handleResult = (data) => {
         clearLayout();
-        this.props.callback && this.props.callback(data.password);
+        this.props.callback && this.props.callback(data.password, data.type);
     };
 
     render() {
         return (
             <Fragment>
-                <ModalTitle tag="unlock" additionalData={{ login: this.state.login }} />
-                <Form requiredFields={['password']} action={checkPassword} handleResult={this.handleResult}>
+                <ModalTitle tag="unlock" additionalData={{ keyType: this.props.keyType }} />
+                <Form 
+                    defaultData={{login: getAccountData().name, isWhaleVault: false}}
+                    requiredFields={!this.state.whaleVaultChecked ? ['login','password'] : ['login']}
+                    action={!this.state.whaleVaultChecked ? async(data, result) => checkPassword(data, result, this.props.keyType) : checkWhaleVault}
+                    handleResult={this.handleResult}
+                >
                     {
                         form => <Fragment>
                             <div className="modal__content">
                                 <Input
-                                    name="password"
-                                    type="password"
+                                    name="login"
+                                    disabled={true}
                                     onChange={form.handleChange}
                                     error={form.state.errors}
                                     value={form.state.data}
+                                    labelTag="field.labels.accName"
                                 />
+                                {!form.state.data.isWhaleVault ? (
+                                    <Input
+                                        name="password"
+                                        type="password"
+                                        className="modal__field"
+                                        onChange={form.handleChange}
+                                        error={form.state.errors}
+                                        value={form.state.data}
+                                        labelTag="field.labels.transactionPassword"
+                                        labelParams={{ keyType: this.props.keyType }}
+                                    />
+                                    ) : "" }
+                                {this.props.keyType !== "owner" ? (
+                                    <CheckBox
+                                        name="isWhaleVault"
+                                        id="isWhaleVault"
+                                        labelTag="field.checkboxes.whaleVault"
+                                        value={form.state.data}
+                                        onChange={(val, id)=>{
+                                            form.handleChange(val, id)
+                                            this.setState(state => ({
+                                                ...state,
+                                                whaleVaultChecked: val
+                                            }));
+                                        }}
+                                    />
+                                ) : "" }                     
                             </div>
                             <div className="modal__bottom">
                                 <Close />
                                 <Submit tag="unlock" />
                             </div>
+                            
                         </Fragment>
                     }
                 </Form>

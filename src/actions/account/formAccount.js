@@ -81,7 +81,7 @@ export const formAccount = async (data) => {
     if(fullAcc === false) {
       return;
     }
-    console.log("fullAccount",fullAcc)
+
     const {account, balances, limit_orders, call_orders, votes} = fullAcc;
     const {id, name, active, owner, options} = account;
     let sidechainAccounts = await getSidechainAccounts(id);

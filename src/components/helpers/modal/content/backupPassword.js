@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
+import Translate from "react-translate-component";
+
 import { setNewAccount } from "../../../../actions/account";
 import InfoBlock from "../../infoBlock";
 import ModalTitle from "../decoration/modalTitle";
@@ -7,7 +9,6 @@ import ModalTitle from "../decoration/modalTitle";
 
 
 const BackupPassword = (data) => {
-    console.log(data)
     const downloadPrivateKeys = (privateKeys, password) => {
         const element = document.createElement("a");
         const fileContents = `
@@ -41,12 +42,13 @@ const BackupPassword = (data) => {
                 <InfoBlock className="info-block__text info-block__marginBottom" tag="modal.backupPassword.forgetPassword" />
                 <InfoBlock className="info-block__text info-block__marginBottom" tag="modal.backupPassword.keyDetails" />
                 <InfoBlock className="info-block__text info-block__marginBottom" tag="modal.backupPassword.keepSafe" />
+                <InfoBlock className="info-block__text info-block__marginBottom" tag="modal.backupPassword.whaleVaultImport" />
 
                 <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <button className="btn btn-round" onClick={() => {downloadPrivateKeys(data.wifs, data.password); setNewAccount(data)}} >Download, take me to dashboard</button>
+                    <button className="btn btn-round" onClick={() => {downloadPrivateKeys(data.wifs, data.password); setNewAccount(data)}} >
+                        <Translate content="modal.backupPassword.download" />
+                    </button>
                 </div>
-        
-
             </div>
 
         </Fragment>

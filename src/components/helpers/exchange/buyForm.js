@@ -151,6 +151,7 @@ class BuyForm extends Component{
                 action={sellBuy}
                 handleResult={this.resetForm}
                 orderConfirmation
+                keyType="active"
             >
                 {
                     form => {

@@ -23,8 +23,6 @@ const history = createBrowserHistory();
 export const store = initStore(history);
 
 ChainConfig.setPrefix(defaultToken);
-console.log(ChainConfig)
-console.log(WhaleVaultConfig)
 WhaleVaultConfig.setWhaleVault(window.whalevault)
 //ChainConfig.networks[defaultNetwork] = defaultChainParams;
 
