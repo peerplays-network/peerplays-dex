@@ -5,8 +5,7 @@ import { getLoginData, getStore } from "../store";
 
 // keyType can be active, memo, and owner
 export const getPassword = async (fn, keyType, password = '') => {
-    const { loginData } = getStore();
-    console.log("loginData",loginData)
+
     if(password) {
         return fn(password, keyType)
     } else {
