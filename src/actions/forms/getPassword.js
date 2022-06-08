@@ -9,7 +9,6 @@ export const getPassword = async (fn, keyType, password = '') => {
     if(password) {
         return fn(password, keyType)
     } else {
-        console.log("password",getLoginData.type, getLoginData.password)
         if(getLoginData.type === 'password' && getLoginData.password) {
             return fn(getLoginData.password, 'password')
         } else if(getLoginData.type === keyType && getLoginData.password) {
