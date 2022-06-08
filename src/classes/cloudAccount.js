@@ -30,8 +30,8 @@ class CloudAccount extends Account{
             for(let role of roles){
                 const privKey = fromWif ? fromWif : generatedKeys.privKeys[role];
                 const pubKey = privKey.toPublicKey().toString();
-                const key = role !== 'memo' ? keys[role].key_auths[0][0] : keys.memo.memo_key;
-                if(key === pubKey){
+                const roleKeys = role !== 'memo' ? keys[role].key_auths.map(auth => auth[0]) : [keys.memo.memo_key];
+                if(roleKeys.includes(pubKey)){
                     type = !fromWif ? "password" : role;
                     result = true;
                     break;
@@ -40,8 +40,8 @@ class CloudAccount extends Account{
         } else {
             const privKey = fromWif ? fromWif : generatedKeys.privKeys[keyType];
             const pubKey = privKey.toPublicKey().toString();
-            const key = keyType !== 'memo' ? keys[keyType].key_auths[0][0] : keys.memo.memo_key;
-            if(key === pubKey){
+            const roleKeys = keyType !== 'memo' ? keys[keyType].key_auths.map(auth => auth[0]) : [keys.memo.memo_key];
+            if(roleKeys.includes(pubKey)){
                 type = !fromWif ? "password" : keyType;
                 result = true;
             }

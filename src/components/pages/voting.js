@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
+import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
@@ -229,7 +230,7 @@ const Voting = (props) => {
     useEffect(() => {
         setNewVotes(props.account.votes.map(el => el.vote_id))
     }, [props.account])
-    const saveResult = (password) => {
+    const saveResult = (password, keyType) => {
         setSaveLoading(true);
         let user = getAccountData();
         dbApi('get_account_by_name', [user.name]).then(e => {
@@ -244,7 +245,12 @@ const Voting = (props) => {
             new_options.num_witness = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 1).length;
             new_options.num_committee = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 0).length;
             new_options.num_son = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 3).length;
-            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password).then(async () => {
+            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password, keyType).then(async () => {
+                updateReduxAccount(await formAccount(user.name))
+                clearVotes();
+                setSaveLoading(false);
+            }).catch(async(e) => {
+                toast.error(counterpart.translate(`errors.${e.message}`))
                 updateReduxAccount(await formAccount(user.name))
                 clearVotes();
                 setSaveLoading(false);

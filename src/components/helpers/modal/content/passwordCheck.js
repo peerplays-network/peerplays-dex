@@ -84,7 +84,7 @@ class PasswordCheck extends Component {
                                         labelParams={{ keyType: this.props.keyType }}
                                     />
                                     ) : "" }
-                                {this.props.keyType !== "owner" ? (
+                                {this.props.keyType && this.props.keyType !== "owner" ? (
                                     <CheckBox
                                         name="isWhaleVault"
                                         id="isWhaleVault"

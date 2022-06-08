@@ -48,7 +48,6 @@ export const authByLogin = async ({login, password, remember, isWhaleVault}, res
 
     const localData = {type: 'cloud', id: fullAcc.account.id, name: fullAcc.account.name};
     const accountData = await formAccount(fullAcc);
-
     result.success = true;
     result.callbackData = { loginData, accountData, localData, remember };
 

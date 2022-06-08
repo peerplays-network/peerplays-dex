@@ -736,7 +736,7 @@ export const en = {
         "conditionLength": "Condition is too long",
         "resolutionError": "Select another date",
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
-        "sonError": "Server side error!! Try again later.",
+        "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",

@@ -22,7 +22,7 @@ export const generateSidechainAddress = async (data) => {
 
     const sonNetworkStatus = await getSonNetworkStatus();
     if(!sonNetworkStatus.isSonNetworkOk){
-        result.errors = "ERROR";
+        result.errors["withdrawAddress"] = "sonError";
         return result;
     }
 
@@ -41,18 +41,31 @@ export const generateSidechainAddress = async (data) => {
         }
     };
     
+    const password = data.password;
+    const keyType = data.keyType;
+    let activeKey = '';
+
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+    }
+
     try {
-        const activeKey = loginData.formPrivateKey(data.password, 'active');
         const trxResult = await trxBuilder([trx], [activeKey]);   
         if (trxResult) {
             result.success = true;
             result.callbackData = trxResult;
             result.sidechainAccounts = await getSidechainAccounts(payer);
         }
+        return result;
+
     } catch (error) {
-        const err = error.toString();
-        err.includes('An active deposit key already exists') ? result.errors = "DUPLICATE" : result.errors = "ERROR";
+        const err = error.message;
+        err.includes('An active deposit key already exists') ? result.errors["withdrawAddress"] = "keyExists" : result.errors["withdrawAddress"] = err;
+        return result;
     }
 
-    return result;
 };

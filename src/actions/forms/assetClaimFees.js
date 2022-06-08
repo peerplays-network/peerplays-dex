@@ -39,12 +39,11 @@ export const assetClaimFees = async (data, result) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
 
     } catch(e) {
         result.errors['quantityAssetFees'] = e.message;
         return result;
     }
 
-
-    return result;
 };

@@ -53,7 +53,9 @@ class UpdateAddress extends Component {
                     requiredFields={['withdrawPublicKey', 'withdrawAddress']}
                     action={updateSidechainAddress}
                     handleResult={this.handleAddressUpdated}
-                    needPassword>
+                    needPassword
+                    keyType="active"
+                >
                 {
                     form => {
                         const {errors, data} = form.state;
@@ -73,8 +75,6 @@ class UpdateAddress extends Component {
                                     value={data}/>
                                 <div className="info__row">
                                     <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
-                                    {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
-                                    {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/> }
                                     {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
                                 </div>
                                 <div className="btn__row">

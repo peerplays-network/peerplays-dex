@@ -40,10 +40,10 @@ export const claimFeePoolBalance = async (data, result) => {
             result.callbackData = trxResult;
         }
 
+        return result;
     } catch(e) {
         result.errors['quantityClaim'] = e.message;
         return result;
     }
 
-    return result;
 };

@@ -17,6 +17,7 @@ const VestGPOS = (props) => {
 	const [fee, setFee] = useState(0);
 	const [sended, setSended] = useState(false);
 	const [changes, setChanges] = useState(false);
+	const [error, setError] = useState("");
 
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
@@ -50,16 +51,26 @@ const VestGPOS = (props) => {
 			}
 		};
 		
-		getPassword(password => {
-			const activeKey = loginData.formPrivateKey(password, 'active');
+		getPassword((password, keyType) => {
+			let activeKey = '';
+			if(keyType === 'password') {
+				activeKey = loginData.formPrivateKey(password, 'active');
+			} else if(keyType === 'active') {
+				activeKey = loginData.formPrivateKey(password);
+			} else if(keyType === 'whaleVault') {
+				activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+			}
 			trxBuilder([trx], [activeKey]).then(async() => {
 				setSended(true)
 				getAssets();
 				setVestAmount(0);
 				updateAccount(await formAccount(account.name));
 				setTimeout(() => setSended(false), 5000)
+			}).catch(e => {
+				setError(e.message)
+				setTimeout(() => setError(""), 5000)
 			});
-		});
+		}, 'active');
 		setChanges(false)
 	};
 
@@ -123,6 +134,7 @@ const VestGPOS = (props) => {
 			</CardContent>
 			<div className="info__row margin">
 			<span>Fee: {fee} {getBasicAsset().symbol}</span>
+			{error && <span className="clr--negative"><Translate className="" content={`errors.${error}`} /></span>}
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >

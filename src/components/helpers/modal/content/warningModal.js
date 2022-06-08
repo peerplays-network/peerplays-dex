@@ -13,8 +13,8 @@ class WarningModal extends Component{
     };
 
     handleMethod = () => {
-        const {trx, password} = this.props;
-        defaultTrx({trx, password})
+        const {trx, password, keyType} = this.props;
+        defaultTrx({trx, password, keyType})
             .then(result => { if(result.success){
                 // clearLayout();   
                 window.location.reload();

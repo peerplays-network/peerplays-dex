@@ -71,6 +71,7 @@ class PublishFeed extends Component {
                       action={publishFeed}
                       handleResult={this.handlePublishFeed}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {

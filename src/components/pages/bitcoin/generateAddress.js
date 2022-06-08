@@ -55,6 +55,7 @@ class GenerateAddress extends Component {
                         action={generateSidechainAddress}
                         handleResult={this.handleAddressGenerated}
                         needPassword
+                        keyType="active"
                     >
                     {
                         form => {
@@ -88,11 +89,7 @@ class GenerateAddress extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>
-                                       </span>
                                         {sended && <Translate component="span" className="clr--positive" content={"success.sidechainGenerated"}/>}
-                                        {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
-                                        {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/>}
                                         <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.generate"}/>
                                     </div>
                                 </Fragment>

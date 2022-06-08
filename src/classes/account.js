@@ -13,18 +13,18 @@ class Account{
     savePassword(password, type){
         const expires = Number(getStorage('settings').walletLock);
         this.type = type;
-
+        
         if(this.timeout) clearTimeout(this.timeout);
         if(!expires) {
             this.updateReduxData();
             return;  
         } 
-
+        
         const passwordExpiration = expires * 60000;
 
         this.password = password;
         this.timeout = setTimeout(this.removePassword.bind(this), passwordExpiration);
-
+        console.log("this", this)
         this.updateReduxData();
     }
     removePassword(){

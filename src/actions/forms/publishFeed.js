@@ -6,7 +6,7 @@ import {getStore} from "../store";
 
 export const publishFeed = async (data, result) => {
     const {loginData, accountData} = getStore();
-    const {forceSettlementPrice, cer, mcr, mssr, core_exchange_rate, settlement_price} = data;
+    const {forceSettlementPrice, cer, mcr, mssr, core_exchange_rate, settlement_price, password, keyType} = data;
 
     const baseAsset = await formAssetData({asset_id: settlement_price.base.asset_id});
     const quoteAsset = await formAssetData({asset_id: settlement_price.quote.asset_id});
@@ -49,8 +49,6 @@ export const publishFeed = async (data, result) => {
         }
     };
 
-    const password = data.password;
-    const keyType = data.keyType;
     let activeKey = '';
 
     if(keyType === 'password') {
@@ -66,11 +64,11 @@ export const publishFeed = async (data, result) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
 
     } catch(e) {
         result.errors['feedProducer'] = e.message;
         return result;
     }
-
-    return result;
+    
 };

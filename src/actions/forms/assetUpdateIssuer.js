@@ -23,8 +23,9 @@ export const assetUpdateIssuer = async (data, result) => {
         }
     };
 
+    const keyType = data.keyType;
+    const password = data.password;
     let ownerKey = '';
-    const keyType = data.keyType
 
     if(keyType === 'password') {
         ownerKey = loginData.formPrivateKey(password, 'owner');
@@ -38,10 +39,10 @@ export const assetUpdateIssuer = async (data, result) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
     } catch(e) {
         result.errors['assetOwner'] = e.message;
         return result;
     }   
 
-    return result;
 };

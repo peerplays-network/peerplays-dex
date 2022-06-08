@@ -52,6 +52,7 @@ class ClaimFeePoolBalance extends Component {
                       action={claimFeePoolBalance}
                       handleResult={this.handleClaimFeePoolBalance}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {

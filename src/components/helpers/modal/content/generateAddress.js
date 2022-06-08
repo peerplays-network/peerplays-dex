@@ -24,6 +24,7 @@ class GenerateAddress extends Component {
       sidechain: this.props.sidechain,
       depositPublicKey: '',
       password: this.props.password,
+      keyType: this.props.keyType,
       withdrawPublicKey: '',
       withdrawAddress: '',
       fee: 0
@@ -96,7 +97,7 @@ class GenerateAddress extends Component {
                             </div>
                         </div>
                         {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
-                        {errors === "ERROR" && <h3 className="clr--negative">Something went wrong!! Try again.</h3>}
+
                         <div className="modal__bottom">
                             <Close />
                             <Submit tag="create" />

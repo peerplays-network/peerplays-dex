@@ -139,12 +139,12 @@ const createAsset = async (data, result) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
     } catch(e) {
         result.errors['newAssetName'] = e.message;
         return result;
     }   
 
-    return result;
 };
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
@@ -178,6 +178,7 @@ class AddNewAsset extends Component {
             permissions,
             flags,
             fee,
+            keyType: this.props.keyType,
             password: this.props.password,
             description: '',
             maxSupply: 100000,
@@ -224,8 +225,6 @@ class AddNewAsset extends Component {
                     mutateData={mutations}
                     action={createAsset}
                     handleResult={this.handleResult}
-                    needPassword
-                    keyType="owner"
                 >
                     {
                         form => {

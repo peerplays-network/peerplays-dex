@@ -76,11 +76,11 @@ export const sellBuy = async (data, result) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
 
     } catch(e) {
         result.errors['amount_to_receive'] = e.message;
         return result;
     }
 
-    return result;
 };

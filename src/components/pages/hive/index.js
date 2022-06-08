@@ -72,6 +72,7 @@ class HiveTransactions extends Component {
                                         action={transfer}
                                         handleResult={this.handleTransfer}
                                         needPassword
+                                        keyType="active"
                                     >
                                     {
                                         form => {

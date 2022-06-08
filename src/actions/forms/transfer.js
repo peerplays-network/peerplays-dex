@@ -89,10 +89,10 @@ export const transfer = async (data) => {
             result.success = true;
             result.callbackData = trxResult;
         }
+        return result;
     } catch(e) {
         result.errors['from'] = e.message;
         return result;
     }   
     
-    return result;
 };

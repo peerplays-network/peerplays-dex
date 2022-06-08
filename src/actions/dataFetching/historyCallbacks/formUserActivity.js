@@ -9,7 +9,7 @@ import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
-import { getPassword } from "../../forms";
+
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;

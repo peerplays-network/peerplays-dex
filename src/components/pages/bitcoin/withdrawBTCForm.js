@@ -53,6 +53,7 @@ class WithdrawBTCForm extends Component {
 					action={transfer}
 					handleResult={this.handleTransfer}
 					needPassword
+					keyType="active"
 				>
 				{
 					form => {

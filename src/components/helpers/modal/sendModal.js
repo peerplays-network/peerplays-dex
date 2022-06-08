@@ -22,12 +22,13 @@ class SendModal extends Component {
     };
 
     componentDidMount(){
-        const {defaultFrom, defaultToken, password} = this.props;
+        const {defaultFrom, defaultToken, password, keyType} = this.props;
         const userTokens = store.getState().account.assets;
         const startAsset =  defaultToken || userTokens[0].symbol;
 
         const defaultData = {
             from: defaultFrom || '',
+            keyType: keyType,
             password: password,
             quantityAsset: startAsset,
             fee: 0,
