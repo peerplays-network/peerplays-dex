@@ -33,7 +33,7 @@ const checkWhaleVault = async (data, result) => {
         result.callbackData = { password: "", type: "whaleVault" };
         return result;
     } else {
-        result.errors.isWhaleVault = 'whaleNotInstalled';
+        result.errors.login = 'whaleNotInstalled';
         return result;
     }
 }
