@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { feeCalculator, getPassword } from "../../../actions/forms/index";
+import { feeCalculator, getPassword, transfer } from "../../../actions/forms/index";
 import { checkErrors } from "../../../actions/forms/errorsHandling/";
 import OrderConfirmationModel from "../modal/content/orderConfirmationModel";
 import {setModal} from "../../../dispatch";
@@ -57,19 +57,12 @@ class Form extends Component {
     submit = (e) => {
         e && e.preventDefault();
         const { errors, data } = this.state;
-        // debugger;
-        // if(!data.password){
-        //     getPassword(password => (
-        //         this.setState(
-        //             { data: { password } },
-        //         )
-            
-        //     ),'',data);
-        //     return;
-        // }
-        // debugger;
-        
-         if (Object.keys(errors).length) return;
+
+        if(this.props.defaultData && this.props.defaultData.password == "passwordpasswordpassword"){
+            let defaultData = {...this.props.defaultData, trx:'model'}
+            localStorage.setItem('sendModel',JSON.stringify(defaultData))
+        }
+       if (Object.keys(errors).length) return;
         
         this.setState({ loading: true });
 
@@ -84,7 +77,6 @@ class Form extends Component {
             return;
         }
         const checkPassword = () => {
-            console.log(this.state)
             this.setState({ loading: false });
             getPassword(password => (
                 this.setState(
@@ -110,8 +102,12 @@ class Form extends Component {
     };
 
     handleAction = () => {
-        const data = this.state.data;
-        console.log(this.state);
+        let data = this.state.data;
+        console.log(this.state)
+        let sendModelData = JSON.parse(localStorage.getItem('sendModel'))
+        if(sendModelData){
+            data = {...sendModelData, password:this.state.data.password}
+        }
 
         const { action, handleResult } = this.props;
         if (action) {
@@ -130,6 +126,13 @@ class Form extends Component {
                 }
                 this.setState({ loading: false }, () => {
                     handleResult(result.callbackData);
+                    if(data.trx && data.trx === 'model'){
+                        transfer(data)
+                        this.setState({ data: this.props.defaultData });
+                        localStorage.removeItem('sendModel')
+                        this.form.reset();
+                        // setTimeout(() => {window.location.reload()},5000);
+                    }
                     this.setState({ data: this.props.defaultData });
                     this.form.reset();
                 });

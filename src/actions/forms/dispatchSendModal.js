@@ -6,7 +6,6 @@ import {getAccountData} from "../store";
 
 export const dispatchSendModal = (defaultToken = '', defaultTo = '') =>setModal(
     <SendModal
-       
         defaultFrom={getAccountData().name}
         defaultTo={defaultTo}
         defaultToken={defaultToken}

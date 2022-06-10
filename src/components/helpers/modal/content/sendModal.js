@@ -45,7 +45,7 @@ class SendModal extends Component {
         const defaultData = {
             from: defaultFrom || '',
             to: defaultTo || '',
-            password: password,
+            password: "passwordpasswordpassword",
             quantityAsset: startAsset,
             fee: 0,
             feeAsset: basicAsset,
