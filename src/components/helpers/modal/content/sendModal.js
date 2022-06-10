@@ -35,7 +35,7 @@ class SendModal extends Component {
     };
 
     componentDidMount() {
-        const {defaultFrom, defaultTo, defaultToken, password} = this.props;
+        const {defaultFrom, defaultTo, defaultToken} = this.props;
         const contacts = getAccountData().contacts.filter(item => item.type !== 2).map(item => item.name);
         const userTokens = getAccountData().assets;
 
@@ -45,7 +45,6 @@ class SendModal extends Component {
         const defaultData = {
             from: defaultFrom || '',
             to: defaultTo || '',
-            password: password,
             quantityAsset: startAsset,
             fee: 0,
             feeAsset: basicAsset,
@@ -80,6 +79,7 @@ class SendModal extends Component {
                     requiredFields={['to', 'quantity']}
                     action={transfer}
                     handleResult={this.handleSend}
+                    needPassword
                 >
                     {
                         form => {
