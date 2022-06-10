@@ -8,14 +8,8 @@ import ModalTitle from "../decoration/modalTitle";
 import { setSidechainAccounts } from '../../../../dispatch/setAccount';
 import { removeModal } from '../../../../dispatch/setModal';
 import {clearLayout} from "../../../../dispatch/index";
-// const handleAddressGenerated = ({sidechainAccounts}) => {
-//     console.log(sidechainAccounts);
-//     if(sidechainAccounts) {
-//         setSidechainAccounts(sidechainAccounts);
-//     }
+import { updateAccountAndLoginData } from "../../../../actions/account";
 
-//     removeModal();
-// }
 
 class GenerateAddress extends Component {
   state = {
@@ -42,10 +36,10 @@ class GenerateAddress extends Component {
     
     this.setState({sended: true}, () => {
     });
+    updateAccountAndLoginData();
 
     setTimeout(() => {
         clearLayout();
-        window.location.reload();
     }, 5000);
 };
 

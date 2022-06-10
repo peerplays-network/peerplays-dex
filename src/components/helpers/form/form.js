@@ -119,12 +119,6 @@ class Form extends Component {
                     handleResult(result.callbackData);
                     this.setState({ data: this.props.defaultData });
                     this.form.reset();
-                    getGlobalData()
-                    .then(({userData}) =>{
-                        if(userData) {
-                            setAccount(userData);
-                        }
-                    })
                 });
             });
         } else if (handleResult) {

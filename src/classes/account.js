@@ -24,7 +24,6 @@ class Account{
 
         this.password = password;
         this.timeout = setTimeout(this.removePassword.bind(this), passwordExpiration);
-        console.log("this", this)
         this.updateReduxData();
     }
     removePassword(){

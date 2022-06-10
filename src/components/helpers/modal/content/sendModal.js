@@ -12,6 +12,7 @@ import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
+import { updateAccountAndLoginData } from '../../../../actions/account';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -60,9 +61,10 @@ class SendModal extends Component {
         this.setState({sended: true}, () => {
         });
 
+        updateAccountAndLoginData();
+
         setTimeout(() => {
             clearLayout();
-            window.location.reload();
         }, 1000);
     };
 

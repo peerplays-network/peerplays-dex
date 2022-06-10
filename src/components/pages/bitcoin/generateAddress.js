@@ -5,6 +5,7 @@ import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {generateSidechainAddress} from "../../../actions/forms/generateSidechainAddress";
 import { setSidechainAccounts } from "../../../dispatch/setAccount";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class GenerateAddress extends Component {
     state = {
@@ -35,8 +36,8 @@ class GenerateAddress extends Component {
         }))
         
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        updateAccountAndLoginData();
     };
 
 

@@ -47,7 +47,6 @@ class QuickSellBuy extends Component {
     handleTransfer = (data) => {
         const context = this;
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
-        window.location.reload();
         if(this.props.update) {
             this.props.update();
         }

@@ -12,7 +12,7 @@ import SelectHeader from '../selectHeader';
 const CloudLogin = ({handleLogin}) =>  {
     const requiredFields = ['login', 'password'];
     const [whaleVaultChecked, setWhaleVaultChecked] = useState(false);
-    const [walletLock, setWalletLock] = useState(0)
+    const [walletLock, setWalletLock] = useState(getStorage('settings').walletLock)
     const changeLock = (e) => {
         const result = {walletLock: e.target.innerText};
         editStorage('settings', result);

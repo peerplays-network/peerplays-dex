@@ -4,6 +4,7 @@ import {  getAccountData, getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class WithdrawBTCForm extends Component {
     state = {
@@ -30,12 +31,9 @@ class WithdrawBTCForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
-        if(this.props.update) {
-            this.props.update();
-        }
+		updateAccountAndLoginData();
     };
 
 

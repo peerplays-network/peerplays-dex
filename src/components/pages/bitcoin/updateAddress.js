@@ -5,6 +5,7 @@ import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddr
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";
 import { getBasicAsset } from "../../../actions/store";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class UpdateAddress extends Component {
     state = {
@@ -36,8 +37,8 @@ class UpdateAddress extends Component {
             }))
         }))
         const context = this;
-        window.location.reload();
         this.setState({updated: true}, () => setTimeout(() => context.setState({updated: false}), 5000));
+        updateAccountAndLoginData();
     };
     
     render() {
