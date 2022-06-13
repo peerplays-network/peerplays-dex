@@ -82,6 +82,14 @@ export const en = {
             "title": "Account Creation",
             "description": "%(registrar)s registered the account %(user)s",
         },
+        "vesting_balance_create":{
+            "title": "Vesting GPOS",
+            "description": "%(sender)s Vest %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Withdraw GPOS",
+            "description": "%(sender)s Withdraw %(quantity)",
+        },
         "send": {
             "title": "Send",
             "description": "%(sender)s send %(quantity)s to %(receiver)s",
