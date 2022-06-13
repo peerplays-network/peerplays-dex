@@ -99,8 +99,10 @@ class BuyForm extends Component{
     componentWillReceiveProps(newProps){
         if(
             (!this.props.defaultData && newProps.defaultData)
-            || newProps.defaultData && newProps.defaultData.quote !== this.props.defaultData.quote
-        ) this.resetForm(newProps);
+            || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol) 
+        ){
+            this.resetForm(newProps);
+        } 
     }
 
     setBasicData = (newProps = {}) => {

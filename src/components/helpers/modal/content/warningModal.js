@@ -16,8 +16,7 @@ class WarningModal extends Component{
         const {trx, password, keyType} = this.props;
         defaultTrx({trx, password, keyType})
             .then(result => { if(result.success){
-                // clearLayout();   
-                window.location.reload();
+                clearLayout();   
             }
         })
             .catch(err => {
