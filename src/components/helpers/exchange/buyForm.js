@@ -6,7 +6,7 @@ import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
-import {getBasicAsset} from "../../../actions/store";
+import {getBasicAsset, getGlobals} from "../../../actions/store";
 
 const calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price)}`;
 const calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price)}`;
@@ -141,8 +141,11 @@ class BuyForm extends Component{
                     form => {
                         const {errors, data} = form.state;
                         const handleChange = (value, name) => {
+                            const { fees, basicAsset } = getGlobals();
                             formMutations[name](form.form)
                             form.handleChange(value, name)
+                            basicAsset.setPrecision(false, fees.asset_create.long_symbol);
+                            console.log("setPrcision",basicAsset.setPrecision(false, fees.asset_create.long_symbol))
                         }
 
                         return (
