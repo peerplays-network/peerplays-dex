@@ -78,7 +78,7 @@ class SendForm extends Component {
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -143,6 +143,11 @@ class SendForm extends Component {
                                     <div className="btn__row">
                                         <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--send"><Translate className="" content={"block.send.title"} /></button>
                                     </div>
                                 </Fragment>

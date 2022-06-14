@@ -33,7 +33,8 @@ class Form extends Component {
     state = {
         loading: false,
         data: this.props.defaultData || {},
-        errors: {}
+        errors: {},
+        transactionError: ""
     };
     handleChange = (val, id) => handleData(this, val, id)
     .then((result) => this.validateAndSetState(this.form, result));
@@ -106,13 +107,18 @@ class Form extends Component {
          const result = {
                 success: false,
                 errors: {},
-                callbackData: ''
+                callbackData: '',
+                transactionError: ''
             };
 
             this.setState({ loading: true });
             action(data, result).then(result => {
                 if (!result.success) {
                     this.setState({ loading: false, errors: result.errors });
+                    if(result.transactionError && result.transactionError !== "") {
+                        const context = this;
+                        this.setState({transactionError: result.transactionError}, () => setTimeout(() => context.setState({transactionError: ""}), 5000));
+                    }
                     return;
                 }
                 this.setState({ loading: false }, () => {

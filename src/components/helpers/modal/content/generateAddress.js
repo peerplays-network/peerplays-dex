@@ -9,6 +9,7 @@ import { setSidechainAccounts } from '../../../../dispatch/setAccount';
 import { removeModal } from '../../../../dispatch/setModal';
 import {clearLayout} from "../../../../dispatch/index";
 import { updateAccountAndLoginData } from "../../../../actions/account";
+import Translate from "react-translate-component";
 
 
 class GenerateAddress extends Component {
@@ -59,7 +60,7 @@ class GenerateAddress extends Component {
             >
                 {
                     form => {
-                        const {errors} = form.state;
+                        const {errors, transactionError} = form.state;
                         return (
                     <Fragment>
                         <div className="modal__content">
@@ -91,6 +92,11 @@ class GenerateAddress extends Component {
                             </div>
                         </div>
                         {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
+                        {transactionError && transactionError !== "" ? 
+                            <span className="clr--negative">
+                                <Translate className="" content={`errors.${transactionError}`} />
+                            </span> 
+                            : ""}
 
                         <div className="modal__bottom">
                             <Close />

@@ -3,7 +3,8 @@ import {getStore} from "../store";
 
 export const defaultTrx = async ({trx, password, keyType}) => {
     const result = {
-        success: false
+        success: false, 
+        transactionError: ''
     };
     const {loginData, accountData} = getStore();
 
@@ -25,6 +26,7 @@ export const defaultTrx = async ({trx, password, keyType}) => {
         }
         return result;
     } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_")
         return result;
     }   
 

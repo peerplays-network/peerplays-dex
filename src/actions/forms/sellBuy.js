@@ -79,7 +79,7 @@ export const sellBuy = async (data, result) => {
         return result;
 
     } catch(e) {
-        result.errors['amount_to_receive'] = e.message;
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
         return result;
     }
 

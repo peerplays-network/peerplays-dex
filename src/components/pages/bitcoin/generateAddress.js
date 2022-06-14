@@ -60,7 +60,7 @@ class GenerateAddress extends Component {
                     >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -91,6 +91,11 @@ class GenerateAddress extends Component {
                                     </div>
                                     <div className="btn__row">
                                         {sended && <Translate component="span" className="clr--positive" content={"success.sidechainGenerated"}/>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.generate"}/>
                                     </div>
                                 </Fragment>

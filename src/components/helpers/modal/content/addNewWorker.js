@@ -10,6 +10,7 @@ import Submit from "../decoration/submit";
 import ModalWarning from "../decoration/modalWarning";
 import {clearLayout} from "../../../../dispatch";
 import {getStore, getGlobals} from "../../../../actions/store";
+import Translate from 'react-translate-component';
 
 const createWorker = async (data, result) => {
 
@@ -67,7 +68,7 @@ const createWorker = async (data, result) => {
         }
         return result;
     } catch(e) {
-        result.errors['newWorkerName'] = e.message;
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
         return result;
     }   
 
@@ -156,6 +157,13 @@ class AddNewWorker extends Component {
                                     error={form.state.errors}
                                     value={form.state.data}
                                 />
+                            </div>
+                            <div className="info__row">
+                                {form.state.transactionError && form.state.transactionError !== "" ? 
+                                    <span className="clr--negative">
+                                        <Translate className="" content={`errors.${form.state.transactionError}`} />
+                                    </span> 
+                                    : ""}
                             </div>
                             <div className="modal__bottom">
                                 <Close />

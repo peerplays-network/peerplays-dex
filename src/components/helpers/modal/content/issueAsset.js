@@ -12,6 +12,7 @@ import {getAccountData, getBasicAsset, getStore} from "../../../../actions/store
 import {trxBuilder} from "../../../../actions/forms/trxBuilder";
 import {dbApi} from "../../../../actions/nodes";
 import {clearLayout} from "../../../../dispatch";
+import Translate from "react-translate-component";
 
 const issueAction = async (data, result) => {
     const {accountData, loginData} = getStore();
@@ -75,7 +76,7 @@ const issueAction = async (data, result) => {
         }
         return result;
     } catch(e) {
-        result.errors['to'] = e.message;
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
         return result;
     }   
 
@@ -126,7 +127,7 @@ class IssueAsset extends Component {
                     handleResult={this.handleResult}
                 >
                     {form => {
-                        const {data, errors} = form.state;
+                        const {data, errors, transactionError} = form.state;
                         const assetSymbol = data.assetSymbol;
 
                         return(
@@ -168,6 +169,13 @@ class IssueAsset extends Component {
                                 />
                                 <div>
                                     Fee: {data.fee || 0} {data.basicAssetSymbol}
+                                </div>
+                                <div>
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <div className="modal__bottom">
                                     <Close />

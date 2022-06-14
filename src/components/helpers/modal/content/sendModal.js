@@ -13,6 +13,7 @@ import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
 import { updateAccountAndLoginData } from '../../../../actions/account';
+import Translate from 'react-translate-component';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -87,7 +88,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             
                             return (
                                 <Fragment>
@@ -168,6 +169,13 @@ class SendModal extends Component {
                                         <div className="quantity-wrapper mt-2">
                                             <div>
                                                 Fee: {data.fee} {data.feeAsset}
+                                            </div>
+                                            <div>
+                                                {transactionError && transactionError !== "" ? 
+                                                    <span className="clr--negative">
+                                                        <Translate className="" content={`errors.${transactionError}`} />
+                                                    </span> 
+                                                : ""}
                                             </div>
                                             {/*<Dropdown*/}
                                             {/*btn={<SelectHeader*/}

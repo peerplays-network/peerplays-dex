@@ -40,7 +40,7 @@ const WithdrawForm = ({defaultData, handleResult, depositData}) => (
     >
         {
             form => {
-                const {data, errors} = form.state;
+                const {data, errors, transactionError} = form.state;
                 const symbol = data.withdrawCoin.toUpperCase();
                 return (
                     <Fragment>
@@ -77,7 +77,14 @@ const WithdrawForm = ({defaultData, handleResult, depositData}) => (
                                 <span>{data.gateFee} {symbol}</span>
                             </div>
                         }
-
+                        {transactionError && transactionError !== "" ? 
+                            <div className="form__row">
+                                <span className="clr--negative">
+                                    <Translate className="" content={`errors.${transactionError}`} />
+                                </span> 
+                            </div>
+                            : "" }
+                        
                         { depositData
                             ?  <Fragment>
                                 {depositData}

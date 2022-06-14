@@ -250,7 +250,7 @@ const Voting = (props) => {
                 clearVotes();
                 setSaveLoading(false);
             }).catch(async(e) => {
-                toast.error(counterpart.translate(`errors.${e.message}`))
+                toast.error(counterpart.translate(`errors.${e.message.split(":")[0].replace(/\s+/g,"_")}`))
                 updateReduxAccount(await formAccount(user.name))
                 clearVotes();
                 setSaveLoading(false);

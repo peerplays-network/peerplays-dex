@@ -55,7 +55,7 @@ class WithdrawBTCForm extends Component {
 				>
 				{
 					form => {
-						const {errors, data} = form.state;
+						const {errors, data, transactionError} = form.state;
 
 						return (
 							<Fragment>
@@ -98,6 +98,11 @@ class WithdrawBTCForm extends Component {
 								</div>
 								<div className="info__row">
 									{sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/>}
+									{transactionError && transactionError !== "" ? 
+										<span className="clr--negative">
+											<Translate className="" content={`errors.${transactionError}`} />
+										</span> 
+									: "" }
 									<span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
 								</div>
 								<div className="btn__row">

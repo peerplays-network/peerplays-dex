@@ -695,6 +695,7 @@ export const en = {
         "wrongPass": "Password is wrong",
         "wrongKey": "Wrong key has been used",
         "user_cancel": "Request was canceled by the user",
+        "missing_required_active_authority": "missing required active authority",
         "notAddedToWhaleVault":"This account is not added to whaleVault",
         "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
         "whaleVaultConnectionError": "Can not Send Request to whaleVault",
@@ -811,7 +812,7 @@ export const en = {
             "keyDetails": "IMPORTANT: Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
             "keepSafe": "IMPORTANT: Please download and keep safe your keys and password.",
             "whaleVaultImport": "You can import these keys inside the WhaleVault extension and use them to login or sign your transactions",
-            "download": "Download, take me to dashboard"
+            "download": "Download & take me to dashboard"
         },
         "login": {
             "title": "Log in"
@@ -861,7 +862,7 @@ export const en = {
         }
     },
     "buttons": {
-        "downloadAndDashboard": "Download, take me to dashboard",
+        "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
         "sendFunds": "Send Funds",

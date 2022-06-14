@@ -59,7 +59,7 @@ class UpdateAddress extends Component {
                 >
                 {
                     form => {
-                        const {errors, data} = form.state;
+                        const {errors, data, transactionError} = form.state;
                         return (
                             <Fragment>                            
                                 <Input 
@@ -77,6 +77,11 @@ class UpdateAddress extends Component {
                                 <div className="info__row">
                                     <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
                                     {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <div className="btn__row">
                                     <Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.update"}/>

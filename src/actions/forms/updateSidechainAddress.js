@@ -19,7 +19,8 @@ export const updateSidechainAddress = async (data) => {
         success: false,
         errors:{},
         callbackData:'',
-        sidechainAccounts: {}
+        sidechainAccounts: {},
+        transactionError: ''
     };
 
     const sonNetworkStatus = await getSonNetworkStatus();
@@ -71,7 +72,8 @@ export const updateSidechainAddress = async (data) => {
         return result;
     } catch (error) {
         const err = error.message;
-        err.includes('An active deposit key already exists') ? result.errors["withdrawAddress"] = "keyExists" : result.errors["withdrawAddress"] = err;
+        err.includes('An active deposit key already exists') ? result.transactionError = "keyExists" 
+            : result.transactionError = err.split(":")[0].replace(/\s+/g,"_");
         return result;
     }
 

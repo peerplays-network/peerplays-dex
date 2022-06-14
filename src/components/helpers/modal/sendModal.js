@@ -7,6 +7,7 @@ import {store} from '../../../index.js';
 import {removeModal} from "../../../dispatch/setModal";
 import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
+import Translate from 'react-translate-component';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -61,7 +62,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return(
                                 <Fragment>
@@ -117,6 +118,11 @@ class SendModal extends Component {
                                             <div>
                                                 Fee: {data.fee} {data.quantityAsset}
                                             </div>
+                                            {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                             {/*<Dropdown*/}
                                             {/*btn={<SelectHeader*/}
                                             {/*text={form.state.data.feeAsset}*/}

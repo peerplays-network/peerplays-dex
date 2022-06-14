@@ -78,7 +78,7 @@ class QuickSellBuy extends Component {
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="input__row">
@@ -129,6 +129,11 @@ class QuickSellBuy extends Component {
                                     <div className="info__row">
                                         <span>Fee: {data.fee} {data.sellAsset}</span>
                                         {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>

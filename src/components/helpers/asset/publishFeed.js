@@ -76,7 +76,7 @@ class PublishFeed extends Component {
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -123,6 +123,11 @@ class PublishFeed extends Component {
                                     <div className="btn__row">
                                         <span>Fee: {data.fee} {data.quantityAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Publish</button>
                                     </div>
                                 </Fragment>

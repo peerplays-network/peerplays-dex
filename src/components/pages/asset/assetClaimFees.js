@@ -55,7 +55,7 @@ class AssetClaimFees extends Component {
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <Input
@@ -71,6 +71,11 @@ class AssetClaimFees extends Component {
                                     <div className="btn__row">
                                         <span>Fee: {data.fee} {data.quantityAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Claim</button>
                                     </div>
                                 </Fragment>

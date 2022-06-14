@@ -41,7 +41,7 @@ export const assetUpdateIssuer = async (data, result) => {
         }
         return result;
     } catch(e) {
-        result.errors['assetOwner'] = e.message;
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
         return result;
     }   
 

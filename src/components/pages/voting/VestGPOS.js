@@ -67,7 +67,7 @@ const VestGPOS = (props) => {
 				updateAccount(await formAccount(account.name));
 				setTimeout(() => setSended(false), 5000)
 			}).catch(e => {
-				setError(e.message)
+				setError(e.message.split(":")[0].replace(/\s+/g,"_"))
 				setTimeout(() => setError(""), 5000)
 			});
 		}, 'active');
