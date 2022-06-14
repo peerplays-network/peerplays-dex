@@ -82,6 +82,14 @@ export const ru = {
             "title": "Создание учетной записи",
             "description": "%(registrar)s зарегистрированный счет %(user)s"
         },
+        "vesting_balance_create":{
+            "title": "Вестинг GPOS",
+            "description": "%(user)s Жилет %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Отзывать GPOS",
+            "description": "%(user)s Отзывать %(quantity)s GPOS",
+        },
         "send": {
             "title": "Отправить",
             "description": "%(sender)s отправить %(quantity)s до %(receiver)s"
