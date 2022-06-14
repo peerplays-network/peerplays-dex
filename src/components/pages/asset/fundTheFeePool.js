@@ -76,7 +76,7 @@ class FundTheFeePool extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
+                                        <span>Fee: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
                                         <button type="submit" className="btn-round btn-round--fund">Fund</button>
                                     </div>
