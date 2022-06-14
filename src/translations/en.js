@@ -84,11 +84,11 @@ export const en = {
         },
         "vesting_balance_create":{
             "title": "Vesting GPOS",
-            "description": "%(sender)s Vest %(quantity)s GPOS",
+            "description": "%(user)s Vest %(quantity)s GPOS",
         },
         "vesting_balance_withdraw":{
             "title": "Withdraw GPOS",
-            "description": "%(sender)s Withdraw %(quantity)",
+            "description": "%(user)s Withdraw %(quantity)s GPOS",
         },
         "send": {
             "title": "Send",
