@@ -75,6 +75,7 @@ class Form extends Component {
             this.setState({ loading: false, errors});
             return;
         }
+        
         const checkPassword = (keyType) => {
             this.setState({ loading: false });
             getPassword((password, keyType) => (
