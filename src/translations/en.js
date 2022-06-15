@@ -594,7 +594,7 @@ export const en = {
     },
     "field": {
         "labels": {
-            "loginPassword": "password or a Peerplays key (ideally your memo key)",
+            "loginPassword": "Password or a Private key (We recommend using Whalevault Web 3.0 wallet)",
             "transactionPassword": "password or %(keyType)s key",
             "publicMemo": "Memo (this is public)",
             "sellAmount": "Sell amount",

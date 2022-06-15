@@ -598,6 +598,9 @@ export const ru = {
     },
     "field": {
         "labels": {
+            "loginPassword": "Пароль или закрытый ключ (мы рекомендуем использовать кошелек WhaleVault Web 3.0)",
+            "transactionPassword": "пароль или ключ %(keyType)s",
+            "publicMemo": "Memo (это общедоступно)",
             "sellAmount": "Сумма продажи",
             "buyAmount": "Сумма покупки",
             "login": "логин",
