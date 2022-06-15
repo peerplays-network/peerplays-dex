@@ -7,6 +7,7 @@ import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { getStore,getAccountData } from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
+import { utils } from '../../../utils';
 
 
 
@@ -88,6 +89,11 @@ const VestGPOS = (props) => {
 					max={accBalance}
 					onChange={(value) => setVestAmount(value)}
 					value={vestAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (vestAmount == null || vestAmount == 0) ? "block" : "none" }}>

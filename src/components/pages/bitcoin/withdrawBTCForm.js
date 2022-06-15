@@ -4,6 +4,7 @@ import {  getAccountData, getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
+import { utils } from "../../../utils";
 
 class WithdrawBTCForm extends Component {
     state = {
@@ -76,6 +77,11 @@ class WithdrawBTCForm extends Component {
 										onChange={form.handleChange}
 										error={errors}
 										value={data}
+										onKeyPress={(e) => {
+											if (!utils.isNumberKey(e)) {
+											  e.preventDefault();
+											}
+										}}
 									/>
 								</div>
 								<div className="input__row">

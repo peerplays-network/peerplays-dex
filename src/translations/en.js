@@ -678,7 +678,6 @@ export const en = {
         }
     },
     "errors": {
-        "maxLength":"only less then 8 Digit",
         "requiredAndnotzero":"This field is required and not zero",
         "withdrawError":"The withdraw amount should be greater than 0",
         "Notexceed":"Value cannot exceed",

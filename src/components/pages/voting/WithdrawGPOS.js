@@ -6,6 +6,7 @@ import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
 import { getStore } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
+import { utils } from '../../../utils';
 
 const WithdrawGPOS = (props) => {
 	const { loginData, accountData } = getStore();
@@ -82,6 +83,11 @@ const WithdrawGPOS = (props) => {
 					precision={accountData.assets[0].precision}
 					onChange={(value) => setWithdrawAmount(value)}
 					value={withdrawAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (availableGpos == undefined || availableGpos == null || availableGpos <= 0) ? "block" : "none" }}>

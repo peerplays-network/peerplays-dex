@@ -12,6 +12,7 @@ import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
+import { utils } from '../../../../utils';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -139,6 +140,11 @@ class SendModal extends Component {
                                                 onChange={form.handleChange}
                                                 error={errors}
                                                 value={data}
+                                                onKeyPress={(e) => {
+                                                    if (!utils.isNumberKey(e)) {
+                                                      e.preventDefault();
+                                                    }
+                                                }}
                                             />
                                             <Input
                                                 id="model"

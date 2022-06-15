@@ -6,6 +6,7 @@ import Input from "../../helpers/form/input";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store";
 import {dbApi} from "../../../actions/nodes";
 import {publishFeed} from "../../../actions/forms/publishFeed";
+import { utils } from "../../../utils";
 
 const getSymbolsList = async (symbol) => dbApi('lookup_accounts', [symbol, 5])
     .then(result => result.map(e => e[0]));
@@ -101,6 +102,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -109,6 +115,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -117,6 +128,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -125,6 +141,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">

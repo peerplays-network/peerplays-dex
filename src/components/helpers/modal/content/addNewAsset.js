@@ -20,6 +20,7 @@ import { formDate } from "../../../../actions/formDate";
 import { clearLayout } from "../../../../dispatch";
 import ControlledInput from "../../form/controlledInput";
 import Grid from '@material-ui/core/Grid';
+import { utils } from "../../../../utils";
 
 const formPermissions = (permissionsObj, isSmartCoin) => {
     const list = isSmartCoin ? defaultPermissions.concat(additionalPermissions) : defaultPermissions;
@@ -233,6 +234,11 @@ class AddNewAsset extends Component {
                                                     formData={form}
                                                     style={{ flex: 3 }}
                                                     type="number"
+                                                    onKeyPress={(e) => {
+                                                        if (!utils.isNumberKey(e)) {
+                                                          e.preventDefault();
+                                                        }
+                                                    }}
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={4}>
@@ -242,6 +248,11 @@ class AddNewAsset extends Component {
                                                     style={{ flex: 3 }}
                                                     comment
                                                     type="number"
+                                                    onKeyPress={(e) => {
+                                                        if (!utils.isNumberKey(e)) {
+                                                          e.preventDefault();
+                                                        }
+                                                    }}
                                                 />
                                             </Grid>
                                         </Grid>
@@ -277,6 +288,11 @@ class AddNewAsset extends Component {
                                                     }}
                                                     comment
                                                     type="number"
+                                                    onKeyPress={(e) => {
+                                                        if (!utils.isNumberKey(e)) {
+                                                          e.preventDefault();
+                                                        }
+                                                    }}
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
@@ -285,6 +301,11 @@ class AddNewAsset extends Component {
                                                     labelParams={{ asset: data.backingAsset }}
                                                     formData={form}
                                                     type="number"
+                                                    onKeyPress={(e) => {
+                                                        if (!utils.isNumberKey(e)) {
+                                                          e.preventDefault();
+                                                        }
+                                                    }}
                                                 />
                                             </Grid>
                                         </Grid>
@@ -344,26 +365,51 @@ class AddNewAsset extends Component {
                                                         name="feedInMinutes"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <Input
                                                         name="minNumberOfFeeds"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <Input
                                                         name="forcedSettlementDelay"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <Input
                                                         name="forcedSettlementPercent"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <Input
                                                         name="forcedSettlementMaxVolume"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <FieldWithHint
                                                         name="backingAsset"
@@ -404,11 +450,21 @@ class AddNewAsset extends Component {
                                                         name="marketFee"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                     <Input
                                                         name="maxMarketFee"
                                                         type="number"
                                                         formData={form}
+                                                        onKeyPress={(e) => {
+                                                            if (!utils.isNumberKey(e)) {
+                                                              e.preventDefault();
+                                                            }
+                                                        }}
                                                     />
                                                 </div>
                                             }

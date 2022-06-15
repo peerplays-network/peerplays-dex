@@ -6,7 +6,8 @@ import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
-import {getBasicAsset, getGlobals} from "../../../actions/store";
+import {getBasicAsset} from "../../../actions/store";
+import { utils } from '../../../utils';
 
 const calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price)}`;
 const calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price)}`;
@@ -60,7 +61,7 @@ const formMutations = {
                 price: form['price'].value,
                 amount_to_receive: form['amount_to_receive'].value
             });
-        } else  if(form['amount_to_sell'].value){
+        } else if(form['amount_to_sell'].value){
             form['price'].value = calcPrice({
                 amount_to_sell: form['amount_to_sell'].value,
                 amount_to_receive: form['amount_to_receive'].value
@@ -141,11 +142,8 @@ class BuyForm extends Component{
                     form => {
                         const {errors, data} = form.state;
                         const handleChange = (value, name) => {
-                            const { fees, basicAsset } = getGlobals();
                             formMutations[name](form.form)
                             form.handleChange(value, name)
-                            basicAsset.setPrecision(false, fees.asset_create.long_symbol);
-                            console.log("setPrcision",basicAsset.setPrecision(false, fees.asset_create.long_symbol))
                         }
 
                         return (
@@ -160,6 +158,11 @@ class BuyForm extends Component{
                                     onChange={handleChange}
                                     value={data}
                                     error={errors}
+                                    onKeyPress={(e) => {
+                                        if (!utils.isNumberKey(e)) {
+                                          e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 <Input
                                     id={`${type}-receive`}
@@ -171,6 +174,11 @@ class BuyForm extends Component{
                                     onChange={handleChange}
                                     value={data}
                                     error={errors}
+                                    onKeyPress={(e) => {
+                                        if (!utils.isNumberKey(e)) {
+                                          e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 <Input
                                     id={`${type}-sell`}
@@ -183,6 +191,7 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                     readOnly={true}
+                                    disabled
                                     style={{cursor:"text"}}
                                 />
                                

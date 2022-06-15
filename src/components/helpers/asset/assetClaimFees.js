@@ -6,6 +6,7 @@ import Input from "../form/input";
 import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetClaimFees} from "../../../actions/forms/assetClaimFees";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
 
 class AssetClaimFees extends Component {
     state = {
@@ -70,6 +71,11 @@ class AssetClaimFees extends Component {
                                         error={errors}
                                         className="asset-action"
                                         onChange={form.handleChange}
+                                        onKeyPress={(e) => {
+                                            if (!utils.isNumberKey(e)) {
+                                              e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     <div className="btn__row">
                                         <span>Fee: {data.fee} {data.quantityAsset}</span>

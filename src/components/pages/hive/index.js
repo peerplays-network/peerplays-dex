@@ -8,6 +8,7 @@ import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
 import FieldWithHint from "../../helpers/form/fieldWithHint";
+import { utils } from "../../../utils";
 
 
 const getHiveAssetsList = async (symbol) => {
@@ -95,6 +96,11 @@ class HiveTransactions extends Component {
                                                             onChange={form.handleChange}
                                                             error={errors}
                                                             value={data}
+                                                            onKeyPress={(e) => {
+                                                                if (!utils.isNumberKey(e)) {
+                                                                  e.preventDefault();
+                                                                }
+                                                            }}
                                                         />
                                                     </div>
                                                     <div className="input__row">

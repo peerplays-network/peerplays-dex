@@ -6,6 +6,7 @@ import Textarea from "./form/textarea";
 import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
+import { utils } from '../../utils';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -99,6 +100,11 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="input__row">

@@ -7,6 +7,7 @@ import {getAccountData} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
+import { utils } from '../../utils';
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
@@ -87,6 +88,11 @@ class QuickSellBuy extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint
@@ -109,6 +115,11 @@ class QuickSellBuy extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint

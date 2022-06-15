@@ -7,6 +7,7 @@ import {store} from '../../../index.js';
 import {removeModal} from "../../../dispatch/setModal";
 import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
+import { utils } from '../../../utils';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -92,6 +93,11 @@ class SendModal extends Component {
                                                 onChange={form.handleChange}
                                                 error={errors}
                                                 value={data}
+                                                onKeyPress={(e) => {
+                                                    if (!utils.isNumberKey(e)) {
+                                                      e.preventDefault();
+                                                    }
+                                                }}
                                             />
                                             <FieldWithHint
                                                 name="quantityAsset"

@@ -1,4 +1,6 @@
 import React from 'react';
+import { getAssetBySymbol } from '../../../actions/assets';
+import { utils } from '../../../utils';
 import FieldWrapper from "./fieldWrapper";
 
 const Input = (props) => {
@@ -10,20 +12,11 @@ const Input = (props) => {
         disabled = false,
         formData,
         onKeyPress,
-        onBlur
+        onBlur,
+        precission
     } = props;
 
     let onChange = formData ? formData.handleChange : props.onChange;
-
-    let isNumberKey = (e,type)=>{
-        var charCode = (e.which) ? e.which : e.keyCode
-        if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
-             return e.preventDefault()
-        }
-        if (type === 'password' && charCode === 32 ){
-            return e.preventDefault()
-       }
-        }
 
     if(disabled) onChange = '';
 
@@ -37,8 +30,15 @@ const Input = (props) => {
                 defaultValue={value[name]}
                 type={type}
                 disabled={disabled}
-                onKeyPress={e => isNumberKey(e,type)}
-                onChange={e => onChange ? onChange(e.target.value, name) : e.preventDefault()}
+                onKeyPress={onKeyPress ?  onKeyPress : null}         
+                onChange={onChange ? (e) => {
+                    if(precission && precission !== "") {
+                        e.target.value = utils.roundNum(e.target.value, Number(precission));
+                    } 
+                    onChange(e.target.value, name)
+                } : (e) => {
+                    e.preventDefault()
+                } }
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
                 placeholder=" "
                 className="field__input"
