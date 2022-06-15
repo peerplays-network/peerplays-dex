@@ -4,6 +4,7 @@ import {editStorage, getStorage} from "../../../actions/storage/index";
 import Dropdown from "../../helpers/form/dropdown";
 import SelectHeader from "../../helpers/selectHeader";
 import {deleteCookie, getCookie, setCookie} from "../../../actions/cookie";
+import { getStore } from "../../../actions/store";
 
 class Security extends Component{
     state = {
@@ -12,16 +13,16 @@ class Security extends Component{
 
     changeLock = (e) => {
 
-        const password = getCookie('password');
+        const {loginData} = getStore();
         const walletLock = Number(e.target.innerText);
         const result = {walletLock};
 
         editStorage('settings', result);
 
-        if(password && walletLock === 0){
-            deleteCookie('password');
-        } else if(password){
-            setCookie('password', password);
+        if(loginData.password && walletLock === 0){
+            loginData.removePassword();
+        } else if(loginData.password){
+            loginData.savePassword(loginData.password, loginData.type)
         }
 
         this.setState(result);
