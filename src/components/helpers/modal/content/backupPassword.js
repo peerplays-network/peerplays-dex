@@ -9,6 +9,7 @@ import ModalTitle from "../decoration/modalTitle";
 
 
 const BackupPassword = (data) => {
+    console.log("data", data)
     const downloadPrivateKeys = (privateKeys, password) => {
         const element = document.createElement("a");
         const fileContents = `
@@ -20,6 +21,7 @@ const BackupPassword = (data) => {
               \n
               \n ##### memo key #####
               \n ${privateKeys.memo}
+              \n
               \n ##### master password #####
               \n ${password}
             `;
@@ -27,7 +29,7 @@ const BackupPassword = (data) => {
           type: "text/plain",
         });
         element.href = URL.createObjectURL(file);
-        element.download = "Keys.txt";
+        element.download = `${data.accountData.name}.txt`;
         element.id = "download-keys";
         document.body.appendChild(element);
         element.click();
