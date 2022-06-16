@@ -3,7 +3,7 @@ import Form from "../../form/form";
 import Input from "../../form/input";
 import Dropdown from "../../form/dropdown";
 import SelectHeader from "../../selectHeader";
-import {transfer} from "../../../../actions/forms/index";
+import {getPassword, transfer} from "../../../../actions/forms/index";
 import Textarea from "../../form/textarea";
 import Close from "../decoration/close";
 import {clearLayout} from "../../../../dispatch/index";
@@ -64,6 +64,15 @@ class SendModal extends Component {
         }, 1000);
     };
 
+    handleTransfer = async (data, result) => {
+        getPassword(password => {
+            data.password = password
+            transfer(data).then(result => {
+                console.log(result);
+            });
+        });
+    }
+
     render() {
 
         const {defaultData, userTokens, sended} = this.state;
@@ -77,9 +86,8 @@ class SendModal extends Component {
                     type={'transfer'}
                     defaultData={defaultData}
                     requiredFields={['to', 'quantity']}
-                    action={transfer}
+                    action={this.handleTransfer}
                     handleResult={this.handleSend}
-                    needPassword
                 >
                     {
                         form => {

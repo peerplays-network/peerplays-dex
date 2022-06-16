@@ -79,7 +79,7 @@ class Form extends Component {
             getPassword(password => (
                 this.setState(
                     { data: { ...data, password } },
-                    () => this.handleAction()
+                    () => this ? _this8.handleAction() : this.handleAction()
                 )
             ));
             return;
