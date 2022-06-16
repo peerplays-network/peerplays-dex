@@ -9,7 +9,6 @@ import ModalTitle from "../decoration/modalTitle";
 
 
 const BackupPassword = (data) => {
-    console.log("data", data)
     const downloadPrivateKeys = (privateKeys, password) => {
         const element = document.createElement("a");
         const fileContents = `
