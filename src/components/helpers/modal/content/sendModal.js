@@ -68,7 +68,9 @@ class SendModal extends Component {
         getPassword(password => {
             data.password = password
             transfer(data).then(result => {
-                console.log(result);
+                if(result.success){
+                    this.handleSend(data);
+                }
             });
         });
     }
