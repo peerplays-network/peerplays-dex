@@ -77,7 +77,7 @@ class FundTheFeePool extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
+                                        <span>Fee: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">

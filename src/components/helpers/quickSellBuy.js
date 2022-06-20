@@ -101,6 +101,8 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             defaultHints={userTokens}
                                             readOnly={true}
+                                            hint={'asset'}
+
                                         />
                                         </div>
                                     </div>
@@ -123,6 +125,7 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             errors={errors}
                                             readOnly={true}
+                                            hint={'asset'}
                                         />
                                         </div>
                                     </div>

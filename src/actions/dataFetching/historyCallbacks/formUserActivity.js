@@ -14,10 +14,10 @@ import {getBasicAsset} from "../../store";
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
     let history = context.props.data.history;
-
+  
     if (!history.length) return [];
-
-    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 32 || el.op[0] === 33 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+    
 
     return Promise.all(history.map(async el => {
       const fee = el.op[1].fee;
@@ -77,6 +77,20 @@ const formAdditionalInfo = {
         registrar: await formUserLink(registrar, notification),
         user: await formUserLink(name, notification)
     }),
+    'vesting_balance_create': async (notification, {creator, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(creator, notification),
+            quantity: amountAsset.toString()
+        })
+    },
+    'vesting_balance_withdraw': async (notification, {owner, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(owner, notification),
+            quantity: amountAsset.toString()
+        })
+    },
     'account_upgrade': async (notification, {account_to_upgrade}) => ({
         user: await formUserLink(account_to_upgrade, notification)
     }),
