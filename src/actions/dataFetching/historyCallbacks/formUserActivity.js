@@ -9,7 +9,7 @@ import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
-import { getPassword } from "../../forms";
+
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
@@ -38,17 +38,9 @@ export const formUserActivity = async (context) => {
 const handleTransactionClick = async (user, operation) => {
 
     const operationData = operation.op[1];
-    
-    if (Object.keys(operationData).includes("memo") && !(/111111111111111111111/.test(operationData.memo.from)) && !(/111111111111111111111/.test(operationData.memo.to))) {
-        getPassword(password => {
-            setModal(<TransactionModal user={user} blockNum={operation.block_num}
-                trxNum={operation.trx_in_block} password={password}/>)
-        });
-    }
-    else {
-        setModal(<TransactionModal user={user} blockNum={operation.block_num}
-            trxNum={operation.trx_in_block} />)
-    }
+        
+    setModal(<TransactionModal user={user} blockNum={operation.block_num}
+        trxNum={operation.trx_in_block} />)
 }
 
 const formInfoColumn = async (user, operation) => {

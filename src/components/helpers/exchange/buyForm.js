@@ -99,8 +99,10 @@ class BuyForm extends Component{
     componentWillReceiveProps(newProps){
         if(
             (!this.props.defaultData && newProps.defaultData)
-            || newProps.defaultData && newProps.defaultData.quote !== this.props.defaultData.quote
-        ) this.resetForm(newProps);
+            || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol) 
+        ){
+            this.resetForm(newProps);
+        } 
     }
 
     setBasicData = (newProps = {}) => {
@@ -151,10 +153,11 @@ class BuyForm extends Component{
                 action={sellBuy}
                 handleResult={this.resetForm}
                 orderConfirmation
+                keyType="active"
             >
                 {
                     form => {
-                        const {errors, data} = form.state;
+                        const {errors, data, transactionError} = form.state;
                         const handleChange = (value, name) => {
                             if(name === 'price' || name === 'amount_to_receive') {
                                 const fractionLength = value.indexOf('.') === -1 
@@ -221,6 +224,13 @@ class BuyForm extends Component{
                                         <span>0 {data.sellAsset}</span>
                                     </div>
                                     <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
+                                </div>
+                                <div className="info__row">
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <button className="btn-round btn-round--buy" onClick={form.submit}>
                                     <Translate content={`exchange.${isBuy ? 'buy' : 'sell'}`} /> {data.buyAsset}

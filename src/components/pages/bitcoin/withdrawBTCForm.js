@@ -4,6 +4,7 @@ import {  getAccountData, getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class WithdrawBTCForm extends Component {
     state = {
@@ -30,12 +31,9 @@ class WithdrawBTCForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
-        if(this.props.update) {
-            this.props.update();
-        }
+		updateAccountAndLoginData();
     };
 
 
@@ -53,10 +51,11 @@ class WithdrawBTCForm extends Component {
 					action={transfer}
 					handleResult={this.handleTransfer}
 					needPassword
+					keyType="active"
 				>
 				{
 					form => {
-						const {errors, data} = form.state;
+						const {errors, data, transactionError} = form.state;
 
 						return (
 							<Fragment>
@@ -99,6 +98,11 @@ class WithdrawBTCForm extends Component {
 								</div>
 								<div className="info__row">
 									{sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/>}
+									{transactionError && transactionError !== "" ? 
+										<span className="clr--negative">
+											<Translate className="" content={`errors.${transactionError}`} />
+										</span> 
+									: "" }
 									<span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
 								</div>
 								<div className="btn__row">

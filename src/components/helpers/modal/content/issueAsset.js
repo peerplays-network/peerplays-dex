@@ -12,13 +12,17 @@ import {getAccountData, getBasicAsset, getStore} from "../../../../actions/store
 import {trxBuilder} from "../../../../actions/forms/trxBuilder";
 import {dbApi} from "../../../../actions/nodes";
 import {clearLayout} from "../../../../dispatch";
+import Translate from "react-translate-component";
 
 const issueAction = async (data, result) => {
     const {accountData, loginData} = getStore();
 
-    const {to, assetWithSupply, issueAmount, password} = data;
+    const {to, assetWithSupply, issueAmount, password, keyType} = data;
 
-    const issue_to_account = await dbApi('get_account_by_name', [to]).then(e => e.id);
+    const issue_to_account = await dbApi('get_account_by_name', [to]).then(e => e);
+    const fromAccount = await dbApi('get_account_by_name', [accountData.name]);
+  
+
     const asset_to_issue = {
         amount: assetWithSupply.addPrecision(false, issueAmount),
         asset_id: assetWithSupply.id
@@ -30,39 +34,52 @@ const issueAction = async (data, result) => {
             fee: getDefaultFee(),
             issuer: accountData.id,
             asset_to_issue,
-            issue_to_account
+            issue_to_account: issue_to_account.id
         }
     };
 
-    const activeKey = loginData.formPrivateKey(password, 'active');
+    let activeKey = '';
 
-    if(data.memo){
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+    }
 
-        const fromMemo = loginData.formPrivateKey(password, 'memo');
-        const toMemo = to.options.memo_key;
-        const nonce = TransactionHelper.unique_nonce_uint64();
+    const memo = data.memo;
+    let memoFromPublic, memoToPublic;
+    if (memo) {
+        memoFromPublic = fromAccount.options.memo_key;
+        memoToPublic = issue_to_account.options.memo_key;
+    }
 
-        trx.params['memo'] = {
-            from: fromMemo.toPublicKey().toString(),
-            to: toMemo,
-            nonce,
-            message: Aes.encrypt_with_checksum(
-                activeKey,
-                toMemo,
-                nonce,
-                new Buffer(data.memo)
-            ),
+    let memoObject;
+    if (memo && memoFromPublic && memoToPublic) {   
+        memoObject = {
+            from: memoFromPublic,
+            to: memoToPublic,
+            nonce: 0,
+            message: Buffer.isBuffer(memo) ? memo : Buffer.concat([Buffer.alloc(4), Buffer.from(memo.toString('utf-8'), 'utf-8')])
         };
+        
     }
 
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    trx.params['memo'] = memoObject
 
-    if(trxResult){
-        result.success = true;
-        result.callbackData = trxResult;
-    }
+    try {
+        const trxResult = await trxBuilder([trx], [activeKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
+    } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
+        return result;
+    }   
 
-    return result;
 };
 
 class IssueAsset extends Component {
@@ -72,13 +89,14 @@ class IssueAsset extends Component {
     };
 
     componentDidMount(){
-        const {password, assetWithSupply, maxSupply} = this.props;
+        const {password, assetWithSupply, maxSupply, keyType} = this.props;
         const currentSupply = assetWithSupply.setPrecision();
         const assetSymbol = assetWithSupply.symbol;
         const basicAssetSymbol = getBasicAsset().symbol;
         const remainToIssue = maxSupply - currentSupply;
         this.setState({
             defaultData: {
+                keyType,
                 password,
                 basicAssetSymbol,
                 currentSupply,
@@ -109,7 +127,7 @@ class IssueAsset extends Component {
                     handleResult={this.handleResult}
                 >
                     {form => {
-                        const {data, errors} = form.state;
+                        const {data, errors, transactionError} = form.state;
                         const assetSymbol = data.assetSymbol;
 
                         return(
@@ -151,6 +169,13 @@ class IssueAsset extends Component {
                                 />
                                 <div>
                                     Fee: {data.fee || 0} {data.basicAssetSymbol}
+                                </div>
+                                <div>
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <div className="modal__bottom">
                                     <Close />

@@ -602,6 +602,9 @@ export const en = {
     },
     "field": {
         "labels": {
+            "loginPassword": "Password or a Private key (We recommend using Whalevault Web 3.0 wallet)",
+            "transactionPassword": "password or %(keyType)s key",
+            "publicMemo": "Memo (this is public)",
             "sellAmount": "Sell amount",
             "buyAmount": "Buy amount",
             "login": "Login",
@@ -682,7 +685,8 @@ export const en = {
             "local": "Local wallet (advanced)"
         },
         "checkboxes": {
-            "remember": "Remember me"
+            "remember": "Remember me",
+            "whaleVault": "Use WhaleVault extension"
         },
         "upload": {
             "file": "Key File (%(fileSize)s)"
@@ -697,6 +701,13 @@ export const en = {
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
+        "wrongKey": "Wrong key has been used",
+        "user_cancel": "Request was canceled by the user",
+        "missing_required_active_authority": "missing required active authority",
+        "notAddedToWhaleVault":"This account is not added to whaleVault",
+        "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
+        "whaleVaultConnectionError": "Can not Send Request to whaleVault",
+        "whaleNotInstalled": "WhaleVault is not installed",
         "required": "This field is required.",
         "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
@@ -734,7 +745,7 @@ export const en = {
         "conditionLength": "Condition is too long",
         "resolutionError": "Select another date",
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
-        "sonError": "Server side error!! Try again later.",
+        "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",
@@ -803,11 +814,19 @@ export const en = {
             "referrerError": "There is no account with %(referrer)s name",
             "referrerMembership": "%(referrer)s must be either a lifetime or annual subscriber."
         },
+        "backupPassword": {
+            "title": "Backup your keys",
+            "forgetPassword": "IMPORTANT: If you forget your password you will be unable to access your account, we cannot reset or restore your password!",
+            "keyDetails": "IMPORTANT: Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
+            "keepSafe": "IMPORTANT: Please download and keep safe your keys and password.",
+            "whaleVaultImport": "You can import these keys inside the WhaleVault extension and use them to login or sign your transactions",
+            "download": "Download & take me to dashboard"
+        },
         "login": {
             "title": "Log in"
         },
         "unlock": {
-            "title": "Unlock Profile for %(login)s"
+            "title": "This transaction needs your %(keyType)s key"
         },
         "binRestore": {
             "title": "Restore account from .bin file"
@@ -851,6 +870,7 @@ export const en = {
         }
     },
     "buttons": {
+        "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
         "sendFunds": "Send Funds",
@@ -880,6 +900,7 @@ export const en = {
         "newContact": "+ New Contact",
         "update": "Update",
         "generate": "Generate",
+
     },
     "emptyPage": {
         "default": "No data",

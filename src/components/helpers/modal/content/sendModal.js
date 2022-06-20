@@ -12,6 +12,8 @@ import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
+import { updateAccountAndLoginData } from '../../../../actions/account';
+import Translate from 'react-translate-component';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -35,7 +37,7 @@ class SendModal extends Component {
     };
 
     componentDidMount() {
-        const {defaultFrom, defaultTo, defaultToken, password} = this.props;
+        const {defaultFrom, defaultTo, defaultToken, password, keyType} = this.props;
         const contacts = getAccountData().contacts.filter(item => item.type !== 2).map(item => item.name);
         const userTokens = getAccountData().assets;
 
@@ -45,6 +47,7 @@ class SendModal extends Component {
         const defaultData = {
             from: defaultFrom || '',
             to: defaultTo || '',
+            keyType: keyType,
             password: password,
             quantityAsset: startAsset,
             fee: 0,
@@ -59,9 +62,10 @@ class SendModal extends Component {
         this.setState({sended: true}, () => {
         });
 
+        updateAccountAndLoginData();
+
         setTimeout(() => {
             clearLayout();
-            window.location.reload();
         }, 1000);
     };
 
@@ -84,7 +88,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             
                             return (
                                 <Fragment>
@@ -165,6 +169,13 @@ class SendModal extends Component {
                                         <div className="quantity-wrapper mt-2">
                                             <div>
                                                 Fee: {data.fee} {data.feeAsset}
+                                            </div>
+                                            <div>
+                                                {transactionError && transactionError !== "" ? 
+                                                    <span className="clr--negative">
+                                                        <Translate className="" content={`errors.${transactionError}`} />
+                                                    </span> 
+                                                : ""}
                                             </div>
                                             {/*<Dropdown*/}
                                             {/*btn={<SelectHeader*/}

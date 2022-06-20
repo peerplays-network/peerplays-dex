@@ -5,6 +5,7 @@ import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {generateSidechainAddress} from "../../../actions/forms/generateSidechainAddress";
 import { setSidechainAccounts } from "../../../dispatch/setAccount";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class GenerateAddress extends Component {
     state = {
@@ -35,8 +36,8 @@ class GenerateAddress extends Component {
         }))
         
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        updateAccountAndLoginData();
     };
 
 
@@ -55,10 +56,11 @@ class GenerateAddress extends Component {
                         action={generateSidechainAddress}
                         handleResult={this.handleAddressGenerated}
                         needPassword
+                        keyType="active"
                     >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -88,11 +90,12 @@ class GenerateAddress extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>
-                                       </span>
                                         {sended && <Translate component="span" className="clr--positive" content={"success.sidechainGenerated"}/>}
-                                        {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
-                                        {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.generate"}/>
                                     </div>
                                 </Fragment>
