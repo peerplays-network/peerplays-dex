@@ -34,7 +34,7 @@ export default function permissionsCards({ className, tableHead, rows, link, onC
   return (
     <Card className="cardsTable">
       {rows.map((trItem, trId) => (
-        <Grid key={`tr-${trId}`} style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px' }}>
+        <Grid key={`tr-${trId}`} style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px', position:'relative', }}>
           {tableHead.map((tdItem, tdId) => (
             <Grid container className={classes.paper} key={`td-${tdId}`}>
               <Grid item xs={12} sm={6}>
