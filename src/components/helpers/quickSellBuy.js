@@ -29,10 +29,14 @@ class QuickSellBuy extends Component {
         defaultData: false,
         userTokens: false,
         sended: false,
+        assets: false,
     };
 
     componentDidMount() {
         const userTokens = getAccountData().assets.map(e => e.symbol);
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets});
+        })
         const defaultData = {
             sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
             buyAsset: defaultQuote,
@@ -61,7 +65,7 @@ class QuickSellBuy extends Component {
   
 
     render() {
-        const {defaultData, userTokens, sended} = this.state;
+        const {defaultData, userTokens, sended, assets} = this.state;
 
         if (!defaultData) return <span/>;
 
@@ -96,6 +100,7 @@ class QuickSellBuy extends Component {
                                                   e.preventDefault();
                                                 }
                                             }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint
@@ -126,6 +131,7 @@ class QuickSellBuy extends Component {
                                                   e.preventDefault();
                                                 }
                                             }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint

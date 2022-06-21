@@ -9,6 +9,7 @@ import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
 import { utils } from '../../../utils';
 import Translate from 'react-translate-component';
+import { dbApi } from '../../../actions/nodes';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -20,10 +21,14 @@ class SendModal extends Component {
 
     state = {
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount(){
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const {defaultFrom, defaultToken, password, keyType} = this.props;
         const userTokens = store.getState().account.assets;
         const startAsset =  defaultToken || userTokens[0].symbol;
@@ -44,7 +49,7 @@ class SendModal extends Component {
 
     render(){
 
-        const {defaultData, userTokens} = this.state;
+        const {defaultData, userTokens, assets} = this.state;
 
         if(!userTokens) return <span />;
 
@@ -100,6 +105,7 @@ class SendModal extends Component {
                                                       e.preventDefault();
                                                     }
                                                 }}
+                                                precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                             />
                                             <FieldWithHint
                                                 name="quantityAsset"

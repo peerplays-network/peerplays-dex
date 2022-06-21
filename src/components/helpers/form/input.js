@@ -1,5 +1,4 @@
 import React from 'react';
-import { getAssetBySymbol } from '../../../actions/assets';
 import { utils } from '../../../utils';
 import FieldWrapper from "./fieldWrapper";
 
@@ -13,7 +12,7 @@ const Input = (props) => {
         formData,
         onKeyPress,
         onBlur,
-        precission,
+        precision,
         min,
     } = props;
 
@@ -33,13 +32,14 @@ const Input = (props) => {
                 disabled={disabled}
                 onKeyPress={onKeyPress ?  onKeyPress : null}         
                 onChange={onChange ? (e) => {
-                    if(precission && precission !== "") {
-                        e.target.value = utils.roundNum(e.target.value, Number(precission));
+                    if(precision && precision !== "") {
+                        e.target.value = utils.roundNum(e.target.value, Number(precision));
+                        onChange(utils.roundNum(e.target.value, Number(precision)), name)
                     } 
                     onChange(e.target.value, name)
                 } : (e) => {
                     e.preventDefault()
-                } }
+                }}
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
                 placeholder=" "
                 min={min}

@@ -8,6 +8,7 @@ import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
 import { utils } from '../../utils';
 import Translate from 'react-translate-component';
+import { dbApi } from '../../actions/nodes';
 
 
 const getSymbolsList = async (symbol) => (
@@ -28,10 +29,14 @@ class SendForm extends Component {
     state = {
         sended: false,
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const userTokens = user.assets;
         const startAsset = userTokens.length ? userTokens[0].symbol : defaultToken;
@@ -61,7 +66,7 @@ class SendForm extends Component {
     };
 
    render() {
-        const {sended, defaultData, userTokens} = this.state;
+        const {sended, defaultData, userTokens, assets} = this.state;
 
         if (!defaultData) return <span/>;
 
@@ -102,6 +107,7 @@ class SendForm extends Component {
                                                   e.preventDefault();
                                                 }
                                             }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                         />
                                     </div>
                                     <div className="input__row">
