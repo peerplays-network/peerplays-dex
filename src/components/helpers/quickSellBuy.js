@@ -7,6 +7,7 @@ import {getAccountData} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
+import { utils } from '../../utils';
 import Translate from 'react-translate-component';
 
 
@@ -28,10 +29,14 @@ class QuickSellBuy extends Component {
         defaultData: false,
         userTokens: false,
         sended: false,
+        assets: false,
     };
 
     componentDidMount() {
         const userTokens = getAccountData().assets.map(e => e.symbol);
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets});
+        })
         const defaultData = {
             sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
             buyAsset: defaultQuote,
@@ -60,7 +65,7 @@ class QuickSellBuy extends Component {
   
 
     render() {
-        const {defaultData, userTokens, sended} = this.state;
+        const {defaultData, userTokens, sended, assets} = this.state;
 
         if (!defaultData) return <span/>;
 
@@ -90,6 +95,12 @@ class QuickSellBuy extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint
@@ -115,6 +126,12 @@ class QuickSellBuy extends Component {
                                             error={errors}
                                             min={0}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
                                         />
                                         <div className="sellHint">
                                         <FieldWithHint

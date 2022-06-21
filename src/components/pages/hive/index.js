@@ -7,7 +7,9 @@ import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
 import FieldWithHint from "../../helpers/form/fieldWithHint";
+import { utils } from "../../../utils";
 import {  updateAccountAndLoginData } from "../../../actions/account";
+import { dbApi } from "../../../actions/nodes";
 
 
 
@@ -20,11 +22,15 @@ class HiveTransactions extends Component {
     state = {
         sended: false,
         defaultData: false,
+        assets: false
     };
 
     update = updateAccountAndLoginData
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const startAsset = 'HIVE';
         const basicAsset = getBasicAsset().symbol;
@@ -50,7 +56,7 @@ class HiveTransactions extends Component {
 
 
     render() {
-        const {sended, defaultData} = this.state;
+        const {sended, defaultData, assets} = this.state;
 
         if (!defaultData) return <span/>;
         return (
@@ -96,6 +102,12 @@ class HiveTransactions extends Component {
                                                             onChange={form.handleChange}
                                                             error={errors}
                                                             value={data}
+                                                            onKeyPress={(e) => {
+                                                                if (!utils.isNumberKey(e)) {
+                                                                  e.preventDefault();
+                                                                }
+                                                            }}
+                                                            precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                                         />
                                                     </div>
                                                     <div className="input__row">

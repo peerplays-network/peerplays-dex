@@ -12,6 +12,7 @@ import {getAccountData, getBasicAsset, getStore} from "../../../../actions/store
 import {trxBuilder} from "../../../../actions/forms/trxBuilder";
 import {dbApi} from "../../../../actions/nodes";
 import {clearLayout} from "../../../../dispatch";
+import { utils } from "../../../../utils";
 import Translate from "react-translate-component";
 
 const issueAction = async (data, result) => {
@@ -152,6 +153,11 @@ class IssueAsset extends Component {
                                             symbol: assetSymbol
                                         }}
                                         comment
+                                        onKeyPress={(e) => {
+                                            if (!utils.isNumberKey(e)) {
+                                              e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     <SelectHeader
                                         text={assetSymbol}
