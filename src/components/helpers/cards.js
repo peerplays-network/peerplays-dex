@@ -34,7 +34,7 @@ export default function TableCard({ className, tableHead, rows, link, onClick, p
   return (
     <Card className="cardsTable">
       {rows.map((trItem, trId) => (
-        <Grid key={`tr-${trId}`} style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px' }}>
+        <Grid key={`tr-${trId}`} className="position" style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px' }}>
           {tableHead.map((tdItem, tdId) => (
             <Grid container className={classes.paper} key={`td-${tdId}`}>
               <Grid item xs={6} sm={6}>
