@@ -2,13 +2,14 @@ import React, {Component,  Fragment} from "react";
 import Translate from "react-translate-component";
 import { Card } from "../../helpers/card";
 import { CardHeader } from "../../helpers/cardHeader";
-import Grid from '@material-ui/core/Grid';
-import {  getAccountData, getBasicAsset } from "../../../actions/store";
+import {  getAccountData, getBasicAsset, getStore } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
 import FieldWithHint from "../../helpers/form/fieldWithHint";
 import { utils } from "../../../utils";
+import {  updateAccountAndLoginData } from "../../../actions/account";
+
 
 
 const getHiveAssetsList = async (symbol) => {
@@ -21,6 +22,8 @@ class HiveTransactions extends Component {
         sended: false,
         defaultData: false,
     };
+
+    update = updateAccountAndLoginData
 
     componentDidMount() {
         const user = getAccountData();
@@ -41,12 +44,9 @@ class HiveTransactions extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
-        if(this.props.update) {
-            this.props.update();
-        }
+        this.update();
     };
 
 
@@ -73,10 +73,11 @@ class HiveTransactions extends Component {
                                         action={transfer}
                                         handleResult={this.handleTransfer}
                                         needPassword
+                                        keyType="active"
                                     >
                                     {
                                         form => {
-                                            const {errors, data} = form.state;
+                                            const {errors, data, transactionError} = form.state;
                 
                                             return (
                                                 <Fragment>
@@ -136,6 +137,11 @@ class HiveTransactions extends Component {
                                                     <div className="btn__row">
                                                         <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
                                                         {sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/> }
+                                                        {transactionError && transactionError !== "" ? 
+                                                            <span className="clr--negative">
+                                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                            </span> 
+                                                            : ""}
                                                         <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.withdraw"}/>
                                                     </div>
                                                 </Fragment>

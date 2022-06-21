@@ -52,10 +52,11 @@ class FundTheFeePool extends Component {
                       action={assetFundFeePool}
                       handleResult={this.handleFundTheFeePool}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -82,8 +83,13 @@ class FundTheFeePool extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
+                                        <span>Fee: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Fund</button>
                                     </div>
                                 </Fragment>

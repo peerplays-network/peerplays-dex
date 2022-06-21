@@ -8,6 +8,7 @@ import {removeModal} from "../../../dispatch/setModal";
 import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
 import { utils } from '../../../utils';
+import Translate from 'react-translate-component';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -23,12 +24,13 @@ class SendModal extends Component {
     };
 
     componentDidMount(){
-        const {defaultFrom, defaultToken, password} = this.props;
+        const {defaultFrom, defaultToken, password, keyType} = this.props;
         const userTokens = store.getState().account.assets;
         const startAsset =  defaultToken || userTokens[0].symbol;
 
         const defaultData = {
             from: defaultFrom || '',
+            keyType: keyType,
             password: password,
             quantityAsset: startAsset,
             fee: 0,
@@ -61,7 +63,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return(
                                 <Fragment>
@@ -122,6 +124,11 @@ class SendModal extends Component {
                                             <div>
                                                 Fee: {data.fee} {data.quantityAsset}
                                             </div>
+                                            {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                             {/*<Dropdown*/}
                                             {/*btn={<SelectHeader*/}
                                             {/*text={form.state.data.feeAsset}*/}

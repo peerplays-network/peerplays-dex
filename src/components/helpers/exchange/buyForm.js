@@ -8,6 +8,7 @@ import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
 import {getBasicAsset} from "../../../actions/store";
 import { utils } from '../../../utils';
+import { getAssetBySymbol } from "../../../actions/assets"
 
 const calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price)}`;
 const calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price)}`;
@@ -85,7 +86,11 @@ const formMutations = {
 class BuyForm extends Component{
 
     state = {
-        defaultData: false
+        defaultData: false,
+        precision: {
+            sellAsset: 0,
+            buyAsset: 0
+        }
     };
 
     componentDidMount(){
@@ -95,8 +100,10 @@ class BuyForm extends Component{
     componentWillReceiveProps(newProps){
         if(
             (!this.props.defaultData && newProps.defaultData)
-            || newProps.defaultData && newProps.defaultData.quote !== this.props.defaultData.quote
-        ) this.resetForm(newProps);
+            || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol) 
+        ){
+            this.resetForm(newProps);
+        } 
     }
 
     setBasicData = (newProps = {}) => {
@@ -114,7 +121,17 @@ class BuyForm extends Component{
             defaultData.amount_to_sell = base;
         }
 
-        this.setState({defaultData})
+        this.setState({defaultData});
+        (async (obj) => {
+            const { precision: sellAssetPrecision } = await getAssetBySymbol(sellAsset)
+            const { precision: buyAssetPrecision } = await getAssetBySymbol(buyAsset)
+            obj.setState({
+                precision: {
+                    sellAsset: sellAssetPrecision,
+                    buyAsset: buyAssetPrecision
+                }
+            })
+        })(this)  
     };
 
     resetForm = (props) => this.setState({defaultData: false}, () => { this.setBasicData(props) });
@@ -137,11 +154,21 @@ class BuyForm extends Component{
                 action={sellBuy}
                 handleResult={this.resetForm}
                 orderConfirmation
+                keyType="active"
             >
                 {
                     form => {
-                        const {errors, data} = form.state;
+                        const {errors, data, transactionError} = form.state;
                         const handleChange = (value, name) => {
+                            if(name === 'price' || name === 'amount_to_receive') {
+                                const fractionLength = value.indexOf('.') === -1 
+                                                        ? 0 
+                                                        : (value.length - value.indexOf('.') - 1)
+                                const {sellAsset, buyAsset} = this.state.precision
+                                const precision = name === 'price' ? sellAsset : buyAsset
+                                if (fractionLength > precision)
+                                    form.form[name].value = parseFloat(value).toFixed(precision).toString()
+                            }
                             formMutations[name](form.form)
                             form.handleChange(value, name)
                         }
@@ -152,6 +179,7 @@ class BuyForm extends Component{
                                     id={`${type}-price`}
                                     name="price"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.price"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
@@ -168,6 +196,7 @@ class BuyForm extends Component{
                                     id={`${type}-receive`}
                                     name="amount_to_receive"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.quantity"
                                     labelParams={{token: defaultData.buyAsset}}
                                     className="with-border"
@@ -184,6 +213,7 @@ class BuyForm extends Component{
                                     id={`${type}-sell`}
                                     name="amount_to_sell"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.total"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
@@ -191,7 +221,7 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                     readOnly={true}
-                                    disabled
+                                    disabled={true}
                                     style={{cursor:"text"}}
                                 />
                                
@@ -205,6 +235,13 @@ class BuyForm extends Component{
                                         <span>0 {data.sellAsset}</span>
                                     </div>
                                     <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
+                                </div>
+                                <div className="info__row">
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <button className="btn-round btn-round--buy" onClick={form.submit}>
                                     <Translate content={`exchange.${isBuy ? 'buy' : 'sell'}`} /> {data.buyAsset}

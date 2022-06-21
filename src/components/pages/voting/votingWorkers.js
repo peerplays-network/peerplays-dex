@@ -102,7 +102,7 @@ class VotingWorkers extends Component {
         });
     };
 
-    dispatchWorkerCreation = () => getPassword(password => setModal(<AddNewWorker password={password} />));
+    dispatchWorkerCreation = () => getPassword((password, keyType) => setModal(<AddNewWorker keyType={keyType} password={password} />), 'active');
 
     render() {
         const {workers} = this.state;

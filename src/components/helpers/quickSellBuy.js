@@ -8,6 +8,8 @@ import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
 import { utils } from '../../utils';
+import Translate from 'react-translate-component';
+
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
@@ -46,7 +48,6 @@ class QuickSellBuy extends Component {
     handleTransfer = (data) => {
         const context = this;
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
-        window.location.reload();
         if(this.props.update) {
             this.props.update();
         }
@@ -74,10 +75,11 @@ class QuickSellBuy extends Component {
                     action={sellBuy}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="input__row">
@@ -85,6 +87,7 @@ class QuickSellBuy extends Component {
                                             name="amount_to_sell"
                                             labelTag="field.labels.sellAmount"
                                             type="number"
+                                            min={0}
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
@@ -104,6 +107,8 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             defaultHints={userTokens}
                                             readOnly={true}
+                                            hint={'asset'}
+
                                         />
                                         </div>
                                     </div>
@@ -114,6 +119,7 @@ class QuickSellBuy extends Component {
                                             type="number"
                                             onChange={form.handleChange}
                                             error={errors}
+                                            min={0}
                                             defaultVal={data}
                                             onKeyPress={(e) => {
                                                 if (!utils.isNumberKey(e)) {
@@ -130,16 +136,22 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             errors={errors}
                                             readOnly={true}
+                                            hint={'asset'}
                                         />
                                         </div>
                                     </div>
                                     <div className="info__row">
                                         <span>Fee: {data.fee} {data.sellAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                            Buy
+                                        <Translate className="" content={"quickSellBuy.buy"} />
                                         </button>
                                     </div>
                                 </Fragment>

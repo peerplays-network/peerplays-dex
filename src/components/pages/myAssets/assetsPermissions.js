@@ -122,7 +122,7 @@ class AssetsPermissions extends Component {
         this.setState({changeLog, showSave});
     };
 
-    saveResult = password => {
+    saveResult = (password, keyType) => {
         const {basicData, changeLog, dataForUpdate} = this.state;
         const addData = Object.values(changeLog.add);
         const changeThreshold = Object.keys(changeLog.threshold);
@@ -157,10 +157,10 @@ class AssetsPermissions extends Component {
             dataForUpdate[type] = data[type];
         });
 
-        updateAccount(dataForUpdate, password).then(this.reset);
+        updateAccount(dataForUpdate, password, keyType).then(this.reset);
     };
 
-    handleSave = () => getPassword(this.saveResult);
+    handleSave = () => getPassword(this.saveResult, 'active');
 
     reset = () => this.props.reset();
 

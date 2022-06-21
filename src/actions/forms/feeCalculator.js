@@ -70,8 +70,8 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
 };
 
 const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
-    const val = Number(amount_to_sell);
-    const val2 = Number(amount_to_receive)
+    const val = amount_to_sell==''?'': Number(amount_to_sell);
+    const val2 = amount_to_receive == undefined ?'': Number(amount_to_receive)
     const result = {
         feeErr: '',
         feeAmount: 0,
@@ -82,8 +82,6 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
         feeAmount: 0,
         errVariable: 'amount_to_receive'
     };
-
-
     if(!val){
         return result;
     } else if(isNaN(val)){
@@ -94,12 +92,12 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
         return result;
     }
 
-    if(!val2){
+    if(!val2 && val2 != ""){
         return result2;
     } else if(isNaN(val2)){
         result2.feeErr = 'isNan';
         return result2;
-    } else if(Number(val2) <= 0){
+    } else if(Number(val2) <= 0 && val2 !=""){
         result2.feeErr = 'isZero';
      return result2;
     }
@@ -143,9 +141,8 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
             amountToPay = feeAmount;
         }
     }
-
     if(usersBasicAsset.setPrecision() < amountToPay) result.feeErr = 'isNotEnough';
-
+   
     return result;
 }
 const calculateWithdrawFee = data => {

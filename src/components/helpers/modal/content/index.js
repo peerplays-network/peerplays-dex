@@ -8,3 +8,4 @@ export * from './createUser';
 export * from './transanctionModal';
 export * from './warningModal';
 export * from './orderConfirmationModel';
+export * from "./backupPassword";

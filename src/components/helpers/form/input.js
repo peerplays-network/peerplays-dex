@@ -13,7 +13,8 @@ const Input = (props) => {
         formData,
         onKeyPress,
         onBlur,
-        precission
+        precission,
+        min,
     } = props;
 
     let onChange = formData ? formData.handleChange : props.onChange;
@@ -41,8 +42,9 @@ const Input = (props) => {
                 } }
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
                 placeholder=" "
+                min={min}
                 className="field__input"
-                autoComplete="off"
+                autoComplete="new-password"
             />
         </FieldWrapper>
     );

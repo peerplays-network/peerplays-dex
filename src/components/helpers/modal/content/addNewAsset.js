@@ -57,6 +57,7 @@ const createAsset = async (data, result) => {
         permissions,
         flagMarketFee,
         flags,
+        keyType,
         password,
         condition,
         resolutionDate
@@ -124,15 +125,27 @@ const createAsset = async (data, result) => {
     }
 
     const trx = { type: 'asset_create', params };
-    const activeKey = loginData.formPrivateKey(password, 'owner');
-    const trxResult = await trxBuilder([trx], [activeKey]);
 
-    if (trxResult) {
-        result.success = true;
-        result.callbackData = trxResult;
+    let ownerKey = '';
+
+    if(keyType === 'password') {
+        ownerKey = loginData.formPrivateKey(password, 'owner');
+    } else if(keyType === 'owner') {
+        ownerKey = loginData.formPrivateKey(password);
     }
+    
+    try {
+        const trxResult = await trxBuilder([trx], [ownerKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
+    } catch(e) {
+        result.errors['newAssetName'] = e.message;
+        return result;
+    }   
 
-    return result;
 };
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
@@ -166,6 +179,7 @@ class AddNewAsset extends Component {
             permissions,
             flags,
             fee,
+            keyType: this.props.keyType,
             password: this.props.password,
             description: '',
             maxSupply: 100000,

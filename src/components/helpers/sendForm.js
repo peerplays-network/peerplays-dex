@@ -7,6 +7,8 @@ import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
 import { utils } from '../../utils';
+import Translate from 'react-translate-component';
+
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -51,17 +53,11 @@ class SendForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
         if(this.props.update) {
             this.props.update();
         }
-
-        // Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        // ",textarea:not(:disabled):not([readonly])")).forEach(
-        //     (input) => input.value = ""
-        // );
     };
 
    render() {
@@ -79,10 +75,11 @@ class SendForm extends Component {
                     action={transfer}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -146,12 +143,18 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            labelTag="field.labels.publicMemo"
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.feeAsset}</span>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--send">SEND</button>
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
+                                        <button type="submit" className="btn-round btn-round--send"><Translate className="" content={"block.send.title"} /></button>
                                     </div>
                                 </Fragment>
                             )

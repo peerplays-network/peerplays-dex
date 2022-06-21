@@ -166,6 +166,9 @@ svg .mask{
     font-size: $fzSM;
     line-height: 1.6rem;
   }
+  &__marginBottom{
+    margin-bottom: 32px;
+  }
 }
 
 .warning{

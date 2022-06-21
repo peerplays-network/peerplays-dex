@@ -1,14 +1,8 @@
-<svg width="12" height="14" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <path d="M12 6.75v7.5H6v-7.5h6zm-1.125-4.5h-3.75l-.75.75H3.75v1.5h10.5V3h-2.625l-.75-.75zm2.625 3h-9v9c0 .825.675 1.5 1.5 1.5h6c.825 0 1.5-.675 1.5-1.5v-9z"
-              id="delete"/>
-    </defs>
-    <g transform="translate(-3 -2)" fill="none" fill-rule="evenodd">
-        <mask id="deleteMask" fill="#fff">
-            <use xlink:href="#delete"/>
-        </mask>
-        <g class="mask" mask="url(#deleteMask)" fill="#FF002E">
-            <path d="M0 0h18v18H0z"/>
-        </g>
-    </g>
+<svg width="22" height="18" viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.5 14.8984H15.5V38.8984H12.5V14.8984Z" fill="#B2B8C8"/>
+<path d="M18.5 14.8984H21.5V38.8984H18.5V14.8984Z" fill="#B2B8C8"/>
+<path d="M24.5 14.8984H27.5V38.8984H24.5V14.8984Z" fill="#B2B8C8"/>
+<path d="M0.5 5.89844H39.5V8.89844H0.5V5.89844Z" fill="#B2B8C8"/>
+<path d="M27.4 7.39999H24.6V4.39999C24.6 3.49999 23.9 2.8 23 2.8H17C16.1 2.8 15.4 3.49999 15.4 4.39999V7.39999H12.6V4.39999C12.6 1.99999 14.6 0 17 0H23C25.4 0 27.4 1.99999 27.4 4.39999V7.39999Z" fill="#B2B8C8"/>
+<path d="M29 47.9008H11C8.6 47.9008 6.5 45.9008 6.3 43.5008L3.5 7.50078L6.5 7.30078L9.3 43.3008C9.4 44.2008 10.2 44.9008 11 44.9008H29C29.9 44.9008 30.7 44.1008 30.7 43.3008L33.5 7.30078L36.5 7.50078L33.7 43.5008C33.5 46.0008 31.4 47.9008 29 47.9008Z" fill="#B2B8C8"/>
 </svg>
