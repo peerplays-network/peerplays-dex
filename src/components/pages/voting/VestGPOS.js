@@ -7,6 +7,7 @@ import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { getStore,getAccountData, getBasicAsset , getFees} from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
+import { utils } from '../../../utils';
 
 
 
@@ -118,6 +119,11 @@ const VestGPOS = (props) => {
 					max={accBalance > getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) ? accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) : 0}
 					onChange={(value) => handlChange(value)}
 					value={vestAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(vestAmount == null || vestAmount == 0)) ? "block" : "none" }}>

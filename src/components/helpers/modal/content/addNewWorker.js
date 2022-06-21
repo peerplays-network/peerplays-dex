@@ -10,6 +10,7 @@ import Submit from "../decoration/submit";
 import ModalWarning from "../decoration/modalWarning";
 import {clearLayout} from "../../../../dispatch";
 import {getStore, getGlobals} from "../../../../actions/store";
+import { utils } from '../../../../utils';
 import Translate from 'react-translate-component';
 
 const createWorker = async (data, result) => {
@@ -144,6 +145,11 @@ class AddNewWorker extends Component {
                                     onChange={form.handleChange}
                                     error={form.state.errors}
                                     value={form.state.data}
+                                    onKeyPress={(e) => {
+                                        if (!utils.isNumberKey(e)) {
+                                          e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 <Input
                                     name="website"

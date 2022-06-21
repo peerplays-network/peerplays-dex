@@ -12,8 +12,10 @@ import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
+import { utils } from '../../../../utils';
 import { updateAccountAndLoginData } from '../../../../actions/account';
 import Translate from 'react-translate-component';
+import { dbApi } from '../../../../actions/nodes';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -33,10 +35,14 @@ class SendModal extends Component {
     state = {
         sended: false,
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const {defaultFrom, defaultTo, defaultToken, password, keyType} = this.props;
         const contacts = getAccountData().contacts.filter(item => item.type !== 2).map(item => item.name);
         const userTokens = getAccountData().assets;
@@ -71,7 +77,7 @@ class SendModal extends Component {
 
     render() {
 
-        const {defaultData, userTokens, sended} = this.state;
+        const {defaultData, userTokens, sended, assets} = this.state;
 
         if (!userTokens) return <span/>;
 
@@ -143,6 +149,12 @@ class SendModal extends Component {
                                                 onChange={form.handleChange}
                                                 error={errors}
                                                 value={data}
+                                                onKeyPress={(e) => {
+                                                    if (!utils.isNumberKey(e)) {
+                                                      e.preventDefault();
+                                                    }
+                                                }}
+                                                precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                             />
                                             <Input
                                                 id="model"
