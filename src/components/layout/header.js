@@ -16,11 +16,7 @@ const Header = ({account, history, sidechainAccounts}) => (
             <span></span>
             <span></span>
             <span></span>
-        </button> : <button>
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>  }
+        </button> : <div></div> }
         <div className="header__user-data">
             <button onClick={openSearch}><IconSearch /></button>
             {!account
