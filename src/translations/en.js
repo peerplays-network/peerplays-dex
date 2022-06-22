@@ -709,6 +709,8 @@ export const en = {
         "whaleVaultConnectionError": "Can not Send Request to whaleVault",
         "whaleNotInstalled": "WhaleVault is not installed",
         "required": "This field is required.",
+        "invalid_public_key": "Provided public key is not correct",
+        "invalid_address": "Provided address is not correct for your bitcoin network",
         "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
         "isTooBig": "Value is too big.",
