@@ -11,11 +11,16 @@ import Button from "../helpers/buttons/button";
 
 const Header = ({account, history, sidechainAccounts}) => (
     <header>
+        { account ?  
         <button className="header__burger" onClick={openMenu}>
             <span></span>
             <span></span>
             <span></span>
-        </button>
+        </button> : <button>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>  }
         <div className="header__user-data">
             <button onClick={openSearch}><IconSearch /></button>
             {!account
