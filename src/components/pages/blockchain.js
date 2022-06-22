@@ -30,10 +30,6 @@ const blockchainMenu = [
         component: Committee
     },
     {
-        link: '/markets',
-        tag: 'markets',
-    },
-    {
         link: '/fees',
         tag: 'fees',
         component: Fees

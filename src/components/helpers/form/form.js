@@ -16,9 +16,11 @@ const handleData = async (context, val, id) => {
     if (mutateData && mutateData[id]) data = mutateData[id](data);
     const errors = await checkErrors(data);
     if (feeCalc) {
-        const { feeErr, feeAmount, errVariable } = feeCalc(data);
+        const { feeErr, feeAmount, errVariable, sellMarketFeePercent, buyMarketFeePercent } = await feeCalc(data);
         if (feeErr) errors[errVariable] = feeErr;
         data['fee'] = feeAmount;
+        data['sellMarketFeePercent'] = sellMarketFeePercent
+        data['buyMarketFeePercent'] = buyMarketFeePercent
     }
     return { data, errors };
 };
@@ -33,7 +35,8 @@ class Form extends Component {
     state = {
         loading: false,
         data: this.props.defaultData || {},
-        errors: {}
+        errors: {},
+        transactionError: ""
     };
     handleChange = (val, id) => handleData(this, val, id)
     .then((result) => this.validateAndSetState(this.form, result));
@@ -74,25 +77,26 @@ class Form extends Component {
             this.setState({ loading: false, errors});
             return;
         }
-        const checkPassword = () => {
+        
+        const checkPassword = (keyType) => {
             this.setState({ loading: false });
-            getPassword(password => (
+            getPassword((password, keyType) => (
                 this.setState(
-                    { data: { ...data, password } },
+                    { data: { ...data, password, keyType } },
                     () => this.handleAction()
                 )
-            ));
+            ), keyType);
             return;
         }
 
         if (this.props.orderConfirmation) {
             this.setState({ loading: false });
-            setModal(<OrderConfirmationModel onSuccess={checkPassword} data={this.props} grid={3} />)
+            setModal(<OrderConfirmationModel onSuccess={() => { checkPassword(this.props.keyType) }} data={this.props} grid={3} />)
             return;
         }
 
         if(this.props.needPassword){
-            checkPassword();
+            checkPassword(this.props.keyType);
             return;
         }
 
@@ -106,25 +110,24 @@ class Form extends Component {
          const result = {
                 success: false,
                 errors: {},
-                callbackData: ''
+                callbackData: '',
+                transactionError: ''
             };
 
             this.setState({ loading: true });
             action(data, result).then(result => {
                 if (!result.success) {
                     this.setState({ loading: false, errors: result.errors });
+                    if(result.transactionError && result.transactionError !== "") {
+                        const context = this;
+                        this.setState({transactionError: result.transactionError}, () => setTimeout(() => context.setState({transactionError: ""}), 5000));
+                    }
                     return;
                 }
                 this.setState({ loading: false }, () => {
                     handleResult(result.callbackData);
                     this.setState({ data: this.props.defaultData });
                     this.form.reset();
-                    getGlobalData()
-                    .then(({userData}) =>{
-                        if(userData) {
-                            setAccount(userData);
-                        }
-                    })
                 });
             });
         } else if (handleResult) {

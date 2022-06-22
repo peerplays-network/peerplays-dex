@@ -10,6 +10,29 @@ class FieldWithHint extends Component{
         hints: [],
         timeout: false,
         dropdown:false,
+        filterAsset:[
+            "AQSQFHZAJVZDTVAC",
+            "AXFMUJYATHGJSOIV",
+            "BSEBEIBGLWDPKMDB",
+            "CFQBVAIKFFJEEOOJ",
+            "DOQIBMVBUJYYDXXF",
+            "MCLUSD",
+            "BTFUN",
+            "SEUSD",
+            "FKGANJJRLRRSUNTR",
+            "HVVTNQNBHEFYPSJP",
+            "LTQCNISQAEWLEJVS",
+            "NGJZSUSFKIJBXKWJ",
+            "OPNQEXZYKBPOZAUP",
+            "RCDQHTNAHQNDHJXE",
+            "RYVCIRCYJSVAUESQ",
+            "TSKXLOICQJTCFPYY",
+            "UGQZISWHZJKNGVRC",
+            "UUCSGNDAXHJNRJUF",
+            "WGKGQTICUIYEYTWV",
+            "WNIPJIXZAFZGHGIC",
+            "WTFUN",
+        ]
     };
      
     componentDidMount(){
@@ -35,7 +58,6 @@ class FieldWithHint extends Component{
     handleChange = (val, name) => {
         let {data, timeout} = this.state;
         data[name] = val;
-        this.setState({dropdown :!this.state.dropdown})
         if(timeout) clearTimeout(timeout);
 
         if(!val) {
@@ -75,17 +97,27 @@ class FieldWithHint extends Component{
         handleChange(val, name);
         this.close(data);
     };
-
+  
     toggleDropdown = ()=>{
         this.setState({dropdown :!this.state.dropdown})
-    }
+        const obj = ReactDOM.findDOMNode(this);
 
+        if (obj.matches('.open')) {
+            obj.classList.remove('open')
+        } else {
+            document.addEventListener('click', this.handleOutsideClick, false);
+            let arrDrops = Object.values(document.querySelectorAll('.dropdown.open'));
+            obj.classList.add('open')
+        }
+
+        this.props.openCallback && this.props.openCallback();
+    }
 
     render(){
 
-        const {name, hideLabel, labelParams, className, errors,id, readOnly} = this.props;
+        const {name, hideLabel, labelParams, className, errors,id, readOnly, hint} = this.props;
         const {data, hints} = this.state;
-
+        const filterAssetResult = hints.filter((item) => !this.state.filterAsset.find(asset => item === asset )) 
         const hasHints = !!hints.length;
 
         return(
@@ -96,17 +128,24 @@ class FieldWithHint extends Component{
                     labelParams={labelParams}
                     className={className}
                     hideLabel={hideLabel}
-                    onChange={this.handleChange}
+                    onChange={this.toggleDropdown}
                     onFocus={this.handleChange}
                     onClick={this.handleChange}
                     value={data}
                     readOnly={readOnly}
+                    hint={hint}
                     {...this.props}
                 />
                 <Caret className='field__caret' onClick={()=>this.toggleDropdown()}/>
+                
                 { errors && errors[name] && <Translate content={`errors.${errors[name]}`} className="field__error" /> }
                 <div className="dropdown__body custom-scroll">
-                    {hasHints && hints.map(e => (
+                    {hasHints && this.props.hint && this.props.hint === 'asset' ? filterAssetResult.map(e => (
+                        data[name] != e && 
+                        <div key={e} className="dropdown__item">
+                            <span  className="cpointer" onClick={() => this.setNewVal(e)}>{e}</span>
+                        </div>
+                    )):hints.map(e => (
                         data[name] != e && 
                         <div key={e} className="dropdown__item">
                             <span  className="cpointer" onClick={() => this.setNewVal(e)}>{e}</span>

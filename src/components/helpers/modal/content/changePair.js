@@ -90,7 +90,6 @@ class ChangePair extends Component{
         const pair = `${quote}_${base}`;
         clearLayout();
         this.props.history.push(`/exchange/${pair}`);
-        window.location.reload();
     };
 
     selectOldPair = (selectedPair) => {

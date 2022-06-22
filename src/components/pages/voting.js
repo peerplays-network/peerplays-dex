@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
+import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
@@ -11,7 +12,7 @@ import SaveChangesCard from "../helpers/saveChangesCard";
 import { getPassword, updateAccount } from "../../actions/forms";
 import { dbApi } from "../../actions/nodes";
 import { clearVotes } from "../../dispatch/votesDispatch";
-import { getAccountData } from "../../actions/store";
+import { getAccountData, getBasicAsset } from "../../actions/store";
 import VestGPOS from './voting/VestGPOS';
 import WithdrawGPOS from './voting/WithdrawGPOS';
 import { getAsset } from '../../actions/assets/getAsset';
@@ -229,7 +230,7 @@ const Voting = (props) => {
     useEffect(() => {
         setNewVotes(props.account.votes.map(el => el.vote_id))
     }, [props.account])
-    const saveResult = (password) => {
+    const saveResult = (password, keyType) => {
         setSaveLoading(true);
         let user = getAccountData();
         dbApi('get_account_by_name', [user.name]).then(e => {
@@ -244,7 +245,12 @@ const Voting = (props) => {
             new_options.num_witness = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 1).length;
             new_options.num_committee = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 0).length;
             new_options.num_son = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 3).length;
-            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password).then(async () => {
+            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password, keyType).then(async () => {
+                updateReduxAccount(await formAccount(user.name))
+                clearVotes();
+                setSaveLoading(false);
+            }).catch(async(e) => {
+                toast.error(counterpart.translate(`errors.${e.message.split(":")[0].replace(/\s+/g,"_")}`))
                 updateReduxAccount(await formAccount(user.name))
                 clearVotes();
                 setSaveLoading(false);
@@ -263,10 +269,10 @@ const Voting = (props) => {
     const handleSave = () => {
         let user = getAccountData();
         if (user.assets[0].amount / 100000 < 20) {
-            return toast.error('Insufficient test balance.')
+            return toast.error(`Insufficient ${getBasicAsset().symbol} balance.`)
         }
         if (totalGpos > 0) {
-            getPassword(saveResult)
+            getPassword(saveResult, 'active')
 
         } else {
             toast.error('You need to Vest some GPOS balance first')

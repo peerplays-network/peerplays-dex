@@ -34,7 +34,7 @@ const CreatedAssets = ({data}) => (
         <RoundButton
             tag="newAsset"
             className="btn--worker"
-            onClick={() => getPassword(password => setModal(<AddNewAsset password={password} />))}
+            onClick={() => getPassword((password, keyType) => setModal(<AddNewAsset password={password} keyType={keyType} />), 'owner')}
         />
         {Boolean(data.createdAssets.length) &&
         <div>

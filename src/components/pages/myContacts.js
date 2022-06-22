@@ -111,11 +111,11 @@ class MyContacts extends Component {
         this.setState({changeLog: []});
     };
 
-    handleSave = () => getPassword(password => {
-        saveChanges(this.props.account.contacts, password, this.state.changeLog).then(e => {
+    handleSave = () => getPassword((password, keyType) => {
+        saveChanges(this.props.account.contacts, password, keyType, this.state.changeLog).then(e => {
             if (e) this.setState({changeLog: []});
         });
-    });
+    }, 'active');
 
     render() {
         const {showBlackList, fee, changeLog} = this.state;

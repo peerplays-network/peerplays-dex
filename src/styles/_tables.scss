@@ -16,7 +16,10 @@
   &__row:hover{
     .actions__on-hover{
       opacity: 1;
-      button{width: 250px;
+      button{
+        width: 30px;
+        z-index: 99;
+        position: relative;
         display: flex;
         justify-content: right;}
     }
@@ -36,6 +39,14 @@
     z-index: 2;
     &:hover{
       cursor: pointer;
+    }
+    @media only screen and (max-width:1200px){
+     width: 92%;
+    }
+    @media only screen and (max-width:767px){
+      bottom: 0px;
+      height: 24px;
+      width: 88%;
     }
   }
   &__partialFill{
@@ -77,6 +88,9 @@
   &__on-hover{
     opacity: 0;
     transition: $anim;
+    @media screen and (max-width: 768px) {
+      opacity: 1;
+    }
     button, a{
       border-radius: 50px;
       &:not(:first-child){
@@ -123,7 +137,9 @@
 .content-padding {
   padding: 0 50px;
 }
-
+.position{
+  position: relative;
+}
 .operation {
   font-size: 12px;
   letter-spacing: 0.2px;
@@ -189,4 +205,6 @@
   .cardsTable {
     display: none;
   }
+
 }
+
