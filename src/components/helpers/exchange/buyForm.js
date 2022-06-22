@@ -234,7 +234,8 @@ class BuyForm extends Component{
                                     </div>
                                     <div className="exchange-form__info">
                                         <Translate content="exchange.marketFee" percent={'0.1'} />
-                                        <span>0 {data.sellAsset}</span>
+                                        {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> : 
+                                            <span>{`${data.sellMarketFeePercent ? data.sellMarketFeePercent : 0}%`}</span>}
                                     </div>
                                     <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
                                 </div>
