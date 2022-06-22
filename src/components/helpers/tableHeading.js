@@ -9,12 +9,12 @@ const TableHeading = ({tableHead}) => (
                     key={`th-${id}`}
                     content={`tableHead.${el.translateTag}`}
                     component="div"
-                    className={`table__cell ${el.params ? el.params : ''}`}
+                    className={`table__cell bold ${el.params ? el.params : ''}`}
                     with={el.translateParams}
                 />
                 : <div
                     key={`th-${id}`}
-                    className={`table__cell ${el.params ? el.params : ''}`}
+                    className={`table__cell bold ${el.params ? el.params : ''}`}
                 />
         ))}
     </div>

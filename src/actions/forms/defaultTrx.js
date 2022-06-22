@@ -1,15 +1,33 @@
 import {trxBuilder} from "./trxBuilder";
-import {getLoginData} from "../store";
+import {getStore} from "../store";
 
-export const defaultTrx = async ({trx, password}) => {
+export const defaultTrx = async ({trx, password, keyType}) => {
     const result = {
-        success: false
+        success: false, 
+        transactionError: ''
     };
+    const {loginData, accountData} = getStore();
 
-    const activeKey = getLoginData().formPrivateKey(password, 'active');
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    let activeKey = '';
 
-    if(trxResult) result.success = true;
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+    }
 
-    return result;
+    try {
+        const trxResult = await trxBuilder([trx], [activeKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
+    } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_")
+        return result;
+    }   
+
 };

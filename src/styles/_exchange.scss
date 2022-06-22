@@ -7,6 +7,7 @@
   border-bottom: 2px solid #E2E4ED;
   box-sizing: border-box;
   color: #3C476C;
+
   background-color: $white;
   &__selector{
     position: relative;
@@ -265,5 +266,11 @@
     margin-bottom: 1.6rem;
     color: $dark-light;
     font-family: $secondary-font;
+  }
+}
+
+@media(max-width:767px){
+  .pair-stats{
+    overflow: scroll ;
   }
 }

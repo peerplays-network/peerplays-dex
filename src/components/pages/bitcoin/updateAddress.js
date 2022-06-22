@@ -5,6 +5,7 @@ import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddr
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";
 import { getBasicAsset } from "../../../actions/store";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class UpdateAddress extends Component {
     state = {
@@ -36,8 +37,8 @@ class UpdateAddress extends Component {
             }))
         }))
         const context = this;
-        window.location.reload();
         this.setState({updated: true}, () => setTimeout(() => context.setState({updated: false}), 5000));
+        updateAccountAndLoginData();
     };
     
     render() {
@@ -53,10 +54,12 @@ class UpdateAddress extends Component {
                     requiredFields={['withdrawPublicKey', 'withdrawAddress']}
                     action={updateSidechainAddress}
                     handleResult={this.handleAddressUpdated}
-                    needPassword>
+                    needPassword
+                    keyType="active"
+                >
                 {
                     form => {
-                        const {errors, data} = form.state;
+                        const {errors, data, transactionError} = form.state;
                         return (
                             <Fragment>                            
                                 <Input 
@@ -73,9 +76,12 @@ class UpdateAddress extends Component {
                                     value={data}/>
                                 <div className="info__row">
                                     <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
-                                    {errors === "ERROR" && <Translate component="span" className="clr--negative" content={"errors.sonError"}/>}
-                                    {errors === "DUPLICATE" && <Translate component="h3" className="clr--negative" content={"errors.keyExists"}/> }
                                     {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            <Translate className="" content={`errors.${transactionError}`} />
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <div className="btn__row">
                                     <Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.update"}/>
