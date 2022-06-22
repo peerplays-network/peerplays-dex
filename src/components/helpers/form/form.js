@@ -16,9 +16,11 @@ const handleData = async (context, val, id) => {
     if (mutateData && mutateData[id]) data = mutateData[id](data);
     const errors = await checkErrors(data);
     if (feeCalc) {
-        const { feeErr, feeAmount, errVariable } = feeCalc(data);
+        const { feeErr, feeAmount, errVariable, sellMarketFeePercent, buyMarketFeePercent } = await feeCalc(data);
         if (feeErr) errors[errVariable] = feeErr;
         data['fee'] = feeAmount;
+        data['sellMarketFeePercent'] = sellMarketFeePercent
+        data['buyMarketFeePercent'] = buyMarketFeePercent
     }
     return { data, errors };
 };
