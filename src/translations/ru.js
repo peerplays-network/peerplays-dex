@@ -712,6 +712,8 @@ export const ru = {
         "whaleVaultConnectionError": "Не удается отправить запрос в whaleVault",
         "whaleNotInstalled": "WhaleVault не установлен",
         "required": "Это поле не требуется.",
+        "invalid_public_key": "Предоставленный открытый ключ неверен",
+        "invalid_address": "Предоставленный адрес не подходит для вашей сети биткойн",
         "invalidKey":"Неправильный ключ.",
         "isNan": "Сумма - это не число.",
         "requiredQuantity": "Требуется количество.",
