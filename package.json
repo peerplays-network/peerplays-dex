@@ -29,6 +29,7 @@
     "dexie": "^2.0.4",
     "dotenv": "^8.2.0",
     "history": "^4.7.2",
+    "html-react-parser": "^2.0.0",
     "lzma": "2.1.6",
     "path-browserify": "^1.0.1",
     "peerplaysjs-lib": "git+https://gitlab.com/PBSA/tools-libs/peerplaysjs-lib#541904be589c5f00e41c55d3eef8dd180560b919",
