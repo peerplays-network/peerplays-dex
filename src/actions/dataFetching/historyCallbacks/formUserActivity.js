@@ -1,7 +1,7 @@
 import React from "react";
 import {ChainTypes} from "peerplaysjs-lib";
 import {getUserName} from "../../account/getUserName";
-import {formAssetData} from "../../assets";
+import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
 import {formDate} from "../../formDate";
@@ -147,11 +147,12 @@ const formAdditionalInfo = {
         }
     },
     "asset_fund_fee_pool": async (notification, {from_account, asset_id, amount}) => {
-        const asset = await formAssetData({asset_id, amount});
-
+        const basicAsset = getBasicAsset();
+        const asset = await formAssetData({asset_id: basicAsset.id, amount});
+        const feePoolAsset = await getAssetById(asset_id)
         return {
             from: await formUserLink(from_account, notification),
-            symbol: asset.symbol,
+            symbol: feePoolAsset.symbol,
             amount: asset.toString()
         }
     },

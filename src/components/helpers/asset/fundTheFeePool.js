@@ -7,6 +7,7 @@ import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
 import {fetchAssetData} from "../../../actions/dataFetching";
 import { utils } from "../../../utils";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class FundTheFeePool extends Component {
     state = {
@@ -19,13 +20,14 @@ class FundTheFeePool extends Component {
         const user = getAccountData();
         const userTokens = user.assets;
         const basicAsset = getBasicAsset();
-        const symbol = this.props.symbol;
+        const poolAssetSymbol = this.props.symbol
         const defaultData = {
             from: user.name,
-            quantityAsset: symbol,
+            quantityAsset: basicAsset.symbol,
             fee: 0,
             feeAsset: basicAsset.symbol,
-            quantity: ''
+            quantity: '',
+            poolAssetSymbol: poolAssetSymbol
         };
 
         this.setState({userTokens, defaultData});
@@ -35,6 +37,7 @@ class FundTheFeePool extends Component {
         const context = this;
         this.setState({sended: true}, () => {
             fetchAssetData();
+            updateAccountAndLoginData();
             setTimeout(() => context.setState({sended: false}), 5000)
         });
     };
@@ -48,7 +51,7 @@ class FundTheFeePool extends Component {
         return (
             <div className="card card--action">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <Translate component="div" className="card__comment" content={`block.${title}.text`} with={{poolAsset: this.props.symbol}} />
                 <Form className="asset-action__content"
                       type={'asset_fund_fee_pool'}
                       defaultData={defaultData}

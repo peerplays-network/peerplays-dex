@@ -247,7 +247,7 @@ export const en = {
         },
         "fundTheFeePool": {
             "title": "Fund The Fee Pool",
-            "text": "Anyone can add to the fee pool balance"
+            "text": "Anyone can add to the %(poolAsset)s fee pool balance the with core asset. This amount will be added to the %(poolAsset)s fee pool based on %(poolAsset)s core exchange rate"
         },
         "claimFeePoolBalance": {
             "title": "Claim fee pool balance",
