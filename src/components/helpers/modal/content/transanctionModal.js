@@ -24,8 +24,15 @@ const fetchFunc = async (context) => {
 
     const basicTag = `tableInfo.${type}`;
     const operation = dataBlock.transactions[trxNum].operations[0][1];
-    const info = await transactionParser(operation, password).then(e => e);
-
+    const info = await transactionParser(operation, password).then(e => {
+        e.map((item) => {
+            
+            if(item.key == "memo") item.value = item.value.split("\n").join("<br/>")
+            return item;
+        })
+        console.log("e",e)
+        return e
+    });
     return {
         dataBlock,
         type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
