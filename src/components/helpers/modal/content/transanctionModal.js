@@ -24,6 +24,7 @@ const fetchFunc = async (context) => {
 
     const basicTag = `tableInfo.${type}`;
     const operation = dataBlock.transactions[trxNum].operations[0][1];
+    operation.type = type
     const info = await transactionParser(operation, password).then(e => e);
 
     return {

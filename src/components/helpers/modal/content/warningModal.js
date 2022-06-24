@@ -13,15 +13,25 @@ class WarningModal extends Component{
     };
 
     handleMethod = () => {
-        const {trx, password} = this.props;
-        defaultTrx({trx, password})
-            .then(result => { if(result.success){
-                // clearLayout();   
-                window.location.reload();
-            }
-        })
+        const {trx, password, keyType} = this.props;
+        defaultTrx({trx, password, keyType})
+            .then(result => { 
+                if(result.success) {
+                    clearLayout();   
+                } else {
+                    if(result.transactionError && result.transactionError !== "") {
+                        this.setState({errors: result.transactionError})
+                    }
+
+                }
+            })
             .catch(err => {
-                if(err.message.includes('Insufficient Balance')) this.setState({errors: 'isNotEnough'})
+                
+                if(err.message.includes('Insufficient Balance')) {
+                    this.setState({errors: 'isNotEnough'})
+                } else {
+                    this.setState({errors: err.message.split(":")[0].replace(/\s+/g,"_")})
+                }
             });
     };
 

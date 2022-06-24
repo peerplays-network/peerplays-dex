@@ -4,16 +4,35 @@ import Link from "react-router-dom/es/Link";
 import React from "react";
 import {clearLayout} from "../dispatch";
 import { Aes } from "peerplaysjs-lib";
-import { getStore } from "./store";
+import { getBasicAsset, getStore } from "./store";
+import { formAssetData } from "./assets";
 
 export const transactionParser = async (operation, password = '') => {
     let asset, info = [];
+    const type = operation.type
+    const operationWithoutType = Object.keys(operation).filter(key =>
+        key !== 'type').reduce((obj, key) =>
+        {
+            obj[key] = operation[key];
+            return obj;
+        }, {}
+    );
 
-    for (let key in operation) {
+    for (let key in operationWithoutType) {
         if (key === 'extensions') continue;
 
         let item = operation[key];
         if (!item) continue;
+
+        if(type === 'asset_fund_fee_pool' && key === 'amount') {
+            const basicAsset = getBasicAsset();
+            const asset = await formAssetData({asset_id: basicAsset.id, amount: item});
+            info.push({
+                key,
+                value: asset.toString()
+            });
+            continue
+        }
 
         if (key === 'memo') {
             const message = item.message;

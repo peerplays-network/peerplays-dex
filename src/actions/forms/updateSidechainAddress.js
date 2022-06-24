@@ -19,12 +19,13 @@ export const updateSidechainAddress = async (data) => {
         success: false,
         errors:{},
         callbackData:'',
-        sidechainAccounts: {}
+        sidechainAccounts: {},
+        transactionError: ''
     };
 
     const sonNetworkStatus = await getSonNetworkStatus();
     if(!sonNetworkStatus.isSonNetworkOk){
-        result.errors = "ERROR";
+        result.errors["withdrawAddress"] = "sonError";
         return result;
     }
 
@@ -39,8 +40,19 @@ export const updateSidechainAddress = async (data) => {
         }
     }
     
+    const password = data.password;
+    const keyType = data.keyType;
+    let activeKey = '';
+
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+    }
+
     try {
-        const activeKey = loginData.formPrivateKey(data.password, 'active');
         const trxResult = await trxBuilder([trx], [activeKey]);   
         if (trxResult) {
             await generateSidechainAddress({
@@ -53,13 +65,16 @@ export const updateSidechainAddress = async (data) => {
                 withdrawAddress,
                 fee: data.fee
             }).then((response) => {
-                response.success ? result = response : response.errors == 'DUPLICATE' ? result.errors = "DUPLICATE" : result.errors = 'ERROR';
+                result = response;
                 return result;
             });
         }
+        return result;
     } catch (error) {
-        result.errors = "ERROR"
+        const err = error.message;
+        err.includes('An active deposit key already exists') ? result.transactionError = "keyExists" 
+            : result.transactionError = err.split(":")[0].replace(/\s+/g,"_");
+        return result;
     }
 
-    return result;
 };

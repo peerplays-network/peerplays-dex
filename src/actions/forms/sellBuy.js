@@ -4,7 +4,7 @@ import {getStore} from "../store";
 import {getDefaultFee} from "./getDefaultFee";
 
 export const sellBuy = async (data, result) => {
-    if (data.asset_to_sell === data.buyAsset) {
+    if (data.sellAsset === data.buyAsset) {
         result.errors['buyAsset'] = 'sameAsset';
         result.errors['sellAsset'] = 'sameAsset';
         return result;
@@ -59,13 +59,28 @@ export const sellBuy = async (data, result) => {
         }
     };
 
-    const activeKey = loginData.formPrivateKey(data.password, 'active');
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    const password = data.password;
+    const keyType = data.keyType;
+    let activeKey = '';
 
-    if(trxResult){
-        result.success = true;
-        result.callbackData = trxResult;
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+    }
+    try {
+        const trxResult = await trxBuilder([trx], [activeKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
+
+    } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
+        return result;
     }
 
-    return result;
 };

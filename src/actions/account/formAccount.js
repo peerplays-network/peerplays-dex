@@ -116,13 +116,14 @@ export const formAccount = async (data) => {
                         .then(e => e[0].is_prediction_market ? 'prediction' : 'smart');
                 }
 
-                const openIssueModal = () => getPassword(password => setModal(
+                const openIssueModal = () => getPassword((password, keyType) => setModal(
                     <IssueAsset
+                        keyType={keyType}
                         password={password}
                         assetWithSupply={asset}
                         maxSupply={maxSupply}
                     />
-                ));
+                ), 'active');
 
                 const actions = <div className="actions__wrapper">
                     <div className="actions__on-hover" style={{marginRight:'auto'}}>

@@ -6,6 +6,7 @@ import Input from "../form/input";
 import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetClaimFees} from "../../../actions/forms/assetClaimFees";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
 
 class AssetClaimFees extends Component {
     state = {
@@ -55,10 +56,11 @@ class AssetClaimFees extends Component {
                       action={assetClaimFees}
                       handleResult={this.handleAssetClaimFees}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <Input
@@ -70,10 +72,20 @@ class AssetClaimFees extends Component {
                                         error={errors}
                                         className="asset-action"
                                         onChange={form.handleChange}
+                                        onKeyPress={(e) => {
+                                            if (!utils.isNumberKey(e)) {
+                                              e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     <div className="btn__row">
                                         <span>Fee: {data.fee} {data.quantityAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Claim</button>
                                     </div>
                                 </Fragment>

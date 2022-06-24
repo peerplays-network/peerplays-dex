@@ -1,6 +1,7 @@
 import {TransactionHelper} from "peerplaysjs-lib";
 import {getAccountData, getBasicAsset, getFees, getStore} from "../store";
 import {Asset} from "../../classes";
+import { dbApi } from "../nodes";
 
 const defaultNonce = TransactionHelper.unique_nonce_uint64();
 
@@ -34,9 +35,8 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
     }
 
     const isBasicAsset = assetName === basicAsset.symbol;
-
     if(!isBasicAsset){
-        const currentAsset = account.assets.find(e => e.symbol === assetName);
+        const currentAsset = account.assets.find(e => e.symbol === assetName)
         if(!currentAsset || !currentAsset.amount){
             result.feeErr = 'isNotEnough';
             return result;
@@ -65,15 +65,14 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
 
     result.feeAmount = feeAmount;
     const amountToPay = isBasicAsset ? feeAmount + val : feeAmount;
-
     if(usersBasicAsset.setPrecision() < amountToPay) result.feeErr = 'isNotEnough';
 
     return result;
 };
 
-const calculateLimitOrderFee = (orderType, amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
-    const val = Number(amount_to_sell);
-    const val2 = Number(amount_to_receive)
+const calculateLimitOrderFee = async (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
+    const val = amount_to_sell==''?'': Number(amount_to_sell);
+    const val2 = amount_to_receive == undefined ?'': Number(amount_to_receive)
     const result = {
         feeErr: '',
         feeAmount: 0,
@@ -84,8 +83,6 @@ const calculateLimitOrderFee = (orderType, amount_to_sell, sellAsset, amount_to_
         feeAmount: 0,
         errVariable: 'amount_to_receive'
     };
-
-
     if(!val){
         return result;
     } else if(isNaN(val)){
@@ -96,12 +93,12 @@ const calculateLimitOrderFee = (orderType, amount_to_sell, sellAsset, amount_to_
         return result;
     }
 
-    if(!val2){
+    if(!val2 && val2 != ""){
         return result2;
     } else if(isNaN(val2)){
         result2.feeErr = 'isNan';
         return result2;
-    } else if(Number(val2) <= 0){
+    } else if(Number(val2) <= 0 && val2 !=""){
         result2.feeErr = 'isZero';
      return result2;
     }
@@ -145,8 +142,22 @@ const calculateLimitOrderFee = (orderType, amount_to_sell, sellAsset, amount_to_
             amountToPay = feeAmount;
         }
     }
-
     if(usersBasicAsset.setPrecision() < amountToPay) result.feeErr = 'isNotEnough';
+   
+    let buyMarketFeePercent = 0;
+    let sellMarketFeePercent = 0;
+
+    const allAssets = await dbApi('list_assets', ['', 100])
+    const sellToken = allAssets.find(asset => asset.symbol === sellAsset)
+    const buyToken = allAssets.find(asset => asset.symbol === buyAsset)
+    if (sellToken.symbol !== basicAsset.symbol) {
+        sellMarketFeePercent = sellToken.options.market_fee_percent / 100;
+    }
+    if (buyToken.symbol !== basicAsset.symbol) {
+        buyMarketFeePercent = buyToken.options.market_fee_percent / 100;
+    }
+    result.sellMarketFeePercent = sellMarketFeePercent
+    result.buyMarketFeePercent = buyMarketFeePercent
 
     return result;
 }
@@ -224,14 +235,16 @@ const calculateSidechainAddressAddFee = () => {
   const userBasicAsset = userData.assets.find(el => el.symbol === basicAsset.symbol);
 
   const fees = getFees().sidechain_address_add;
-  if(fees.fee > 0 && (!userBasicAsset || userBasicAsset.setPrecision() <= fees.fee)){
+  if(fees && fees.fee > 0 && (!userBasicAsset || userBasicAsset.setPrecision() <= fees.fee)){
       result.feeErr = 'isNotEnough';
-      return result;
-  }
-
-  const defaultFee = basicAsset.setPrecision(true, fees.fee);
+      const defaultFee = basicAsset.setPrecision(true, fees.fee);
 
   result.feeAmount = new Asset({...basicAsset, amount: defaultFee});
+    return result;
+
+  }
+
+  
 
   return result;
 };

@@ -92,7 +92,7 @@ svg .mask{
 }
 
 .title{
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
   &__text{
     font-family: $secondary-font;
     font-size: $fzXLG;
@@ -166,6 +166,9 @@ svg .mask{
     font-size: $fzSM;
     line-height: 1.6rem;
   }
+  &__marginBottom{
+    margin-bottom: 32px;
+  }
 }
 
 .warning{
@@ -217,4 +220,7 @@ svg .mask{
 
 .input-cus-style span b{
   background:transparent !important;
+}
+.display-none{
+  display: none;
 }

@@ -7,6 +7,9 @@ import {store} from '../../../index.js';
 import {removeModal} from "../../../dispatch/setModal";
 import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
+import { utils } from '../../../utils';
+import Translate from 'react-translate-component';
+import { dbApi } from '../../../actions/nodes';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -18,16 +21,21 @@ class SendModal extends Component {
 
     state = {
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount(){
-        const {defaultFrom, defaultToken, password} = this.props;
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
+        const {defaultFrom, defaultToken, password, keyType} = this.props;
         const userTokens = store.getState().account.assets;
         const startAsset =  defaultToken || userTokens[0].symbol;
 
         const defaultData = {
             from: defaultFrom || '',
+            keyType: keyType,
             password: password,
             quantityAsset: startAsset,
             fee: 0,
@@ -41,7 +49,7 @@ class SendModal extends Component {
 
     render(){
 
-        const {defaultData, userTokens} = this.state;
+        const {defaultData, userTokens, assets} = this.state;
 
         if(!userTokens) return <span />;
 
@@ -60,7 +68,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return(
                                 <Fragment>
@@ -92,6 +100,12 @@ class SendModal extends Component {
                                                 onChange={form.handleChange}
                                                 error={errors}
                                                 value={data}
+                                                onKeyPress={(e) => {
+                                                    if (!utils.isNumberKey(e)) {
+                                                      e.preventDefault();
+                                                    }
+                                                }}
+                                                precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                             />
                                             <FieldWithHint
                                                 name="quantityAsset"
@@ -116,6 +130,11 @@ class SendModal extends Component {
                                             <div>
                                                 Fee: {data.fee} {data.quantityAsset}
                                             </div>
+                                            {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                             {/*<Dropdown*/}
                                             {/*btn={<SelectHeader*/}
                                             {/*text={form.state.data.feeAsset}*/}

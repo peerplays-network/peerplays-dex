@@ -5,7 +5,7 @@ import {setModal} from "../dispatch/layoutDispatch";
 import {getAccountData, getGlobals} from "./store";
 import {Asset} from "../classes";
 
-export const openWarning = async (trxType, additionalData) => getPassword(async password => {
+export const openWarning = async (trxType, additionalData) => getPassword(async (password, keyType) => {
     const {fees, basicAsset} = getGlobals();
     const accountData = getAccountData();
     const rawFee = fees[trxType].fee || fees[trxType].membership_lifetime_fee;
@@ -24,8 +24,8 @@ export const openWarning = async (trxType, additionalData) => getPassword(async 
 
     const trx = { type: trxType, params };
 
-    setModal(<WarningModal trx={trx} error={error} password={password} fee={feeAsset.toString()} />)
-});
+    setModal(<WarningModal trx={trx} error={error} password={password} keyType={keyType} fee={feeAsset.toString()} />)
+}, 'active');
 
 const setCancelOrder = (accountData, order) => ({
     fee_paying_account: accountData.id,

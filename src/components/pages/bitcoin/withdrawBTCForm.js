@@ -4,14 +4,21 @@ import {  getAccountData, getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
+import { utils } from "../../../utils";
+import { updateAccountAndLoginData } from "../../../actions/account";
+import { dbApi } from "../../../actions/nodes";
 
 class WithdrawBTCForm extends Component {
     state = {
         sended: false,
         defaultData: false,
+		assets: false
     };
 
     componentDidMount() {
+		dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const startAsset = 'BTC';
         const basicAsset = getBasicAsset().symbol;
@@ -30,17 +37,14 @@ class WithdrawBTCForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
-        if(this.props.update) {
-            this.props.update();
-        }
+		updateAccountAndLoginData();
     };
 
 
     render() {
-        const {sended, defaultData} = this.state;
+        const {sended, defaultData, assets} = this.state;
 
         if (!defaultData) return <span/>;
 		return (
@@ -53,10 +57,11 @@ class WithdrawBTCForm extends Component {
 					action={transfer}
 					handleResult={this.handleTransfer}
 					needPassword
+					keyType="active"
 				>
 				{
 					form => {
-						const {errors, data} = form.state;
+						const {errors, data, transactionError} = form.state;
 
 						return (
 							<Fragment>
@@ -76,6 +81,12 @@ class WithdrawBTCForm extends Component {
 										onChange={form.handleChange}
 										error={errors}
 										value={data}
+										onKeyPress={(e) => {
+											if (!utils.isNumberKey(e)) {
+											  e.preventDefault();
+											}
+										}}
+										precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
 									/>
 								</div>
 								<div className="input__row">
@@ -99,6 +110,11 @@ class WithdrawBTCForm extends Component {
 								</div>
 								<div className="info__row">
 									{sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/>}
+									{transactionError && transactionError !== "" ? 
+										<span className="clr--negative">
+											<Translate className="" content={`errors.${transactionError}`} />
+										</span> 
+									: "" }
 									<span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
 								</div>
 								<div className="btn__row">

@@ -63,10 +63,11 @@ class AssetUpdateIssuer extends Component {
                       defaultData={defaultData}
                       handleResult={this.handleAssetUpdateIssuer}
                       needPassword
+                      keyType="owner"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return(
                                 <Fragment>
                                     <FieldWithHint
@@ -79,6 +80,11 @@ class AssetUpdateIssuer extends Component {
                                     <div className="btn__row">
                                         <span>Fee: {data.fee} {data.quantityAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Change</button>
                                     </div>
                                 </Fragment>
