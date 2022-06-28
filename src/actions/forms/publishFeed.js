@@ -6,7 +6,7 @@ import {getStore} from "../store";
 
 export const publishFeed = async (data, result) => {
     const {loginData, accountData} = getStore();
-    const {forceSettlementPrice, cer, mcr, mssr, core_exchange_rate, settlement_price} = data;
+    const {forceSettlementPrice, cer, mcr, mssr, core_exchange_rate, settlement_price, password, keyType} = data;
 
     const baseAsset = await formAssetData({asset_id: settlement_price.base.asset_id});
     const quoteAsset = await formAssetData({asset_id: settlement_price.quote.asset_id});
@@ -49,13 +49,26 @@ export const publishFeed = async (data, result) => {
         }
     };
 
-    const activeKey = loginData.formPrivateKey(data.password, 'active');
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    let activeKey = '';
 
-    if (trxResult) {
-        result.success = true;
-        result.callbackData = trxResult;
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
     }
+    try {
+        const trxResult = await trxBuilder([trx], [activeKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
 
-    return result;
+    } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");;
+        return result;
+    }
+    
 };

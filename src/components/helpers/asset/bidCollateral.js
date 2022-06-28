@@ -4,6 +4,7 @@ import Translate from "react-translate-component";
 import Form from "../form/form";
 import Input from "../form/input";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store/index";
+import { utils } from "../../../utils";
 
 class BidCollateral extends Component {
     state = {
@@ -74,6 +75,11 @@ class BidCollateral extends Component {
                                             labelParams={{token: data.mainAsset}}
                                             className="asset-action"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -83,6 +89,11 @@ class BidCollateral extends Component {
                                             labelParams={{token: data.mainAsset}}
                                             className="asset-action__quantity"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">

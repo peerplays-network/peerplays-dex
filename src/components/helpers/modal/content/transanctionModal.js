@@ -30,7 +30,6 @@ const fetchFunc = async (context) => {
             if(item.key == "memo") item.value = item.value.split("\n").join("<br/>")
             return item;
         })
-        console.log("e",e)
         return e
     });
     return {

@@ -8,14 +8,9 @@ import ModalTitle from "../decoration/modalTitle";
 import { setSidechainAccounts } from '../../../../dispatch/setAccount';
 import { removeModal } from '../../../../dispatch/setModal';
 import {clearLayout} from "../../../../dispatch/index";
-// const handleAddressGenerated = ({sidechainAccounts}) => {
-//     console.log(sidechainAccounts);
-//     if(sidechainAccounts) {
-//         setSidechainAccounts(sidechainAccounts);
-//     }
+import { updateAccountAndLoginData } from "../../../../actions/account";
+import Translate from "react-translate-component";
 
-//     removeModal();
-// }
 
 class GenerateAddress extends Component {
   state = {
@@ -24,6 +19,7 @@ class GenerateAddress extends Component {
       sidechain: this.props.sidechain,
       depositPublicKey: '',
       password: this.props.password,
+      keyType: this.props.keyType,
       withdrawPublicKey: '',
       withdrawAddress: '',
       fee: 0
@@ -41,10 +37,10 @@ class GenerateAddress extends Component {
     
     this.setState({sended: true}, () => {
     });
+    updateAccountAndLoginData();
 
     setTimeout(() => {
         clearLayout();
-        window.location.reload();
     }, 5000);
 };
 
@@ -64,7 +60,7 @@ class GenerateAddress extends Component {
             >
                 {
                     form => {
-                        const {errors} = form.state;
+                        const {errors, transactionError} = form.state;
                         return (
                     <Fragment>
                         <div className="modal__content">
@@ -96,7 +92,12 @@ class GenerateAddress extends Component {
                             </div>
                         </div>
                         {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
-                        {errors === "ERROR" && <h3 className="clr--negative">Something went wrong!! Try again.</h3>}
+                        {transactionError && transactionError !== "" ? 
+                            <span className="clr--negative">
+                                <Translate className="" content={`errors.${transactionError}`} />
+                            </span> 
+                            : ""}
+
                         <div className="modal__bottom">
                             <Close />
                             <Submit tag="create" />
