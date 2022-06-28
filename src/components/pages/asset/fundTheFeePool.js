@@ -5,6 +5,7 @@ import Translate from "react-translate-component";
 import Form from "../../helpers/form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
+import { utils } from "../../../utils";
 
 class FundTheFeePool extends Component {
     state = {
@@ -51,10 +52,11 @@ class FundTheFeePool extends Component {
                       action={assetFundFeePool}
                       handleResult={this.handleFundTheFeePool}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -73,11 +75,21 @@ class FundTheFeePool extends Component {
                                             error={errors}
                                             className="asset-action__quantity"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
+                                        <span>Fee: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Fund</button>
                                     </div>
                                 </Fragment>

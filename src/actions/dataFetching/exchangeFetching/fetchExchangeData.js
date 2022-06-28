@@ -42,14 +42,14 @@ export const fetchExchangeData = async (newPair) => {
 
     let pair = currentPair;
 
-    if(!pair || pair.quote.symbol === newQuote || pair.base.symbol !== newBase){
+    if(!pair || pair.quote.symbol !== newQuote || pair.base.symbol !== newBase){
         pair = await getPairData(newPair);
 
         if(currentPair){
             unsubscribeFromMarket();
-            editActivePair(`${currentPair.quote.symbol}_${currentPair.base.symbol}`);
         }
-
+        editActivePair(`${newQuote}_${newBase}`);
+        
         dbApi('subscribe_to_market', [reloadData, pair.base.id, pair.quote.id]);
     }
 
