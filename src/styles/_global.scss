@@ -76,6 +76,9 @@ a{
   &--positive{
     color: $positive;
   }
+  &--margin{
+    margin-left: 30px;
+  }
 }
 
 svg .mask{
