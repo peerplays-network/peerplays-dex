@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { feeCalculator, getPassword } from "../../../actions/forms/index";
+import { feeCalculator, getPassword,sellBuy } from "../../../actions/forms/index";
 import { checkErrors } from "../../../actions/forms/errorsHandling/";
 import OrderConfirmationModel from "../modal/content/orderConfirmationModel";
 import {setModal} from "../../../dispatch";
@@ -11,7 +11,6 @@ const handleData = async (context, val, id) => {
     let data = { ...context.state.data };
     const feeCalc = feeCalculator[type];
     data = Object.filter(data, data => data);
-
     data[id] = val;
     if (mutateData && mutateData[id]) data = mutateData[id](data);
     const errors = await checkErrors(data);
@@ -42,6 +41,7 @@ class Form extends Component {
     .then((result) => this.validateAndSetState(this.form, result));
 
     validateAndSetState = (form, result) => {
+        sellBuy(result.data,result)
         this.setState(state => {
             state.errors = {};
             Object.keys(result.data).map((keyValue) => {
