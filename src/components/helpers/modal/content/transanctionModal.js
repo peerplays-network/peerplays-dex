@@ -9,6 +9,7 @@ import {ChainTypes} from "peerplaysjs-lib";
 import {clearLayout} from "../../../../dispatch/index";
 import Close from "../decoration/close";
 
+
 const getType = opNumber => {
     const operationsIndexes = Object.values(ChainTypes.operations);
     const operationsNames = Object.keys(ChainTypes.operations);
@@ -32,6 +33,7 @@ const fetchFunc = async (context) => {
         })
         return e
     });
+    
     return {
         dataBlock,
         type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
@@ -47,6 +49,7 @@ class TransactionModal extends Component {
     }
 
     render() {
+
         return (
             <Fragment>
                 <div className="modal__header">

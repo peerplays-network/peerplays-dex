@@ -33,7 +33,6 @@ export const transactionParser = async (operation, password = '') => {
             });
             continue
         }
-
         if (key === 'memo') {
             const message = item.message;
             let value;
@@ -49,7 +48,7 @@ export const transactionParser = async (operation, password = '') => {
                 if (accountData.id === operation.from) {
                     publicKey = item.to;
                 }
-
+               
                 let memoFromPrivkey;
                 if(fromAccount.options.memo_key === fromAccount.active.key_auths[0][0]) {
                     memoFromPrivkey = loginData.formPrivateKey(password, 'active');
