@@ -37,31 +37,9 @@ export const transactionParser = async (operation, password = '') => {
         if (key === 'memo') {
             const message = item.message;
             let value;
-            if (message.slice(0, 8) === "00000000") {
-
-                value = (Buffer.from(message.slice(8), 'hex')).toString()
-
-            } else {
-                const {loginData, accountData} = getStore();
-                const fromAccount = await dbApi('get_account_by_name',[accountData.name]);
-                let publicKey = item.from;
-    
-                if (accountData.id === operation.from) {
-                    publicKey = item.to;
-                }
-
-                let memoFromPrivkey;
-                if(fromAccount.options.memo_key === fromAccount.active.key_auths[0][0]) {
-                    memoFromPrivkey = loginData.formPrivateKey(password, 'active');
-                } else {
-                    memoFromPrivkey = loginData.formPrivateKey(password, 'memo');
-                }
-                try {
-                    value = (Aes.decrypt_with_checksum(memoFromPrivkey, publicKey, item.nonce, message)).toString();
-                } catch (e) {
-                    console.error('Could not decode message.');
-                }
-            }
+            
+            value = (Buffer.from(message.slice(8), 'hex')).toString()
+            
             info.push({
                 key: "memo",
                 value
