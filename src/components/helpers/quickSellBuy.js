@@ -147,7 +147,7 @@ class QuickSellBuy extends Component {
                                         </div>
                                     </div>
                                     <div className="info__row">
-                                        <span className='clr--margin'>Fee: {data.fee} {data.sellAsset}</span>
+                                        <span className='clr--margin'><Translate className="" content={`exchange.fee`} />: {data.fee} {data.sellAsset}</span>
                                         {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">

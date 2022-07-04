@@ -18,6 +18,7 @@ export const ru = {
         "volume": "объем (asset/%(token)s)",
         "valueWithToken": "Значение (%(token)s)",
         "value": "ценность",
+        "fee": "Платеж",
         "actions": "Действия",
         "trade": "торговля",
         "orderID": "Идентификатор заказа",
@@ -295,6 +296,8 @@ export const ru = {
     "exchange": {
         "title": "обмен",
         "price": "Текущая цена",
+        "fee": "Платеж",
+        "fund":"ФОНД",
         "change": "Изменение (24h)",
         "value": "объем (24h)",
         "feed": "Цена корма",
@@ -349,7 +352,8 @@ export const ru = {
         "title": "информация"
     },
     "actions": {
-        "title": "Действия"
+        "title": "Действия",
+        "fund":"ФОНД"
     },
     "assetUpdate": {
         "title": "обновлять",
@@ -689,7 +693,8 @@ export const ru = {
             "local": "Местный кошелек (продвинутый)"
         },
         "checkboxes": {
-            "remember": "Запоми меня"
+            "remember": "Запоми меня",
+            "whaleVault": "Используйте расширение WhaleVault"
         },
         "upload": {
             "file": "Ключевой файл (%(fileSize)s)"
@@ -793,6 +798,16 @@ export const ru = {
         "brain": "Мозговой ключ",
     },
     "modal": {
+        "recive":{
+            "fee":"платеж",
+            "registrar":"регистратор",
+            "referrer":"реферер",
+            "referrer_percent":"процент реферала",
+            "name":"имя",
+            "owner":"владелец",
+            "active":"активный",
+            "options":"опции"
+        },
         "send": {
             "title": "Отправить"
         },
@@ -872,6 +887,7 @@ export const ru = {
         }
     },
     "buttons": {
+        "Asset":"Актив",
         "ping": "гудение",
         "clear": "Четкий список",
         "sendFunds": "Отправить средства",

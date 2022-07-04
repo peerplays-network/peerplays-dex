@@ -11,6 +11,8 @@ import {clearAssetData, setAssetData} from "../../../dispatch";
 import {getStore} from "../../../actions/store";
 import {fetchAssetData} from "../../../actions/dataFetching";
 import NeedToLogin from "../../helpers/needToLogin";
+import Translate from 'react-translate-component';
+
 
 const assetMenu = [
     {
@@ -76,7 +78,7 @@ class AssetPage extends Component {
         return (
             <div className="container page">
                 <div className="page__header-wrapper">
-                    <h1 className="page__title">Asset {symbol}</h1>
+                    <h1 className="page__title"><Translate className="" content={`buttons.Asset`} /> {symbol}</h1>
                 </div>
                 <PageMenu items={menu} link={`/asset/${symbol}`} path={'/asset/:symbol'} data={assetData} />
             </div>
