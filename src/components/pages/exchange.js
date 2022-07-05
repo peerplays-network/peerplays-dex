@@ -60,7 +60,7 @@ class Exchange extends Component {
         </div>
                 <PairStats pair={pair} data={stats} history={this.props.history} />
 
-                <Grid container >
+                <Grid container>
                     <Grid item xs={12} sm={3}>
                         <div className="exchangse">
                             <div className="">
