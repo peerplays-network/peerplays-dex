@@ -9,6 +9,8 @@ import {getAccountData} from "../../store";
 import {setModal} from "../../../dispatch";
 import WithdrawModal from "../../../components/helpers/modal/content/withdrawModal";
 import {getPassword} from "../../forms";
+import {getPairData, getPairStats} from "../exchangeFetching/index";
+import {getStore} from "../../store";
 
 const basicTableHead = [
     {
@@ -87,6 +89,10 @@ export const getUserAssets = async (context) => {
 
     const {name, assets} = context.props.data;
 
+
+    const currentPair = getStore().pageData;
+
+    let pair = currentPair;
     if(!assets || !assets.length) return [];
 
     const userLogged = getAccountData().name;
@@ -94,21 +100,45 @@ export const getUserAssets = async (context) => {
     const tableHead = userLogged ? basicTableHead : basicTableHead.slice(0, basicTableHead.length - 1);
 
     // And now we form asset data for table
+    const pairs = {
+        base: {
+            bitasset_data_id: undefined,
+            dynamic_asset_data_id: "2.3.5",
+            id: "1.3.5",
+            precision: 8,
+            symbol: "ABC"
+        },
+
+        quote: {
+            bitasset_data_id: undefined,
+            dynamic_asset_data_id: "2.3.0",
+            id: "1.3.0",
+            precision: 5,
+            symbol: "TEST"
+        }
+    }
+
+    const stats = await getPairStats(pairs);
+    console.log(currentPair)
 
     const rows = await Promise.all(assets.map(async el => {
+        
+            
+        
         const asset = isActiveUser ? el : await formAssetData(el);
 
         const symbol = asset.symbol;
         const available = asset.setPrecision();
         const defaultQuoteAsset = await formAssetData({symbol: defaultQuote})
-
-        let latest = 0, percent_change = 0, value = 0;
+        console.log(symbol)
+        console.log(defaultQuote)
+        let latest, percent_change = 0, value = 0;
 
         if(symbol !== defaultQuote) {
             try{
                 const tickerData = await dbApi('get_ticker', [symbol, defaultQuote]);
                 if(tickerData) {
-                    latest= roundNum(tickerData.latest, defaultQuoteAsset.precision);
+                    latest= roundNum(tickerData.latest);
                     percent_change = tickerData.percent_change;
                     value = roundNum(tickerData.quote_volume, 3)
                 } 

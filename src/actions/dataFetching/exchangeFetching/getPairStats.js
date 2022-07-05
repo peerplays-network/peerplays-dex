@@ -34,7 +34,7 @@ const getFeedData = async (asset) => {
 };
 
 export const getPairStats = async ({quote, base}) => {
-
+    
     const ticker = await dbApi('get_ticker', [base.symbol, quote.symbol]);
 
     let feedData = false;

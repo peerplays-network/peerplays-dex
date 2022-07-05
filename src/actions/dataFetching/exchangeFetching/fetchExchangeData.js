@@ -41,9 +41,9 @@ export const fetchExchangeData = async (newPair) => {
     const currentPair = getStore().pageData.pair;
 
     let pair = currentPair;
-
+    console.log(getStore().pageData)
     if(!pair || pair.quote.symbol !== newQuote || pair.base.symbol !== newBase){
-        pair = await getPairData(newPair);
+        // pair = await getPairData(newPair);
 
         if(currentPair){
             unsubscribeFromMarket();
