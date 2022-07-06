@@ -2,7 +2,7 @@ import React from 'react';
 import {roundNum} from "../../roundNum";
 import {formAssetData} from "../../assets";
 import {dispatchSendModal} from "../../forms/dispatchSendModal";
-import {defaultQuote} from "../../../params/networkParams";
+import {defaultQuote,defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
 import {IconBuy, IconDeposit, IconSend} from "../../../svg";
 import {getAccountData} from "../../store";
@@ -100,17 +100,17 @@ export const getUserAssets = async (context) => {
 
         const symbol = asset.symbol;
         const available = asset.setPrecision();
-        const defaultQuoteAsset = await formAssetData({symbol: defaultQuote})
+        const defaultQuoteAsset = await formAssetData({symbol: defaultToken})
 
         let latest = 0, percent_change = 0, value = 0;
 
         if(symbol !== defaultQuote) {
             try{
-                const tickerData = await dbApi('get_ticker', [symbol, defaultQuote]);
+                const tickerData = await dbApi('get_ticker', [symbol, defaultToken]);
                 if(tickerData) {
-                    latest= roundNum(tickerData.latest, defaultQuoteAsset.precision);
-                    percent_change = tickerData.percent_change;
-                    value = roundNum(tickerData.quote_volume, 3)
+                    latest= roundNum(Number(tickerData.latest, defaultQuoteAsset.precision));
+                    percent_change = roundNum(Number(tickerData.percent_change),1);
+                    value = roundNum(Number(tickerData.quote_volume), 3);
                 } 
             } catch(e){}
         }
