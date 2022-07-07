@@ -49,7 +49,7 @@ class FundTheFeePool extends Component {
         if (!defaultData) return <span/>;
 
         return (
-            <div className="card card--action">
+            <div className="card card--action cardresponsivediv">
                 <CardHeader title={`block.${title}.title`}/>
                 <Translate component="div" className="card__comment" content={`block.${title}.text`} with={{poolAsset: this.props.symbol}} />
                 <Form className="asset-action__content"
