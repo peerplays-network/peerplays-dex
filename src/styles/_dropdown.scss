@@ -115,12 +115,12 @@
   }
   &.open{
     > .dropdown__body{
-      transform: translate(-95%, 0);
+      transform: translate(-95%, 0);  
       width: 400px;
     }
   }
 }
-@media(min-width:420px){
+@media(min-width:320px){
   .dropdown__item{
     margin-right:60px;
     margin-top: -6px;

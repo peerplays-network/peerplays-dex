@@ -55,6 +55,7 @@
   }
   &__content{
     padding: 2.25rem 0;
+    overflow: auto;
     .tbd, .no-data{
       min-height: calc(100vh - 275px);
     }
