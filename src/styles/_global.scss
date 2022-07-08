@@ -78,6 +78,12 @@ a{
   }
   &--margin{
     margin-left: 30px;
+    @media only screen and (max-width:1199px){
+      margin-left: 15px;
+    }
+    @media only screen and (max-width:1024px){
+      margin-left: 0px;
+    }
   }
 }
 
