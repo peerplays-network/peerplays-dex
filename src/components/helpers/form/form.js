@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { feeCalculator, getPassword } from "../../../actions/forms/index";
+import { feeCalculator, getPassword ,sellBuy } from "../../../actions/forms/index";
 import { checkErrors } from "../../../actions/forms/errorsHandling/";
 import OrderConfirmationModel from "../modal/content/orderConfirmationModel";
 import {setModal} from "../../../dispatch";
@@ -42,6 +42,7 @@ class Form extends Component {
     .then((result) => this.validateAndSetState(this.form, result));
 
     validateAndSetState = (form, result) => {
+        sellBuy(result.data,result)
         this.setState(state => {
             state.errors = {};
             Object.keys(result.data).map((keyValue) => {

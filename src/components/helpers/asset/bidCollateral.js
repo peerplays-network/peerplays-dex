@@ -97,9 +97,9 @@ class BidCollateral extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Publish</button>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.quantityAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></span>}
+                                        <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.publish}`} /></button>
                                     </div>
                                 </Fragment>
                             )

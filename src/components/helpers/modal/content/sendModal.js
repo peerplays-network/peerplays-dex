@@ -180,7 +180,7 @@ class SendModal extends Component {
                                         />
                                         <div className="quantity-wrapper mt-2">
                                             <div>
-                                                Fee: {data.fee} {data.feeAsset}
+                                            <Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}
                                             </div>
                                             <div>
                                                 {transactionError && transactionError !== "" ? 
@@ -199,7 +199,7 @@ class SendModal extends Component {
                                         </div>
                                     </div>
                                     <div className="modal__bottom">
-                                        {sended && <h3 className="clr--positive">Transaction Completed</h3>}
+                                        {sended && <h3 className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></h3>}
                                         <Close/>
                                         <Submit tag="send"/>
                                     </div>

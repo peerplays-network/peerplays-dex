@@ -142,8 +142,8 @@ class PublishFeed extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                    <span><Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
                                                 <Translate className="" content={`errors.${transactionError}`} />
