@@ -117,3 +117,9 @@
     width: 100%;
   }
 }
+
+.cardresponsivediv {
+  @media only screen and (max-width:767px){
+    width: 100% !important;
+  }
+}

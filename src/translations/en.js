@@ -349,7 +349,11 @@ export const en = {
         "title": "Info"
     },
     "actions": {
-        "title": "Actions"
+        "title": "Actions",
+        "fund":"FUND",
+        "claim":"claim",
+        "publish":"publish",
+        "change":"change",
     },
     "assetUpdate": {
         "title": "Update",
@@ -791,6 +795,20 @@ export const en = {
         "brain": "Brain Key",
     },
     "modal": {
+        "recive":{
+            "fee":"fee",
+            "registrar":"registrar",
+            "referrer":"referrer",
+            "referrer_percent":"referrer_percent",
+            "name":"name",
+            "owner":"owner",
+            "active":"active",
+            "options":"options",
+            "seller":"seller",
+            "amount_to_sell":"amount_to_sell",
+            "min_to_receive":"min_to_receive",
+            "expiration":"expiration",
+        },
         "send": {
             "title": "Send"
         },
@@ -872,6 +890,7 @@ export const en = {
         }
     },
     "buttons": {
+        "Asset":"Asset",
         "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
