@@ -797,6 +797,10 @@ export const en = {
     "modal": {
         "recive":{
             "fee":"fee",
+            "from":"from",
+            "to":"to",
+            "amount":"amount",
+            "memo":"memo",
             "registrar":"registrar",
             "referrer":"referrer",
             "referrer_percent":"referrer_percent",

@@ -801,6 +801,10 @@ export const ru = {
     "modal": {
         "recive":{
             "fee":"платеж",
+            "from":"из",
+            "to":"к",
+            "amount":"количество",
+            "memo":"памятка",
             "registrar":"регистратор",
             "referrer":"реферер",
             "referrer_percent":"процент реферала",
