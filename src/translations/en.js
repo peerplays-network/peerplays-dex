@@ -753,7 +753,8 @@ export const en = {
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
         "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
-        "assetsShouldBeSame": "One of the assets should be",
+        "assetsShouldBeTEST": "One of the assets should be TEST",
+        "assetsShouldBePPY": "One of the assets should be PPY",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",

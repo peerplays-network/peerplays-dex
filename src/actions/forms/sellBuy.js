@@ -12,8 +12,8 @@ export const sellBuy = async (data, result) => {
     }
 
     if (data.sellAsset !== defaultToken && data.buyAsset !== defaultToken) {
-        result.errors['buyAsset'] = 'assetsShouldBeSame';
-        result.errors['sellAsset'] = 'assetsShouldBeSame';
+        result.errors['buyAsset'] = `assetsShouldBe${defaultToken}`;
+        result.errors['sellAsset'] = `assetsShouldBe${defaultToken}`;
         return result;
     }
 
