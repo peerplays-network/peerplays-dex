@@ -60,8 +60,7 @@ export const getUserOrders = async (pair, account) => {
             if(!orders.length) return false;
 
             const rows = await Promise.all(orders.map(async order => {
-
-                const expiration = formDate(order.expiration);
+                const expiration = formDate(order.expiration, ['date', 'month', 'year', 'time']);
 
                 const baseAsset = await formAssetData(order.sell_price.base);
                 const quoteAsset = await formAssetData(order.sell_price.quote);
