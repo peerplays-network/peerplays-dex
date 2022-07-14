@@ -7,6 +7,7 @@ import SelectHeader from "../helpers/selectHeader";
 import {blockContent} from "../../actions/blockContent";
 import {clearLayout} from "../../dispatch/layoutDispatch";
 import {searchFuncs} from "../../actions/forms/globalSearch";
+import {useNavigate} from 'react-router-dom';
 
 const searchTypes = ['users', 'blocks', 'tokens'];
 
@@ -18,10 +19,16 @@ class GlobalSearch extends Component{
     };
 
     componentWillReceiveProps(nextProps){
-        this.setState({searchType:searchTypes[0]})
-        if(this.props.open === nextProps.open) return;
-        blockContent(nextProps.open);
-        this.setState({result:[],value:''})
+        // this.setState({searchType:searchTypes[0]})
+        // if(this.props.open === nextProps.open) return;
+        // blockContent(nextProps.open);
+        // this.setState({ result: [], value: '' })
+        console.log(this)
+
+        const navigate = useNavigate();
+
+    navigate('/search', {replace: true});
+
     }
 
     changeSearchType = searchType => this.getResult(searchType, this.state.value);

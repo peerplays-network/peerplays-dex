@@ -19,6 +19,9 @@ class SearchForm extends Component{
         this.props.handleChange(this.state.val);
     };
 
+    componentDidMount() {
+        console.log(this)    
+    }
 
     render(){
         return(
