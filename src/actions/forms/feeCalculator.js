@@ -1,6 +1,7 @@
 import {TransactionHelper} from "peerplaysjs-lib";
 import {getAccountData, getBasicAsset, getFees, getStore} from "../store";
 import {Asset} from "../../classes";
+import { dbApi } from "../nodes";
 
 const defaultNonce = TransactionHelper.unique_nonce_uint64();
 
@@ -69,9 +70,9 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
     return result;
 };
 
-const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
-    const val = Number(amount_to_sell);
-    const val2 = Number(amount_to_receive)
+const calculateLimitOrderFee = async (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
+    const val = amount_to_sell==''?'': Number(amount_to_sell);
+    const val2 = amount_to_receive == undefined ?'': Number(amount_to_receive)
     const result = {
         feeErr: '',
         feeAmount: 0,
@@ -82,8 +83,6 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
         feeAmount: 0,
         errVariable: 'amount_to_receive'
     };
-
-
     if(!val){
         return result;
     } else if(isNaN(val)){
@@ -94,12 +93,12 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
         return result;
     }
 
-    if(!val2){
+    if(!val2 && val2 != ""){
         return result2;
     } else if(isNaN(val2)){
         result2.feeErr = 'isNan';
         return result2;
-    } else if(Number(val2) <= 0){
+    } else if(Number(val2) <= 0 && val2 !=""){
         result2.feeErr = 'isZero';
      return result2;
     }
@@ -143,8 +142,22 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
             amountToPay = feeAmount;
         }
     }
-
     if(usersBasicAsset.setPrecision() < amountToPay) result.feeErr = 'isNotEnough';
+   
+    let buyMarketFeePercent = 0;
+    let sellMarketFeePercent = 0;
+
+    const allAssets = await dbApi('list_assets', ['', 100])
+    const sellToken = allAssets.find(asset => asset.symbol === sellAsset)
+    const buyToken = allAssets.find(asset => asset.symbol === buyAsset)
+    if (sellToken.symbol !== basicAsset.symbol) {
+        sellMarketFeePercent = sellToken.options.market_fee_percent / 100;
+    }
+    if (buyToken.symbol !== basicAsset.symbol) {
+        buyMarketFeePercent = buyToken.options.market_fee_percent / 100;
+    }
+    result.sellMarketFeePercent = sellMarketFeePercent
+    result.buyMarketFeePercent = buyMarketFeePercent
 
     return result;
 }

@@ -41,7 +41,31 @@ const radioGroup = [
 class Assets extends Component {
     state = {
         assets: [],
-        radio: ''
+        radio: '',
+        filterAsset:[
+            "AQSQFHZAJVZDTVAC",
+            "AXFMUJYATHGJSOIV",
+            "BSEBEIBGLWDPKMDB",
+            "CFQBVAIKFFJEEOOJ",
+            "DOQIBMVBUJYYDXXF",
+            "MCLUSD",
+            "BTFUN",
+            "SEUSD",
+            "FKGANJJRLRRSUNTR",
+            "HVVTNQNBHEFYPSJP",
+            "LTQCNISQAEWLEJVS",
+            "NGJZSUSFKIJBXKWJ",
+            "OPNQEXZYKBPOZAUP",
+            "RCDQHTNAHQNDHJXE",
+            "RYVCIRCYJSVAUESQ",
+            "TSKXLOICQJTCFPYY",
+            "UGQZISWHZJKNGVRC",
+            "UUCSGNDAXHJNRJUF",
+            "WGKGQTICUIYEYTWV",
+            "WNIPJIXZAFZGHGIC",
+            "WTFUN",
+        ]
+    
     };
 
     componentDidMount() {
@@ -50,7 +74,7 @@ class Assets extends Component {
 
     render() {
         const {assets} = this.state;
-
+        const filterAssetResult = assets.filter((item) => !this.state.filterAsset.find(asset => item.asset === asset )) 
         return (
             <div className="assets">
                 <div className="assets__radioss">
@@ -65,9 +89,9 @@ class Assets extends Component {
                 </div>
                 <Table
                     tableHead={tableHead}
-                    rows={assets}
+                    rows={filterAssetResult}
                 />
-                <TableCard rows={assets} tableHead={tableHead}/>
+                <TableCard rows={filterAssetResult} tableHead={tableHead}/>
             </div>
         )
 

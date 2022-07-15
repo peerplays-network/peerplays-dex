@@ -6,6 +6,10 @@ import Textarea from "./form/textarea";
 import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
+import { utils } from '../../utils';
+import Translate from 'react-translate-component';
+import { dbApi } from '../../actions/nodes';
+
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -25,10 +29,14 @@ class SendForm extends Component {
     state = {
         sended: false,
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const userTokens = user.assets;
         const startAsset = userTokens.length ? userTokens[0].symbol : defaultToken;
@@ -50,21 +58,15 @@ class SendForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
         if(this.props.update) {
             this.props.update();
         }
-
-        // Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        // ",textarea:not(:disabled):not([readonly])")).forEach(
-        //     (input) => input.value = ""
-        // );
     };
 
    render() {
-        const {sended, defaultData, userTokens} = this.state;
+        const {sended, defaultData, userTokens, assets} = this.state;
 
         if (!defaultData) return <span/>;
 
@@ -78,10 +80,11 @@ class SendForm extends Component {
                     action={transfer}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -99,6 +102,12 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                         />
                                     </div>
                                     <div className="input__row">
@@ -140,12 +149,18 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            labelTag="field.labels.publicMemo"
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--send">SEND</button>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.feeAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
+                                        <button type="submit" className="btn-round btn-round--send"><Translate className="" content={"block.send.title"} /></button>
                                     </div>
                                 </Fragment>
                             )

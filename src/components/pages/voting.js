@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
+import counterpart from "counterpart";
 import Translate from "react-translate-component";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
@@ -11,7 +12,7 @@ import SaveChangesCard from "../helpers/saveChangesCard";
 import { getPassword, updateAccount } from "../../actions/forms";
 import { dbApi } from "../../actions/nodes";
 import { clearVotes } from "../../dispatch/votesDispatch";
-import { getAccountData } from "../../actions/store";
+import { getAccountData, getBasicAsset } from "../../actions/store";
 import VestGPOS from './voting/VestGPOS';
 import WithdrawGPOS from './voting/WithdrawGPOS';
 import { getAsset } from '../../actions/assets/getAsset';
@@ -24,7 +25,7 @@ import {getGlobalData} from "../../actions/dataFetching/getGlobalData";
 import {setAccount, setSidechainAccounts} from "../../dispatch/setAccount";
 import {setGlobals, setMaintenance} from "../../dispatch";
 import {setNotifications} from "../../dispatch/notificationsDispatch";
-
+import { utils } from '../../utils';
 
 
 const tableHeadWitnesses = [
@@ -188,12 +189,12 @@ const Voting = (props) => {
         var now = new Date();
         var utcNowMS = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()).getTime();
         var nextMtMS = new Date(maintenance.nextMaintenance).getTime();
-        var _hr = 0
         var _mt = Math.floor((nextMtMS - utcNowMS) / 1000 / 60);
-        var _ms = Math.floor((nextMtMS - utcNowMS - 60 * 1000 * _mt) / 1000);
-
+        var _hr = parseInt(_mt/60)
+        var _ms = Math.floor((nextMtMS - utcNowMS) / 1000);
+        var _mmt = "";
         if (nextMtMS <= utcNowMS) {
-            _mt = "0 Minute 0 Second";
+            _mmt = "0 Minute 0 Second";
             getGlobalData()
                 .then(({userData, globalData, notifications, lastBlockData}) => {
                     if(userData) {
@@ -214,23 +215,22 @@ const Voting = (props) => {
                 });
         } else {
             if (_mt === 0) {
-                _mt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
-            } else if (_mt === 1) {
-                _mt = _mt + " Minute " + _ms + " Seconds"
-            }else  if(_mt > 60){ 
-                _hr = Math.round(_mt/60)
-                _mt = _hr + " Hours " + (_mt - (_hr * 60)) + " Minutes " + _ms + " Seconds"
+                _mmt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
+            } else if (_hr === 0) {
+                _mmt = _mt + " Minute " +(_ms -(_mt*60)) + " Seconds"
+            }else  if(_hr > 0){
+                _mmt = _hr + " Hours " + (_mt-(_hr*60) ) + " Minutes " + (_ms -(_mt*60))+ " Seconds"
             }
              else {
-                _mt = _mt + " Minutes " + _ms + " Seconds"
+                _mmt = _mt + " Minutes " + _ms + " Seconds"
             }
         }
-        setGposSubPeriodStr(_mt)
+        setGposSubPeriodStr(_mmt)
     }
     useEffect(() => {
         setNewVotes(props.account.votes.map(el => el.vote_id))
     }, [props.account])
-    const saveResult = (password) => {
+    const saveResult = (password, keyType) => {
         setSaveLoading(true);
         let user = getAccountData();
         dbApi('get_account_by_name', [user.name]).then(e => {
@@ -245,7 +245,12 @@ const Voting = (props) => {
             new_options.num_witness = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 1).length;
             new_options.num_committee = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 0).length;
             new_options.num_son = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 3).length;
-            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password).then(async () => {
+            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password, keyType).then(async () => {
+                updateReduxAccount(await formAccount(user.name))
+                clearVotes();
+                setSaveLoading(false);
+            }).catch(async(e) => {
+                toast.error(counterpart.translate(`errors.${e.message.split(":")[0].replace(/\s+/g,"_")}`))
                 updateReduxAccount(await formAccount(user.name))
                 clearVotes();
                 setSaveLoading(false);
@@ -264,10 +269,10 @@ const Voting = (props) => {
     const handleSave = () => {
         let user = getAccountData();
         if (user.assets[0].amount / 100000 < 20) {
-            return toast.error('Insufficient test balance.')
+            return toast.error(`Insufficient ${getBasicAsset().symbol} balance.`)
         }
         if (totalGpos > 0) {
-            getPassword(saveResult)
+            getPassword(saveResult, 'active')
 
         } else {
             toast.error('You need to Vest some GPOS balance first')
@@ -359,7 +364,7 @@ const Voting = (props) => {
                 </Switch>
             </div>
             <SaveChangesCard
-                show={newVotes.length !== props.account.votes.length}
+                show={!utils.isArrayEqual(newVotes, props.account.votes.map(vote => vote.vote_id)) }
                 fee={props.data.update_fee}
                 cancelFunc={reset}
                 saveFunc={handleSave}

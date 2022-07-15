@@ -6,6 +6,8 @@ import Form from "../form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
+import { updateAccountAndLoginData } from "../../../actions/account";
 
 class FundTheFeePool extends Component {
     state = {
@@ -18,13 +20,14 @@ class FundTheFeePool extends Component {
         const user = getAccountData();
         const userTokens = user.assets;
         const basicAsset = getBasicAsset();
-        const symbol = this.props.symbol;
+        const poolAssetSymbol = this.props.symbol
         const defaultData = {
             from: user.name,
-            quantityAsset: symbol,
+            quantityAsset: basicAsset.symbol,
             fee: 0,
             feeAsset: basicAsset.symbol,
-            quantity: ''
+            quantity: '',
+            poolAssetSymbol: poolAssetSymbol
         };
 
         this.setState({userTokens, defaultData});
@@ -34,6 +37,7 @@ class FundTheFeePool extends Component {
         const context = this;
         this.setState({sended: true}, () => {
             fetchAssetData();
+            updateAccountAndLoginData();
             setTimeout(() => context.setState({sended: false}), 5000)
         });
     };
@@ -45,9 +49,9 @@ class FundTheFeePool extends Component {
         if (!defaultData) return <span/>;
 
         return (
-            <div className="card card--action">
+            <div className="card card--action cardresponsivediv">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <Translate component="div" className="card__comment" content={`block.${title}.text`} with={{poolAsset: this.props.symbol}} />
                 <Form className="asset-action__content"
                       type={'asset_fund_fee_pool'}
                       defaultData={defaultData}
@@ -55,10 +59,11 @@ class FundTheFeePool extends Component {
                       action={assetFundFeePool}
                       handleResult={this.handleFundTheFeePool}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -77,12 +82,22 @@ class FundTheFeePool extends Component {
                                             error={errors}
                                             className="asset-action__quantity"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Fund</button>
+                                    <span><Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
+                                       <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.fund`} /></button>
                                     </div>
                                 </Fragment>
                             )

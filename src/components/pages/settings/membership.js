@@ -61,7 +61,7 @@ const Membership = ({account}) => {
                 </div>
             </div>
             <PendingFees name={name} />
-            <MembershipTitle title="vestingTitle" subtitle="vestingDesc" />
+            <MembershipTitle title="vestingTitle" subtitle="vestingDesc" subtitleData={{symbol: feeAsset.symbol}} />
         </div>
     );
 }
