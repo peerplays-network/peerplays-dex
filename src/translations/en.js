@@ -431,7 +431,7 @@ export const en = {
             "title": "Generate Bitcoin Address"
         },
         "updateAddress": {
-            "title": "Update Bitcoin Address"
+            "title": "Update Bitcoin Deposit Address"
         }
     },
     "hive": {
