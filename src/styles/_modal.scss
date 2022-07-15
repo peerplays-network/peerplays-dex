@@ -67,6 +67,7 @@
     text-align: center;
     text-transform: uppercase;
     border-radius: 4px;
+
     &:hover {
       background: $grey-light;
     }
@@ -74,4 +75,7 @@
   &__field {
     margin-top: 2.2rem;
   }
+}
+.modal__smbottom button:last-child{
+  margin-top: 10px;
 }
