@@ -25,7 +25,7 @@ import {getGlobalData} from "../../actions/dataFetching/getGlobalData";
 import {setAccount, setSidechainAccounts} from "../../dispatch/setAccount";
 import {setGlobals, setMaintenance} from "../../dispatch";
 import {setNotifications} from "../../dispatch/notificationsDispatch";
-
+import { utils } from '../../utils';
 
 
 const tableHeadWitnesses = [
@@ -364,7 +364,7 @@ const Voting = (props) => {
                 </Switch>
             </div>
             <SaveChangesCard
-                show={newVotes.length !== props.account.votes.length}
+                show={!utils.isArrayEqual(newVotes, props.account.votes.map(vote => vote.vote_id)) }
                 fee={props.data.update_fee}
                 cancelFunc={reset}
                 saveFunc={handleSave}
