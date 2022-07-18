@@ -74,13 +74,6 @@ span.react-numeric-input{
 
 .dropdown__body.custom-scroll{
     max-height:13rem;
-    right: 0;
-    top: 100%    
-                                ;
-    .dropdown__item  {
-        margin-right: 0 !important;
-        margin-top: 0 !important;
-    }
 }
 @media only screen and (max-width:767px){
     .dropdown__body.custom-scroll{
@@ -96,25 +89,3 @@ span.react-numeric-input{
 }
 
 .margin{ margin-left: 3%;}
-
-
-.page__content{
-    .table{
-        .actions__wrapper{
-            .dropdown__body{
-                width: 120px !important;
-                overflow: hidden;
-                left: -8px;
-            }
-        }
-    }
-    .MuiPaper-root {
-        .actions__wrapper{
-            .dropdown__body{
-                width: 114px !important;
-                overflow: hidden;
-                left: -19px;
-            }
-        }
-    }
-}
