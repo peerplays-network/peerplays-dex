@@ -65,3 +65,11 @@
     margin-bottom: 2rem;
   }
 }
+
+
+.global-search__result .card{
+  @media only screen and (max-width:390px){
+    margin: 0 !important;
+    padding: 10px;
+  }
+}
