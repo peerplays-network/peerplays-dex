@@ -295,6 +295,7 @@ export const ru = {
     "exchange": {
         "title": "обмен",
         "price": "Текущая цена",
+        "fee": "Платеж",
         "change": "Изменение (24h)",
         "value": "объем (24h)",
         "feed": "Цена корма",
@@ -349,7 +350,11 @@ export const ru = {
         "title": "информация"
     },
     "actions": {
-        "title": "Действия"
+        "title": "Действия",
+        "fund":"ФОНД",
+        "claim":"требовать",
+        "publish":"публиковать",
+        "change":"сдача",
     },
     "assetUpdate": {
         "title": "обновлять",
@@ -689,7 +694,8 @@ export const ru = {
             "local": "Местный кошелек (продвинутый)"
         },
         "checkboxes": {
-            "remember": "Запоми меня"
+            "remember": "Запоми меня",
+            "whaleVault": "Используйте расширение WhaleVault"
         },
         "upload": {
             "file": "Ключевой файл (%(fileSize)s)"
@@ -751,6 +757,8 @@ export const ru = {
         "remainIssueNotEnough": "Оставшегося количества предложения недостаточно для выпуска",
         "sonError": "Сеть сыновей сейчас недоступна!! Попробуйте позже.",
         "keyExists": "Ключ уже существует.",
+        "assetsShouldBeTEST": "Один из активов должен быть TEST",
+        "assetsShouldBePPY": "Один из активов должен быть PPY",
         "newAcc": {
             "noCapital": "Имя учетной записи не должно содержать заглавных букв",
             "longer": "Имя учетной записи должно быть длиннее",
@@ -793,6 +801,20 @@ export const ru = {
         "brain": "Мозговой ключ",
     },
     "modal": {
+        "recive":{
+            "fee":"платеж",
+            "registrar":"регистратор",
+            "referrer":"реферер",
+            "referrer_percent":"процент реферала",
+            "name":"имя",
+            "owner":"владелец",
+            "active":"активный",
+            "options":"опции",
+            "seller":"продавец",
+            "amount_to_sell":"сумма_для_продажи",
+            "min_to_receive":"мин_до_получать",
+            "expiration":"истечение срока",
+        },
         "send": {
             "title": "Отправить"
         },
@@ -872,6 +894,7 @@ export const ru = {
         }
     },
     "buttons": {
+        "Asset":"Актив",
         "ping": "гудение",
         "clear": "Четкий список",
         "sendFunds": "Отправить средства",

@@ -349,7 +349,11 @@ export const en = {
         "title": "Info"
     },
     "actions": {
-        "title": "Actions"
+        "title": "Actions",
+        "fund":"FUND",
+        "claim":"claim",
+        "publish":"publish",
+        "change":"change",
     },
     "assetUpdate": {
         "title": "Update",
@@ -749,6 +753,8 @@ export const en = {
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
         "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
+        "assetsShouldBeTEST": "One of the assets should be TEST",
+        "assetsShouldBePPY": "One of the assets should be PPY",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
@@ -791,6 +797,20 @@ export const en = {
         "brain": "Brain Key",
     },
     "modal": {
+        "recive":{
+            "fee":"fee",
+            "registrar":"registrar",
+            "referrer":"referrer",
+            "referrer_percent":"referrer_percent",
+            "name":"name",
+            "owner":"owner",
+            "active":"active",
+            "options":"options",
+            "seller":"seller",
+            "amount_to_sell":"amount_to_sell",
+            "min_to_receive":"min_to_receive",
+            "expiration":"expiration",
+        },
         "send": {
             "title": "Send"
         },
@@ -872,6 +892,7 @@ export const en = {
         }
     },
     "buttons": {
+        "Asset":"Asset",
         "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
