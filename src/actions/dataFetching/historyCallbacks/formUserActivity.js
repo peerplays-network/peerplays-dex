@@ -36,7 +36,8 @@ export const formUserActivity = async (context) => {
     }));
 };
 const handleTransactionClick = async (user, operation) => {
-
+    console.log(user);
+    console.log(operation)
     const operationData = operation.op[1];
         
     setModal(<TransactionModal user={user} blockNum={operation.block_num}
@@ -44,7 +45,7 @@ const handleTransactionClick = async (user, operation) => {
 }
 
 const formInfoColumn = async (user, operation) => {
-    const {type, data} = await formTrxInfo(user, operation);
+    const { type, data } = await formTrxInfo(user, operation);
     const basicTag = `tableInfo.${type}`;
     return {
         type: <Translate content={`${basicTag}.title`} component="a"
@@ -65,7 +66,6 @@ export const formTrxInfo = async (user, operation, notification = false) => {
     if (!formAdditionalInfo[type]) return '';
 
     const data = await formAdditionalInfo[type](notification, opData, opResult);
-
     if (type === 'transfer') type = opData.from === user ? 'send' : 'receive';
 
     return {type, data}
