@@ -10,16 +10,16 @@ import {clearLayout} from "../../../../dispatch/index";
 import Close from "../decoration/close";
 
 const getType = opNumber => {
+    console.log(opNumber)
     const operationsIndexes = Object.values(ChainTypes.operations);
     const operationsNames = Object.keys(ChainTypes.operations);
-
     return operationsNames[operationsIndexes.indexOf(opNumber)].toLowerCase();
 };
 
 const fetchFunc = async (context) => {
     const {blockNum, trxNum, password} = context.props;
     const dataBlock = await dbApi('get_block', [blockNum]).then(e => e);
-console.log(dataBlock)
+console.log(blockNum)
     const type = getType(dataBlock.transactions[trxNum].operations[0][0]);
 
     const basicTag = `tableInfo.${type}`;
@@ -47,7 +47,7 @@ class TransactionModal extends Component {
                 <div className="modal__header">
                     <h1>Block #{this.props.blockNum}</h1>
                 </div>
-                {/* <div className="operation__block">
+                <div className="operation__block">
                     <div className="header">
                         {!!(this.props.data.trxNum) && <div className="number">#{this.props.data.trxNum}</div>}
                         {this.props.data.type}
@@ -55,7 +55,7 @@ class TransactionModal extends Component {
                     {
                         this.props.data.info.map((item, index) => <TransferItem data={item} key={index}/>)
                     }
-                </div> */}
+                </div>
 
                 <div className="modal__bottom">
                     <Close tag="close" />
