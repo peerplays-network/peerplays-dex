@@ -41,7 +41,7 @@ const handleTransactionClick = async (user, operation) => {
     const operationData = operation.op[1];
         
     setModal(<TransactionModal user={user} blockNum={operation.block_num}
-        trxNum={operation.trx_in_block} />)
+        trxNum={operation.trx_in_block} op={operation.op[0]} />)
 }
 
 const formInfoColumn = async (user, operation) => {

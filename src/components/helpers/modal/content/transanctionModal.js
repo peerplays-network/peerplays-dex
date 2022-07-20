@@ -9,19 +9,20 @@ import {ChainTypes} from "peerplaysjs-lib";
 import {clearLayout} from "../../../../dispatch/index";
 import Close from "../decoration/close";
 
-const getType = opNumber => {
-    console.log(opNumber)
+const getType = async (opNumber) => {
     const operationsIndexes = Object.values(ChainTypes.operations);
     const operationsNames = Object.keys(ChainTypes.operations);
+    console.log(operationsNames)
     return operationsNames[operationsIndexes.indexOf(opNumber)].toLowerCase();
 };
 
 const fetchFunc = async (context) => {
-    const {blockNum, trxNum, password} = context.props;
+    const { blockNum, trxNum, password, op } = context.props;
     const dataBlock = await dbApi('get_block', [blockNum]).then(e => e);
-console.log(blockNum)
-    const type = getType(dataBlock.transactions[trxNum].operations[0][0]);
-
+    
+    const operationsNames = Object.keys(ChainTypes.operations);
+    let type = operationsNames[op].toLowerCase();
+    
     const basicTag = `tableInfo.${type}`;
     const operation = dataBlock.transactions[trxNum].operations[0][1];
     operation.type = type
