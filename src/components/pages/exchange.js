@@ -15,8 +15,6 @@ import Grid from '@material-ui/core/Grid';
 import { updateAccountAndLoginData } from '../../actions/account';
 class Exchange extends Component {
 
-    update = updateAccountAndLoginData
-
     state = {
         isLoaded: false
     };
@@ -87,7 +85,7 @@ class Exchange extends Component {
                             type="buy"
                             pair={pair}
                             defaultData={fieldParams}
-                            update={this.update}
+                            update={updateAccountAndLoginData}
                         />
                     </Grid>
                     <Grid item xs={12} sm={3} className="exchange__center" style={{ padding: '10px 10px 10px 10px'}}>
@@ -96,7 +94,7 @@ class Exchange extends Component {
                             type="sell"
                             pair={pair}
                             defaultData={fieldParams}
-                            update={this.update}
+                            update={updateAccountAndLoginData}
                         />
                     </Grid>
                 </Grid>
