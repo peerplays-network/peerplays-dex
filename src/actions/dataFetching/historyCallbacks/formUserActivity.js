@@ -36,8 +36,6 @@ export const formUserActivity = async (context) => {
     }));
 };
 const handleTransactionClick = async (user, operation) => {
-    console.log(user);
-    console.log(operation)
     const operationData = operation.op[1];
         
     setModal(<TransactionModal user={user} blockNum={operation.block_num}
