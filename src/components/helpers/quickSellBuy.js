@@ -33,6 +33,10 @@ class QuickSellBuy extends Component {
     };
 
     componentDidMount() {
+        this.setBasicData();
+    }
+
+    setBasicData = () => {
         const userTokens = getAccountData().assets.map(e => e.symbol);
         dbApi('list_assets', ['', 100]).then(assets => {
             this.setState({assets});
@@ -47,13 +51,17 @@ class QuickSellBuy extends Component {
             amount_to_receive: 0
         };
 
-        this.setState({userTokens, defaultData});
-    }
+        this.setState({ userTokens, defaultData });
+    };
 
 
-    handleTransfer = (data) => {
+    handleTransfer = () => {
         const context = this;
-        this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData();
+            setTimeout(() => context.setState({sended: false}), 5000)
+        });
+        
         if(this.props.update) {
             this.props.update();
         }
