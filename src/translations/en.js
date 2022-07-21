@@ -10,6 +10,7 @@ export const en = {
         "sidechainAccounts": "Sidechain Accounts"
     },
     "tableHead": {
+        "Price_per_KByte": "Price per KByte",
         "asset": "Asset",
         "available": "Available",
         "priceWithToken": "Price (%(token)s)",
