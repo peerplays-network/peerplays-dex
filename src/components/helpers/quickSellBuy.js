@@ -57,10 +57,10 @@ class QuickSellBuy extends Component {
         if(this.props.update) {
             this.props.update();
         }
-        Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        ",textarea:not(:disabled):not([readonly])")).forEach(
-            (input) => input.value = ""
-        );
+        // Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
+        // ",textarea:not(:disabled):not([readonly])")).forEach(
+        //     (input) => input.value = ""
+        // );
         
     };
 
