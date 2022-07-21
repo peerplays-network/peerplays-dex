@@ -14,7 +14,7 @@ const getType = opNumber => {
 };
 
 const fetchFunc = async (context) => {
-    const {operation, password} = context.props;
+    const {operation, password, keyType} = context.props;
     const {trx_in_block, block_num} = operation;
 
     const type = getType(operation.op[0]);
@@ -23,7 +23,7 @@ const fetchFunc = async (context) => {
     const operationData = operation.op[1] 
     operationData.type = type
 
-    const info = await transactionParser(operationData, password).then(e => e);
+    const info = await transactionParser(operationData, password, keyType).then(e => e);
     return {
         type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
         info,

@@ -27,7 +27,7 @@ const checkPassword = async (data, result, keyType) => {
     return result;
 };
 
-const checkWhaleVault = async (data, result) => {    
+const checkWhaleVault = async (data, result) => { 
     if (window.whalevault) {         
         result.success = true;
         result.callbackData = { password: "", type: "whaleVault" };
