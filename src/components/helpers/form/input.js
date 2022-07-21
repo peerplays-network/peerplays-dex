@@ -32,7 +32,10 @@ const Input = (props) => {
                 disabled={disabled}
                 onKeyPress={onKeyPress ?  onKeyPress : null}         
                 onChange={onChange ? (e) => {
-                    if(precision && precision !== "") {
+                    if(precision && precision !== "" &&
+                        Number(e.target.value) > 0 &&
+                        String(e.target.value).split(".")[1] &&
+                        String(e.target.value).split(".")[1].length > Number(precision)) {
                         e.target.value = utils.roundNum(e.target.value, Number(precision));
                         onChange(utils.roundNum(e.target.value, Number(precision)), name)
                     } 
@@ -41,7 +44,7 @@ const Input = (props) => {
                     e.preventDefault()
                 }}
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
-                placeholder=" "
+                placeholder=""
                 min={min}
                 className="field__input"
                 autoComplete="new-password"
