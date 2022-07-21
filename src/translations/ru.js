@@ -10,6 +10,7 @@ export const ru = {
         "sidechainAccounts": "Учетные записи боковых цепей"
     },
     "tableHead": {
+        "Price_per_KByte": "Цена за килобайт",
         "asset": "актив",
         "available": "доступный",
         "priceWithToken": "Цена (%(token)s)",
