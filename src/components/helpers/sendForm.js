@@ -144,7 +144,6 @@ class SendForm extends Component {
                                         <Textarea   
                                             name="memo"
                                             maxLength={MEMO_MAX_LENGTH}
-                                            comment={true}
                                             className="memo"
                                             onChange={form.handleChange}
                                             error={errors}
