@@ -848,7 +848,7 @@ export const en = {
             "title": "Log in"
         },
         "unlock": {
-            "title": "This transaction needs your %(keyType)s key"
+            "title": "Your %(keyType)s key is needed"
         },
         "binRestore": {
             "title": "Restore account from .bin file"

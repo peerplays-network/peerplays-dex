@@ -850,7 +850,7 @@ export const ru = {
             "title": "Войти"
         },
         "unlock": {
-            "title": "Разблокировать профиль для %(login)s"
+            "title": "Ваш ключ %(keyType)s необходим"
         },
         "binRestore": {
             "title": "Восстановить аккаунт из .bin файла"
