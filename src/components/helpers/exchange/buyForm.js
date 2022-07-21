@@ -142,7 +142,13 @@ class BuyForm extends Component{
         }
     };
 
-    resetForm = (props) => this.setState({defaultData: false}, () => { this.setBasicData(props) });
+    resetForm = (props) => {
+        this.setState({ defaultData: false }, () => { this.setBasicData(props) });
+
+         if(this.props.update) {
+            this.props.update();
+        }
+    }
 
     render(){
         const type = this.props.type;

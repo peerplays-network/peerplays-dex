@@ -35,12 +35,8 @@ export const formUserActivity = async (context) => {
       };
     }));
 };
-const handleTransactionClick = async (user, operation) => {
-
-    const operationData = operation.op[1];
-        
-    setModal(<TransactionModal user={user} blockNum={operation.block_num}
-        trxNum={operation.trx_in_block} />)
+const handleTransactionClick = async (user, operation) => {        
+    setModal(<TransactionModal user={user}  operation={operation}/>)
 }
 
 const formInfoColumn = async (user, operation) => {

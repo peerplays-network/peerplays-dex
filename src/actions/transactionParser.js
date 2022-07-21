@@ -58,7 +58,7 @@ export const transactionParser = async (operation, password = '') => {
                 continue;
             }
         } else if (typeof(item) === 'object') {
-            if (item.amount && item.asset_id) {
+            if (item.amount !== undefined && item.asset_id) {
                 asset = await new Asset({
                     id: item.asset_id,
                     amount: item.amount
