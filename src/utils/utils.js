@@ -3,7 +3,6 @@ import { isEmpty, isEqual, size, xorWith } from "lodash";
 export const utils = {
 
   isNumberKey: (e) => {
-    console.log("ghasem", e)
     const numbers = "0123456789.";
     if (numbers.includes(e.key)) {
       return true;
