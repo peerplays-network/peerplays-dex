@@ -54,7 +54,9 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
 
     let feeAmount = basicAsset.setPrecision(false, rawFee);
 
-    if(memo && memo.length > 0){
+    const emptyMemoRegex = /^\s+$/;
+
+    if(memo && memo.length > 0 && !emptyMemoRegex.test(memo)){
         const rawAdditional = feeData.price_per_kbyte;
         const memoLength = JSON.stringify(account.keys.memo).length;
         const helperLength = JSON.stringify(defaultNonce).length;
