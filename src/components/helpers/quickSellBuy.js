@@ -33,14 +33,14 @@ class QuickSellBuy extends Component {
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets});
+        })
         this.setBasicData();
     }
 
     setBasicData = () => {
         const userTokens = getAccountData().assets.map(e => e.symbol);
-        dbApi('list_assets', ['', 100]).then(assets => {
-            this.setState({assets});
-        })
         const basicAsset = getBasicAsset().symbol;
         const defaultData = {
             sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
