@@ -4,6 +4,7 @@ import FieldWrapper from "./fieldWrapper";
 
 const Input = (props) => {
 
+    const BROWSER_INPUT_MAX_LENGTH = 300
     const {
         id,
         name = '',
@@ -30,7 +31,17 @@ const Input = (props) => {
                 defaultValue={value[name]}
                 type={type}
                 disabled={disabled}
-                onKeyPress={onKeyPress ?  onKeyPress : null}         
+                onKeyPress={onKeyPress ? (e) => {
+                    if(e.target.value.length > BROWSER_INPUT_MAX_LENGTH) {
+                        e.preventDefault()
+                    } else {
+                        onKeyPress(e)
+                    }
+                } : (e) => {
+                    if(e.target.value.length > BROWSER_INPUT_MAX_LENGTH) {
+                        e.preventDefault()
+                    }
+                }}         
                 onChange={onChange ? (e) => {
                     if(precision && precision !== "" &&
                         Number(e.target.value) > 0 &&
