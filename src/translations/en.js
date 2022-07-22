@@ -10,6 +10,7 @@ export const en = {
         "sidechainAccounts": "Sidechain Accounts"
     },
     "tableHead": {
+        "Price_per_KByte": "Price per KByte",
         "asset": "Asset",
         "available": "Available",
         "priceWithToken": "Price (%(token)s)",
@@ -40,8 +41,8 @@ export const en = {
         "weight": "Weight",
         "webpage": "Webpage",
         "operation": "Operation",
-        "standardFee": "Standard Fee (bitUSD)",
-        "memberFee": "Member Fee (bitUSD)",
+        "standardFee": "Standard Fee",
+        "memberFee": "Member Fee",
         "blockID": "Block ID",
         "date": "Date",
         "blockTimestamp": "Time",
@@ -753,6 +754,8 @@ export const en = {
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
         "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
+        "assetsShouldBeTEST": "One of the assets should be TEST",
+        "assetsShouldBePPY": "One of the assets should be PPY",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
@@ -846,7 +849,7 @@ export const en = {
             "title": "Log in"
         },
         "unlock": {
-            "title": "This transaction needs your %(keyType)s key"
+            "title": "Your %(keyType)s key is needed"
         },
         "binRestore": {
             "title": "Restore account from .bin file"

@@ -3,7 +3,7 @@ import Input from "./form/input";
 import Form from "./form/form";
 import {sellBuy} from "../../actions/forms";
 import {defaultQuote, defaultToken} from "../../params/networkParams";
-import {getAccountData} from "../../actions/store";
+import {getAccountData, getBasicAsset} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
@@ -33,33 +33,38 @@ class QuickSellBuy extends Component {
     };
 
     componentDidMount() {
-        const userTokens = getAccountData().assets.map(e => e.symbol);
         dbApi('list_assets', ['', 100]).then(assets => {
             this.setState({assets});
         })
+        this.setBasicData();
+    }
+
+    setBasicData = () => {
+        const userTokens = getAccountData().assets.map(e => e.symbol);
+        const basicAsset = getBasicAsset().symbol;
         const defaultData = {
             sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
             buyAsset: defaultQuote,
+            feeAsset: basicAsset,
             fee: 0,
             amount_to_sell: 0,
             amount_to_receive: 0
         };
 
-        this.setState({userTokens, defaultData});
-    }
+        this.setState({ userTokens, defaultData });
+    };
 
 
-    handleTransfer = (data) => {
+    handleTransfer = () => {
         const context = this;
-        this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData();
+            setTimeout(() => context.setState({sended: false}), 5000)
+        });
+        
         if(this.props.update) {
             this.props.update();
         }
-        Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        ",textarea:not(:disabled):not([readonly])")).forEach(
-            (input) => input.value = ""
-        );
-        
     };
 
   
@@ -102,7 +107,7 @@ class QuickSellBuy extends Component {
                                             }}
                                             precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
                                             name="sellAsset"
                                             method={getUserAssetsList}
@@ -115,7 +120,7 @@ class QuickSellBuy extends Component {
                                             hint={'asset'}
 
                                         />
-                                        </div>
+   
                                     </div>
                                     <div className="input__row">
                                         <Input
@@ -133,7 +138,7 @@ class QuickSellBuy extends Component {
                                             }}
                                             precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
                                             name="buyAsset"
                                             method={getAssetsList}
@@ -144,10 +149,10 @@ class QuickSellBuy extends Component {
                                             readOnly={true}
                                             hint={'asset'}
                                         />
-                                        </div>
+
                                     </div>
                                     <div className="info__row">
-                                    <span className='clr--margin'><Translate className="" content={`exchange.fee`} />: {data.fee} {data.sellAsset}</span>
+                                    <span className='clr--margin'><Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}</span>
                                         {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">

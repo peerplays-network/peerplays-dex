@@ -2,11 +2,18 @@ import {trxBuilder} from "./trxBuilder";
 import {Asset} from "../../classes/asset";
 import {getStore} from "../store";
 import {getDefaultFee} from "./getDefaultFee";
+import {defaultToken} from "../../params/networkParams";
 
 export const sellBuy = async (data, result) => {
     if (data.sellAsset === data.buyAsset) {
         result.errors['buyAsset'] = 'sameAsset';
         result.errors['sellAsset'] = 'sameAsset';
+        return result;
+    }
+
+    if (data.sellAsset !== defaultToken && data.buyAsset !== defaultToken) {
+        result.errors['buyAsset'] = `assetsShouldBe${defaultToken}`;
+        result.errors['sellAsset'] = `assetsShouldBe${defaultToken}`;
         return result;
     }
 

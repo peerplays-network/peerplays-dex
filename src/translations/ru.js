@@ -10,6 +10,7 @@ export const ru = {
         "sidechainAccounts": "Учетные записи боковых цепей"
     },
     "tableHead": {
+        "Price_per_KByte": "Цена за килобайт",
         "asset": "актив",
         "available": "доступный",
         "priceWithToken": "Цена (%(token)s)",
@@ -40,8 +41,8 @@ export const ru = {
         "weight": "вес",
         "webpage": "Веб-страница",
         "operation": "операция",
-        "standardFee": "Стандартная плата (bitUSD)",
-        "memberFee": "Плата за участие (bitUSD)",
+        "standardFee": "Стандартная плата",
+        "memberFee": "Плата за участие",
         "blockID": "Идентификатор блока",
         "date": "дата",
         "witness": "свидетель",
@@ -757,6 +758,8 @@ export const ru = {
         "remainIssueNotEnough": "Оставшегося количества предложения недостаточно для выпуска",
         "sonError": "Сеть сыновей сейчас недоступна!! Попробуйте позже.",
         "keyExists": "Ключ уже существует.",
+        "assetsShouldBeTEST": "Один из активов должен быть TEST",
+        "assetsShouldBePPY": "Один из активов должен быть PPY",
         "newAcc": {
             "noCapital": "Имя учетной записи не должно содержать заглавных букв",
             "longer": "Имя учетной записи должно быть длиннее",
@@ -848,7 +851,7 @@ export const ru = {
             "title": "Войти"
         },
         "unlock": {
-            "title": "Разблокировать профиль для %(login)s"
+            "title": "Ваш ключ %(keyType)s необходим"
         },
         "binRestore": {
             "title": "Восстановить аккаунт из .bin файла"
