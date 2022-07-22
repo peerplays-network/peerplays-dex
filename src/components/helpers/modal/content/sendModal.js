@@ -179,7 +179,7 @@ class SendModal extends Component {
                                             value={data}
                                         />
                                         <div className="quantity-wrapper mt-2">
-                                            <div>
+                                            <div className='padding-one'>
                                             <Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}
                                             </div>
                                             <div>
