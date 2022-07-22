@@ -50,14 +50,16 @@ export const transfer = async (data) => {
     }
 
     const memo = data.memo;
+    const emptyMemoRegex = /^\s+$/;
+
     let memoFromPublic, memoToPublic;
-    if (memo) {
+    if (memo && !emptyMemoRegex.test(memo)) {
         memoFromPublic = fromAccount.options.memo_key;
         memoToPublic = toAccount.options.memo_key;
     }
 
     let memoObject;
-    if (memo && memoFromPublic && memoToPublic) {   
+    if (memo && !emptyMemoRegex.test(memo) && memoFromPublic && memoToPublic) {   
         memoObject = {
             from: memoFromPublic,
             to: memoToPublic,

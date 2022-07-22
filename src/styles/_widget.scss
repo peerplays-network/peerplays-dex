@@ -55,12 +55,16 @@
 }
 
 .form__sell-buy {
-  width: 85%;
-  margin: 0 1.6rem;
+  width: 95%;
+  margin: 0 1rem;
 
-  label {
-    max-width: 200px;
+  .dropdown, label {
+    width: 100%;
   }
+   label {
+    margin-right: 3rem;
+  }
+  
 }
 
 .form__send {

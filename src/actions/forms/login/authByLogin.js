@@ -20,7 +20,7 @@ export const authByLogin = async ({login, password, remember, isWhaleVault}, res
             return result;
         }
     } else {
-        if (window.whalevault) {         
+        if (window.whalevault) {
             const res = await window.whalevault.promiseRequestPubKeys("dex", `ppy:${login}`)
             const pubKeys = res.result[`ppy:${login}`];
             if(res.success){
@@ -35,12 +35,12 @@ export const authByLogin = async ({login, password, remember, isWhaleVault}, res
                     return result;
                 }
             } else{
-              result.errors.isWhaleVault = "whaleVaultConnectionError"  ;
+              result.errors.login = "whaleVaultConnectionError"  ;
               return result;
             }
             
         } else {
-            result.errors.isWhaleVault = 'whaleNotInstalled';
+            result.errors.login = 'whaleNotInstalled';
             return result;
         }
 

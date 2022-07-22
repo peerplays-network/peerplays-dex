@@ -107,7 +107,7 @@ class QuickSellBuy extends Component {
                                             }}
                                             precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
                                             name="sellAsset"
                                             method={getUserAssetsList}
@@ -120,7 +120,7 @@ class QuickSellBuy extends Component {
                                             hint={'asset'}
 
                                         />
-                                        </div>
+   
                                     </div>
                                     <div className="input__row">
                                         <Input
@@ -138,7 +138,7 @@ class QuickSellBuy extends Component {
                                             }}
                                             precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
                                             name="buyAsset"
                                             method={getAssetsList}
@@ -149,7 +149,7 @@ class QuickSellBuy extends Component {
                                             readOnly={true}
                                             hint={'asset'}
                                         />
-                                        </div>
+
                                     </div>
                                     <div className="info__row">
                                     <span className='clr--margin'><Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}</span>
