@@ -33,10 +33,14 @@ class QuickSellBuy extends Component {
     };
 
     componentDidMount() {
-        const userTokens = getAccountData().assets.map(e => e.symbol);
         dbApi('list_assets', ['', 100]).then(assets => {
             this.setState({assets});
         })
+        this.setBasicData();
+    }
+
+    setBasicData = () => {
+        const userTokens = getAccountData().assets.map(e => e.symbol);
         const basicAsset = getBasicAsset().symbol;
         const defaultData = {
             sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
@@ -47,21 +51,20 @@ class QuickSellBuy extends Component {
             amount_to_receive: 0
         };
 
-        this.setState({userTokens, defaultData});
-    }
+        this.setState({ userTokens, defaultData });
+    };
 
 
-    handleTransfer = (data) => {
+    handleTransfer = () => {
         const context = this;
-        this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData();
+            setTimeout(() => context.setState({sended: false}), 5000)
+        });
+        
         if(this.props.update) {
             this.props.update();
         }
-        Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        ",textarea:not(:disabled):not([readonly])")).forEach(
-            (input) => input.value = ""
-        );
-        
     };
 
   
