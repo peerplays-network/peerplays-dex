@@ -96,7 +96,6 @@ class UserVoting extends Component {
         let workers = this.props.data.worker_account.filter(item => item.vote);
         let sons = this.props.data.son_account.filter(item => item.vote);
 
-        console.log(sons)
         if (witnesses && witnesses.length) buttons.push("Witnesses");
         if (committee && committee.length) buttons.push("Committee");
         if (workers && workers.length) buttons.push("Workers");
@@ -139,7 +138,7 @@ class UserVoting extends Component {
 
     render() {
         const {data, buttons, show} = this.state;
-        console.log(data)
+
         return (
             <div className="user__voting">
                 {
