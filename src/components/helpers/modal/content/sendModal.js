@@ -199,7 +199,7 @@ class SendModal extends Component {
                                         </div>
                                     </div>
                                     <div className="modal__bottom">
-                                        {sended && <h3 className="clr--positive"><Translate className="" content={`success.transCompleted}`} /></h3>}
+                                        {sended && <h3 className="clr--positive"><Translate className="" content={`success.transCompleted`} /></h3>}
                                         <Close/>
                                         <Submit tag="send"/>
                                     </div>

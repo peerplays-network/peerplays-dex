@@ -7,7 +7,7 @@ import { Aes } from "peerplaysjs-lib";
 import { getBasicAsset, getStore } from "./store";
 import { formAssetData } from "./assets";
 
-export const transactionParser = async (operation, password = '') => {
+export const transactionParser = async (operation, password = '' , keyType) => {
     let asset, info = [];
     const type = operation.type
     const operationWithoutType = Object.keys(operation).filter(key =>
@@ -35,10 +35,43 @@ export const transactionParser = async (operation, password = '') => {
         }
 
         if (key === 'memo') {
+            const {loginData, accountData} = getStore();
             const message = item.message;
             let value;
-            
-            value = (Buffer.from(message.slice(8), 'hex')).toString()
+            if (message.slice(0, 8) === "00000000") {
+                value = (Buffer.from(message.slice(8), 'hex')).toString()
+            } else {
+                if(password) {
+                    const fromAccount = await dbApi('get_account_by_name',[accountData.name]);
+                    let publicKey = item.from;
+        
+                    if (accountData.id === operation.from) {
+                        publicKey = item.to;
+                    }
+    
+                    let memoFromPrivkey;
+                   
+                    memoFromPrivkey = loginData.formPrivateKey(password, 'memo');
+                   
+                    try {
+                        value = (Aes.decrypt_with_checksum(memoFromPrivkey, publicKey, item.nonce, message)).toString();
+                    } catch (e) {
+                        console.error('Could not decode message.');
+                    }
+                } else {
+                    try {
+                        const response = await window.whalevault
+                            .promiseRequestDecryptMemo("peerplays-dex", `ppy:${accountData.name}`, message, "memo", "")
+                        if(response.success) {
+                            value = response.message
+                        } else {
+                            console.error('Could not decode message.');
+                        }
+                    } catch(e) {
+                        console.error('Could not decode message.');
+                    }
+                }
+            }
             
             info.push({
                 key: "memo",
@@ -58,7 +91,7 @@ export const transactionParser = async (operation, password = '') => {
                 continue;
             }
         } else if (typeof(item) === 'object') {
-            if (item.amount && item.asset_id) {
+            if (item.amount !== undefined && item.asset_id) {
                 asset = await new Asset({
                     id: item.asset_id,
                     amount: item.amount
