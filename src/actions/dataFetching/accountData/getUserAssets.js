@@ -110,7 +110,7 @@ export const getUserAssets = async (context) => {
             } catch(e){}
         }
 
-        const change = !percent_change || percent_change == 0 ? `0%` : percent_change > 0 ? `+${percent_change}%` : `-${percent_change}%`;
+        const change = !percent_change || percent_change == 0 ? `0%` : percent_change > 0 ? `+${percent_change}%` : `${percent_change}%`;
 
         const actions = userLogged && formActions(symbol, name, isActiveUser);
 
