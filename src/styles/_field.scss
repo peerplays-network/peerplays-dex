@@ -115,7 +115,11 @@
 }
 
 @media (max-width:850px){
-  .field__error{
-    font-size: 9px !important;
+  .ErrorCss{
+    .field__error{
+      font-size: 10px !important;
+      padding: 0;
+    }
   }
 }
+

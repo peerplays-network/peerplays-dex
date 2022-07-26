@@ -147,6 +147,7 @@ class SendModal extends Component {
                                                 name="quantity"
                                                 type="number"
                                                 onChange={form.handleChange}
+                                                className="ErrorCss"
                                                 error={errors}
                                                 value={data}
                                                 onKeyPress={(e) => {
