@@ -61,6 +61,19 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
+
+  @media(max-width:500px){
+  .grid__cade {
+    display: block;
+    grid-template-columns: none;
+  }
+  .card__margins {
+   width: 90%;
+  }
+  &__card{
+    padding: 10px;
+  }
+}
   .asset-stats{
     margin-bottom: 2rem;
   }
