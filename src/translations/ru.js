@@ -718,7 +718,7 @@ export const ru = {
         "notAddedToWhaleVault": "Эта учетная запись не добавлена в whaleVault",
         "wrongKeysAddedToWhale": "Добавленные ключи в whaleVault неверны",
         "whaleVaultConnectionError": "Не удается отправить запрос в whaleVault",
-        "whaleNotInstalled": "WhaleVault не установлен",
+        "whaleNotInstalled": "WhaleVault не установлен. Пожалуйста, установите расширение WhaleVault и перезагрузите приложение.",
         "required": "Это поле не требуется.",
         "invalid_public_key": "Предоставленный открытый ключ неверен",
         "invalid_address": "Предоставленный адрес не подходит для вашей сети биткойн",

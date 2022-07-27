@@ -52,7 +52,7 @@ class Block extends Component {
 
         return (
             <div className="container">
-                <BlockHeader num={this.props.data.blockNum} data={[this.props.data.dataBlock]}/>
+                <BlockHeader num={this.props.data.blockNum} data={this.props.data.dataBlock}/>
                 {
                     transaction.map((item, index) =>
                         <div className="operation__block" key={index}>
