@@ -33,7 +33,7 @@ const ChildBlock = ({column, data}) => {
                 </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-                <Typography style={{fontSize: '12px'}}>{data[column]}</Typography>
+                <Typography className="block__typography">{data[column]}</Typography>
             </Grid>
         </Grid>
     );

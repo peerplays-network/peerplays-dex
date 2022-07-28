@@ -62,6 +62,10 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
 
+  .block__typography {
+    font-size: 12px;
+  }
+  
   @media(max-width:500px){
   .grid__cade {
     display: block;
@@ -72,6 +76,9 @@
   }
   &__card{
     padding: 10px;
+  }
+  .block__typography {
+    font-size: 10px;
   }
 }
   .asset-stats{
