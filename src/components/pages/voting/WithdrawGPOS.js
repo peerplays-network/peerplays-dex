@@ -127,12 +127,12 @@ const WithdrawGPOS = (props) => {
 				</div>
 				<div style={{ marginTop: 12 }}  className="input-cus-style">
 				<div style={{padding:"0 10px"}}>
-				<Translate  className="" content={"voting.newGpos"} /> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong>
+				{/* <Translate  className="" content={"voting.newGpos"} /> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong> */}
 				</div>
 				</div>
 			</CardContent>
 			<div className="info__row margin">
-			<span>Fee: {fee} {getBasicAsset().symbol}</span>
+			<span><Translate className="" content={"tableHead.fee"} />: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 			{error && <span className="clr--negative"><Translate content={`errors.${error}`} /></span>}
 		  </div>
