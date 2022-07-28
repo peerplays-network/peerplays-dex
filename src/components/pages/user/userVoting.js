@@ -129,7 +129,7 @@ class UserVoting extends Component {
 
     render() {
         const {data, buttons, show} = this.state;
-
+        
         return (
             <div className="user__voting">
                 {
@@ -140,9 +140,8 @@ class UserVoting extends Component {
                                 text={show}
                                 className="select-voting"
                             />}
-                            list={buttons.map(item => <button onClick={() => this.setState({show: item.toLowerCase()})}>
-                                {item}
-                            </button>)}
+                            list={buttons.filter(items => items.toLowerCase() !== show).map(item => <button onClick={() => this.setState({show: item.toLowerCase()})}>{item}</button>)}
+                  
                         />
                         :
                         <span className="no-data">No data</span>
