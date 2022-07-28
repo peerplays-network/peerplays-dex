@@ -138,7 +138,7 @@ class UserVoting extends Component {
 
     render() {
         const {data, buttons, show} = this.state;
-
+        
         return (
             <div className="user__voting">
                 {

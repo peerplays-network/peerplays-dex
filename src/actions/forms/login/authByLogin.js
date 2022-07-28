@@ -40,7 +40,7 @@ export const authByLogin = async ({login, password, remember, isWhaleVault}, res
             }
             
         } else {
-            result.errors.login = 'whaleNotInstalled';
+            result.errors.login = 'whalevault_not_installed';
             return result;
         }
 

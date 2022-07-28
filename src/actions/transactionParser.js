@@ -7,7 +7,7 @@ import { Aes } from "peerplaysjs-lib";
 import { getBasicAsset, getStore } from "./store";
 import { formAssetData } from "./assets";
 
-export const transactionParser = async (operation, password = '' , keyType) => {
+export const transactionParser = async (operation, password = '', decodeMemo = false) => {
     let asset, info = [];
     const type = operation.type
     const operationWithoutType = Object.keys(operation).filter(key =>
@@ -58,7 +58,7 @@ export const transactionParser = async (operation, password = '' , keyType) => {
                     } catch (e) {
                         console.error('Could not decode message.');
                     }
-                } else {
+                } else if(decodeMemo) {
                     try {
                         const response = await window.whalevault
                             .promiseRequestDecryptMemo("peerplays-dex", `ppy:${accountData.name}`, message, "memo", "")
