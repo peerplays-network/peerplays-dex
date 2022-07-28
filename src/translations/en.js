@@ -713,7 +713,7 @@ export const en = {
         "notAddedToWhaleVault":"This account is not added to whaleVault",
         "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
         "whaleVaultConnectionError": "Can not Send Request to whaleVault",
-        "whaleNotInstalled": "WhaleVault is not installed. Please install WhaleVault extension and reload the app",
+        "whalevault_not_installed": "WhaleVault is not installed. Please install WhaleVault extension and reload the app",
         "required": "This field is required.",
         "invalid_public_key": "Provided public key is not correct",
         "invalid_address": "Provided address is not correct for your bitcoin network",
