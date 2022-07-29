@@ -77,7 +77,7 @@ const issueAction = async (data, result) => {
         }
         return result;
     } catch(e) {
-        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
+        result.transactionError = e.message.toLowerCase().split(":")[0].replace(/\s+/g,"_");
         return result;
     }   
 
