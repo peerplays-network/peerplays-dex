@@ -56,10 +56,10 @@ class OrderConfirmationModel extends Component {
                 </div>
                 {this.orderPreviewItems.map(elem => (
                     <Grid container spacing={1} key={elem} style={{justifyContent: "space-between"}}>
-                        <Grid item xs={12} sm={3}>
+                        <Grid item xs={6} sm={3}>
                             <Typography variant="h6">{elem.charAt(0).toUpperCase()}{elem.substr(1,)}</Typography>
                         </Grid>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={6} sm={6}>
                             <Typography
                                 style={{fontSize: '12px', textAlign: "right"}}>{this.state.data[elem]}</Typography>
                         </Grid>
