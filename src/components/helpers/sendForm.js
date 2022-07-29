@@ -108,6 +108,7 @@ class SendForm extends Component {
                                                 }
                                             }}
                                             precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
+                                            min={0}
                                         />
                                     </div>
                                     <div className="input__row">
