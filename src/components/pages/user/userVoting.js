@@ -94,10 +94,12 @@ class UserVoting extends Component {
         let witnesses = this.props.data.witness_account.filter(item => item.vote);
         let committee = this.props.data.committee_member_account.filter(item => item.vote);
         let workers = this.props.data.worker_account.filter(item => item.vote);
+        let sons = this.props.data.son_account.filter(item => item.vote);
 
         if (witnesses && witnesses.length) buttons.push("Witnesses");
         if (committee && committee.length) buttons.push("Committee");
         if (workers && workers.length) buttons.push("Workers");
+        if (sons && sons.length) buttons.push("Sons");
 
         this.setState({
             data: {
@@ -120,6 +122,13 @@ class UserVoting extends Component {
                         ...worker,
                         rank: index + 1,
                         vote_icon: <IconCheckGreen/>
+                    })),
+                sons: sons
+                    .map((son, index) => ({
+                        ...son,
+                        rank: index + 1,
+                        vote_icon: <IconCheckGreen/>,
+                        status: son.active ? 'Active' : 'Proposed'
                     }))
             },
             buttons,
@@ -129,7 +138,7 @@ class UserVoting extends Component {
 
     render() {
         const {data, buttons, show} = this.state;
-
+        
         return (
             <div className="user__voting">
                 {
@@ -140,9 +149,8 @@ class UserVoting extends Component {
                                 text={show}
                                 className="select-voting"
                             />}
-                            list={buttons.map(item => <button onClick={() => this.setState({show: item.toLowerCase()})}>
-                                {item}
-                            </button>)}
+                            list={buttons.filter(items => items.toLowerCase() !== show).map(item => <button onClick={() => this.setState({show: item.toLowerCase()})}>{item}</button>)}
+                  
                         />
                         :
                         <span className="no-data">No data</span>

@@ -59,7 +59,7 @@ const WithdrawGPOS = (props) => {
 					setWithdrawAmount(0);
 					setWithdrawDisabled(false);
 				}).catch(e => {
-					setError(e.message.split(":")[0].replace(/\s+/g,"_"))
+					setError(e.message.toLowerCase().split(":")[0].replace(/\s+/g,"_"))
 					setTimeout(() => setError(""), 5000)
 					setWithdrawDisabled(false)
 				});
