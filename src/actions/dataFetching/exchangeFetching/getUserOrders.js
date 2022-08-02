@@ -44,7 +44,7 @@ export const getUserOrders = async (pair, account) => {
         },
         {
             key: 'action',
-            translateTag: 'kill',
+            translateTag: 'cancel',
             params: 'fit-content--center clr--negative'
         }
     ];
