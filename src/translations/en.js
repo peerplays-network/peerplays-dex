@@ -60,7 +60,7 @@ export const en = {
         "ratio": "Ratio",
         "callPrice": "Call Price",
         "expiration": "Expiration",
-        "kill": "Cancel",
+        "cancel": "Cancel",
         "param": "%(param)s",
         "total": "Total (%(token)s)",
         "name_description": "Name / Description",
