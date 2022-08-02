@@ -786,8 +786,8 @@ export const en = {
     },
     "success":{
         "transCompleted": "Transaction Completed",
-        "sidechainUpdated": "Sidechain address has been updated.",
-        "sidechainGenerated": "Sidechain address has been generated.",
+        "sidechainUpdated": "Sidechain address update running through secure cross-chain consensus processes. Estimated wait based on current Bitcoin network load: 60 min (updates are underway to optimize this).",
+        "sidechainGenerated": "Sidechain address generation running through secure cross-chain consensus processes. Estimated wait based on current Bitcoin network load: 60 min (updates are underway to optimize this).",
     },
     "tabs": {
         "orderBook": "Order Book",
