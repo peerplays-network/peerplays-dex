@@ -59,7 +59,7 @@ export const ru = {
         "ratio": "пропорция",
         "callPrice": "Цена звонка",
         "expiration": "истечение",
-        "kill": "Удалить",
+        "cancel": "Отмена",
         "param": "%(param)s",
         "total": "Итого (%(token)s)",
         "name_description": "Имя / Описание",
@@ -84,34 +84,6 @@ export const ru = {
             "title": "Создание учетной записи",
             "description": "%(registrar)s зарегистрированный счет %(user)s"
         },
-        "vesting_balance_create":{
-            "title": "Вестинг GPOS",
-            "description": "%(user)s Жилет %(quantity)s GPOS",
-        },
-        "vesting_balance_withdraw":{
-            "title": "Отзывать GPOS",
-            "description": "%(user)s Отзывать %(quantity)s GPOS",
-        },
-        "send": {
-            "title": "Отправить",
-            "description": "%(sender)s отправить %(quantity)s до %(receiver)s"
-        },
-        "receive": {
-            "title": "получать",
-            "description": "%(receiver)s получил %(quantity)s от %(sender)s"
-        },
-        "limit_order_create": {
-            "title": "Создание заказа",
-            "description": "%(creator)s разместил заказ %(id)s на %(marketLink)s, чтобы купить %(buy)s за %(sell)s"
-        },
-        "limit_order_cancel": {
-            "title": "Отмена заказа",
-            "description": "%(user)s отмененный заказ #%(id)s"
-        },
-        "fill_order": {
-            "title": "Заказ заполнен",
-            "description": "%(user)s купил %(receives)s для %(pays)s на %(marketLink)s для заказа #%(id)s"
-        },
         "account_update": {
             "title": "Обновленная учетная запись",
             "description": "%(user)s обновленные данные учетной записи"
@@ -120,33 +92,21 @@ export const ru = {
             "title": "Обновленная учетная запись",
             "description": "%(user)s обновленная учетная запись для пожизненного члена"
         },
-        "worker_create": {
-            "title": "Создан работник",
-            "description": "%(user)s создал предложение работника с ежедневной оплатой %(dailyPay)s"
-        },
-        "proposal_create": {
-            "title": "Предложение Создать",
-            "description": ""
-        },
-        "balance_claim": {
-            "title": "требование баланса",
-            "description": ""
-        },
-        "transfer": {
-            "title": "Перевод",
-            "description": ""
-        },
-        "asset_fund_fee_pool": {
-            "title": "Фонд активов Плата бассейн",
-            "description": "%(from)s финансируемых %(symbol)s платный бассейн с %(amount)s"
-        },
         "account_whitelist": {
             "title": "Учетная запись Белый список",
             "description": "%(issuer)s %(status)s счет %(listed)s"
         },
+        "asset_claim_pool": {
+            "title": "Претензия пула сборов за активы",
+            "description": "%(issuer)s заявленный %(claimed)s от %(asset)s пул гонорара"
+        },
         "asset_create": {
             "title": "Создание активов",
             "description": "%(issuer)s создал актив %(assetName)s"
+        },
+        "asset_fund_fee_pool": {
+            "title": "Фонд активов Плата бассейн",
+            "description": "%(from)s финансируемых %(symbol)s платный бассейн с %(amount)s"
         },
         "asset_issue": {
             "title": "Выпуск активов",
@@ -156,18 +116,58 @@ export const ru = {
             "title": "Обновление актива",
             "description": "%(issuer)s обновленный актив %(asset)s"
         },
-        "asset_claim_pool": {
-            "title": "Претензия пула сборов за активы",
-            "description": "%(issuer)s заявленный %(claimed)s от %(asset)s пул гонорара"
+        "asset_update_feed_producers": {
+            "title": "Обновление производителей кормов для активов",
+            "description": "%(issuer)s обновил кормовые производители для актива %(asset)s"
         },
         "asset_update_issuer": {
             "title": "Обновление эмитента активов",
             "description": "%(issuer)s передал права на %(asset)s до %(newOwner)s"
         },
-        "asset_update_feed_producers": {
-            "title": "Обновление производителей кормов для активов",
-            "description": "%(issuer)s обновил кормовые производители для актива %(asset)s"
-        }
+        "balance_claim": {
+            "title": "требование баланса",
+            "description": ""
+        },
+        "fill_order": {
+            "title": "Заказ заполнен",
+            "description": "%(user)s купил %(receives)s для %(pays)s на %(marketLink)s для заказа #%(id)s"
+        },
+        "limit_order_cancel": {
+            "title": "Отмена заказа",
+            "description": "%(user)s отмененный заказ #%(id)s"
+        },
+        "limit_order_create": {
+            "title": "Создание заказа",
+            "description": "%(creator)s разместил заказ %(id)s на %(marketLink)s, чтобы купить %(buy)s за %(sell)s"
+        },
+        "proposal_create": {
+            "title": "Предложение Создать",
+            "description": ""
+        },
+        "receive": {
+            "title": "получать",
+            "description": "%(receiver)s получил %(quantity)s от %(sender)s"
+        },
+        "send": {
+            "title": "Отправить",
+            "description": "%(sender)s отправить %(quantity)s до %(receiver)s"
+        },
+        "transfer": {
+            "title": "Перевод",
+            "description": ""
+        },
+        "vesting_balance_create":{
+            "title": "Вестинг GPOS",
+            "description": "%(user)s Жилет %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Отзывать GPOS",
+            "description": "%(user)s Отзывать %(quantity)s GPOS",
+        },
+        "worker_create": {
+            "title": "Создан работник",
+            "description": "%(user)s создал предложение работника с ежедневной оплатой %(dailyPay)s"
+        },
     },
     "dashboard": {
         "title": "Приборная панель",
@@ -790,8 +790,8 @@ export const ru = {
     },
     "success":{
         "transCompleted": "Транзакция завершена",
-        "sidechainUpdated": "Адрес боковой цепи обновлен.",
-        "sidechainGenerated": "Адрес боковой цепи сгенерирован.",
+        "sidechainUpdated": "Обновление адреса сайдчейна выполняется через безопасные процессы консенсуса между цепочками. Расчетное время ожидания, основанное на текущей загрузке сети Биткойн: 60 минут (идет обновление для оптимизации этого).",
+        "sidechainGenerated": "Генерация адресов сайдчейна, работающая через безопасные процессы консенсуса между цепочками. Расчетное время ожидания, основанное на текущей загрузке сети Биткойн: 60 минут (идет обновление для оптимизации этого).",
     },
     "tabs": {
         "orderBook": "Книга заказов",
