@@ -84,34 +84,6 @@ export const en = {
             "title": "Account Creation",
             "description": "%(registrar)s registered the account %(user)s",
         },
-        "vesting_balance_create":{
-            "title": "Vesting GPOS",
-            "description": "%(user)s Vest %(quantity)s GPOS",
-        },
-        "vesting_balance_withdraw":{
-            "title": "Withdraw GPOS",
-            "description": "%(user)s Withdraw %(quantity)s GPOS",
-        },
-        "send": {
-            "title": "Send",
-            "description": "%(sender)s send %(quantity)s to %(receiver)s",
-        },
-        "receive": {
-            "title": "Receive",
-            "description": "%(receiver)s received %(quantity)s from %(sender)s",
-        },
-        "limit_order_create": {
-            "title": "Create Order",
-            "description": "%(creator)s placed order #%(id)s at %(marketLink)s to buy %(buy)s for %(sell)s",
-        },
-        "limit_order_cancel": {
-            "title": "Cancel Order",
-            "description": "%(user)s cancelled order #%(id)s",
-        },
-        "fill_order": {
-            "title": "Order Filled",
-            "description": "%(user)s bought %(pays)s for %(receives)s at %(marketLink)s for order #%(id)s",
-        },
         "account_update": {
             "title": "Account Updated",
             "description": "%(user)s updated account data",
@@ -120,33 +92,21 @@ export const en = {
             "title": "Account Upgraded",
             "description": "%(user)s upgraded account to lifetime member",
         },
-        "worker_create": {
-            "title": "Worker Created",
-            "description": "%(user)s created a worker proposal with daily pay of %(dailyPay)s",
-        },
-        "proposal_create": {
-            "title": "Proposal Create",
-            "description": ""
-        },
-        "balance_claim": {
-            "title": "Balance claim",
-            "description": ""
-        },
-        "transfer": {
-            "title": "Transfer",
-            "description": ""
-        },
-        "asset_fund_fee_pool": {
-            "title": "Fund Asset Fee Pool",
-            "description": "%(from)s funded %(symbol)s fee pool with %(amount)s"
-        },
         "account_whitelist": {
             "title": "Account Whitelist",
             "description": "%(issuer)s %(status)s the account %(listed)s"
         },
+        "asset_claim_pool": {
+            "title": "Claim asset fee pool",
+            "description": "%(issuer)s claimed %(claimed)s from %(asset)s fee pool"
+        },
         "asset_create": {
             "title": "Asset Create",
             "description": "%(issuer)s created the asset %(assetName)s"
+        },
+        "asset_fund_fee_pool": {
+            "title": "Fund Asset Fee Pool",
+            "description": "%(from)s funded %(symbol)s fee pool with %(amount)s"
         },
         "asset_issue": {
             "title": "Issue Asset",
@@ -156,10 +116,6 @@ export const en = {
             "title": "Update Asset",
             "description": "%(issuer)s updated asset %(asset)s"
         },
-        "asset_claim_pool": {
-            "title": "Claim asset fee pool",
-            "description": "%(issuer)s claimed %(claimed)s from %(asset)s fee pool"
-        },
         "asset_update_issuer": {
             "title": "Update asset issuer",
             "description": "%(issuer)s transferred rights for %(asset)s to %(newOwner)s"
@@ -167,7 +123,51 @@ export const en = {
         "asset_update_feed_producers": {
             "title": "Update asset feed producers",
             "description": "%(issuer)s updated the feed producers for the asset %(asset)s"
-        }
+        },
+        "balance_claim": {
+            "title": "Balance claim",
+            "description": ""
+        },
+        "fill_order": {
+            "title": "Order Filled",
+            "description": "%(user)s bought %(pays)s for %(receives)s at %(marketLink)s for order #%(id)s",
+        },
+        "limit_order_cancel": {
+            "title": "Cancel Order",
+            "description": "%(user)s cancelled order #%(id)s",
+        },
+        "limit_order_create": {
+            "title": "Create Order",
+            "description": "%(creator)s placed order #%(id)s at %(marketLink)s to buy %(buy)s for %(sell)s",
+        },
+        "proposal_create": {
+            "title": "Proposal Create",
+            "description": ""
+        },
+        "receive": {
+            "title": "Receive",
+            "description": "%(receiver)s received %(quantity)s from %(sender)s",
+        },
+        "send": {
+            "title": "Send",
+            "description": "%(sender)s send %(quantity)s to %(receiver)s",
+        },
+        "transfer": {
+            "title": "Transfer",
+            "description": ""
+        },
+        "vesting_balance_create":{
+            "title": "Vesting GPOS",
+            "description": "%(user)s Vest %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Withdraw GPOS",
+            "description": "%(user)s Withdraw %(quantity)s GPOS",
+        },    
+        "worker_create": {
+            "title": "Worker Created",
+            "description": "%(user)s created a worker proposal with daily pay of %(dailyPay)s",
+        },
     },
     "dashboard": {
         "title": "Dashboard",
