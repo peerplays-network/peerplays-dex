@@ -11,7 +11,6 @@ import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
 
-
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
     let history = context.props.data.history;
@@ -23,7 +22,7 @@ export const formUserActivity = async (context) => {
     return Promise.all(history.map(async el => {
       const fee = el.op[1].fee;
 
-      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp));
+      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp, ['date', 'month', 'year', 'time']));
       const {type, info} = await formInfoColumn(user, el);
       const feeAsset = await formAssetData(fee);
 
