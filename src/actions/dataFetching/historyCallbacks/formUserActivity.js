@@ -4,35 +4,12 @@ import {getUserName} from "../../account/getUserName";
 import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
-// import {formDate} from "../../formDate";
+import {formDate} from "../../formDate";
 import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
-
- const convertUTCDateToLocalDate = (date) => {
-    const newDate = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60 * 1000
-    );
-    return newDate;
-  };
-
-const formDate = (date, pattern = ["day", "month", "date", "year"]) => {
-    const localDate = convertUTCDateToLocalDate(new Date(date));
-    const newDate = String(localDate).split(" ");
-    const dateObj = {
-        day: newDate[0] + ",",
-        date: newDate[2],
-        month: newDate[1],
-        year: newDate[3],
-        time: newDate[4],
-      };
-
-    return `${dateObj.year}-${
-        localDate.getMonth() + 1
-      }-${localDate.getDate()} ${dateObj.time}`;
-}
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
@@ -45,7 +22,7 @@ export const formUserActivity = async (context) => {
     return Promise.all(history.map(async el => {
       const fee = el.op[1].fee;
 
-      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp));
+      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp, ['date', 'month', 'year', 'time']));
       const {type, info} = await formInfoColumn(user, el);
       const feeAsset = await formAssetData(fee);
 
