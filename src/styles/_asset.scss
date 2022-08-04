@@ -50,6 +50,16 @@
       }
     }
   }
+
+  @media(max-width:500px){
+    &__content {
+      padding: 0px 10px;
+      div {
+        min-width: 300px;
+        padding: 0.1rem;
+      }
+    }
+  }
 }
 
 .asset-action {
@@ -123,3 +133,4 @@
     width: 100% !important;
   }
 }
+
