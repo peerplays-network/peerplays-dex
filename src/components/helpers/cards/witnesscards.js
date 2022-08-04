@@ -6,7 +6,7 @@ import Translate from "react-translate-component";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
+import {formDate} from "../../../actions/formDate";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Witnesscards(props) {
     const classes = useStyles();
     const { active, blockchainData, currentWitness } = props;
+
+    let nextMaintenanceTime = '';
+    if (blockchainData) nextMaintenanceTime = formDate(blockchainData.next_maintenance_time, ['date', 'month', 'year', 'time']);
 
     return (
         <div className={classes.root}>
@@ -84,7 +87,7 @@ export default function Witnesscards(props) {
                                 <Translate component="div" content={"blockchain.witnesses.nextVoteUpdate"} />
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
-                                {new Date(blockchainData.next_maintenance_time).toLocaleString()}
+                                {nextMaintenanceTime}
                             </Typography>
                         </CardContent>
                     </Card>}
