@@ -15,6 +15,7 @@ import { dbApi } from '../../../actions/nodes';
 class BuyForm extends Component{
 
     state = {
+        sended: false,
         defaultData: false,
         precision: {
             sellAsset: 0,
@@ -31,6 +32,7 @@ class BuyForm extends Component{
     }
 
     componentWillReceiveProps(newProps){
+        this.setState({ sended: false });
         if(
             (!this.props.defaultData && newProps.defaultData)
             || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol) 
@@ -143,7 +145,10 @@ class BuyForm extends Component{
     };
 
     resetForm = (props) => {
-        this.setState({ defaultData: false }, () => { this.setBasicData(props) });
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData(props);
+            setTimeout(() => this.setState({sended: false}), 5000)
+        });
 
          if(this.props.update) {
             this.props.update();
@@ -152,8 +157,8 @@ class BuyForm extends Component{
 
     render(){
         const type = this.props.type;
-        const defaultData = this.state.defaultData;
-        const assets = this.state.assets
+    
+        const {sended, defaultData, assets} = this.state;
         if(!defaultData) return <span />;
 
         const isBuy = type === 'buy';
@@ -245,6 +250,7 @@ class BuyForm extends Component{
                                     </div>
                                     <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
                                 </div>
+                                {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
                                 <div className="info__row">
                                     {transactionError && transactionError !== "" ? 
                                         <span className="clr--negative">
