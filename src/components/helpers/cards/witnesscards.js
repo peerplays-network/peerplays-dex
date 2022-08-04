@@ -27,7 +27,7 @@ export default function Witnesscards(props) {
     const { active, blockchainData, currentWitness } = props;
 
     let nextMaintenanceTime = '';
-    if (blockchainData) time = formDate(blockchainData.next_maintenance_time, ['date', 'month', 'year', 'time']);
+    if (blockchainData) nextMaintenanceTime = formDate(blockchainData.next_maintenance_time, ['date', 'month', 'year', 'time']);
 
     return (
         <div className={classes.root}>
