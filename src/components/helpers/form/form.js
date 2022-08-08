@@ -5,6 +5,7 @@ import OrderConfirmationModel from "../modal/content/orderConfirmationModel";
 import {setModal} from "../../../dispatch";
 import {getGlobalData} from "../../../actions/dataFetching/getGlobalData";
 import {setAccount} from "../../../dispatch/setAccount";
+import {getAccountData} from "../../../actions/store";
 
 const handleData = async (context, val, id) => {
     const { mutateData, type } = context.props;
@@ -63,7 +64,7 @@ class Form extends Component {
     submit = (e) => {
         e && e.preventDefault();
         const { errors, data } = this.state;
-        
+        console.log(errors)
          if (Object.keys(errors).length) return;
         
         this.setState({ loading: true });
@@ -74,6 +75,34 @@ class Form extends Component {
         this.props.requiredQuantity && this.props.requiredQuantity
             .filter(el => !data[el])
             .forEach(el => errors[el] = 'requiredQuantity')
+        
+        // this.props.buyForm && this.props.buyForm
+        if (data.type === 'buy') {
+                const userAsset = getAccountData().assets.find(el => el.symbol === data.sellAsset);
+            console.log(userAsset)
+            if (!userAsset) {
+                errors.amount_to_sell = 'isNotEnough';
+                return 'isNotEnough'
+                } else {
+                  return userAsset.setPrecision() < amount_to_sell ? 'isNotEnough' : false;
+                }
+        } else {
+            const userAsset = getAccountData().assets.find(el => el.symbol === data.buyAsset);
+                  console.log(userAsset)
+            }
+                
+
+                
+
+
+        
+        // if (data.amount_to_receive && data.amount_to_receive === '2') {
+        //     console.log('22')
+        // }
+    //     if(data.amount_to_receive <= 3) {
+    //         console.log('three')
+    //           return 'isZero';
+    // }
         if (Object.keys(errors).length) {
             this.setState({ loading: false, errors});
             return;
