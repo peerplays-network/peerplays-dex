@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from 'react';
+import React, { Component, Fragment } from 'react';
 import Form from "../form/form";
 import UserBalance from "./userBalance";
 import ControlledInput from "../form/controlledInput";
 import Input from "../form/input";
-import {sellBuy} from "../../../actions/forms";
-import {roundNum} from "../../../actions/roundNum";
+import { sellBuy } from "../../../actions/forms";
+import { roundNum } from "../../../actions/roundNum";
 import Translate from "react-translate-component";
 import { getBasicAsset, getAccountData } from "../../../actions/store";
 import { utils } from '../../../utils';
@@ -12,7 +12,7 @@ import { getAssetBySymbol } from "../../../actions/assets"
 import { dbApi } from '../../../actions/nodes';
 
 
-class BuyForm extends Component{
+class BuyForm extends Component {
 
     state = {
         sended: false,
@@ -24,39 +24,39 @@ class BuyForm extends Component{
         assets: false
     };
 
-    componentDidMount(){
+    componentDidMount() {
         dbApi('list_assets', ['', 100]).then(assets => {
-            this.setState({assets})
+            this.setState({ assets })
         })
         this.setBasicData();
     }
 
-    componentWillReceiveProps(newProps){
+    componentWillReceiveProps(newProps) {
         this.setState({ sended: false });
-        if(
+        if (
             (!this.props.defaultData && newProps.defaultData)
-            || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol) 
-        ){
+            || (this.props.pair.base.symbol !== newProps.pair.base.symbol || this.props.pair.quote.symbol !== newProps.pair.quote.symbol)
+        ) {
             this.resetForm(newProps);
-        } 
+        }
     }
 
     setBasicData = (newProps = {}) => {
-        const {type, pair} = this.props;
+        const { type, pair } = this.props;
         const sellAsset = pair.base.symbol;
         const buyAsset = pair.quote.symbol;
         const basicAsset = getBasicAsset();
 
         const defaultData = { type, sellAsset, buyAsset, fee: 0, feeAsset: basicAsset.symbol };
 
-        if(newProps.defaultData){
-            const {quote, base, price} = newProps.defaultData;
+        if (newProps.defaultData) {
+            const { quote, base, price } = newProps.defaultData;
             defaultData.price = price;
             defaultData.amount_to_receive = quote;
             defaultData.amount_to_sell = base;
         }
 
-        this.setState({defaultData});
+        this.setState({ defaultData });
         (async (obj) => {
             const { precision: sellAssetPrecision } = await getAssetBySymbol(sellAsset)
             const { precision: buyAssetPrecision } = await getAssetBySymbol(buyAsset)
@@ -66,37 +66,37 @@ class BuyForm extends Component{
                     buyAsset: buyAssetPrecision
                 }
             })
-        })(this)  
+        })(this)
     };
 
 
-    calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price, this.state.precision.sellAsset)}`;
-    calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price, this.state.precision.buyAsset)}`;
-    calcPrice = ({amount_to_sell, amount_to_receive}) => `${roundNum((amount_to_receive / amount_to_sell), this.state.precision.sellAsset)}`;
+    calcSell = ({ price, amount_to_receive }) => `${roundNum(amount_to_receive * price, this.state.precision.sellAsset)}`;
+    calcReceive = ({ price, amount_to_sell }) => `${roundNum(amount_to_sell / price, this.state.precision.buyAsset)}`;
+    calcPrice = ({ amount_to_sell, amount_to_receive }) => `${roundNum((amount_to_receive / amount_to_sell), this.state.precision.sellAsset)}`;
 
     mutations = {
         price: (data) => {
-            if(data['amount_to_receive']){
+            if (data['amount_to_receive']) {
                 data['amount_to_sell'] = this.calcSell(data);
-            } else if (data['amount_to_sell']){
+            } else if (data['amount_to_sell']) {
                 data['amount_to_receive'] = this.calcReceive(data);
             }
             return data;
         },
         amount_to_receive: (data) => {
 
-            if (data['price']){
+            if (data['price']) {
                 data['amount_to_sell'] = this.calcSell(data);
-            } else  if(data['amount_to_sell']){
+            } else if (data['amount_to_sell']) {
                 data['price'] = this.calcPrice(data);
             }
 
             return data;
         },
         amount_to_sell: (data) => {
-            if (data['price']){
+            if (data['price']) {
                 data['amount_to_receive'] = this.calcReceive(data);
-            } else if(data['amount_to_receive']){
+            } else if (data['amount_to_receive']) {
                 data['price'] = this.calcPrice(data);
             }
             return data;
@@ -104,12 +104,12 @@ class BuyForm extends Component{
     };
     formMutations = {
         price: (form) => {
-            if(form['amount_to_receive'].value){
+            if (form['amount_to_receive'].value) {
                 form['amount_to_sell'].value = this.calcSell({
                     price: form['price'].value,
                     amount_to_receive: form['amount_to_receive'].value
                 });
-            } else if (form['amount_to_sell'].value){
+            } else if (form['amount_to_sell'].value) {
                 form['amount_to_receive'].value = this.calcReceive({
                     price: form['price'].value,
                     amount_to_sell: form['amount_to_sell'].value
@@ -117,12 +117,12 @@ class BuyForm extends Component{
             }
         },
         amount_to_receive: (form) => {
-            if (form['price'].value){
+            if (form['price'].value) {
                 form['amount_to_sell'].value = this.calcSell({
                     price: form['price'].value,
                     amount_to_receive: form['amount_to_receive'].value
                 });
-            } else if(form['amount_to_sell'].value){
+            } else if (form['amount_to_sell'].value) {
                 form['price'].value = this.calcPrice({
                     amount_to_sell: form['amount_to_sell'].value,
                     amount_to_receive: form['amount_to_receive'].value
@@ -130,12 +130,12 @@ class BuyForm extends Component{
             }
         },
         amount_to_sell: (form) => {
-            if (form['price'].value){
+            if (form['price'].value) {
                 form['amount_to_receive'].value = this.calcReceive({
                     price: form['price'].value,
                     amount_to_sell: form['amount_to_sell'].value
                 });
-            } else if(form['amount_to_receive'].value){
+            } else if (form['amount_to_receive'].value) {
                 form['price'].value = this.calcPrice({
                     amount_to_sell: form['amount_to_sell'].value,
                     amount_to_receive: form['amount_to_receive'].value
@@ -147,28 +147,28 @@ class BuyForm extends Component{
     resetForm = (props) => {
         this.setState({ defaultData: false, sended: true }, () => {
             this.setBasicData(props);
-            setTimeout(() => this.setState({sended: false}), 5000)
+            setTimeout(() => this.setState({ sended: false }), 5000)
         });
 
-         if(this.props.update) {
+        if (this.props.update) {
             this.props.update();
         }
     }
 
-    render(){
+    render() {
         const type = this.props.type;
-    
-        const {sended, defaultData, assets} = this.state;
-        if(!defaultData) return <span />;
+
+        const { sended, defaultData, assets } = this.state;
+        if (!defaultData) return <span />;
 
         const isBuy = type === 'buy';
 
-        return(
+        return (
             <Form
                 type="limit_order_create"
                 defaultData={defaultData}
-                requiredFields={['price','amount_to_sell', 'amount_to_receive']}
-                requiredQuantity = {['amount_to_receive']}
+                requiredFields={['price', 'amount_to_sell', 'amount_to_receive']}
+                requiredQuantity={['amount_to_receive']}
                 mutateData={this.mutations}
                 action={sellBuy}
                 handleResult={this.resetForm}
@@ -189,26 +189,26 @@ class BuyForm extends Component{
 
                         const handleValidations = () => {
                             requiredFields && requiredFields
-                            .filter(el => {
-                                if (data[el])
-                            if (type === 'buy') {
-                                const userAsset = getAccountData().assets.find(el => el.symbol === sellAsset);
-                                if (!userAsset) {
-                                    errors.amount_to_receive = "isNotEnough";
-                                    return 'isNotEnough'
-                                } else {
-                                    userAsset.setPrecision() < defaultData.amount_to_sell ? errors.amount_to_receive = "isNotEnough" : false;
-                                }
-                            } else {
-                                const userAsset = getAccountData().assets.find(el => el.symbol === buyAsset);
-                                if (!userAsset) {
-                                    errors.amount_to_receive = "isNotEnough";
-                                    return 'isNotEnough'
-                                } else {
-                                    userAsset.setPrecision() >= defaultData.amount_to_receive ? false : errors.amount_to_receive = "isNotEnough";
-                                }
-                            }
-                        })
+                                .filter(el => {
+                                    if (data[el])
+                                        if (type === 'buy') {
+                                            const userAsset = getAccountData().assets.find(el => el.symbol === sellAsset);
+                                            if (!userAsset) {
+                                                errors.amount_to_receive = "isNotEnough";
+                                                return 'isNotEnough'
+                                            } else {
+                                                userAsset.setPrecision() < defaultData.amount_to_sell ? errors.amount_to_receive = "isNotEnough" : false;
+                                            }
+                                        } else {
+                                            const userAsset = getAccountData().assets.find(el => el.symbol === buyAsset);
+                                            if (!userAsset) {
+                                                errors.amount_to_receive = "isNotEnough";
+                                                return 'isNotEnough'
+                                            } else {
+                                                userAsset.setPrecision() >= defaultData.amount_to_receive ? false : errors.amount_to_receive = "isNotEnough";
+                                            }
+                                        }
+                                })
                             form.submit()
                         }
 
@@ -220,14 +220,14 @@ class BuyForm extends Component{
                                     type="number"
                                     min={0}
                                     labelTag="exchangeForm.price"
-                                    labelParams={{token: defaultData.sellAsset}}
+                                    labelParams={{ token: defaultData.sellAsset }}
                                     className="with-border"
                                     onChange={handleChange}
                                     value={data}
                                     error={errors}
                                     onKeyPress={(e) => {
                                         if (!utils.isNumberKey(e)) {
-                                          e.preventDefault();
+                                            e.preventDefault();
                                         }
                                     }}
                                     precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
@@ -238,14 +238,14 @@ class BuyForm extends Component{
                                     type="number"
                                     min={0}
                                     labelTag="exchangeForm.quantity"
-                                    labelParams={{token: defaultData.buyAsset}}
+                                    labelParams={{ token: defaultData.buyAsset }}
                                     className="with-border"
                                     onChange={handleChange}
                                     value={data}
                                     error={errors}
                                     onKeyPress={(e) => {
                                         if (!utils.isNumberKey(e)) {
-                                          e.preventDefault();
+                                            e.preventDefault();
                                         }
                                     }}
                                     precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
@@ -256,17 +256,17 @@ class BuyForm extends Component{
                                     type="number"
                                     min={0}
                                     labelTag="exchangeForm.total"
-                                    labelParams={{token: defaultData.sellAsset}}
+                                    labelParams={{ token: defaultData.sellAsset }}
                                     className="with-border"
                                     onChange={handleChange}
                                     value={data}
                                     error={errors}
                                     readOnly={true}
                                     disabled={true}
-                                    style={{cursor:"text"}}
+                                    style={{ cursor: "text" }}
                                     precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                 />
-                               
+
                                 <div className="exchange-form__info-wrapper">
                                     <div className="exchange-form__info">
                                         <Translate content="exchange.fee" />
@@ -274,17 +274,17 @@ class BuyForm extends Component{
                                     </div>
                                     <div className="exchange-form__info">
                                         <Translate content="exchange.marketFee" percent={'0.1'} />
-                                        {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> : 
+                                        {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> :
                                             <span>{`${data.sellMarketFeePercent ? data.sellMarketFeePercent : 0}%`}</span>}
                                     </div>
-                                    <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
+                                    <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset} />
                                 </div>
                                 {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
                                 <div className="info__row">
-                                    {transactionError && transactionError !== "" ? 
+                                    {transactionError && transactionError !== "" ?
                                         <span className="clr--negative">
                                             <Translate className="" content={`errors.${transactionError}`} />
-                                        </span> 
+                                        </span>
                                         : ""}
                                 </div>
                                 <button className="btn-round btn-round--buy" onClick={handleValidations}>
