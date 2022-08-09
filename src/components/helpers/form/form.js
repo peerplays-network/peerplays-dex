@@ -72,28 +72,6 @@ class Form extends Component {
             .filter(el => !data[el])
             .forEach(el => errors[el] = 'requiredQuantity')
 
-        this.props.buyForm && this.props.requiredFields && this.props.requiredFields
-            .filter(el => {
-                if (data[el])
-                    if (data.type === 'buy') {
-                        const userAsset = getAccountData().assets.find(el => el.symbol === data.sellAsset);
-                        if (!userAsset) {
-                            errors.amount_to_receive = "isNotEnough";
-                            return 'isNotEnough'
-                        } else {
-                            userAsset.setPrecision() < data.amount_to_sell ? errors.amount_to_receive = "isNotEnough" : false;
-                        }
-                    } else {
-                        const userAsset = getAccountData().assets.find(el => el.symbol === data.buyAsset);
-                        if (!userAsset) {
-                            errors.amount_to_receive = "isNotEnough";
-                            return 'isNotEnough'
-                        } else {
-                            userAsset.setPrecision() >= data.amount_to_receive ? false : errors.amount_to_receive = "isNotEnough";
-                        }
-                    }
-            })
-
         if (Object.keys(errors).length) {
             this.setState({ loading: false, errors });
             return;

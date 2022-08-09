@@ -6,7 +6,7 @@ import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
-import {getBasicAsset} from "../../../actions/store";
+import { getBasicAsset, getAccountData } from "../../../actions/store";
 import { utils } from '../../../utils';
 import { getAssetBySymbol } from "../../../actions/assets"
 import { dbApi } from '../../../actions/nodes';
@@ -178,10 +178,38 @@ class BuyForm extends Component{
             >
                 {
                     form => {
-                        const {errors, data, transactionError} = form.state;
+                        const { errors, data, transactionError } = form.state;
+                        const { type, sellAsset, buyAsset } = defaultData;
+                        const { requiredFields } = form.props;
+
                         const handleChange = (value, name) => {
                             this.formMutations[name](form.form)
                             form.handleChange(value, name)
+                        }
+
+                        const handleValidations = () => {
+                            requiredFields && requiredFields
+                            .filter(el => {
+                                if (data[el])
+                            if (type === 'buy') {
+                                const userAsset = getAccountData().assets.find(el => el.symbol === sellAsset);
+                                if (!userAsset) {
+                                    errors.amount_to_receive = "isNotEnough";
+                                    return 'isNotEnough'
+                                } else {
+                                    userAsset.setPrecision() < defaultData.amount_to_sell ? errors.amount_to_receive = "isNotEnough" : false;
+                                }
+                            } else {
+                                const userAsset = getAccountData().assets.find(el => el.symbol === buyAsset);
+                                if (!userAsset) {
+                                    errors.amount_to_receive = "isNotEnough";
+                                    return 'isNotEnough'
+                                } else {
+                                    userAsset.setPrecision() >= defaultData.amount_to_receive ? false : errors.amount_to_receive = "isNotEnough";
+                                }
+                            }
+                        })
+                            form.submit()
                         }
 
                         return (
@@ -259,7 +287,7 @@ class BuyForm extends Component{
                                         </span> 
                                         : ""}
                                 </div>
-                                <button className="btn-round btn-round--buy" onClick={form.submit}>
+                                <button className="btn-round btn-round--buy" onClick={handleValidations}>
                                     <Translate content={`exchange.${isBuy ? 'buy' : 'sell'}`} /> {data.buyAsset}
                                 </button>
                             </Fragment>
