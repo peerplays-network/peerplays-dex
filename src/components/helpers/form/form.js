@@ -64,8 +64,7 @@ class Form extends Component {
     submit = (e) => {
         e && e.preventDefault();
         const { errors, data } = this.state;
-        console.log(errors)
-         if (Object.keys(errors).length) return;
+        if (Object.keys(errors).length) return;
         
         this.setState({ loading: true });
 
@@ -76,21 +75,28 @@ class Form extends Component {
             .filter(el => !data[el])
             .forEach(el => errors[el] = 'requiredQuantity')
         
-        // this.props.buyForm && this.props.buyForm
+        this.props.requiredFields && this.props.requiredFields
+            .filter(el => {
+                if(data[el])
+            
         if (data.type === 'buy') {
                 const userAsset = getAccountData().assets.find(el => el.symbol === data.sellAsset);
-            console.log(userAsset)
             if (!userAsset) {
-                errors.amount_to_sell = 'isNotEnough';
+                errors.amount_to_receive = "isNotEnough";
                 return 'isNotEnough'
                 } else {
-                  return userAsset.setPrecision() < amount_to_sell ? 'isNotEnough' : false;
+                  userAsset.setPrecision() < data.amount_to_sell ? errors.amount_to_receive = "isNotEnough" : false;
                 }
         } else {
             const userAsset = getAccountData().assets.find(el => el.symbol === data.buyAsset);
-                  console.log(userAsset)
+            if (!userAsset) {
+                errors.amount_to_receive = "isNotEnough";
+                  return 'isNotEnough'
+                } else {
+                   userAsset.setPrecision() >= data.amount_to_receive ? false : errors.amount_to_receive = "isNotEnough";
+                }
             }
-                
+        }) 
 
                 
 
