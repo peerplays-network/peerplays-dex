@@ -145,6 +145,12 @@ class BuyForm extends Component{
     };
 
     resetForm = (props) => {
+        this.setState({ defaultData: false }, () => {
+            this.setBasicData(props);
+        });
+    }
+
+    handleResult = (props) => {
         this.setState({ defaultData: false, sended: true }, () => {
             this.setBasicData(props);
             setTimeout(() => this.setState({sended: false}), 5000)
@@ -171,7 +177,7 @@ class BuyForm extends Component{
                 requiredQuantity = {['amount_to_receive']}
                 mutateData={this.mutations}
                 action={sellBuy}
-                handleResult={this.resetForm}
+                handleResult={this.handleResult}
                 orderConfirmation
                 keyType="active"
             >

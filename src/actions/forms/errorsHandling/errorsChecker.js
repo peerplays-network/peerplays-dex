@@ -18,6 +18,7 @@ import { checkTo } from "./checkTo";
 import { checkDepositPublicKey } from "./checkDepositPublicKey";
 import { checkWithdrawPublicKey } from "./checkWithdrawPublicKey";
 import { checkReferrer } from "./checkReferrer";
+import { checkAssetsForExchange } from "./checkAssetsForExchange";
 
 export const errorsChecker = {
     newLogin: checkNewLogin,
@@ -44,4 +45,6 @@ export const errorsChecker = {
     quantity: checkQuantity,
     depositPublicKey: checkDepositPublicKey,
     withdrawPublicKey: checkWithdrawPublicKey,
+    sellAsset: checkAssetsForExchange,
+    buyAsset: checkAssetsForExchange,
 };

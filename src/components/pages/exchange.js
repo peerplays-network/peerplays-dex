@@ -65,7 +65,7 @@ class Exchange extends Component {
                         <div className="exchangse">
                             <div className="">
                                 <Tabs head={['orderBook', 'history']}>
-                                    <OrderBook data={orderBook} handleRowClick={this.handleOrderClick} />
+                                    <OrderBook data={orderBook} />
                                     <HistoryBook data={globalHistory} />
                                 </Tabs>
                             </div>

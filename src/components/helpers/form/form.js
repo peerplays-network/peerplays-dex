@@ -25,6 +25,16 @@ const handleData = async (context, val, id) => {
     return { data, errors };
 };
 
+const validateAfterSubmit = async (data, type) => {
+    const errors = await checkErrors(data);
+    const feeCalc = feeCalculator[type];
+    if (feeCalc) {
+        const { feeErr, errVariable } = await feeCalc(data);
+        if (feeErr) errors[errVariable] = feeErr;
+    }
+    return errors
+}
+
 Object.filter = (obj, predicate) =>
     Object.keys(obj)
         .filter( key => predicate(obj[key]) )
@@ -32,17 +42,25 @@ Object.filter = (obj, predicate) =>
 
 
 class Form extends Component {
-    state = {
-        loading: false,
-        data: this.props.defaultData || {},
-        errors: {},
-        transactionError: ""
-    };
-    handleChange = (val, id) => handleData(this, val, id)
-    .then((result) => this.validateAndSetState(this.form, result));
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: false,
+            data: props.defaultData || {},
+            errors: {},
+            transactionError: ""
+        };
+        this.validateAndSetState = this.validateAndSetState.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.submit = this.submit.bind(this);
+        this.handleAction = this.handleAction.bind(this);
+    }
+    
+    handleChange (val, id) {
+        return handleData(this, val, id).then((result) => this.validateAndSetState(this.form, result));
+    } 
 
-    validateAndSetState = (form, result) => {
-        sellBuy(result.data,result)
+    validateAndSetState (form, result) {
         this.setState(state => {
             state.errors = {};
             Object.keys(result.data).map((keyValue) => {
@@ -57,14 +75,13 @@ class Form extends Component {
         });
     }
 
-    
-
-
-    submit = (e) => {
+    async submit (e) {
         e && e.preventDefault();
-        const { errors, data } = this.state;
-        
-         if (Object.keys(errors).length) return;
+        const { data } = this.state;
+        const errors =  await validateAfterSubmit(data, this.props.type)
+        this.setState({errors: errors})
+
+        if (Object.keys(errors).length) return;
         
         this.setState({ loading: true });
 
@@ -104,7 +121,7 @@ class Form extends Component {
         this.handleAction();
     };
 
-    handleAction = () => {
+    handleAction () {
         const data = this.state.data;
         const { action, handleResult } = this.props;
         if (action) {
