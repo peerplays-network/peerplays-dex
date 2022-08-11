@@ -23,21 +23,6 @@ const tableHead = [
     }
 ];
 
-const radioGroup = [
-    {
-        text: <Translate content={"modal.newAssets.smartCoin"}/>,
-        value: "smart"
-    },
-    {
-        text: <Translate content={"createdAssets.issued"}/>,
-        value: "issued"
-    },
-    {
-        text: <Translate content={"createdAssets.prediction_assets"}/>,
-        value: "prediction"
-    }
-];
-
 class Assets extends Component {
     state = {
         assets: [],
@@ -74,24 +59,13 @@ class Assets extends Component {
 
     render() {
         const {assets} = this.state;
-        const filterAssetResult = assets.filter((item) => !this.state.filterAsset.find(asset => item.asset === asset )) 
         return (
             <div className="assets">
-                <div className="assets__radioss">
-                    {radioGroup.map(item =>
-                        <Radio
-                            key={item}
-                            callback={() => this.setState({radio: item.value})}
-                            name="asset"
-                            value={item.value}
-                            text={item.text}
-                        />)}
-                </div>
                 <Table
                     tableHead={tableHead}
-                    rows={filterAssetResult}
+                    rows={assets}
                 />
-                <TableCard rows={filterAssetResult} tableHead={tableHead}/>
+                <TableCard rows={assets} tableHead={tableHead}/>
             </div>
         )
 
