@@ -132,7 +132,7 @@ const WithdrawGPOS = (props) => {
 				</div>
 			</CardContent>
 			<div className="info__row margin">
-			<span>Fee: {fee} {getBasicAsset().symbol}</span>
+			<span><Translate className="" content={"tableHead.fee"} />: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 			{error && <span className="clr--negative"><Translate content={`errors.${error}`} /></span>}
 		  </div>
