@@ -36,11 +36,6 @@ const tableHead = [
         key: 'total_votes',
         translateTag: 'votes',
         params: 'align-right fit-content'
-    },
-    {
-        key: 'signing_key',
-        translateTag: 'key',
-        params: 'align-center fit-content content-padding'
     }
 ];
 
