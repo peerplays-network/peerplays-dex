@@ -144,6 +144,10 @@ export const ru = {
             "title": "Предложение Создать",
             "description": ""
         },
+        "proposal_update": {
+            "title": "Обновление предложения",
+            "description": ""
+        },
         "receive": {
             "title": "получать",
             "description": "%(receiver)s получил %(quantity)s от %(sender)s"
