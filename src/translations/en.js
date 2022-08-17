@@ -144,6 +144,10 @@ export const en = {
             "title": "Proposal Create",
             "description": ""
         },
+        "proposal_update": {
+            "title": "Proposal Update",
+            "description": ""
+        },
         "receive": {
             "title": "Receive",
             "description": "%(receiver)s received %(quantity)s from %(sender)s",

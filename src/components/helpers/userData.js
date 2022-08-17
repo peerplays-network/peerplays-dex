@@ -113,7 +113,7 @@ const UserData = (props) => {
 
 const mapStateToProps = (state) => ({
     data: state.accountData,
-    sidechainAccounts: state.sidechainAccounts
+    sidechainAccounts: state.accountData.sidechainAccounts
 });
 
 export default connect(mapStateToProps)(UserData);
