@@ -23,6 +23,17 @@ export const transactionParser = async (operation, password = '', decodeMemo = f
 
         let item = operation[key];
         if (!item) continue;
+        
+        if (type === 'account_update' && key === 'new_options') {
+            const sonVoteCount = item.votes.filter(e => e.startsWith('3')).length;
+            const _value = { ...item, num_son: sonVoteCount }
+            
+            info.push({
+                key,
+                value: JSON.stringify(_value)
+            })
+            continue
+        }
 
         if(type === 'asset_fund_fee_pool' && key === 'amount') {
             const basicAsset = getBasicAsset();
