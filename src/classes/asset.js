@@ -25,20 +25,20 @@ export class Asset {
                 return this;
             })
             .catch(console.error)
+        }
+        setPrecision(roundTo = false, amount = this.amount, precision = this.precision){
+            const precisioned = amount / (10 ** precision);
+            return roundTo ? roundNum(precisioned, precision).toFixed(7) : precisioned.toFixed(7);
+        }
+        addPrecision(roundTo = false, amount = this.amount, precision = this.precision){
+            const precisioned = amount * (10 ** precision);
+            return roundTo ? roundNum(precisioned).toFixed(7) : precisioned.toFixed(7);
+        }
+        calculatePrice(base, roundTo = 5){
+            const price = this.setPrecision() / this.setPrecision(false, base.amount, base.precision);
+            return roundNum(price, roundTo).toFixed(7);
+        }
+        toString(amount = this.amount){
+            return `${this.setPrecision(true, amount)} ${this.symbol}`
+        }
     }
-    setPrecision(roundTo = false, amount = this.amount, precision = this.precision){
-        const precisioned = amount / (10 ** precision);
-        return roundTo ? roundNum(precisioned, precision) : precisioned;
-    }
-    addPrecision(roundTo = false, amount = this.amount, precision = this.precision){
-        const precisioned = amount * (10 ** precision);
-        return roundTo ? roundNum(precisioned) : precisioned;
-    }
-    calculatePrice(base, roundTo = 5){
-        const price = this.setPrecision() / this.setPrecision(false, base.amount, base.precision);
-        return roundNum(price, roundTo);
-    }
-    toString(amount = this.amount){
-        return `${this.setPrecision(true, amount)} ${this.symbol}`
-    }
-}

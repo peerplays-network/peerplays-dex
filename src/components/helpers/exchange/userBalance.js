@@ -14,7 +14,7 @@ const UserBalance = ({assetSymbol, account}) => {
     return (
         <div className="exchange-form__info">
             <Translate content="exchange.balance" />
-            <span>{balance} {assetSymbol}</span>
+            <span>{balance.toFixed(5)} {assetSymbol}</span>
         </div>
     )
 };

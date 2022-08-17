@@ -70,9 +70,9 @@ class BuyForm extends Component{
     };
 
 
-    calcSell = ({price, amount_to_receive}) => `${roundNum(amount_to_receive * price, this.state.precision.sellAsset)}`;
-    calcReceive = ({price, amount_to_sell}) => `${roundNum(amount_to_sell / price, this.state.precision.buyAsset)}`;
-    calcPrice = ({amount_to_sell, amount_to_receive}) => `${roundNum((amount_to_receive / amount_to_sell), this.state.precision.sellAsset)}`;
+    calcSell = ({ price, amount_to_receive }) => `${roundNum(amount_to_receive * price, this.state.precision.sellAsset).toFixed(5)}`;
+    calcReceive = ({ price, amount_to_sell }) => `${roundNum(amount_to_sell / price, this.state.precision.buyAsset).toFixed(5)}`;
+    calcPrice = ({ amount_to_sell, amount_to_receive }) => `${roundNum((amount_to_receive / amount_to_sell), this.state.precision.sellAsset).toFixed(5)}`;
 
     mutations = {
         price: (data) => {
