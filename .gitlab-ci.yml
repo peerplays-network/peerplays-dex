@@ -14,11 +14,38 @@ variables:
  DOCKER_DRIVER: overlay2
 
 stages:
-  - build
   - test
+  - build
   - review
   - deploy
   - dast
+
+npm-audit_dependency_scanning:
+  stage: test
+  image: registry.gitlab.com/jitesoft/open-source/javascript/audit-for-gitlab:1
+  script:
+    - audit-for-gitlab
+  allow_failure: false
+  artifacts:
+    reports:
+      dependency_scanning: gl-dependency-scanning-report.json
+
+sonarcloud-check:
+  stage: test
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  only:
+    - merge_requests
+    - master
+    - develop
+    - sonar-npm-audit-cicd
 
 # builds app
 build_dev:
@@ -110,35 +137,6 @@ deployToDev:
   tags:
     - dex1
 
-npm-audit_dependency_scanning:
-  stage: test
-  image: registry.gitlab.com/jitesoft/open-source/javascript/audit-for-gitlab:1
-  script:
-    - audit-for-gitlab
-  allow_failure: false
-  artifacts:
-    reports:
-      dependency_scanning: gl-dependency-scanning-report.json
-
-variables:
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-sonarcloud-check:
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [""]
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script:
-    - sonar-scanner
-  only:
-    - merge_requests
-    - master
-    - develop
-    - sonar-npm-audit-cicd
-    
 dast:
   stage: dast
   before_script:
