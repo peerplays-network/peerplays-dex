@@ -49,6 +49,8 @@ sonarcloud-check:
     - master
     - develop
     - sonar-npm-audit-cicd
+  tags:
+    - sonar-scanner
 
 # builds app
 build_dev:
