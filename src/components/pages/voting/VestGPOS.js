@@ -139,7 +139,7 @@ const VestGPOS = (props) => {
 				</div>
 			</CardContent>
 			<div className="info__row margin">
-			<span><Translate className="" content={"tableHead.fee"} />: {fee} {getBasicAsset().symbol}</span>
+				<span><Translate className="" content={"field.labels.fee"} />{fee} {getBasicAsset().symbol}</span>
 			{error && <span className="clr--negative"><Translate className="" content={`errors.${error}`} /></span>}
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>

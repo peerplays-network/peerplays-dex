@@ -141,7 +141,7 @@ class HiveTransactions extends Component {
                                                         />
                                                     </div>
                                                     <div className="btn__row">
-                                                        <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
+                                                        <span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
                                                         {sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/> }
                                                         {transactionError && transactionError !== "" ? 
                                                             <span className="clr--negative">
