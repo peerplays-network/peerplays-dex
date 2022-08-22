@@ -34,8 +34,16 @@
   &__key{
     display: flex;
     flex-direction: column;
+    min-width: 155px;
   }
   &__link{
     margin-top: 0.5rem;
+  }
+  &__value {
+    min-width: 140px;
+    margin-left: 5px;
+    @media(min-width:500px){
+    margin-left: 50px;
+    }
   }
 }

@@ -50,14 +50,15 @@ class OrderBookTable extends Component{
     render(){
 
         const {type, threshold} = this.state;
-        const {sell, spread, buy} = this.props.data;
+        const { sell, spread, buy } = this.props.data;
+        
         return(
             <div className="order-book__table custom-scroll">
                 {['all', 'sell'].includes(type)
                 && <Table
                     className="table--exchange table--without_header"
                     tableHead={sell.sellHeader}
-                    rows={sell.sellRows}
+                    rows={sell.sellRows.filter((ask) => Number(ask.price) >= threshold)}
                     onClick={this.props.handleRowClick}
                     partialFill={{
                         percentKey: 'encashed',
@@ -79,7 +80,7 @@ class OrderBookTable extends Component{
                 && <Table
                     className="table--exchange table--without_header"
                     tableHead={buy.buyHeader}
-                    rows={buy.buyRows}
+                    rows={buy.buyRows.filter((bid) => Number(bid.price) >= threshold)}
                     onClick={this.props.handleRowClick}
                     partialFill={{
                         percentKey: 'encashed',
