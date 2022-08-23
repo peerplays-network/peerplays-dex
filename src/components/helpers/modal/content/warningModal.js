@@ -9,18 +9,20 @@ import {defaultTrx} from "../../../../actions/forms";
 class WarningModal extends Component{
 
     state = {
-        errors: this.props.error
+        errors: this.props.error,
+        disabled: true
     };
 
     handleMethod = () => {
-        const {trx, password, keyType} = this.props;
+        const { trx, password, keyType } = this.props;
+        this.setState({ disabled: false });
         defaultTrx({trx, password, keyType})
             .then(result => { 
                 if(result.success) {
                     clearLayout();   
                 } else {
                     if(result.transactionError && result.transactionError !== "") {
-                        this.setState({errors: result.transactionError})
+                        this.setState({ errors: result.transactionError, disabled: true })
                     }
 
                 }
@@ -28,9 +30,9 @@ class WarningModal extends Component{
             .catch(err => {
                 
                 if(err.message.includes('Insufficient Balance')) {
-                    this.setState({errors: 'isNotEnough'})
+                    this.setState({ errors: 'isNotEnough', disabled: true })
                 } else {
-                    this.setState({errors: err.message.split(":")[0].replace(/\s+/g,"_")})
+                    this.setState({ errors: err.message.split(":")[0].replace(/\s+/g, "_"), disabled: true })
                 }
             });
     };
@@ -39,6 +41,7 @@ class WarningModal extends Component{
 
         const fee = this.props.fee;
         const errors = this.state.errors;
+        const disabled = this.state.disabled;
 
         return(
             <Fragment>
@@ -49,10 +52,11 @@ class WarningModal extends Component{
                     className={!errors ? '' : 'modal__error'}
                     with={{fee}}
                 />
-                <div className="modal__bottom">
-                    <Close />
-                    {!errors && <ModalButton tag="continue" onClick={this.handleMethod} /> }
-                </div>
+                {disabled && <div className="modal__bottom">
+                        <Close />
+                        {!errors && <ModalButton tag="continue" onClick={this.handleMethod} />}
+                    </div>
+                }
             </Fragment>
         )
     }
