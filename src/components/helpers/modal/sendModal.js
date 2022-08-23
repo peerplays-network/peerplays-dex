@@ -128,7 +128,7 @@ class SendModal extends Component {
                                         />
                                         <div className="quantity-wrapper">
                                             <div>
-                                                Fee: {data.fee} {data.quantityAsset}
+                                                <Translate className="" content={"field.labels.fee"} />{data.fee} {data.quantityAsset}
                                             </div>
                                             {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">

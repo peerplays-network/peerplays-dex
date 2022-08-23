@@ -75,7 +75,7 @@ class UpdateAddress extends Component {
                                     error={errors}
                                     value={data}/>
                                 <div className="info__row">
-                                    <span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
+                                    <span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
                                     {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
                                     {transactionError && transactionError !== "" ? 
                                         <span className="clr--negative">

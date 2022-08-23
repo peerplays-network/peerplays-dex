@@ -115,7 +115,7 @@ class WithdrawBTCForm extends Component {
 											<Translate className="" content={`errors.${transactionError}`} />
 										</span> 
 									: "" }
-									<span><Translate component="span" content={"field.labels.fee"}/>: {data.fee} {data.feeAsset}</span>
+									<span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
 								</div>
 								<div className="btn__row">
 									<Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.withdraw"}/>

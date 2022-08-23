@@ -246,10 +246,10 @@ class BuyForm extends Component{
                                
                                 <div className="exchange-form__info-wrapper">
                                     <div className="exchange-form__info">
-                                        <Translate content="exchange.fee" />
+                                        <Translate content={"field.labels.fee"} />
                                         <span>{data.fee} {data.feeAsset}</span>
                                     </div>
-                                    <div className="exchange-form__info">
+                                    <div classN ame="exchange-form__info">
                                         <Translate content="exchange.marketFee" percent={'0.1'} />
                                         {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> : 
                                             <span>{`${data.sellMarketFeePercent ? data.sellMarketFeePercent : 0}%`}</span>}
