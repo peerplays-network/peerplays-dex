@@ -75,7 +75,7 @@ class AssetClaimFees extends Component {
                                         }}
                                     />
                                     <div className="btn__row">
-                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.quantityAsset}</span>
+                                        <span><Translate className="" content={"field.labels.fee"} />{data.fee} {data.quantityAsset}</span>
                                         {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">

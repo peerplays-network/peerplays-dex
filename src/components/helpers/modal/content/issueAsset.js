@@ -174,7 +174,7 @@ class IssueAsset extends Component {
                                     value={data}
                                 />
                                 <div>
-                                    Fee: {data.fee || 0} {data.basicAssetSymbol}
+                                    <Translate className="" content={"field.labels.fee"} />{data.fee || 0} {data.basicAssetSymbol}
                                 </div>
                                 <div>
                                     {transactionError && transactionError !== "" ? 
