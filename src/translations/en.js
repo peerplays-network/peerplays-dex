@@ -631,7 +631,7 @@ export const en = {
             "hiveCurrency": "Select currency",
             "quantity": "Quantity",
             "memo": "Memo",
-            "fee": "Fee",
+            "fee": "Fee: ",
             "gateFee": "Gate Fee",
             "newWorkerName": "Worker Name",
             "dailyPay": "Daily Pay (TEST)",

@@ -88,7 +88,7 @@ class GenerateAddress extends Component {
                         </div>
                         <div className="quantity-wrapper mt-2">
                             <div>
-                                Fee: {form.state.data.fee.amount} {form.state.data.fee.symbol}
+                                <Translate className="" content={"field.labels.fee"} />{form.state.data.fee.amount} {form.state.data.fee.symbol}
                             </div>
                         </div>
                         {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
