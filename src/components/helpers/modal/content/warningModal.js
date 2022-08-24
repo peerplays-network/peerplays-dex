@@ -10,19 +10,19 @@ class WarningModal extends Component{
 
     state = {
         errors: this.props.error,
-        disabled: true
+        disabled: false
     };
 
     handleMethod = () => {
         const { trx, password, keyType } = this.props;
-        this.setState({ disabled: false });
+        this.setState({ disabled: true });
         defaultTrx({trx, password, keyType})
             .then(result => { 
                 if(result.success) {
                     clearLayout();   
                 } else {
                     if(result.transactionError && result.transactionError !== "") {
-                        this.setState({ errors: result.transactionError, disabled: true })
+                        this.setState({ errors: result.transactionError, disabled: false })
                     }
 
                 }
@@ -30,9 +30,9 @@ class WarningModal extends Component{
             .catch(err => {
                 
                 if(err.message.includes('Insufficient Balance')) {
-                    this.setState({ errors: 'isNotEnough', disabled: true })
+                    this.setState({ errors: 'isNotEnough', disabled: false })
                 } else {
-                    this.setState({ errors: err.message.split(":")[0].replace(/\s+/g, "_"), disabled: true })
+                    this.setState({ errors: err.message.split(":")[0].replace(/\s+/g, "_"), disabled: false })
                 }
             });
     };
@@ -52,11 +52,10 @@ class WarningModal extends Component{
                     className={!errors ? '' : 'modal__error'}
                     with={{fee}}
                 />
-                {disabled && <div className="modal__bottom">
+                <div className="modal__bottom">
                         <Close />
-                        {!errors && <ModalButton tag="continue" onClick={this.handleMethod} />}
-                    </div>
-                }
+                        {!errors && <ModalButton tag="continue" onClick={this.handleMethod} disabled={disabled} />}
+                </div>
             </Fragment>
         )
     }
