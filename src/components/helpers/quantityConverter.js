@@ -18,9 +18,9 @@ export const formQuantity = async (list, assetSymbol = defaultQuote) => {
 
 export const formUserAssets = async (assetsList) => {
 
-    const defaultQuoteData = {amount: 0, symbol: defaultQuote};
+    // const defaultQuoteData = {amount: 0, symbol: defaultQuote};
 
-    let haveDefaultQuote = false;
+    // let haveDefaultQuote = false;
 
     let assets = await Promise.all(assetsList.map(async el => {
         const asset = await formAssetData(el);
@@ -28,12 +28,12 @@ export const formUserAssets = async (assetsList) => {
         const symbol = asset.symbol;
         const amount = asset.setPrecision();
 
-        if(symbol === defaultQuote) haveDefaultQuote = true;
+        // if(symbol === defaultQuote) haveDefaultQuote = true;
 
         return { amount,  symbol };
     }));
 
-    if(!haveDefaultQuote) assets.unshift(defaultQuoteData);
+    // if(!haveDefaultQuote) assets.unshift(defaultQuoteData);
 
     return assets;
 };
@@ -57,16 +57,14 @@ class QuantityConverter extends Component{
         return nextProps.name !== this.props.name || nextState.quantity !== this.state.quantity;
     }
 
-    formData = (props) => formUserAssets(props.assets).then(assetsList => (
-        formQuantity(assetsList, assetsList[this.state.selectedAsset].symbol).then(quantity => {
-            this.setState({assetsList, quantity});
-        })
-    ));
+    formData = (props) => formUserAssets(props.assets).then(assetsList => {
+        this.setState({assetsList, quantity: assetsList[this.state.selectedAsset].amount});
+    });
 
     changeQuantity = (id) => {
         const selectedAsset = id;
         const assetsList = this.state.assetsList;
-        formQuantity(assetsList, assetsList[selectedAsset].symbol).then(quantity => this.setState({selectedAsset, quantity}));
+        this.setState({selectedAsset, quantity: assetsList[id].amount})
     };
 
     render(){
