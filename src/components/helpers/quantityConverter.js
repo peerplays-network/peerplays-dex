@@ -3,10 +3,8 @@ import Dropdown from "./form/dropdown";
 import SelectHeader from "./selectHeader";
 import {dbApi} from "../../actions/nodes";
 import {defaultQuote} from "../../params/networkParams";
-import {formAssetData, getAsset, setPrecision} from "../../actions/assets";
+import {formAssetData} from "../../actions/assets";
 import {roundNum} from "../../actions/roundNum";
-import {Asset} from "../../classes";
-import {getFullAccount} from "../../actions/account";
 
 export const formQuantity = async (list, assetSymbol = defaultQuote) => {
     let quantity = 0;
@@ -18,22 +16,14 @@ export const formQuantity = async (list, assetSymbol = defaultQuote) => {
 
 export const formUserAssets = async (assetsList) => {
 
-    // const defaultQuoteData = {amount: 0, symbol: defaultQuote};
-
-    // let haveDefaultQuote = false;
-
     let assets = await Promise.all(assetsList.map(async el => {
         const asset = await formAssetData(el);
         
         const symbol = asset.symbol;
         const amount = asset.setPrecision();
 
-        // if(symbol === defaultQuote) haveDefaultQuote = true;
-
         return { amount,  symbol };
     }));
-
-    // if(!haveDefaultQuote) assets.unshift(defaultQuoteData);
 
     return assets;
 };
