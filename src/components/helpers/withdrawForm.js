@@ -4,10 +4,10 @@ import {transfer} from "../../actions/forms";
 import {getAccountData} from "../../actions/store";
 import Input from "./form/input";
 import Textarea from "./form/textarea";
-import Translate from "react-translate-component";
 import RoundButton from "./buttons/roundButton";
 import Close from "./modal/decoration/close";
 import Submit from "./modal/decoration/submit";
+import counterpart from 'counterpart';
 
 const withdrawTokens = async (data, result) => {
     let {password, keyType, withdrawAddress, memo, gatewayWallet, withdrawCoin, withdrawAmount, minAmount, gateFee} = data;
@@ -68,19 +68,19 @@ const WithdrawForm = ({defaultData, handleResult, depositData}) => (
                         />
                         }
                         <div className="form__row">
-                            <Translate content="field.labels.fee"/>
+                            <span>{counterpart.translate(`field.labels.fee`)}</span>
                             <span>{data.fee.toString()}</span>
                         </div>
                         {Boolean(data.gateFee) &&
                             <div className="form__row">
-                                <Translate content="field.labels.gateFee" />
+                                <span>{counterpart.translate(`field.labels.gateFee`)}</span>
                                 <span>{data.gateFee} {symbol}</span>
                             </div>
                         }
                         {transactionError && transactionError !== "" ? 
                             <div className="form__row">
                                 <span className="clr--negative">
-                                    <Translate className="" content={`errors.${transactionError}`} />
+                                    <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                 </span> 
                             </div>
                             : "" }

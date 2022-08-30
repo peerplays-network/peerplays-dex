@@ -7,8 +7,8 @@ import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
 import { utils } from '../../utils';
-import Translate from 'react-translate-component';
 import { dbApi } from '../../actions/nodes';
+import counterpart, { translate } from 'counterpart';
 
 
 const getSymbolsList = async (symbol) => (
@@ -153,14 +153,18 @@ class SendForm extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span><Translate className="" content={"field.labels.fee"} />{data.fee} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>{data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && <span className="clr--positive">{translate.counterpart(`success.transCompleted`)}</span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
-                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                {counterpart.translate(`errors.${transactionError}`)}
                                             </span> 
                                             : ""}
-                                        <button type="submit" className="btn-round btn-round--send"><Translate className="" content={"block.send.title"} /></button>
+                                        <button type="submit" className="btn-round btn-round--send">
+                                            {counterpart.translate(`block.send.title`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

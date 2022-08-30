@@ -8,7 +8,7 @@ import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
 import { utils } from '../../utils';
-import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
@@ -152,17 +152,20 @@ class QuickSellBuy extends Component {
 
                                     </div>
                                     <div className="info__row">
-                                        <span className='clr--margin'><Translate className="" content={"field.labels.fee"} />{data.fee} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+                                        <span className='clr--margin'>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && <span className="clr--positive">{counterpart.translate(`voting.trans`)}</span>}
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
-                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                             </span> 
                                             : ""}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                        <Translate className="" content={"quickSellBuy.buy"} />
+                                            <span>{counterpart.translate(`quickSellBuy.buy`)}</span>
                                         </button>
                                     </div>
                                 </Fragment>

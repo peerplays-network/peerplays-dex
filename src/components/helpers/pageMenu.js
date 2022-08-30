@@ -1,20 +1,20 @@
 import React, {Fragment} from 'react';
 import Tbd from "../pages/tbd";
 import {NavLink, Route, Switch} from "react-router-dom";
-import Translate from "react-translate-component";
+import counterpart from 'counterpart';
 
 const PageMenu = ({items, link, path, data = {}}) => (
     <Fragment>
         <div className="page__menu">
             {items.map((el, id) => (
-                <Translate
-                    key={id}
-                    content={`${el.tag}.title`}
-                    component={NavLink}
+                <NavLink 
+                    key={id} 
                     to={`${link}${el.link}`}
                     className="page__menu-item"
                     exact
-                />
+                >
+                    {counterpart.translate(`${el.tag}.title`)}
+                </NavLink>
             ))}
         </div>
         <div className="page__content">

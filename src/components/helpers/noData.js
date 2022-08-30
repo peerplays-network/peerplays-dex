@@ -1,6 +1,6 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 
-const NoData = ({tag}) => <Translate content={tag ? tag : 'emptyPage.default'} className="no-data" />;
+const NoData = ({tag}) => <span className="no-data">{counterpart.translate(`${tag ? tag : 'emptyPage.default'}`)}</span> ;
 
 export default NoData;

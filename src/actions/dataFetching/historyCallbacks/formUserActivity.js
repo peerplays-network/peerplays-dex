@@ -5,11 +5,11 @@ import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
 import {formDate} from "../../formDate";
-import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
+import counterpart from "counterpart";
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
@@ -49,10 +49,11 @@ const formInfoColumn = async (user, operation) => {
     const {type, data} = await formTrxInfo(user, operation);
     const basicTag = `tableInfo.${type}`;
     return {
-        type: <Translate content={`${basicTag}.title`} component="a"
-            onClick={() => handleTransactionClick(user, operation)}
-            className="operation positive" />,
-        info: <Translate content={`${basicTag}.description`} with={data} />
+        type: 
+            <a onClick={() => handleTransactionClick(user, operation)} className="operation positive">
+                {counterpart.translate(`${basicTag}.title`)}
+            </a>,
+        info: <span>{counterpart.translate(`${basicTag}.description`, {data})}</span>,
     };
 };
 

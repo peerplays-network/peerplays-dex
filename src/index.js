@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import {initLocale} from "./actions/locale";
 import {initStore} from "./actions/store/initStore";
-import {initDB} from "./actions/iDB";
 
 import App from './App'
 import {initSettings} from "./actions/settings";
@@ -29,7 +28,6 @@ WhaleVaultConfig.setWhaleVault(window.whalevault)
 initCache();
 initSettings();
 initLocale();
-initDB();
 
 const render = (Component) => {
     ReactDom.render(

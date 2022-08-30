@@ -1,5 +1,4 @@
 import React from "react";
-import Translate from "react-translate-component";
 import Link from "react-router-dom/es/Link";
 import TableHeading from "./tableHeading";
 import TableCard from '../helpers/cards';

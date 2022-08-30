@@ -1,9 +1,11 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 
 export const MembershipTitle = ({title, subtitle, subtitleData}) => (
     <div className="membership__title-wrapper">
-        <Translate content={`membership.${title}`} component="h2" className="membership__title" />
-        { subtitle && <Translate content={`membership.${subtitle}`} with={subtitleData} className="membership__subtitle" /> }
+        <h2 className="membership__title">
+            {counterpart.translate(`membership.${title}`)}
+        </h2>
+        { subtitle && <span className="membership__subtitle">{counterpart.translate(`membership.${subtitle}`, {subtitleData})}</span> }
     </div>
 );

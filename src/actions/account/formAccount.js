@@ -1,5 +1,4 @@
 import React from "react";
-import Translate from "react-translate-component";
 import {getFullAccount} from "./getFullAccount";
 import {formAssetData} from "../assets";
 import {getUserHistory} from "../dataFetching";
@@ -12,6 +11,7 @@ import {setModal} from "../../dispatch";
 import {editStorage, getStorage} from "../storage";
 import Link from "react-router-dom/es/Link";
 import {getSidechainAccounts} from "./getSidechainAccounts";
+import counterpart from "counterpart";
 
 const formMembershipData = async fullAcc => {
     const {account, lifetime_referrer_name, referrer_name, registrar_name, statistics} = fullAcc;
@@ -137,7 +137,7 @@ export const formAccount = async (data) => {
                 return {
                     symbol: el.symbol,
                     supply: asset.setPrecision(true),
-                    assetType: <Translate content={`createdAssets.${assetType}`} />,
+                    assetType: <span>{counterpart.translate(`createdAssets.${assetType}`)}</span>,
                     maxSupply,
                     actions
                 };

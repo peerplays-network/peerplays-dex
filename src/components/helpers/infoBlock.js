@@ -1,5 +1,5 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 import {IconInfo} from "../../svg";
 
 const InfoBlock = ({tag, data, className = ''}) => (
@@ -7,7 +7,9 @@ const InfoBlock = ({tag, data, className = ''}) => (
         <div className="info-block__icon">
             <IconInfo />
         </div>
-        <Translate content={tag} with={data} className={ className? className : "info-block__text"} />
+        <span className={ className? className : "info-block__text"}>
+            {counterpart.translate(`${tag}`, {data})}
+        </span>
     </div>
 );
 
