@@ -1,8 +1,18 @@
 import {formAssetData} from "../assets/index";
-import {formQuantity, formUserAssets} from "../../components/helpers/quantityConverter";
+import {formUserAssets} from "../../components/helpers/quantityConverter";
 import {formAccount} from "../account/index";
 import {dbApi} from "../nodes/index";
 import Wallet from "../../classes/wallet";
+import {roundNum} from "../../actions/roundNum";
+import {defaultQuote} from "../../params/networkParams";
+
+const formQuantity = async (list, assetSymbol = defaultQuote) => {
+    let quantity = 0;
+    return await Promise.all(list.map(async asset => {
+        const price = assetSymbol === asset.symbol ? 1 : await dbApi('get_ticker', [assetSymbol, asset.symbol]).then(e => e.latest);
+        quantity = quantity + (price * asset.amount);
+    })).then(() => roundNum(quantity));
+};
 
 export const walletToRedux = async localData => {
 

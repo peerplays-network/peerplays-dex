@@ -1,18 +1,7 @@
 import React, {Component} from "react";
 import Dropdown from "./form/dropdown";
 import SelectHeader from "./selectHeader";
-import {dbApi} from "../../actions/nodes";
-import {defaultQuote} from "../../params/networkParams";
 import {formAssetData} from "../../actions/assets";
-import {roundNum} from "../../actions/roundNum";
-
-export const formQuantity = async (list, assetSymbol = defaultQuote) => {
-    let quantity = 0;
-    return await Promise.all(list.map(async asset => {
-        const price = assetSymbol === asset.symbol ? 1 : await dbApi('get_ticker', [assetSymbol, asset.symbol]).then(e => e.latest);
-        quantity = quantity + (price * asset.amount);
-    })).then(() => roundNum(quantity));
-};
 
 export const formUserAssets = async (assetsList) => {
 
