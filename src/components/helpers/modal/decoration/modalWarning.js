@@ -1,11 +1,11 @@
+import counterpart from "counterpart";
 import React from "react";
 import {IconWarning} from "../../../../svg";
-import Translate from "react-translate-component";
 
 const ModalWarning = ({tag}) => (
     <div className="modal__warning">
         <IconWarning />
-        <Translate content={`modal.${tag}.warning`} />
+        <span>{counterpart.translate(`modal.${tag}.warning`)}</span>
     </div>
 );
 

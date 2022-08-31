@@ -11,7 +11,7 @@ import ModalWarning from "../decoration/modalWarning";
 import {clearLayout} from "../../../../dispatch";
 import {getStore, getGlobals} from "../../../../actions/store";
 import { utils } from '../../../../utils';
-import Translate from 'react-translate-component';
+import counterpart from 'counterpart';
 
 const createWorker = async (data, result) => {
 
@@ -167,7 +167,7 @@ class AddNewWorker extends Component {
                             <div className="info__row">
                                 {form.state.transactionError && form.state.transactionError !== "" ? 
                                     <span className="clr--negative">
-                                        <Translate className="" content={`errors.${form.state.transactionError}`} />
+                                        <span>{counterpart.translate(`errors.${form.state.transactionError}`)}</span>
                                     </span> 
                                     : ""}
                             </div>

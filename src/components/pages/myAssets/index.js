@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import Translate from "react-translate-component";
-import AssetsPermissions from "./assetsPermissions";
 import PageMenu from "../../helpers/pageMenu";
 import {connect} from "react-redux";
 import UserAssets from "../user/userAssets";
@@ -9,6 +7,7 @@ import UserActivity from "../user/userActivity";
 import UserMargins from "../user/userMargins";
 import NeedToLogin from "../../helpers/needToLogin";
 import {formAccount} from "../../../actions/account/formAccount";
+import counterpart from 'counterpart';
 
 const basicMenu = [
     {
@@ -56,7 +55,7 @@ class MyAssets extends Component{
         return(
             <div className="container page">
                 <div className="page__user-title">
-                    <Translate className="page__title" component="h1" content={"assets.title"}/>
+                    <h1 className="page__title">{counterpart.translate(`assets.title`)}</h1>
                 </div>
                 <PageMenu items={basicMenu} link={`/assets`} path={'/assets'} data={this.state.accountData} />
             </div>

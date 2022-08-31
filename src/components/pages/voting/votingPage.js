@@ -1,10 +1,8 @@
 import React, { Component, Fragment, useEffect, useState } from "react";
-import Translate from "react-translate-component";
 import { IconCheckBlue } from "../../../svg";
 import Table from "../../helpers/table";
-import { setVotes } from "../../../dispatch/votesDispatch";
-import { getStore } from "../../../actions/store";
 import TableCard from "../../helpers/cards";
+import counterpart from "counterpart";
 
 const VotingPage = (props) => {
     const [active, setActive] = useState(false);
@@ -55,7 +53,7 @@ const VotingPage = (props) => {
             {
                 active &&
                 <Fragment>
-                    <Translate className="table__title" component="div" content={"blockchain.witnesses.active"} />
+                    <div className="table__title">{counterpart.translate(`blockchain.witnesses.active`)}</div>
                     <Table
                         tableHead={tableHead}
                         rows={active}
@@ -67,7 +65,7 @@ const VotingPage = (props) => {
             {
                 pending &&
                 <Fragment>
-                    <Translate className="table__title" component="div" content={"blockchain.witnesses.pending"} />
+                    <div className="table__title">{counterpart.translate(`blockchain.witnesses.pending`)}</div>
                     <Table
                         tableHead={tableHead}
                         rows={pending}

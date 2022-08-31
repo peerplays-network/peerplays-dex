@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
 import {menuList} from "../../params/menuList";
 import {NavLink} from "react-router-dom";
-import Translate from "react-translate-component";
 import {connect} from "react-redux";
 import {getStorage} from "../../actions/storage/index";
 import {clearLayout} from "../../dispatch/layoutDispatch";
 import {getStore} from "../../actions/store";
 import { IconLogo } from '../../svg';
+import counterpart from 'counterpart';
 
 const Menu = (props) => {
     const {loginData} = getStore();
@@ -32,7 +32,7 @@ const Menu = (props) => {
                     <Fragment key={id}>
                         <NavLink className="menu__item" exact to={link} onClick={clearLayout}>
                             <span className="menu__icon-wrapper">{el.icon}</span>
-                            <Translate content={`${el.tag}.title`} />
+                            <span>{counterpart.translate(`${el.tag}.title`)}</span>
                         </NavLink>
                         { (id + 1) % 3 === 0 && id !== 8 && <div className="menu__separator" />}
                     </Fragment>

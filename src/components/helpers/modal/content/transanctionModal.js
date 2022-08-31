@@ -1,10 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import dataFetch from "../../dataFetch";
-import Translate from "react-translate-component";
 import {transactionParser} from "../../../../actions/transactionParser";
 import TransferItem from "../../transferItem";
 import {ChainTypes} from "peerplaysjs-lib";
 import Close from "../decoration/close";
+import counterpart from 'counterpart';
 
 const getType = opNumber => {
     const operationsIndexes = Object.values(ChainTypes.operations);
@@ -25,7 +25,7 @@ const fetchFunc = async (context) => {
 
     const info = await transactionParser(operationData, password, true).then(e => e);
     return {
-        type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
+        type: <div className="operation positive">{counterpart.translate(`${basicTag}.title`)}</div>,
         info,
         blockNum: block_num,
         trxNum: trx_in_block

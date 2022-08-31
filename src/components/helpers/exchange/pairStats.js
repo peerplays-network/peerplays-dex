@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import Translate from "react-translate-component";
 import {Caret} from "../../../svg/index";
 import ChangePair from "../modal/content/changePair";
 import {setModal} from "../../../dispatch/layoutDispatch";
+import counterpart from 'counterpart';
 
 class PairStats extends Component{
 
@@ -40,11 +40,7 @@ class PairStats extends Component{
                                 <div className={`pair-stats__value${additionalClass}`}>
                                     {val} {asset && <span className="pair-stats__item-asset">{asset}</span>}
                                 </div>
-                                <Translate
-                                    content={`exchange.${el}`}
-                                    component="div"
-                                    className="pair-stats__item-title"
-                                />
+                                <div className="pair-stats__item-title">{counterpart.translate(`exchange.${el}`)}</div>
                             </div>
                         )
                     })}

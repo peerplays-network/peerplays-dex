@@ -2,9 +2,9 @@ import React, {Component, Fragment} from "react";
 import Close from "../decoration/close";
 import ModalTitle from "../decoration/modalTitle";
 import ModalButton from "../../buttons/modalButton";
-import Translate from "react-translate-component";
 import {clearLayout} from "../../../../dispatch/layoutDispatch";
 import {defaultTrx} from "../../../../actions/forms";
+import counterpart from "counterpart";
 
 class WarningModal extends Component{
 
@@ -46,12 +46,9 @@ class WarningModal extends Component{
         return(
             <Fragment>
                 <ModalTitle tag="warning" />
-                <Translate
-                    component="div"
-                    content={!errors ? `modal.warning.message` : `errors.${errors}`}
-                    className={!errors ? '' : 'modal__error'}
-                    with={{fee}}
-                />
+                <div className={!errors ? '' : 'modal__error'}>
+                    {counterpart.translate(`${!errors ? `modal.warning.message` : `errors.${errors}`}`,{fee})}
+                </div>
                 <div className="modal__bottom">
                         <Close />
                         {!errors && <ModalButton tag="continue" onClick={this.handleMethod} disabled={disabled} />}

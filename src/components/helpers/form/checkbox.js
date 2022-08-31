@@ -1,5 +1,5 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 import {IconCheck} from "../../../svg/index";
 
 
@@ -7,7 +7,7 @@ const CheckBox = ({id = '', labelTag = '', value = '', className = '', onChange,
     return(
         <label htmlFor={id} className={`checkbox${value[id] ? ' checkbox--selected' : ''}${className ? ` ${className}` : ''}${disabled ? ' disabled' : ''}`}>
             <input id={id} type="checkbox" defaultChecked={value[id]} onChange={e => onChange ? onChange(e.target.checked, id) : e.preventDefault()} disabled={disabled}/>
-            {labelTag && <Translate content={labelTag} className="checkbox__label" />}
+            {labelTag && <span className="checkbox__label">{counterpart.translate(`${labelTag}`)}</span> }
             <IconCheck />
         </label>
     )

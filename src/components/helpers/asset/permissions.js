@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {CardHeader} from "../cardHeader"
-import Translate from "react-translate-component";
 import {IconCheck} from "../../../svg/index";
+import counterpart from "counterpart";
 
 class Permissions extends Component {
     render() {
@@ -14,7 +14,7 @@ class Permissions extends Component {
                         permissions.map((item, index) =>
                             <div className="permissions__list" key={index}>
                                 <IconCheck/>
-                                <Translate className="" content={`block.${title}.${item}`}/>
+                                <span>{counterpart.translate(`block.${title}.${item}`)}</span>
                             </div>
                         )
                     }
