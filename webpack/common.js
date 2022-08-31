@@ -16,12 +16,12 @@ const config = {
     target: 'web',
 
     entry: {
-        app: ['babel-polyfill', 'react-hot-loader/patch', 'whatwg-fetch', './index.js'],
+        app: ['react-hot-loader/patch', 'whatwg-fetch', './index.js'],
     },
 
     output: {
         path: DIST,
-        filename: '[name][hash].js',
+        filename: '[name][contenthash].js',
         publicPath: '/',
     },
 
@@ -64,64 +64,54 @@ const config = {
                         loader: 'babel-loader'
                     },
                     {
-                        loader: 'react-svg-loader',
+                        loader: '@svgr/webpack',
                         options: {
-                            svgo: {
-                                plugins: [
-                                    {
-                                        removeViewBox: false
-                                    },
-                                    {
-                                        cleanupIDs: false
-                                    }
-                                ]
-                            },
-                            jsx: true
-                        }
+                            native: true,
+                        },
                     }
                 ]
             },
-            {
-                test: /\.(png|jpe?g|gif|svg)$/i,
-                exclude: /node_modules/,
-                include: /images/,
-                use:
-                    [
-                        'file-loader',
-                        {
-                            loader: 'image-webpack-loader',
-                            options: {
-                                mozjpeg: {
-                                    quality: 75
-                                },
-                                pngquant: {
-                                    quality: "60-70",
-                                    speed: 4
-                                },
-                                svgo: {
-                                    plugins: [
-                                        {
-                                            removeViewBox: false
-                                        },
-                                        {
-                                            removeEmptyAttrs: false
-                                        },
-                                        {
-                                            cleanupIDs: false
-                                        }
-                                    ]
-                                },
-                                gifsicle: {
-                                    optimizationLevel: 7,
-                                    interlaced: false
-                                },
-                                optipng: {
-                                    enabled: false
-                                }
-                            }
-                        }
-                    ]
-            },
+            // {
+            //     test: /\.(png|jpe?g|gif|svg)$/i,
+            //     exclude: /node_modules/,
+            //     include: /images/,
+            //     use:
+            //         [
+            //             'file-loader',
+            //             {
+            //                 loader: 'img-loader',
+            //                 options: {
+            //                     mozjpeg: {
+            //                         quality: 75
+            //                     },
+            //                     pngquant: {
+            //                         quality: "60-70",
+            //                         speed: 4
+            //                     },
+            //                     svgo: {
+            //                         plugins: [
+            //                             {
+            //                                 removeViewBox: false
+            //                             },
+            //                             {
+            //                                 removeEmptyAttrs: false
+            //                             },
+            //                             {
+            //                                 cleanupIDs: false
+            //                             }
+            //                         ]
+            //                     },
+            //                     gifsicle: {
+            //                         optimizationLevel: 7,
+            //                         interlaced: false
+            //                     },
+            //                     optipng: {
+            //                         enabled: false
+            //                     }
+            //                 }
+            //             }
+            //         ]
+            // },
             {
               test: /\.(woff2?|svg)$/,
               use: [

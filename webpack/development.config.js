@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 const { HotModuleReplacementPlugin } = require('webpack')
-const merge = require('webpack-merge')
+const {merge} = require('webpack-merge')
 const path = require('path');
 
 const { config } = require('./common')
@@ -45,16 +45,19 @@ module.exports = merge(config, {
   ],
 
   devServer: {
-    contentBase: resolve(__dirname, '..', 'public'),
+    static: {
+      directory: resolve(__dirname, '..', 'public')
+    },
     compress: true,
     hot: true,
-    noInfo: true,
     historyApiFallback: {
         disableDotRule: true
     },
-    overlay: {
-      warning: false,
-      errors: true,
-    },
+    client: {
+      overlay: {
+        warnings: false,
+        errors: true,
+      }
+    }
   },
 })

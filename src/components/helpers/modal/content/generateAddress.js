@@ -9,7 +9,7 @@ import { setSidechainAccounts } from '../../../../dispatch/setAccount';
 import { removeModal } from '../../../../dispatch/setModal';
 import {clearLayout} from "../../../../dispatch/index";
 import { updateAccountAndLoginData } from "../../../../actions/account";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
 
 
 class GenerateAddress extends Component {
@@ -88,13 +88,14 @@ class GenerateAddress extends Component {
                         </div>
                         <div className="quantity-wrapper mt-2">
                             <div>
-                                <Translate className="" content={"field.labels.fee"} />{form.state.data.fee.amount} {form.state.data.fee.symbol}
+                                <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                {form.state.data.fee.amount} {form.state.data.fee.symbol}
                             </div>
                         </div>
                         {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
                         {transactionError && transactionError !== "" ? 
                             <span className="clr--negative">
-                                <Translate className="" content={`errors.${transactionError}`} />
+                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                             </span> 
                             : ""}
 
