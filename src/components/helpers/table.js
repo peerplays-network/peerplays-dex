@@ -1,7 +1,6 @@
 import React from "react";
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import TableHeading from "./tableHeading";
-import TableCard from '../helpers/cards';
 
 const Table = ({className, tableHead, rows, link, onClick, partialFill}) => (
     <div className={`table${link || onClick ? ' table--with-link' : ''}${className ? ` ${className}` : ''}`}>

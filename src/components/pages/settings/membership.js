@@ -1,6 +1,6 @@
 import React from "react";
 import RoundButton from "../../helpers/buttons/roundButton";
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import {openWarning} from "../../../actions/openWarning";
 import {getGlobals} from "../../../actions/store";

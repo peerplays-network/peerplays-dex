@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { NavLink, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
 import counterpart from "counterpart";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
@@ -349,7 +349,7 @@ const Voting = (props) => {
                 }
             </div>
             <div className="page__content voting__content">
-                <Switch>
+                <Routes>
                     {
                         votingMenu.map((el, id) => (
                             <Route
@@ -360,7 +360,7 @@ const Voting = (props) => {
                             />
                         ))
                     }
-                </Switch>
+                </Routes>
             </div>
             <SaveChangesCard
                 show={!utils.isArrayEqual(newVotes, props.account.votes.map(vote => vote.vote_id)) }

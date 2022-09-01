@@ -10,7 +10,7 @@ const TableHeading = ({tableHead}) => (
                         key={`th-${id}`}
                         className={`table__cell bold ${el.params ? el.params : ''}`}
                     >
-                        {counterpart.translate(`tableHead.${el.translateTag}`, {el.translateParams})}
+                        {counterpart.translate(`tableHead.${el.translateTag}`, el.translateParams)}
                     </div>     
                 : <div
                     key={`th-${id}`}

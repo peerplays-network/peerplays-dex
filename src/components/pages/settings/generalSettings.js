@@ -4,12 +4,12 @@ import {setLocale} from "../../../actions/locale/setLocale";
 import Switcher from "../../helpers/switcher";
 import {editStorage, getStorage} from "../../../actions/storage/index";
 import CheckBox from "../../helpers/form/checkbox";
-import Translate from "react-translate-component";
 import Dropdown from "../../helpers/form/dropdown";
 import SelectHeader from "../../helpers/selectHeader";
 import Input from "../../helpers/form/input";
 import {faucetUrl} from "../../../params/networkParams";
 import Faucet from "./faucet";
+import counterpart from 'counterpart';
 
 class GeneralSettings extends Component {
 
@@ -81,7 +81,7 @@ class GeneralSettings extends Component {
 
         return (
             <div className="settings">
-                <Translate content="general.interface" component="h2" />
+                <h2>{counterpart.translate(`general.interface`)}</h2>
                 <Dropdown
                     btn={<SelectHeader labelTag="general.language" text={activeLang} />}
                     list={localesList}
@@ -98,14 +98,14 @@ class GeneralSettings extends Component {
                     selected={advancedMode}
                     handleChange={this.modeChange}
                 />
-                <Translate content="general.notifications" component="h2" />
+                <h2>{counterpart.translate(`general.notifications`)}</h2>
                 <CheckBox
                     id="notifications"
                     labelTag="general.transferNotifications"
                     value={formData}
                     onChange={this.handleNotifications}
                 />
-                <Translate content="general.faucet" component="h2" />
+                <h2>{counterpart.translate(`general.faucet`)}</h2>
     
                 <Faucet value={formData.faucet}/>
             </div>

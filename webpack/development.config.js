@@ -49,7 +49,6 @@ module.exports = merge(config, {
       directory: resolve(__dirname, '..', 'public')
     },
     compress: true,
-    hot: true,
     historyApiFallback: {
         disableDotRule: true
     },

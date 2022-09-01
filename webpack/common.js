@@ -21,7 +21,7 @@ const config = {
 
     output: {
         path: DIST,
-        filename: '[name][contenthash].js',
+        filename: '[name][hash].js',
         publicPath: '/',
     },
 
@@ -41,11 +41,6 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.json$/,
-                exclude: /node_modules/,
-                use: ['json-loader']
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader'],
@@ -61,57 +56,57 @@ const config = {
                 include: /svg/,
                 use: [
                     {
-                        loader: 'babel-loader'
+                      loader: 'file-loader'
                     },
                     {
-                        loader: '@svgr/webpack',
-                        options: {
-                            native: true,
-                        },
+                      loader: 'svgo-loader',
+                      options: {
+                        configFile: false
+                      }
                     }
                 ]
             },
-            // {
-            //     test: /\.(png|jpe?g|gif|svg)$/i,
-            //     exclude: /node_modules/,
-            //     include: /images/,
-            //     use:
-            //         [
-            //             'file-loader',
-            //             {
-            //                 loader: 'img-loader',
-            //                 options: {
-            //                     mozjpeg: {
-            //                         quality: 75
-            //                     },
-            //                     pngquant: {
-            //                         quality: "60-70",
-            //                         speed: 4
-            //                     },
-            //                     svgo: {
-            //                         plugins: [
-            //                             {
-            //                                 removeViewBox: false
-            //                             },
-            //                             {
-            //                                 removeEmptyAttrs: false
-            //                             },
-            //                             {
-            //                                 cleanupIDs: false
-            //                             }
-            //                         ]
-            //                     },
-            //                     gifsicle: {
-            //                         optimizationLevel: 7,
-            //                         interlaced: false
-            //                     },
-            //                     optipng: {
-            //                         enabled: false
-            //                     }
-            //                 }
-            //             }
-            //         ]
-            // },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                exclude: /node_modules/,
+                include: /images/,
+                use:
+                    [
+                        'file-loader',
+                        {
+                            loader: 'img-loader',
+                            options: {
+                                mozjpeg: {
+                                    quality: 75
+                                },
+                                pngquant: {
+                                    quality: "60-70",
+                                    speed: 4
+                                },
+                                svgo: {
+                                    plugins: [
+                                        {
+                                            removeViewBox: false
+                                        },
+                                        {
+                                            removeEmptyAttrs: false
+                                        },
+                                        {
+                                            cleanupIDs: false
+                                        }
+                                    ]
+                                },
+                                gifsicle: {
+                                    optimizationLevel: 7,
+                                    interlaced: false
+                                },
+                                optipng: {
+                                    enabled: false
+                                }
+                            }
+                        }
+                    ]
+            },
             {
               test: /\.(woff2?|svg)$/,
               use: [

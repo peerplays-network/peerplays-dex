@@ -3,7 +3,7 @@ import {CardHeader} from "../cardHeader";
 import {defaultToken} from "../../../params/networkParams";
 import {Asset} from "../../../classes/index";
 import Table from "../table";
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import {getUserName} from "../../../actions/account/index";
 
 const tableHead = [

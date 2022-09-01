@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/dashboard";
 import Tbd from "../pages/tbd";
 import User from "../pages/user/";
@@ -20,7 +20,7 @@ class Main extends Component {
     render() {
  return (
             <main>
-                <Switch>
+                <Routes>
                     <Route exact path="/" component={Dashboard} />
                     <PrivateRoute exact path="/exchange/:pair" component={Exchange} />
                     <PrivateRoute path="/assets" component={MyAssets} />
@@ -35,7 +35,7 @@ class Main extends Component {
                     <PrivateRoute path="/asset/:symbol" component={AssetPage} />
                     <PrivateRoute path="/bitcoin" component={BitcoinTransactions} />
                     <PrivateRoute path="/hive-hbd" component={HiveTransactions} />
-                </Switch>
+                </Routes>
             </main>
         )
     }

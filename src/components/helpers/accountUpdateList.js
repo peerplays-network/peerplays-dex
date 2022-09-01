@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import {IconCross} from "../../svg";
 import Table from "./table";
 

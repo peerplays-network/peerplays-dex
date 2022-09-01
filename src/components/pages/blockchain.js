@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Route, Switch} from "react-router-dom";
+import {NavLink, Route, Routes} from "react-router-dom";
 import Tbd from "./tbd";
 import Witnesses from "./blockchain/witnesses";
 import Committee from "./blockchain/committee";
@@ -57,7 +57,7 @@ const Blockchain = () => (
             }
         </div>
         <div className="page__content">
-            <Switch>
+            <Routes>
                 {
                     blockchainMenu.map((el, id) => (
                         <Route
@@ -68,7 +68,7 @@ const Blockchain = () => (
                         />
                     ))
                 }
-            </Switch>
+            </Routes>
         </div>
     </div>
 );
