@@ -92,7 +92,7 @@ class User extends Component{
                 <div className="page__user-title">
                     <Avatar userName={name}/>
                     <h1 className="page__title">{name}</h1>
-                    <QuantityConverter assets={assets} />
+                    {/* <QuantityConverter assets={assets} /> */}
                 </div>
                 <PageMenu items={menu} link={`/user/${name}`} path={'/user/:name'} data={userData} />
             </div>
