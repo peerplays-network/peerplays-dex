@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
 import {Asset} from "../../../classes";
-import Translate from "react-translate-component";
 
 const infoElems = ['feedPrice', 'feedLifetime', 'minimumFeeds', 'maintenanceCollateralRatio', 'maximumShortSqueezeRatio'];
 

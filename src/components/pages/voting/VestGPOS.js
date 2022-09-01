@@ -1,8 +1,6 @@
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import React, { useState } from 'react';
 import NumericInput from 'react-numeric-input';
-import { connect, useSelector } from "react-redux";
-import Translate from 'react-translate-component';
 import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { getStore,getAccountData, getBasicAsset , getFees} from '../../../actions/store';

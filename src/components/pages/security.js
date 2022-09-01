@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import Translate from "react-translate-component";
 import {editStorage, getStorage} from "../../actions/storage";
 import Dropdown from "../helpers/dropdown";
 import SelectHeader from "../helpers/selectHeader";

@@ -1,5 +1,4 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import { getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";

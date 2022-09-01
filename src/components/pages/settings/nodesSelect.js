@@ -8,7 +8,6 @@ import Switcher from "../../helpers/switcher";
 import {editStorage, getStorage} from "../../../actions/storage/index";
 import Node from "../../helpers/node";
 import {defaultNodesList} from "../../../params/nodesList";
-import Translate from "react-translate-component";
 import RoundButton from "../../helpers/buttons/roundButton";
 
 class NodesSelect extends Component{

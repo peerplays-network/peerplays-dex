@@ -1,7 +1,6 @@
 import React, {Component, Fragment} from "react";
 import Input from "../../helpers/form/input";
 import {CardHeader} from "../../helpers/cardHeader";
-import Translate from "react-translate-component";
 import Form from "../../helpers/form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";

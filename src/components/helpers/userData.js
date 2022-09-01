@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { connect } from "react-redux";
 import { Sidechains } from "../../params/networkParams";
 import ActionsBtn from "./buttons/actionsBtn";
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import { store } from "../../index";
 import { removeStorageItem } from "../../actions/storage";
 import { dispatchSendModal } from "../../actions/forms/dispatchSendModal";

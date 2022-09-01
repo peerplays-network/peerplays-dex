@@ -9,7 +9,7 @@ import {getPassword} from "../forms";
 import IssueAsset from "../../components/helpers/modal/content/issueAsset";
 import {setModal} from "../../dispatch";
 import {editStorage, getStorage} from "../storage";
-import Link from "react-router-dom/es/Link";
+import { Link } from "react-router-dom";
 import {getSidechainAccounts} from "./getSidechainAccounts";
 import counterpart from "counterpart";
 

@@ -1,5 +1,4 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import { Card } from "../../helpers/card";
 import { CardHeader } from "../../helpers/cardHeader";
 import {  getAccountData, getBasicAsset, getStore } from "../../../actions/store";

@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import Input from "../../helpers/form/input";
-import Translate from "react-translate-component";
 import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddress";
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";

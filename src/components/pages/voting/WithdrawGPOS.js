@@ -1,7 +1,6 @@
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import React, { useState } from 'react';
 import NumericInput from 'react-numeric-input';
-import Translate from 'react-translate-component';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
 import { getBasicAsset, getStore, getFees } from '../../../actions/store';

@@ -41,7 +41,7 @@ export default function TableCard({ className, tableHead, rows, link, onClick, p
                   {tdItem.translateTag
                     ?
                       <div key={`th-${tdId}`}>
-                        {counterpart.translate(`tableHead.${tdItem.translateTag}`, {tdItem.translateParams})}
+                        {counterpart.translate(`tableHead.${tdItem.translateTag}`, tdItem.translateParams)}
                       </div> 
                     : <div
                       key={`th-${tdId}`}

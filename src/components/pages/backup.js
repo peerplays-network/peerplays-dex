@@ -1,5 +1,5 @@
+import counterpart from 'counterpart';
 import React, {Component} from 'react';
-import Translate from "react-translate-component";
 import Dropdown from "../helpers/dropdown";
 import SelectHeader from "../helpers/selectHeader";
 
@@ -52,7 +52,7 @@ class Backup extends Component{
         return(
             <div className="backup">
                 <div className="backup__item">
-                    <Translate content={`${backupTranslate}.title`} component="h2" />
+                    <h2>{counterpart.translate(`${backupTranslate}.title`)}</h2>
                     <Dropdown
                         btn={<SelectHeader
                             labelTag={`${backupTranslate}.type`}

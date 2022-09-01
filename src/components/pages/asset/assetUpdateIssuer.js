@@ -1,6 +1,5 @@
 import React, {Component, Fragment} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
-import Translate from "react-translate-component";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store";
 import FieldWithHint from "../../helpers/form/fieldWithHint";
 import {dbApi} from "../../../actions/nodes";

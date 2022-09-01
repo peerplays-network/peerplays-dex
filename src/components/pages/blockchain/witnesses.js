@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from "react";
-import Translate from "react-translate-component";
 import {getWitnesses} from "../../../actions/getWitnesses";
 import Table from "../../helpers/table";
 import {Card} from "../../helpers/card";

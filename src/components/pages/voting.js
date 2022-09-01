@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
 import counterpart from "counterpart";
-import Translate from "react-translate-component";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
 import { connect } from "react-redux";
