@@ -1,15 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import Form from "../form/form";
 import UserBalance from "./userBalance";
-import ControlledInput from "../form/controlledInput";
 import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
-import Translate from "react-translate-component";
 import {getBasicAsset} from "../../../actions/store";
 import { utils } from '../../../utils';
 import { getAssetBySymbol } from "../../../actions/assets"
 import { dbApi } from '../../../actions/nodes';
+import counterpart from 'counterpart';
 
 
 class BuyForm extends Component{
@@ -246,26 +245,31 @@ class BuyForm extends Component{
                                
                                 <div className="exchange-form__info-wrapper">
                                     <div className="exchange-form__info">
-                                        <Translate content={"field.labels.fee"} />
+                                        <span>{counterpart.translate(`field.labels.fee`)}</span>
                                         <span>{data.fee} {data.feeAsset}</span>
                                     </div>
-                                    <div classN ame="exchange-form__info">
-                                        <Translate content="exchange.marketFee" percent={'0.1'} />
+                                    <div className="exchange-form__info">
+                                        <span>{counterpart.translate(`exchange.marketFee`)}</span>
                                         {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> : 
                                             <span>{`${data.sellMarketFeePercent ? data.sellMarketFeePercent : 0}%`}</span>}
                                     </div>
                                     <UserBalance assetSymbol={isBuy ? data.sellAsset : data.buyAsset}  />
                                 </div>
-                                {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                {sended && 
+                                    <span className="clr--positive">
+                                        <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                    </span>
+                                }
                                 <div className="info__row">
                                     {transactionError && transactionError !== "" ? 
                                         <span className="clr--negative">
-                                            <Translate className="" content={`errors.${transactionError}`} />
+                                            <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                         </span> 
                                         : ""}
                                 </div>
                                 <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                    <Translate content={`exchange.${isBuy ? 'buy' : 'sell'}`} /> {data.buyAsset}
+                                    <span>{counterpart.translate(`exchange.${isBuy ? 'buy' : 'sell'}`)}</span>
+                                    {` ${data.buyAsset}`}
                                 </button>
                             </Fragment>
                         )

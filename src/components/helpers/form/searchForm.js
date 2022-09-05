@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import Translate from "react-translate-component";
-import {IconCross, IconSearch} from "../../../svg";
+import IconCross from "../../../svg/cross.svg";
+import IconSearch from "../../../svg/search.svg";
+
 
 class SearchForm extends Component{
     state = {
@@ -24,12 +25,11 @@ class SearchForm extends Component{
         return(
             <div className="search">
                 <IconSearch className="search__icon" />
-                <Translate
-                    component="input"
-                    className="search__field"
+                <input  
+                    className="search__field" 
                     type="text"
                     onChange={this.onChange}
-                    attributes={{ placeholder: this.props.placeholderTag }}
+                    attributes={{ placeholder: this.props.placeholderTag }} 
                 />
                 <button className="search__close" onClick={this.onClose}><IconCross /></button>
             </div>

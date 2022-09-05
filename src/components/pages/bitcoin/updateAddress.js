@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from "react";
 import Input from "../../helpers/form/input";
-import Translate from "react-translate-component";
 import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddress";
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";
 import { getBasicAsset } from "../../../actions/store";
 import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class UpdateAddress extends Component {
     state = {
@@ -75,16 +75,22 @@ class UpdateAddress extends Component {
                                     error={errors}
                                     value={data}/>
                                 <div className="info__row">
-                                    <span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
-                                    {updated && <Translate component="span" className="clr--positive" content={"success.sidechainUpdated"}/> }
+                                    <span>
+                                        {counterpart.translate(`field.labels.fee`)} {data.fee} {data.feeAsset}
+                                    </span>
+                                    {updated &&
+                                        <span className="clr--positive">{counterpart.translate(`success.sidechainUpdated`)}</span> 
+                                    }
                                     {transactionError && transactionError !== "" ? 
                                         <span className="clr--negative">
-                                            <Translate className="" content={`errors.${transactionError}`} />
+                                            {counterpart.translate(`errors.${transactionError}`)}
                                         </span> 
                                         : ""}
                                 </div>
                                 <div className="btn__row">
-                                    <Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.update"}/>
+                                    <button className="btn-round btn-round--buy" type="submit">
+                                        {counterpart.translate(`buttons.update`)}
+                                    </button>
                                 </div>
                             </Fragment>
                         )

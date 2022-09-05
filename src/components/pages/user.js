@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
-import Translate from "react-translate-component";
 import Tbd from "./tbd";
 import QuantityConverter from "../helpers/quantityConverter";
 import UserAssets from "./userAssets";
@@ -8,6 +7,7 @@ import OpenOrders from "./openOrders";
 import UserActivity from "./userActivity";
 import UserPermissions from "./userPermissions";
 import {getStorage} from "../../actions/storage";
+import counterpart from 'counterpart';
 
 const userMenu = [
     {
@@ -68,14 +68,15 @@ class User extends Component{
                 </div>
                 <div className="page__menu">
                     {userMenu.map((el, id) => (
-                        <Translate
-                            key={id}
-                            content={`${el.tag}.title`}
-                            component={NavLink}
+                        <NavLink  
+                            key={id} 
                             to={`/user/${this.props.match.params.id}${el.link}`}
                             className="page__menu-item"
                             exact
-                        />
+                        >
+                            {counterpart.translate(`${el.tag}.title`)}
+                        </NavLink>
+ 
                     ))}
                 </div>
                 <div className="page__content">

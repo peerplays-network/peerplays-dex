@@ -3,7 +3,7 @@ import {dbApi} from "../../nodes";
 import {formAssetData, setPrecision} from "../../assets";
 import {openWarning} from "../../openWarning";
 import {formDate} from "../../formDate";
-import {IconDelete} from "../../../svg";
+import IconDelete from "../../../svg/delete.svg";
 import {roundNum} from "../../roundNum";
 
 export const getUserOrders = async (pair, account) => {

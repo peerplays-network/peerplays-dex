@@ -1,5 +1,4 @@
 import React from 'react';
-import Translate from 'react-translate-component';
 
 const TransferItem = ({data}) => (
     <div className="operation__row">

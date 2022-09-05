@@ -8,8 +8,8 @@ import {removeModal} from "../../../dispatch/setModal";
 import {transfer} from "../../../actions/forms/index";
 import Textarea from "../textarea";
 import { utils } from '../../../utils';
-import Translate from 'react-translate-component';
 import { dbApi } from '../../../actions/nodes';
+import counterpart from 'counterpart';
 
 const getUserAssetsList = async (symbol) => (
     getAccountData().assets
@@ -128,11 +128,12 @@ class SendModal extends Component {
                                         />
                                         <div className="quantity-wrapper">
                                             <div>
-                                                <Translate className="" content={"field.labels.fee"} />{data.fee} {data.quantityAsset}
+                                                <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                                {data.fee} {data.quantityAsset}
                                             </div>
                                             {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
-                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                             </span> 
                                             : ""}
                                             {/*<Dropdown*/}

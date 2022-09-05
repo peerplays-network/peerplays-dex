@@ -1,5 +1,5 @@
+import counterpart from "counterpart";
 import React, {Component} from "react";
-import Translate from "react-translate-component";
 import {connect} from "react-redux";
 import NeedToLogin from "../helpers/needToLogin";
 import PageMenu from "../helpers/pageMenu";
@@ -23,7 +23,7 @@ class Business extends Component{
         return(
             <div className="container page">
                 <div className="page__header-wrapper">
-                    <Translate component="h1" className="page__title" content="business.title"/>
+                    <h1 className="page__title">{counterpart.translate(`business.title`)}</h1>
                 </div>
                 <PageMenu items={basicMenu} link={`/business`} path={'/business'} data={userData} />
             </div>

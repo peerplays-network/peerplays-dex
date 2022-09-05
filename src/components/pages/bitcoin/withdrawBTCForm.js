@@ -1,5 +1,4 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import {  getAccountData, getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
@@ -7,6 +6,7 @@ import {transfer} from "../../../actions/forms"
 import { utils } from "../../../utils";
 import { updateAccountAndLoginData } from "../../../actions/account";
 import { dbApi } from "../../../actions/nodes";
+import counterpart from "counterpart";
 
 class WithdrawBTCForm extends Component {
     state = {
@@ -109,16 +109,19 @@ class WithdrawBTCForm extends Component {
 									/>
 								</div>
 								<div className="info__row">
-									{sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/>}
+									{sended && <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span> }
 									{transactionError && transactionError !== "" ? 
 										<span className="clr--negative">
-											<Translate className="" content={`errors.${transactionError}`} />
+											<span>{counterpart.translate(`errors.${transactionError}`)}</span>
 										</span> 
 									: "" }
-									<span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
+									<span>
+										<span>{counterpart.translate(`field.labels.fee`)}</span>
+										{data.fee} {data.feeAsset}
+									</span>
 								</div>
 								<div className="btn__row">
-									<Translate className="btn-round btn-round--buy" component="button" type="submit" content={"buttons.withdraw"}/>
+									<button className="btn-round btn-round--buy" type="submit">{counterpart.translate(`buttons.withdraw`)}</button>
 								</div>
 							</Fragment>
 						)

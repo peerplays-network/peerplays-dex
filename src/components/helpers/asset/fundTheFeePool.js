@@ -1,13 +1,13 @@
 import React, {Component, Fragment} from "react";
 import Input from "../form/input";
 import {CardHeader} from "../cardHeader";
-import Translate from "react-translate-component";
 import Form from "../form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
 import {fetchAssetData} from "../../../actions/dataFetching";
 import { utils } from "../../../utils";
 import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class FundTheFeePool extends Component {
     state = {
@@ -51,7 +51,7 @@ class FundTheFeePool extends Component {
         return (
             <div className="card card--action cardresponsivediv">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`} with={{poolAsset: this.props.symbol}} />
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`, {poolAsset: this.props.symbol})}</div>
                 <Form className="asset-action__content"
                       type={'asset_fund_fee_pool'}
                       defaultData={defaultData}
@@ -90,14 +90,23 @@ class FundTheFeePool extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span><Translate className="" content={"field.labels.fee"} />{data.fee} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">
+                                                <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                            </span>
+                                        }
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
-                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                             </span> 
                                             : ""}
-                                       <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.fund`} /></button>
+                                       <button type="submit" className="btn-round btn-round--fund">
+                                           <span>{counterpart.translate(`actions.fund`)}</span>
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

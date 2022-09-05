@@ -82,47 +82,47 @@ export const ru = {
     "tableInfo": {
         "account_create": {
             "title": "Создание учетной записи",
-            "description": "%(registrar)s зарегистрированный счет %(user)s"
+            "description": "%(registrar)s, зарегистрированный счет , %(user)s"
         },
         "account_update": {
             "title": "Обновленная учетная запись",
-            "description": "%(user)s обновленные данные учетной записи"
+            "description": "%(user)s, обновленные данные учетной записи"
         },
         "account_upgrade": {
             "title": "Обновленная учетная запись",
-            "description": "%(user)s обновленная учетная запись для пожизненного члена"
+            "description": "%(user)s, обновленная учетная запись для пожизненного члена"
         },
         "account_whitelist": {
             "title": "Учетная запись Белый список",
-            "description": "%(issuer)s %(status)s счет %(listed)s"
+            "description": "%(issuer)s, %(status)s счет , %(listed)s"
         },
         "asset_claim_pool": {
             "title": "Претензия пула сборов за активы",
-            "description": "%(issuer)s заявленный %(claimed)s от %(asset)s пул гонорара"
+            "description": "%(issuer)s, заявленный %(claimed)s от , %(asset)s , пул гонорара"
         },
         "asset_create": {
             "title": "Создание активов",
-            "description": "%(issuer)s создал актив %(assetName)s"
+            "description": "%(issuer)s, создал актив , %(assetName)s"
         },
         "asset_fund_fee_pool": {
             "title": "Фонд активов Плата бассейн",
-            "description": "%(from)s финансируемых %(symbol)s платный бассейн с %(amount)s"
+            "description": "%(from)s, финансируемых %(symbol)s платный бассейн с %(amount)s"
         },
         "asset_issue": {
             "title": "Выпуск активов",
-            "description": "%(issuer)s с выданным %(assetAmount)s до %(receiver)s"
+            "description": "%(issuer)s, с выданным %(assetAmount)s до , %(receiver)s"
         },
         "asset_update": {
             "title": "Обновление актива",
-            "description": "%(issuer)s обновленный актив %(asset)s"
+            "description": "%(issuer)s, обновленный актив , %(asset)s"
         },
         "asset_update_feed_producers": {
             "title": "Обновление производителей кормов для активов",
-            "description": "%(issuer)s обновил кормовые производители для актива %(asset)s"
+            "description": "%(issuer)s, обновил кормовые производители для актива , %(asset)s"
         },
         "asset_update_issuer": {
             "title": "Обновление эмитента активов",
-            "description": "%(issuer)s передал права на %(asset)s до %(newOwner)s"
+            "description": "%(issuer)s, передал права на , %(asset)s , до , %(newOwner)s"
         },
         "balance_claim": {
             "title": "требование баланса",
@@ -130,15 +130,15 @@ export const ru = {
         },
         "fill_order": {
             "title": "Заказ заполнен",
-            "description": "%(user)s купил %(receives)s для %(pays)s на %(marketLink)s для заказа #%(id)s"
+            "description": "%(user)s, купил %(receives)s для %(pays)s на , %(marketLink)s , для заказа #%(id)s"
         },
         "limit_order_cancel": {
             "title": "Отмена заказа",
-            "description": "%(user)s отмененный заказ #%(id)s"
+            "description": "%(user)s, отмененный заказ #%(id)s"
         },
         "limit_order_create": {
             "title": "Создание заказа",
-            "description": "%(creator)s разместил заказ %(id)s на %(marketLink)s, чтобы купить %(buy)s за %(sell)s"
+            "description": "%(creator)s, разместил заказ %(id)s на , %(marketLink)s , чтобы купить %(buy)s за %(sell)s"
         },
         "proposal_create": {
             "title": "Предложение Создать",
@@ -150,11 +150,11 @@ export const ru = {
         },
         "receive": {
             "title": "получать",
-            "description": "%(receiver)s получил %(quantity)s от %(sender)s"
+            "description": "%(receiver)s, получил %(quantity)s от , %(sender)s"
         },
         "send": {
             "title": "Отправить",
-            "description": "%(sender)s отправить %(quantity)s до %(receiver)s"
+            "description": "%(sender)s, отправить %(quantity)s до , %(receiver)s"
         },
         "transfer": {
             "title": "Перевод",
@@ -162,15 +162,15 @@ export const ru = {
         },
         "vesting_balance_create":{
             "title": "Вестинг GPOS",
-            "description": "%(user)s Жилет %(quantity)s GPOS",
+            "description": "%(user)s, Жилет %(quantity)s GPOS",
         },
         "vesting_balance_withdraw":{
             "title": "Отзывать GPOS",
-            "description": "%(user)s Отзывать %(quantity)s GPOS",
+            "description": "%(user)s, Отзывать %(quantity)s GPOS",
         },
         "worker_create": {
             "title": "Создан работник",
-            "description": "%(user)s создал предложение работника с ежедневной оплатой %(dailyPay)s"
+            "description": "%(user)s, создал предложение работника с ежедневной оплатой %(dailyPay)s"
         },
     },
     "dashboard": {
@@ -310,7 +310,7 @@ export const ru = {
         "buy": "покупать",
         "sell": "продавать",
         "fee": "плата:",
-        "marketFee": "Рыночная плата (%(percent)s%):",
+        "marketFee": "Рыночная плата",
         "balance": "Остаток средств:"
     },
     "assets": {
@@ -409,8 +409,8 @@ export const ru = {
             "none": "Нет наград"
         },
         "trans":"Транзакция завершена",
-        "percent": "Квалифицированная награда %",
-        "potential": "Расчетное вознаграждение за рейк %",
+        "percent": "Квалифицированная награда %%",
+        "potential": "Расчетное вознаграждение за рейк %%",
         "next_vote": "Следующее обновление голосования",
         "newGpos":"Новый баланс GPOS",
         "noGpos":"Нет доступного GPOS",
@@ -584,8 +584,8 @@ export const ru = {
     },
     "membership": {
         "title": "членство",
-        "upgradeTitle": "Обновление для 80% Кэшбэк",
-        "upgradeDesc": "Пожизненные участники получают 80% кэшбэка с каждой уплаченной ими комиссии за транзакцию и имеют право на получение реферального дохода от пользователей, у которых они регистрируются или ссылаются на сеть. Пожизненное членство составляет всего %(fee)s.",
+        "upgradeTitle": "Обновление для 80%% Кэшбэк",
+        "upgradeDesc": "Пожизненные участники получают 80%% кэшбэка с каждой уплаченной ими комиссии за транзакцию и имеют право на получение реферального дохода от пользователей, у которых они регистрируются или ссылаются на сеть. Пожизненное членство составляет всего %(fee)s.",
         "referralTitle": "Ваша реферальная ссылка",
         "referralDesc": "Дайте ссылку людям, которых вы хотите привлечь к Peerplays: %(link)s/?r=%(name)s",
         "allocationTitle": "Распределение комиссионных",
@@ -673,7 +673,7 @@ export const ru = {
             "forcedSettlementPercent": "Принудительный расчет процент",
             "forcedSettlementMaxVolume": "Максимальный объем принудительного расчета (процент в час)",
             "backingAsset": "Резервное имущество",
-            "marketFee": "Рыночная плата (%)",
+            "marketFee": "Рыночная плата",
             "maxMarketFee": "Максимальная рыночная плата",
             "issueAmount": "Сумма выпуска",
             "condition": "Состояние (максимум 60 символов)",

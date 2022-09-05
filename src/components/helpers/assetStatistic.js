@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {getUserName} from "../../actions/account";
 import {Asset} from "../../classes";
-import Translate from "react-translate-component";
 import {getBasicAsset} from "../../actions/store";
+import counterpart from "counterpart";
 
 const infoElems = ['type', 'issuer', 'precision', 'backingAsset', 'currentSupply', 'stealthSupply', 'maxFee', 'maxSupply'];
 
@@ -17,35 +17,35 @@ const formAssetStatistic = async ({basicData, dynamicData, baseAsset, quoteAsset
 
     return {
         type: {
-            title: <Translate content="block.general.type"/>,
+            title: <span>{counterpart.translate(`block.general.type`)}</span>,
             text: type
         },
         precision: {
-            title: <Translate content="block.general.precision"/>,
+            title: <span>{counterpart.translate(`block.general.precision`)}</span>,
             text: precision
         },
         issuer: {
-            title: <Translate content="block.general.issuer"/>,
+            title: <span>{counterpart.translate(`block.general.issuer`)}</span>,
             text: issuer
         },
         backingAsset: {
-            title: <Translate content="block.general.backingAsset"/>,
+            title: <span>{counterpart.translate(`block.general.backingAsset`)}</span>,
             text: quoteAsset.symbol
         },
         currentSupply: {
-            title: <Translate content="block.general.currentSupply"/>,
+            title: <span>{counterpart.translate(`block.general.currentSupply`)}</span>,
             text: defaultAsset.setPrecision(true, current_supply)
         },
         stealthSupply: {
-            title: <Translate content="block.general.stealthSupply"/>,
+            title: <span>{counterpart.translate(`block.general.stealthSupply`)}</span>,
             text: defaultAsset.setPrecision(true, confidential_supply)
         },
         maxFee: {
-            title: <Translate content="block.general.maxFee"/>,
+            title: <span>{counterpart.translate(`block.general.maxFee`)}</span>,
             text: defaultAsset.setPrecision(true, max_market_fee)
         },
         maxSupply: {
-            title: <Translate content="block.general.maxSupply"/>,
+            title: <span>{counterpart.translate(`block.general.maxSupply`)}</span>,
             text: defaultAsset.setPrecision(true, max_supply)
         }
     };

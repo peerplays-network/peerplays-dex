@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
 import {Asset} from "../../../classes";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
 
 const infoElems = ['coreExchangeRate', 'feePool', 'unclaimedIssuerIncome'];
 
@@ -16,15 +16,15 @@ const formFeePool = async ({basicData, dynamicData, quoteAsset, baseAsset}) => {
 
     return {
         coreExchangeRate: {
-            title: <Translate content="block.fee.coreExchangeRate"/>,
+            title: <span>{counterpart.translate(`block.fee.coreExchangeRate`)}</span>,
             text: `${newQuoteAsset.calculatePrice(newBaseAsset)} ${newQuoteAsset.symbol}/${newBaseAsset.symbol}`
         },
         feePool: {
-            title: <Translate content="block.fee.feePool"/>,
+            title: <span>{counterpart.translate(`block.fee.feePool`)}</span>,
             text: feeAsset.toString()
         },
         unclaimedIssuerIncome: {
-            title: <Translate content="block.fee.unclaimedIssuerIncome"/>,
+            title: <span>{counterpart.translate(`block.fee.unclaimedIssuerIncome`)}</span>,
             text: accumulated_fees ? newQuoteAsset.toString(accumulated_fees) : `0 ${quoteAsset.symbol}`
         }
     }
@@ -52,7 +52,7 @@ class FeePool extends Component {
         return (
             <div className="fee-pool card">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`)}</div>
                 {
                     data && <div className="asset-stats__items">
                         {infoElems.map((elem, index) => (

@@ -1,8 +1,6 @@
 import React, {Component} from "react";
 import Table from "../../helpers/table";
 import {getAssets} from "../../../actions/getAssets";
-import {Radio} from "../../helpers/radio";
-import Translate from "react-translate-component";
 import TableCard from "../../helpers/cards";
 
 const tableHead = [

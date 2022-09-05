@@ -1,6 +1,5 @@
+import counterpart from 'counterpart';
 import React, {Component} from 'react';
-import RoundButton from "../buttons/roundButton";
-import Translate from "react-translate-component";
 
 class FileUpload extends Component{
 
@@ -30,10 +29,10 @@ class FileUpload extends Component{
         return(
             <label htmlFor={id} className="upload">
                 <div className="upload__info">
-                    <Translate content={`field.labels.${id}`} fileSize={fileSizes} className="upload__text" />
+                    <span className="upload__text" fileSize={fileSizes}>{counterpart.translate(`field.labels.${id}`)}</span>
                     <span className="upload__file-name">{fileName}</span>
                 </div>
-                <Translate content={`buttons.${fileName ? 'useAnother' : 'upload'}`} className="upload__btn btn-round" />
+                <span className="upload__btn btn-round">{counterpart.translate(`buttons.${fileName ? 'useAnother' : 'upload'}`)}</span>
                 <input id={id} className="upload__input" type="file" onChange={this.handleFile} accept={fileSizes}/>
             </label>
         )

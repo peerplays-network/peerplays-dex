@@ -1,17 +1,17 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 
 const DefaultTabsHead = ({head, activeTab, callback}) => (
     <div className="tabs__head">
         {head.map((el, id) => (
-            <Translate
+            <button 
                 key={id}
-                id={el}
-                component="button"
-                content={`tabs.${el}`}
+                id={el} 
                 className={`tabs__head-item${activeTab === id ? ' active' : ''}`}
                 onClick={callback}
-            />
+            >
+                {counterpart.translate(`tabs.${el}`)}
+            </button>
         ))}
     </div>
 );

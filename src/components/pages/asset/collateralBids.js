@@ -1,11 +1,9 @@
 import React, {Component} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
 import {defaultToken} from "../../../params/networkParams";
-import {dbApi} from "../../../actions/nodes";
 import {Asset} from "../../../classes";
 import Table from "../../helpers/table";
-import {formAssetData} from "../../../actions/assets";
-import Link from "react-router-dom/es/Link";
+import {Link} from "react-router-dom";
 import {getUserName} from "../../../actions/account";
 
 const tableHead = [

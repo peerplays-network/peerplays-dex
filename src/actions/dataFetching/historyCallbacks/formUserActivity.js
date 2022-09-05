@@ -1,15 +1,29 @@
-import React from "react";
+import React, {Fragment}  from "react";
 import {ChainTypes} from "peerplaysjs-lib";
 import {getUserName} from "../../account/getUserName";
 import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
 import {formDate} from "../../formDate";
-import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
+import counterpart from "counterpart";
+
+const addLinkComponent = (linkString, index) => {
+    const trimedLink = linkString.replace(/\s/g, "");
+    const text = trimedLink.substring(
+        trimedLink.indexOf("=") + 1,
+        trimedLink.lastIndexOf("]")
+    );
+    const link = trimedLink.substring(
+        trimedLink.indexOf(":") + 1,
+        trimedLink.lastIndexOf("=")
+    );
+    return <Link key={index} to={`${link}`}>{text}</Link>;
+}
+
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
@@ -25,12 +39,19 @@ export const formUserActivity = async (context) => {
       const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp, ['date', 'month', 'year', 'time']));
       const {type, info} = await formInfoColumn(user, el);
       const feeAsset = await formAssetData(fee);
-
+      let separatedInfo = info.props.children.split(",");
+      separatedInfo = separatedInfo.map((part, index) => {
+        if (part.includes("link")) {
+            return addLinkComponent(part, index);
+          } else {
+            return <span key={index}>{part}</span>;
+          }
+      })
       return {
           id: el.id,
           fee: feeAsset.toString(),
           type,
-          info,
+          info: <>{separatedInfo.map(info => info)}</>,
           time
       };
     }));
@@ -49,10 +70,11 @@ const formInfoColumn = async (user, operation) => {
     const {type, data} = await formTrxInfo(user, operation);
     const basicTag = `tableInfo.${type}`;
     return {
-        type: <Translate content={`${basicTag}.title`} component="a"
-            onClick={() => handleTransactionClick(user, operation)}
-            className="operation positive" />,
-        info: <Translate content={`${basicTag}.description`} with={data} />
+        type: 
+            <a onClick={() => handleTransactionClick(user, operation)} className="operation positive">
+                {counterpart.translate(`${basicTag}.title`)}
+            </a>,
+        info: <span>{counterpart.translate(`${basicTag}.description`, data)}</span>,
     };
 };
 
@@ -209,7 +231,7 @@ const formAdditionalInfo = {
 };
 
 const getAuthor = userID => getUserName(userID);
-const formLink = (url, text, linkID) => <Link to={`/${url}/${linkID || text}`}>{text}</Link>;
+const formLink = (url, text, linkID) => `[link:/${url}/${linkID || text}=${text}]`;
 const formAssetLink = async (assetID, notification) => {
     const asset = await formAssetData({id: assetID});
     return notification ? asset.symbol : formLink('asset', asset.symbol);

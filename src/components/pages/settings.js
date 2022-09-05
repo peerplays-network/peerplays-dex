@@ -4,9 +4,9 @@ import GeneralSettings from "./generalSettings";
 import NodesSelect from "./nodesSelect";
 import Security from "./security";
 import Backup from "./backup";
-import Translate from "react-translate-component";
 import Tbd from "./tbd";
 import ActionsBtn from "../helpers/actionsBtn";
+import counterpart from 'counterpart';
 
 const settingsMenu = [
     {
@@ -49,14 +49,14 @@ const Settings = () => (
         </div>
         <div className="page__menu">
             {settingsMenu.map((el, id) => (
-                <Translate
+                <NavLink
                     key={id}
-                    content={`${el.tag}.title`}
-                    component={NavLink}
                     to={`/settings${el.link}`}
                     className="page__menu-item"
                     exact
-                />
+                >
+                    {counterpart.translate(`${el.tag}.title`)}
+                </NavLink>
             ))}
         </div>
         <div className="page__content">

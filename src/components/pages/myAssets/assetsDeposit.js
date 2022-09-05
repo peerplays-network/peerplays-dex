@@ -4,9 +4,9 @@ import {testnetCheck} from "../../../params/networkParams";
 import {getAccountData} from "../../../actions/store";
 import DepositData from "../../helpers/depositData";
 import {getStorage} from "../../../actions/storage";
-import Translate from "react-translate-component";
 import {getFullAccount} from "../../../actions/account";
 import {formAssetData} from "../../../actions/assets";
+import counterpart from 'counterpart';
 
 const formDepositData = async ({bridgeParams, coinParams}, userName) => {
 
@@ -118,7 +118,7 @@ class AssetDeposit extends Component{
                 <BridgeSelector type="deposit" defaultData={bridgesData} handleSelect={this.handleSelect} clearData={this.clearData} />
                 {coinParams
                     ? <DepositData type="deposit" data={coinParams} user={userData} address={inputAddress} memo={inputMemo} />
-                    : <Translate content="bridgeData.warning" component="div" />
+                    : <div>{counterpart.translate(`bridgeData.warning`)}</div>
                 }
             </div>
         )

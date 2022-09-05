@@ -1,6 +1,6 @@
 import React, {Fragment, Component} from "react";
 import Table from "../../helpers/table";
-import {IconCheckGreen} from "../../../svg";
+import IconCheckGreen from "../../../svg/check_green.svg";
 import {getInfoVoting} from "../../../actions/voting/getInfoVoting";
 import SelectHeader from "../../helpers/selectHeader";
 import {dbApi} from "../../../actions/nodes";

@@ -5,7 +5,6 @@ import {getUserName} from "../../../actions/account/index";
 import Table from "../table";
 import Link from "react-router-dom/es/Link";
 import {formDate} from "../../../actions/formDate";
-import {defaultToken} from "../../../params/networkParams";
 
 const defaultTableHead = [
     {
