@@ -1,7 +1,7 @@
 import React from "react";
 import {QRCodeCanvas} from 'qrcode.react';
 import InfoBlock from "./infoBlock";
-import {Link} from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import WarningMessage from "./warningMessage";
 import counterpart from "counterpart";
 

@@ -1,6 +1,8 @@
 import React from "react";
 import ActionsBtn from "../helpers/actionsBtn";
-import {IconBuy, IconDeposit, IconSend} from "../../svg";
+import IconBuy from "../../svg/buy.svg";
+import IconDeposit from "../../svg/deposit.svg";
+import IconSend from "../../svg/send.svg";
 import Table from "../helpers/table";
 import {connect} from "react-redux";
 import {defaultQuote, defaultToken} from "../../params/networkParams";

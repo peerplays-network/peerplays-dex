@@ -43,11 +43,11 @@ const tableHead = [
     // }
 ];
 
+
 const UserActivity = ({data}) => 
-<div>
-<Table tableHead={tableHead} rows={data} />
-<TableCard tableHead={tableHead} rows={data}/>
-</div>
-;
+    <div>
+        <Table tableHead={tableHead} rows={data} />
+        <TableCard tableHead={tableHead} rows={data}/>
+    </div>;
 
 export default dataFetch({ method: formUserActivity, page: 'activity' })(UserActivity);

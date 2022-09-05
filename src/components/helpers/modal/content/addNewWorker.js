@@ -1,5 +1,4 @@
 import React, {Component, Fragment} from 'react';
-import {IconWarning} from "../../../../svg/index";
 import Form from "../../form/form";
 import Input from "../../form/input";
 import DateField from "../../form/dateField";

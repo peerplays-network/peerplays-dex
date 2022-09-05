@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {ContactItem} from "../helpers/contactItem";
-import {IconBlackList, IconStar, IconTrash} from "../../svg";
+import IconBlackList from "../../svg/blackList.svg";
+import IconStar from "../../svg/star.svg";
+import IconTrash from "../../svg/trash.svg";
 import Switcher from "../helpers/switcher";
 import {ActionsPanel} from "../helpers/actionsPanel";
 import RoundButton from "../helpers/buttons/roundButton";

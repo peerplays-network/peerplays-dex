@@ -3,7 +3,7 @@ import {CardHeader} from "../../helpers/cardHeader";
 import {Asset} from "../../../classes";
 import {getUserName} from "../../../actions/account";
 import Table from "../../helpers/table";
-import {Link} from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import {formDate} from "../../../actions/formDate";
 import {defaultToken} from "../../../params/networkParams";
 

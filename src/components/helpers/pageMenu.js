@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import Tbd from "../pages/tbd";
-import {NavLink, Route, Routes} from "react-router-dom";
+import {NavLink, Route, Switch} from "react-router-dom";
 import counterpart from 'counterpart';
 
 const PageMenu = ({items, link, path, data = {}}) => (
@@ -18,7 +18,7 @@ const PageMenu = ({items, link, path, data = {}}) => (
             ))}
         </div>
         <div className="page__content">
-            <Routes>
+            <Switch>
                 {
                     items.map((el, id) => {
                         const Component = el.component ? el.component : Tbd;
@@ -32,7 +32,7 @@ const PageMenu = ({items, link, path, data = {}}) => (
                         )
                     })
                 }
-            </Routes>
+            </Switch>
         </div>
     </Fragment>
 );

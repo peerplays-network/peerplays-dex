@@ -6,6 +6,6 @@ export const MembershipTitle = ({title, subtitle, subtitleData}) => (
         <h2 className="membership__title">
             {counterpart.translate(`membership.${title}`)}
         </h2>
-        { subtitle && <span className="membership__subtitle">{counterpart.translate(`membership.${subtitle}`, {subtitleData})}</span> }
+        { subtitle && <span className="membership__subtitle">{counterpart.translate(`membership.${subtitle}`, subtitleData)}</span> }
     </div>
 );

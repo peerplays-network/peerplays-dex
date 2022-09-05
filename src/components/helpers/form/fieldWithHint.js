@@ -1,7 +1,7 @@
 import * as ReactDOM from "react-dom";
 import React, {Component} from 'react'
 import ControlledInput from "./controlledInput";
-import {Caret} from "../../../svg";
+import IconCaret from "../../../svg/caret.svg";
 import counterpart from "counterpart";
 
 class FieldWithHint extends Component{
@@ -136,7 +136,7 @@ class FieldWithHint extends Component{
                     hint={hint}
                     {...this.props}
                 />
-                <Caret className='field__caret' onClick={()=>this.toggleDropdown()}/>
+                <IconCaret className='field__caret' onClick={()=>this.toggleDropdown()}/>
                 
                 { errors && errors[name] && <span className="field__error">{counterpart.translate(`errors.${errors[name]}`)}</span> }
                 <div className="dropdown__body custom-scroll">

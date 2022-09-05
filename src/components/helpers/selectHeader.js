@@ -1,6 +1,6 @@
 import counterpart from 'counterpart';
 import React from 'react';
-import {Caret} from "../../svg";
+import IconCaret from "../../svg/caret.svg";
 
 const SelectHeader = ({labelTag, text, className = '', error, style = {}}) => (
     <div className={`field ${className}${!labelTag ? ' without-label' : ''}`} style={style}>
@@ -9,7 +9,7 @@ const SelectHeader = ({labelTag, text, className = '', error, style = {}}) => (
             {text}
         </span>
         <span className="field__border" />
-        <Caret className='field__caret'/>
+        <IconCaret className='field__caret'/>
         { error && <span className="field__error">{counterpart.translate(`errors.${error}`)}</span> }
     </div>
 );

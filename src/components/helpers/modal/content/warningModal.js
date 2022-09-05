@@ -47,7 +47,7 @@ class WarningModal extends Component{
             <Fragment>
                 <ModalTitle tag="warning" />
                 <div className={!errors ? '' : 'modal__error'}>
-                    {counterpart.translate(`${!errors ? `modal.warning.message` : `errors.${errors}`}`,{fee})}
+                    {counterpart.translate(`${!errors ? `modal.warning.message` : `errors.${errors}`}`, {fee})}
                 </div>
                 <div className="modal__bottom">
                         <Close />

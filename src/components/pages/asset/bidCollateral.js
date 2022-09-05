@@ -4,6 +4,7 @@ import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store";
 import { utils } from "../../../utils";
+import counterpart from "counterpart";
 
 class BidCollateral extends Component {
     state = {
@@ -50,7 +51,9 @@ class BidCollateral extends Component {
         return(
             <div className="card card--action__big">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment card__comment--negative" content={`block.${title}.text`}/>
+                <div className="card__comment card__comment--negative">
+                    {counterpart.translate(`block.${title}.text`)}
+                </div>
                 <div className="card__footer"/>
                 <Form className="asset-action__content"
                       type={'asset_publish_feed'}
@@ -96,9 +99,15 @@ class BidCollateral extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span><Translate className="" content={"field.labels.fee"} />{data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
-                                        <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.publish}`} /></button>
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>{data.fee} {data.quantityAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span>
+                                        }
+                                        <button type="submit" className="btn-round btn-round--fund">
+                                            {counterpart.translate(`actions.publish`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

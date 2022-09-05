@@ -7,8 +7,8 @@ import TableCard from "../../helpers/cards";
 
 const OpenOrders = ({data}) =>(
     <div>
-    <Table tableHead={data.tableHead} rows={data.rows} />
-    <TableCard tableHead={data.tableHead} rows={data.rows}/>
+        <Table tableHead={data.tableHead} rows={data.rows} />
+        <TableCard tableHead={data.tableHead} rows={data.rows}/>
     </div>
 );
 

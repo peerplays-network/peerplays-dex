@@ -1,6 +1,6 @@
 import React from 'react';
 import Dropdown from "../form/dropdown";
-import {IconMore} from "../../../svg/index";
+import IconMore from "../../../svg/more.svg";
 
 const ActionsBtn = ({actionsList}) => (
     <Dropdown

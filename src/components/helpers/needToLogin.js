@@ -1,6 +1,6 @@
 import React from "react";
 import CreateUser from "./modal/content/createUser";
-import {IconLogin} from "../../svg";
+import IconLogin from "../../svg/login.svg";
 import {setModal} from "../../dispatch/layoutDispatch";
 import Button from "./buttons/button";
 import counterpart from "counterpart";

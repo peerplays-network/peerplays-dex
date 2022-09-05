@@ -1,6 +1,6 @@
 import counterpart from "counterpart";
 import React from "react";
-import {IconCheck} from "../../svg";
+import IconCheck from "../../svg/check.svg";
 
 
 const CheckBox = ({id = '', labelTag = '', value = '', className = '', onChange, disabled = false}) => {

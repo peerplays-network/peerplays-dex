@@ -52,27 +52,22 @@ const config = {
             },
             {
                 test: /\.svg$/i,
-                exclude: /node_modules/,
-                include: /svg/,
-                use: [
-                    {
-                      loader: 'file-loader'
-                    },
-                    {
-                      loader: 'svgo-loader',
-                      options: {
-                        configFile: false
-                      }
-                    }
-                ]
+                type: 'asset',
+                resourceQuery: /url/, // *.svg?url
+            },
+            {
+                test: /\.svg$/i,
+                issuer: /\.[jt]sx?$/,
+                resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+                use: ['@svgr/webpack'],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/i,
                 exclude: /node_modules/,
                 include: /images/,
+                type: 'asset/resource',
                 use:
                     [
-                        'file-loader',
                         {
                             loader: 'img-loader',
                             options: {
@@ -108,18 +103,20 @@ const config = {
                     ]
             },
             {
-              test: /\.(woff2?|svg)$/,
-              use: [
-                {
-                  loader: 'url-loader',
-                  options: {
-                    limit: 10000,
-                  },
+                test: /\.(woff2?)$/,
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 10 * 1024 // 10kb
+                    }
                 },
-              ],
-              include: /fonts/,
+                include: /fonts/,
             },
-            { test: /\.(ttf|eot)$/, loader: "file-loader", include: /fonts/, },
+            { 
+                test: /\.(ttf|eot)$/,
+                type: 'asset/resource',
+                include: /fonts/ 
+            },
         ],
     },
 

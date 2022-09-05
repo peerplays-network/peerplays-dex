@@ -56,29 +56,34 @@ class Backup extends Component{
                     <Dropdown
                         btn={<SelectHeader
                             labelTag={`${backupTranslate}.type`}
-                            text={<Translate content={this.state.backup.text} />}
+                            text={<span>{counterpart.translate(`${this.state.backup.text}`)}</span>}
                             className="with-bg with-border"
                         />}
-                        list={backupsList.map((e, id) => <Translate key={id} onClick={() => this.changeBackup(e)} content={e.text} component="button" />)}
-                        comment={<Translate content={`${backupTranslate}.comment`} lastBackup={'01/22/2019'} />}
+                        list={backupsList.map((e, id) => <button key={id} onClick={() => this.changeBackup(e)}>{counterpart.translate(`${e.text}`)}</button> )}
+                        comment={<span lastBackup={'01/22/2019'}>{counterpart.translate(`${backupTranslate}.comment`)}</span> }
                     />
-                    <Translate content={`${backupTranslate}.needed`} className="backup__warning" />
-                    <Translate content={`${backupTranslate}.desc`} className="backup__desc" component="p" />
-                    <Translate content={`${backupTranslate}.title`} component="button" className="btn-round" />
+                    <span className="backup__warning">{counterpart.translate(`${backupTranslate}.needed`)}</span>
+                    <p className="backup__desc">{counterpart.translate(`${backupTranslate}.desc`)}</p>
+                    <button className="btn-round">{counterpart.translate(`${backupTranslate}.title`)}</button>
                 </div>
                 <div className="backup__item">
-                    <Translate content={`${restoreTranslate}.title`} component="h2" />
+                    <h2>{counterpart.translate(`${restoreTranslate}.title`)}</h2>
                     <Dropdown
                         btn={<SelectHeader
                             labelTag={`${restoreTranslate}.type`}
-                            text={<Translate content={this.state.restore.text} />}
+                            text={<span>{counterpart.translate(`${this.state.restore.text}`)}</span> }
                             className="with-bg with-border"
                         />}
-                        list={restoresList.map((e, id) => <Translate key={id} onClick={() => this.changeRestore(e)} content={e.text} component="button" />)}
+                        list={restoresList.map((e, id) => <button key={id} onClick={() => this.changeRestore(e)}>
+                                {counterpart.translate(`${e.text}`)}
+                            </button>)
+                        }
                     />
-                    <Translate content={`${restoreTranslate}.fileUpload`} component="button" className="btn-round btn-round--grey" />
-                    <Translate content={`${restoreTranslate}.desc`} className="backup__desc" component="p" />
-                    <Translate content={`${restoreTranslate}.title`} component="button" className="btn-round" />
+                    <button className="btn-round btn-round--grey">
+                        {counterpart.translate(`${restoreTranslate}.fileUpload`)}
+                    </button>
+                    <p className="backup__desc">{counterpart.translate(`${restoreTranslate}.desc`)}</p>
+                    <button className="btn-round">{counterpart.translate(`${restoreTranslate}.title`)}</button>
                 </div>
 
             </div>

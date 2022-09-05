@@ -1,5 +1,7 @@
 import React, {Component} from "react";
-import {IconCross, IconSearch} from "../../../svg";
+import IconCross from "../../../svg/cross.svg";
+import IconSearch from "../../../svg/search.svg";
+
 
 class SearchForm extends Component{
     state = {

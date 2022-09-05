@@ -1,6 +1,6 @@
 import Avatar from "../avatar";
 import React from "react";
-import {IconWarning} from "../../../svg/index";
+import IconWarning from "../../../svg/warning.svg";
 import counterpart from "counterpart";
 
 const NotificationsItem = ({data}) => (

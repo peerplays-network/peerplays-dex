@@ -9,6 +9,7 @@ import {editStorage, getStorage} from "../../../actions/storage/index";
 import Node from "../../helpers/node";
 import {defaultNodesList} from "../../../params/nodesList";
 import RoundButton from "../../helpers/buttons/roundButton";
+import counterpart from 'counterpart';
 
 class NodesSelect extends Component{
 
@@ -38,7 +39,7 @@ class NodesSelect extends Component{
         const {nodesList, instance} = this.props;
         const autoSelect = this.state.autoselect;
         let nodesAmount = defaultNodesList.length;
-        let content = <Translate content="nodes.checking" /> ;
+        let content = <span>{counterpart.translate(`nodes.checking`)}</span>;
 
         if(nodesList.length){
             const activeNode = nodesList.find(e => e.url === instance.url);
@@ -47,17 +48,17 @@ class NodesSelect extends Component{
 
             nodesAmount = nodesList.length;
             content = <Fragment>
-                <Translate content="nodes.active" component="h2" />
+                <h2>{counterpart.translate(`nodes.active`)}</h2>
                 <Node data={activeNode} />
                 {availableNodes.length &&
                     <Fragment>
-                        <Translate content="nodes.available" component="h2" />
+                        <h2>{counterpart.translate(`nodes.available`)}</h2>
                         { availableNodes.map((el, id) => <Node key={id} data={el} handleActivation={this.setActive} />) }
                     </Fragment>
                 }
                 {unavailableNodes.length &&
                     <Fragment>
-                        <Translate content="nodes.unavailable" component="h2" />
+                        <h2>{counterpart.translate(`nodes.unavailable`)}</h2>
                         { unavailableNodes.map((el, id) => <Node key={id} data={el} handleActivation={this.setActive} />) }
                     </Fragment>
                 }
@@ -74,7 +75,7 @@ class NodesSelect extends Component{
                             selected={autoSelect}
                             handleChange={this.changeAutoSelect}
                         />
-                        <Translate content="nodes.listed" nodesAmount={nodesAmount} className="nodes__amount"/>
+                        <span  nodesAmount={nodesAmount} className="nodes__amount">{counterpart.translate(`nodes.listed`)}</span>
                     </div>
                     <RoundButton tag="ping" onClick={this.ping} />
                 </div>

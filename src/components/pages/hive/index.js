@@ -9,6 +9,7 @@ import FieldWithHint from "../../helpers/form/fieldWithHint";
 import { utils } from "../../../utils";
 import {  updateAccountAndLoginData } from "../../../actions/account";
 import { dbApi } from "../../../actions/nodes";
+import counterpart from "counterpart";
 
 
 
@@ -61,7 +62,7 @@ class HiveTransactions extends Component {
         return (
             <div className="container">
                 <div className="page__header-wrapper">
-                    <Translate className="page__title" component="h1" content={"hive.title"}/>
+                    <h1 className="page__title">{counterpart.translate(`hive.title`)}</h1>
                 </div>
                 <div>
                     <div className="graphs" style={{justifyContent: "center"}}>
@@ -140,14 +141,25 @@ class HiveTransactions extends Component {
                                                         />
                                                     </div>
                                                     <div className="btn__row">
-                                                        <span><Translate component="span" content={"field.labels.fee"}/>{data.fee} {data.feeAsset}</span>
-                                                        {sended && <Translate className="clr--positive" component="span" content={"success.transCompleted"}/> }
+                                                        <span>
+                                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                                            {data.fee} {data.feeAsset}
+                                                        </span>
+                                                        {sended &&
+                                                            <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span> 
+                                                        }
                                                         {transactionError && transactionError !== "" ? 
                                                             <span className="clr--negative">
-                                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                                             </span> 
-                                                            : ""}
-                                                        <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.withdraw"}/>
+                                                            : ""
+                                                        }
+                                                        <button 
+                                                            className="btn-round btn-round--send"
+                                                            type="submit"
+                                                        >
+                                                            {counterpart.translate(`buttons.withdraw`)}
+                                                        </button>
                                                     </div>
                                                 </Fragment>
                                             )

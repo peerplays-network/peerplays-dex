@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {getStorage} from "../../actions/storage/index";
 import {clearLayout} from "../../dispatch/layoutDispatch";
 import {getStore} from "../../actions/store";
-import { IconLogo } from '../../svg';
+import IconLogo  from '../../svg/logo.svg';
 import counterpart from 'counterpart';
 
 const Menu = (props) => {

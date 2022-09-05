@@ -1,6 +1,8 @@
 import counterpart from 'counterpart';
 import React from 'react';
-import {IconConnectedNode, IconNode} from "../../svg";
+import IconConnectedNode from "../../svg/nodeConnected.svg";
+import IconNode from "../../svg/node.svg";
+
 import ActionsBtn from "./buttons/actionsBtn";
 
 const Node = ({data, handleActivation}) => (

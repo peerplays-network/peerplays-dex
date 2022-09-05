@@ -1,6 +1,6 @@
 import {dbApi} from "./nodes";
 import {Asset} from "../classes";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import React from "react";
 import {clearLayout} from "../dispatch";
 import { Aes } from "peerplaysjs-lib";

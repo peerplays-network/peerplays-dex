@@ -39,7 +39,11 @@ class BackupItem extends Component {
                             {counterpart.translate(`${translate}.${e.type}.text`)}
                         </button>
                     ))}
-                    comment={showComment && <span>{lastBackup ? counterpart.translate(`${translate}.lastBackup`) : counter.translate(`${translate}.needBackup`)}</span>}
+                    comment={showComment && 
+                        <span>
+                            {lastBackup ? counterpart.translate(`${translate}.lastBackup`) : counterpart.translate(`${translate}.needBackup`)}
+                        </span>
+                    }
                 />
                 <p className="backup__desc">{counterpart.translate(`${translateWithType}.desc`)}</p>
                 <button className="btn-round" onClick={selectedItem.action} >{counterpart.translate(`${translate}.title`)}</button>

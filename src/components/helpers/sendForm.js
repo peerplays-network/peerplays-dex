@@ -156,7 +156,9 @@ class SendForm extends Component {
                                         <span>
                                             <span>{counterpart.translate(`field.labels.fee`)}</span>{data.fee} {data.feeAsset}
                                         </span>
-                                        {sended && <span className="clr--positive">{translate.counterpart(`success.transCompleted`)}</span>}
+                                        {sended && 
+                                            <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span>
+                                        }
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
                                                 {counterpart.translate(`errors.${transactionError}`)}

@@ -1,3 +1,4 @@
+import counterpart from "counterpart";
 import React, {Component} from "react";
 import {editStorage, getStorage} from "../../actions/storage";
 import Dropdown from "../helpers/dropdown";
@@ -18,7 +19,7 @@ class Security extends Component{
         return(
             <div className="security">
                 <div className="security__item">
-                    <Translate content="security.lock" component="h2" />
+                    <h2>{counterpart.translate(`security.lock`)}</h2>
                     <Dropdown
                         btn={<SelectHeader
                             labelTag="security.lockLabel"
@@ -31,8 +32,8 @@ class Security extends Component{
                     />
                 </div>
                 <div className="security__item">
-                    <Translate content="security.password" component="h2" />
-                    <Translate content="global.tbd" className="security__tbd" />
+                    <h2>{counterpart.translate(`security.password`)}</h2>
+                    <span className="security__tbd">{counterpart.translate(`global.tbd`)}</span>
                 </div>
             </div>
         )

@@ -1,13 +1,12 @@
 import React from "react";
-import {store} from "../../../index";
 import {roundNum} from "../../roundNum";
 import {formAssetData} from "../../assets";
 import {defaultQuote, defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
-import {getFullAccount} from "../../account";
 import {MarginsActions} from "../../../components/pages/user/marginsActions";
-import {IconBarChart, IconCreate, IconDelete} from "../../../svg";
-import {getStorage} from "../../storage";
+import IconBarChart from "../../../svg/bar_chart.svg"
+import IconCreate from "../../../svg/create.svg";
+import IconDelete from "../../../svg/delete.svg";
 import {Link} from "react-router-dom";
 
 const tableHead = [

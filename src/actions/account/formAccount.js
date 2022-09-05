@@ -4,12 +4,13 @@ import {formAssetData} from "../assets";
 import {getUserHistory} from "../dataFetching";
 import {defaultToken} from "../../params/networkParams";
 import {dbApi} from "../nodes";
-import {IconCreate, IconSend} from "../../svg";
+import IconCreate from '../../svg/create.svg';
+import IconSend from '../../svg/send.svg';
 import {getPassword} from "../forms";
 import IssueAsset from "../../components/helpers/modal/content/issueAsset";
 import {setModal} from "../../dispatch";
 import {editStorage, getStorage} from "../storage";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import {getSidechainAccounts} from "./getSidechainAccounts";
 import counterpart from "counterpart";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import TableHeading from "./tableHeading";
 
 const Table = ({className, tableHead, rows, link, onClick, partialFill}) => (

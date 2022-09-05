@@ -1,6 +1,6 @@
 import React from "react";
 import RoundButton from "../../helpers/buttons/roundButton";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import {connect} from "react-redux";
 import {openWarning} from "../../../actions/openWarning";
 import {getGlobals} from "../../../actions/store";
@@ -55,7 +55,7 @@ const Membership = ({account}) => {
                 <MembershipTitle title="statistics" />
                 <div className="statistic">
                     <div className="statistic__key">
-                        <Translate content="membership.totalFee" className="statistic__title" />
+                        <span className="statistic__title">{counterpart.translate(`membership.totalFee`)}</span>
                     </div>
                     <span className="statistic__value">{feesPaid}</span>
                 </div>

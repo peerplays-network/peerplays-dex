@@ -3,7 +3,7 @@ import {menuList} from "../../params/menuList";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {store} from "../../index";
-import { IconLogo } from '../../svg';
+import IconLogo  from '../../svg/logo.svg';
 import counterpart from 'counterpart';
 
 const closeMenu = () => {

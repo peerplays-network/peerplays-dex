@@ -1,5 +1,5 @@
-import React, { Component, Fragment, useEffect, useState } from "react";
-import { IconCheckBlue } from "../../../svg";
+import React, { Fragment, useEffect, useState } from "react";
+import IconCheckBlue  from "../../../svg/check_blue.svg";
 import Table from "../../helpers/table";
 import TableCard from "../../helpers/cards";
 import counterpart from "counterpart";

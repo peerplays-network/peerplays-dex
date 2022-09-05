@@ -3,7 +3,7 @@ import {CardHeader} from "../cardHeader";
 import {Asset} from "../../../classes/index";
 import {getUserName} from "../../../actions/account/index";
 import Table from "../table";
-import {Link} from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import {formDate} from "../../../actions/formDate";
 
 const defaultTableHead = [

@@ -1,6 +1,6 @@
 import counterpart from "counterpart";
 import React from "react";
-import {IconWarning} from "../../../../svg";
+import IconWarning from "../../../../svg/warning.svg";
 
 const ModalWarning = ({tag}) => (
     <div className="modal__warning">

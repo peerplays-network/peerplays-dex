@@ -6,6 +6,7 @@ import { dbApi } from '../../../actions/nodes';
 import { getBasicAsset, getStore, getFees } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
 import { utils } from '../../../utils';
+import counterpart from 'counterpart';
 
 const WithdrawGPOS = (props) => {
 	const { loginData, accountData } = getStore();
@@ -82,23 +83,22 @@ const WithdrawGPOS = (props) => {
 	return (
 		<Card mode="widget" >
 			<div className="card__title" style={{ paddingTop:"20px" , borderTopLeftRadius:"10px" , borderTopRightRadius:"10px"}}>
-			<Translate content={"voting.powerDown"} />
+			<span>{counterpart.translate(`voting.powerDown`)}</span>
 			</div>
 			<CardContent >
 				<div style={{ marginBottom: 12 }}>
 					<div style={{ display: "inline-block", width: "50%" }}>
 						<div style={{ background: "#f0f0f0", margin: 4, padding: 12 }}>
-						<Translate content={"voting.openGpos"} />: <strong >{totalGpos} {symbol}</strong>
+							<span>{counterpart.translate(`voting.openGpos`)}</span> : <strong >{totalGpos} {symbol}</strong>
 						</div>
 					</div>
 					<div style={{ display: "inline-block", width: "50%" }}>
 						<div style={{ background: "#f0f0f0", margin: 4, padding: 12 }}>
-						<Translate content={"voting.availableGpos"} />:<strong> {availableGpos} {symbol}</strong>
+							<span>{counterpart.translate(`voting.availableGpos`)}</span>: <strong> {availableGpos} {symbol}</strong>
 						</div>
 					</div>
-					</div>
-
-				<Translate style={{ fontWeight:"bold",margin:"10px",display:"block"}} content='withdraw.title' />
+				</div>
+				<span style={{ fontWeight:"bold",margin:"10px",display:"block"}}>{counterpart.translate(`withdraw.title`)}</span>
 				<div className='input-cus-style'>
 				<NumericInput
 					strict={true}
@@ -119,24 +119,41 @@ const WithdrawGPOS = (props) => {
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: ( changes &&(availableGpos == undefined || availableGpos == null || availableGpos <= 0) ) ? "block" : "none" }}>
-					<Translate  className="" content={"voting.noGpos"} />
+					<span>{counterpart.translate(`voting.noGpos`)}</span>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(withdrawAmount == undefined || withdrawAmount == null || withdrawAmount <= 0)) ? "block" : "none" }}>
-					<Translate  className="" content={"errors.withdrawError"} /> 
+					<span>{counterpart.translate(`errors.withdrawError`)}</span>
 				</div>
 				<div style={{ marginTop: 12 }}  className="input-cus-style">
 				<div style={{padding:"0 10px"}}>
-				<Translate  className="" content={"voting.newGpos"} /> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong>
+					<span>{counterpart.translate(`voting.newGpos`)}</span> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong>
 				</div>
 				</div>
 			</CardContent>
 			<div className="info__row margin">
-				<span><Translate className="" content={"field.labels.fee"} />{fee} {getBasicAsset().symbol}</span>
-			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
-			{error && <span className="clr--negative"><Translate content={`errors.${error}`} /></span>}
+				<span>
+					<span>{counterpart.translate(`field.labels.fee`)}</span>
+					{fee} {getBasicAsset().symbol}
+				</span>
+			{sended &&
+				<span className="clr--positive">
+					{counterpart.translate(`voting.trans`)}
+				</span>
+			}
+			{error && 
+				<span className="clr--negative">
+					{counterpart.translate(`errors.${error}`)}
+				</span>
+			}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}><Translate className="" content={"voting.Withdraw"} /></button>
+				<button 
+					disabled={withdrawDisabled} 
+					className="btn-round btn-round--buy" 
+					onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}
+				>
+					{counterpart.translate(`voting.Withdraw`)}
+				</button>
 			</CardActions>
 		</Card>
 	)

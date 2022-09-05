@@ -10,7 +10,7 @@ import ModalTitle from "../decoration/modalTitle";
 import { getStorage } from "../../../../actions/storage";
 import { checkReferrer } from "../../../../actions/forms/errorsHandling/checkReferrer";
 import { generatePassword } from "../../password";
-import { IconCopy } from '../../../../svg';
+import IconCopy  from '../../../../svg/copy.svg';
 
 
 

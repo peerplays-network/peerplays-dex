@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import {clearLayout} from "../../../dispatch/layoutDispatch";
 import {dbApi} from "../../nodes";
 import BlockHeader from "../../../components/helpers/blockHeader";

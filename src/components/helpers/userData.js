@@ -2,15 +2,14 @@ import React, {useState} from "react";
 import { connect } from "react-redux";
 import { Sidechains } from "../../params/networkParams";
 import ActionsBtn from "./buttons/actionsBtn";
-import { Link } from "react-router-dom";
+import Link from "react-router-dom/es/Link";
 import { store } from "../../index";
 import { removeStorageItem } from "../../actions/storage";
 import { dispatchSendModal } from "../../actions/forms/dispatchSendModal";
 import UnlockProfile from "./unlockProfile";
 import Button from "./buttons/button";
-import RoundButton from "./buttons/roundButton";
 import { dispatchGenerateAddress } from '../../actions/forms/dispatchGenerateAddress';
-import {IconCopy} from "../../svg";
+import IconCopy from "../../svg/copy.svg";
 import counterpart from "counterpart";
 
 

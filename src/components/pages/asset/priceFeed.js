@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
 import {Asset} from "../../../classes";
+import counterpart from "counterpart";
 
 const infoElems = ['feedPrice', 'feedLifetime', 'minimumFeeds', 'maintenanceCollateralRatio', 'maximumShortSqueezeRatio'];
 
@@ -13,23 +14,23 @@ const formPriceFeed = async ({smartData, quoteAsset, baseAsset}) => {
 
     return {
         feedPrice: {
-            title: <Translate content="block.price.feedPrice"/>,
+            title: <span>{counterpart.translate(`block.price.feedPrice`)}</span>,
             text: isNaN(newBaseAsset.calculatePrice(newQuoteAsset)) ? '-' : `${newBaseAsset.calculatePrice(newQuoteAsset)} ${newBaseAsset.symbol}/${newQuoteAsset.symbol}`
         },
         feedLifetime: {
-            title: <Translate content="block.price.feedLifetime"/>,
+            title: <span>{counterpart.translate(`block.price.feedLifetime`)}</span>,
             text: feed_lifetime_sec / 60 / 60
         },
         minimumFeeds: {
-            title: <Translate content="block.price.minimumFeeds"/>,
+            title: <span>{counterpart.translate(`block.price.minimumFeeds`)}</span>,
             text: minimum_feeds
         },
         maintenanceCollateralRatio: {
-            title: <Translate content="block.price.maintenanceCollateralRatio"/>,
+            title: <span>{counterpart.translate(`block.price.maintenanceCollateralRatio`)}</span>,
             text: Number(maintenance_collateral_ratio)/(10**3)
         },
         maximumShortSqueezeRatio: {
-            title: <Translate content="block.price.maximumShortSqueezeRatio"/>,
+            title: <span>{counterpart.translate(`block.price.maximumShortSqueezeRati`)}</span>,
             text: Number(maximum_short_squeeze_ratio)/(10**3)
         }
     }

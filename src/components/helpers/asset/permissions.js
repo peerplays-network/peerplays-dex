@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {CardHeader} from "../cardHeader"
-import {IconCheck} from "../../../svg/index";
+import IconCheck from "../../../svg/check.svg";
 import counterpart from "counterpart";
 
 class Permissions extends Component {

@@ -25,11 +25,11 @@ const FieldWrapper = (props) => {
             { children }
             { !hideLabel && 
                 <span className={`field__label${value[name] ? ' squeezed' : ''}`}>
-                    {counterpart.translate(`${labelTag ? labelTag : `field.labels.${name}`}`, {labelParams})}
+                    {counterpart.translate(`${labelTag ? labelTag : `field.labels.${name}`}`, labelParams)}
                 </span> 
             }
             { error[name] && <span className="field__error">{counterpart.translate(`errors.${error[name]}`)}</span> }
-            { comment && !error[name] && <span className="field__comment">{counterpart.translate(`field.comments.${name}`, {commentParams})}</span>  }
+            { comment && !error[name] && <span className="field__comment">{counterpart.translate(`field.comments.${name}`, commentParams)}</span>  }
             <span className="field__border" />
         </label>
     );

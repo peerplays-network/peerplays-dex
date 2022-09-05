@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
 import {Asset} from "../../../classes";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
 
 const infoElems = ['settlementPrice', 'settlementFunds', 'settlementFundCollateralRatio'];
 
@@ -13,15 +13,15 @@ const formSettlement = async ({smartData, quoteAsset, baseAsset}) => {
 
     return {
         settlementPrice: {
-            title: <Translate content="block.settlement.settlementPrice"/>,
+            title: <span>{counterpart.translate(`block.settlement.settlementPrice`)}</span> ,
             text: isNaN(newBaseAsset.calculatePrice(newQuoteAsset)) ? '-' : `${newBaseAsset.calculatePrice(newQuoteAsset)} ${newBaseAsset.symbol}/${newQuoteAsset.symbol}`
         },
         settlementFunds: {
-            title: <Translate content="block.settlement.settlementFunds"/>,
+            title: <span>{counterpart.translate(`block.settlement.settlementFunds`)}</span>,
             text: settlement_fund
         },
         settlementFundCollateralRatio: {
-            title: <Translate content="block.settlement.settlementFundCollateralRatio"/>,
+            title: <span>{counterpart.translate(`block.settlement.settlementFundCollateralRatio`)}</span>,
             text: 0
         }
     }
@@ -49,7 +49,7 @@ class Settlement extends Component {
         return (
             <div className="fee-pool card">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`)}</div>
                 {
                     data && <div className="asset-stats__items">
                         {infoElems.map((elem, index) => (

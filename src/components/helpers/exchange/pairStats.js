@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import {Caret} from "../../../svg/index";
+import IconCaret from "../../../svg/caret.svg";
 import ChangePair from "../modal/content/changePair";
 import {setModal} from "../../../dispatch/layoutDispatch";
 import counterpart from 'counterpart';
@@ -22,7 +22,7 @@ class PairStats extends Component{
                     <button className="pair-stats__selector" onClick={this.changePair}>
                         <span className="pair-stats__base">{quote.symbol}</span>
                         <span className="pair-stats__quote"> / {base.symbol}</span>
-                        <Caret className='field__caret'/>
+                        <IconCaret className='field__caret'/>
                     </button>
                     {data && items.filter(el => data[el]).map(el => {
 

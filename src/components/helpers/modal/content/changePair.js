@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import FieldWithHint from "../../form/fieldWithHint";
 import {dbApi} from "../../../../actions/nodes/index";
-import {IconPairChange} from "../../../../svg/index";
+import IconPairChange from "../../../../svg/pairChange.svg";
 import {getStorage} from "../../../../actions/storage/index";
 import Dropdown from "../../form/dropdown";
 import SelectHeader from "../../selectHeader";

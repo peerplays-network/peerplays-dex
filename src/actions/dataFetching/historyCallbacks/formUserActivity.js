@@ -53,7 +53,7 @@ const formInfoColumn = async (user, operation) => {
             <a onClick={() => handleTransactionClick(user, operation)} className="operation positive">
                 {counterpart.translate(`${basicTag}.title`)}
             </a>,
-        info: <span>{counterpart.translate(`${basicTag}.description`, {data})}</span>,
+        info: <span>{counterpart.translate(`${basicTag}.description`, data)}</span>,
     };
 };
 
