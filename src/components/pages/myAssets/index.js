@@ -11,22 +11,22 @@ import counterpart from 'counterpart';
 
 const basicMenu = [
     {
-        link: '',
+        link: '/',
         tag: 'userAssets',
         component: UserAssets
     },
     {
-        link: 'orders',
+        link: '/orders/',
         tag: 'orders',
         component: OpenOrders
     },
     {
-        link: 'activity',
+        link: '/activity',
         tag: 'activity',
         component: UserActivity
     },
     {
-        link: 'positions',
+        link: '/positions',
         tag: 'positions',
         component: UserMargins
     },
@@ -52,7 +52,7 @@ class MyAssets extends Component{
                 <div className="page__user-title">
                     <h1 className="page__title">{counterpart.translate(`assets.title`)}</h1>
                 </div>
-                <PageMenu items={basicMenu} data={this.state.accountData} />
+                <PageMenu items={basicMenu} link={`/assets`} path={'/assets'} data={this.state.accountData} />
             </div>
         )
     }

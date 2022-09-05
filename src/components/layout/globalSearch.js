@@ -44,17 +44,12 @@ class GlobalSearch extends Component{
                 <div className="global-search__filter">
                     <Dropdown
                         btn={<SelectHeader text={<span>{counterpart.translate(`search.${this.state.searchType}`)}</span>} />}
-                        list={searchTypes.map((searchType, id) => {
-                                if (this.state.searchType !== searchType)
-                                    return
-                                        <button 
-                                            key={id}
-                                            onClick={() => this.changeSearchType(searchType)}
-                                        >
-                                            {counterpart.translate(`search.${searchType}`)}
-                                        </button>
-                            }
-                        )}
+                        list={searchTypes.filter(s => s !== this.state.searchType).map((searchType, id) => <button 
+                            key={id}
+                            onClick={() => this.changeSearchType(searchType)}
+                        >
+                            {counterpart.translate(`search.${searchType}`)}
+                        </button>)}
                     />
                 </div>
                 <div className="global-search__result custom-scroll">

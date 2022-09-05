@@ -49,7 +49,7 @@ export const getOrders = async (context) => {
 
     const {name, limit_orders} = context.props.data;
 
-    if(!limit_orders.length) return [];
+    if(!limit_orders || !limit_orders.length) return [];
 
     const isActiveUser = name === getAccountData().name;
 

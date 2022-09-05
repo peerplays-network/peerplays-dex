@@ -33,7 +33,7 @@ const render = (Component) => {
     ReactDom.render(
         <AppContainer>
             <Provider store={store}>
-                <ConnectedRouter history={history}>
+                <ConnectedRouter history={history} store={store}>
                      <Component history={history}/>
                 </ConnectedRouter>
             </Provider>

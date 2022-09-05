@@ -107,7 +107,7 @@ const Voting = (props) => {
     const [availableGpos, setAvailableGpos] = useState(0);
     const [gposPerformance, setGposPerformance] = useState(0);
     const [estimatedRakeReward, setEstimatedRakeReward] = useState(0);
-    const [gposPerfString, setGposPerfString] = useState("");
+    const [gposPerfString, setGposPerfString] = useState("voting.performance.none");
     const [precision, setPrecision] = useState(0);
     const [symbol, setSymbol] = useState("");
     const [symbol_id, setSymbol_id] = useState("");

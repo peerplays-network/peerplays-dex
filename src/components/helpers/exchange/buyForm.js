@@ -248,8 +248,8 @@ class BuyForm extends Component{
                                         <span>{counterpart.translate(`field.labels.fee`)}</span>
                                         <span>{data.fee} {data.feeAsset}</span>
                                     </div>
-                                    <div classN ame="exchange-form__info">
-                                        <span>{counterpart.translate(`exchange.marketFee`, {percent: '0.1'})}</span>
+                                    <div className="exchange-form__info">
+                                        <span>{counterpart.translate(`exchange.marketFee`)}</span>
                                         {type === 'buy' ? <span>{`${data.buyMarketFeePercent ? data.buyMarketFeePercent : 0}%`}</span> : 
                                             <span>{`${data.sellMarketFeePercent ? data.sellMarketFeePercent : 0}%`}</span>}
                                     </div>
@@ -269,7 +269,7 @@ class BuyForm extends Component{
                                 </div>
                                 <button className="btn-round btn-round--buy" onClick={form.submit}>
                                     <span>{counterpart.translate(`exchange.${isBuy ? 'buy' : 'sell'}`)}</span>
-                                    {data.buyAsset}
+                                    {` ${data.buyAsset}`}
                                 </button>
                             </Fragment>
                         )
