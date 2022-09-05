@@ -10,7 +10,7 @@ apt-get install build-essential nasm
 
 ## Installation
 
-Node v14+ is required and it can be installed using nvm following these [installation steps](https://github.com/nvm-sh/nvm#installing-and-updating).
+Node v16+ is required and it can be installed using nvm following these [installation steps](https://github.com/nvm-sh/nvm#installing-and-updating).
 ```
 npm install
 ```
