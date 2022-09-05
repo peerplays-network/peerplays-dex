@@ -1,17 +1,17 @@
 import React, {Component, Fragment} from 'react';
 import FieldWithHint from "../../form/fieldWithHint";
 import {dbApi} from "../../../../actions/nodes/index";
-import {IconPairChange} from "../../../../svg/index";
+import IconPairChange from "../../../../svg/pairChange.svg";
 import {getStorage} from "../../../../actions/storage/index";
 import Dropdown from "../../form/dropdown";
 import SelectHeader from "../../selectHeader";
 import Close from "../decoration/close";
 import {clearLayout} from "../../../../dispatch/index";
 import ModalTitle from "../decoration/modalTitle";
-import Translate from "react-translate-component";
 import ModalButton from "../../buttons/modalButton";
 import except from "../../../../actions/assets/exceptAssetList";
 import { defaultToken } from '../../../../params/networkParams';
+import counterpart from 'counterpart';
 
 const getSymbolsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
@@ -135,7 +135,7 @@ class ChangePair extends Component{
                             />
                         </div>
                     }
-                    <Translate content="modal.pairSelect.recent" component="h3" className="pair-selector__subtitle" />
+                    <h3 className="pair-selector__subtitle">{counterpart.translate(`modal.pairSelect.recent`)}</h3>
                    
                     <Dropdown
                         btn={<SelectHeader

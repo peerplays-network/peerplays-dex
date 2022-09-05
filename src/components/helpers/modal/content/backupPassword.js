@@ -1,5 +1,5 @@
+import counterpart from "counterpart";
 import React, { Fragment, useEffect, useState } from "react";
-import Translate from "react-translate-component";
 
 import { setNewAccount } from "../../../../actions/account";
 import InfoBlock from "../../infoBlock";
@@ -47,7 +47,7 @@ const BackupPassword = (data) => {
 
                 <div style={{display: 'flex', justifyContent: 'center'}}>
                     <button className="btn btn-round" onClick={() => {downloadPrivateKeys(data.wifs, data.password); setNewAccount(data)}} >
-                        <Translate content="modal.backupPassword.download" />
+                        <span>{counterpart.translate(`modal.backupPassword.download`)}</span>
                     </button>
                 </div>
             </div>

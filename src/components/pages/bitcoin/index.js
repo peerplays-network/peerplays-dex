@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import Translate from "react-translate-component";
 import { Card } from "../../helpers/card";
 import { CardHeader } from "../../helpers/cardHeader";
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +6,7 @@ import WithdrawBTCForm from './withdrawBTCForm';
 import GenerateAddress from "./generateAddress";
 import UpdateAddress from "./updateAddress";
 import { getStore } from "../../../actions/store";
+import counterpart from "counterpart";
 
 function BitcoinTransactions() {
     const { accountData } = getStore();
@@ -26,7 +26,7 @@ function BitcoinTransactions() {
     return(
         <div className="container">
             <div className="page__header-wrapper">
-                <Translate className="page__title" component="h1" content={"bitcoin.title"}/>
+                <h1 className="page__title">{counterpart.translate(`bitcoin.title`)}</h1>
             </div>
             <div>
                 <Grid container spacing={1}>

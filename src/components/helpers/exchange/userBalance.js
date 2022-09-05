@@ -1,6 +1,6 @@
+import counterpart from "counterpart";
 import React from "react";
 import {connect} from "react-redux";
-import Translate from "react-translate-component";
 
 const UserBalance = ({assetSymbol, account}) => {
 
@@ -13,7 +13,7 @@ const UserBalance = ({assetSymbol, account}) => {
 
     return (
         <div className="exchange-form__info">
-            <Translate content="exchange.balance" />
+            <span>{counterpart.translate(`exchange.balance`)}</span>
             <span>{balance} {assetSymbol}</span>
         </div>
     )

@@ -5,10 +5,10 @@ import {getStorage} from "../../../actions/storage";
 import BridgeSelector from "../../helpers/bridgeSelector";
 import DepositData from "../../helpers/depositData";
 import WithdrawForm from "../../helpers/withdrawForm";
-import Translate from "react-translate-component";
 import NoData from "../../helpers/noData";
 import Close from "../../helpers/modal/decoration/close";
 import {clearLayout} from "../../../dispatch";
+import counterpart from "counterpart";
 
 class AssetWithdraw extends Component{
     state = {
@@ -105,7 +105,7 @@ class AssetWithdraw extends Component{
                     }
                 </div>
                 {!coinParams
-                    ? <Translate content="bridgeData.warning" component="div" />
+                    ? <div>{counterpart.translate(`bridgeData.warning`)}</div> 
                     : !isModal && depositData
                 }
             </div>

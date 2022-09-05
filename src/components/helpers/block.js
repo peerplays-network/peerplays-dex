@@ -4,8 +4,8 @@ import {dbApi} from "../../actions/nodes";
 import dataFetch from "./dataFetch";
 import TransferItem from "./transferItem";
 import {transactionParser} from "../../actions/transactionParser";
-import Translate from "react-translate-component";
 import {ChainTypes} from "peerplaysjs-lib";
+import counterpart from 'counterpart';
 
 const getType = opNumber => {
     const operationsIndexes = Object.values(ChainTypes.operations);
@@ -27,7 +27,7 @@ const fetchFunc = async (context) => {
             const info = await transactionParser(item.operations[0][1]).then(e => e);
 
             transaction.push({
-                type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
+                type: <div className="operation positive">{counterpart.translate(`${basicTag}.title`)}</div>,
                 info
             })
         })

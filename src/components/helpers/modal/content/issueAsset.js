@@ -13,7 +13,8 @@ import {trxBuilder} from "../../../../actions/forms/trxBuilder";
 import {dbApi} from "../../../../actions/nodes";
 import {clearLayout} from "../../../../dispatch";
 import { utils } from "../../../../utils";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
+
 
 const issueAction = async (data, result) => {
     const {accountData, loginData} = getStore();
@@ -174,12 +175,13 @@ class IssueAsset extends Component {
                                     value={data}
                                 />
                                 <div>
-                                    <Translate className="" content={"field.labels.fee"} />{data.fee || 0} {data.basicAssetSymbol}
+                                    <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                    {data.fee || 0} {data.basicAssetSymbol}
                                 </div>
                                 <div>
                                     {transactionError && transactionError !== "" ? 
                                         <span className="clr--negative">
-                                            <Translate className="" content={`errors.${transactionError}`} />
+                                            <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                         </span> 
                                         : ""}
                                 </div>

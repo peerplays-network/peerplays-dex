@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
 import counterpart from "counterpart";
-import Translate from "react-translate-component";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
 import { connect } from "react-redux";
@@ -108,7 +107,7 @@ const Voting = (props) => {
     const [availableGpos, setAvailableGpos] = useState(0);
     const [gposPerformance, setGposPerformance] = useState(0);
     const [estimatedRakeReward, setEstimatedRakeReward] = useState(0);
-    const [gposPerfString, setGposPerfString] = useState("");
+    const [gposPerfString, setGposPerfString] = useState("voting.performance.none");
     const [precision, setPrecision] = useState(0);
     const [symbol, setSymbol] = useState("");
     const [symbol_id, setSymbol_id] = useState("");
@@ -281,9 +280,9 @@ const Voting = (props) => {
     if (!account) return <NeedToLogin tag={'empty.login'} />;
     return (
         <div className="container page">
-              <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"voting.vestingTitle"}/>
-        </div>
+            <div className="page__header-wrapper">
+                <h1 className="page__title">{counterpart.translate(`voting.vestingTitle`)}</h1>
+            </div>
             <div>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={6}>
@@ -298,31 +297,39 @@ const Voting = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6} md={3}>
                         <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.performance.title' />
-                            <CardContent >
-                                <Translate component="div" content={gposPerfString} />
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.performance.title`)}
+                            </div>
+                            <CardContent>
+                                <div>{counterpart.translate(`${gposPerfString}`)}</div>
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.percent' />
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.percent`)}
+                            </div>
                             <CardContent>
                                 {gposPerformance}%
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.potential' />
+                        <Card>
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.potential`)}
+                            </div>
                             <CardContent>
                                 {`${estimatedRakeReward}%`}
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.next_vote' />
+                        <Card>
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.next_vote`)}
+                            </div>
                             <CardContent>
                                 {gposSubPeriodStr}
                             </CardContent>
@@ -333,19 +340,19 @@ const Voting = (props) => {
             </div>
 
             <div className="page__header-wrapper">
-                <Translate className="page__title" component="h1" content="voting.votingTitle" />
+                <h1 className="page__title">{counterpart.translate(`voting.votingTitle`)}</h1>
             </div>
             <div className="page__menu">
                 {
                     votingMenu.map((el, id) => (
-                        <Translate
-                            key={id}
-                            content={`voting.${el.tag}.title`}
-                            component={NavLink}
+                        <NavLink 
+                            key={id} 
                             to={`/voting-vesting${el.link}`}
                             className="page__menu-item"
                             exact
-                        />
+                        >
+                            {counterpart.translate(`voting.${el.tag}.title`)}
+                        </NavLink>
                     ))
                 }
             </div>

@@ -16,7 +16,7 @@ const config = {
     target: 'web',
 
     entry: {
-        app: ['babel-polyfill', 'react-hot-loader/patch', 'whatwg-fetch', './index.js'],
+        app: ['react-hot-loader/patch', 'whatwg-fetch', './index.js'],
     },
 
     output: {
@@ -41,11 +41,6 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.json$/,
-                exclude: /node_modules/,
-                use: ['json-loader']
-            },
-            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: ['babel-loader'],
@@ -57,39 +52,24 @@ const config = {
             },
             {
                 test: /\.svg$/i,
-                exclude: /node_modules/,
-                include: /svg/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    },
-                    {
-                        loader: 'react-svg-loader',
-                        options: {
-                            svgo: {
-                                plugins: [
-                                    {
-                                        removeViewBox: false
-                                    },
-                                    {
-                                        cleanupIDs: false
-                                    }
-                                ]
-                            },
-                            jsx: true
-                        }
-                    }
-                ]
+                type: 'asset',
+                resourceQuery: /url/, // *.svg?url
+            },
+            {
+                test: /\.svg$/i,
+                issuer: /\.[jt]sx?$/,
+                resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+                use: ['@svgr/webpack'],
             },
             {
                 test: /\.(png|jpe?g|gif|svg)$/i,
                 exclude: /node_modules/,
                 include: /images/,
+                type: 'asset/resource',
                 use:
                     [
-                        'file-loader',
                         {
-                            loader: 'image-webpack-loader',
+                            loader: 'img-loader',
                             options: {
                                 mozjpeg: {
                                     quality: 75
@@ -123,18 +103,20 @@ const config = {
                     ]
             },
             {
-              test: /\.(woff2?|svg)$/,
-              use: [
-                {
-                  loader: 'url-loader',
-                  options: {
-                    limit: 10000,
-                  },
+                test: /\.(woff2?)$/,
+                type: 'asset',
+                parser: {
+                    dataUrlCondition: {
+                        maxSize: 10 * 1024 // 10kb
+                    }
                 },
-              ],
-              include: /fonts/,
+                include: /fonts/,
             },
-            { test: /\.(ttf|eot)$/, loader: "file-loader", include: /fonts/, },
+            { 
+                test: /\.(ttf|eot)$/,
+                type: 'asset/resource',
+                include: /fonts/ 
+            },
         ],
     },
 

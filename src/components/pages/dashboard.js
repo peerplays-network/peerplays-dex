@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import { CardHeader } from "../helpers/cardHeader";
 import { Card } from "../helpers/card";
@@ -16,6 +15,7 @@ import UserActivity from './user/userActivity'
 import { updateAccountAndLoginData } from '../../actions/account';
 import Grid from '@material-ui/core/Grid';
 import UserAssets from "../pages/user/userAssets";
+import counterpart from 'counterpart';
 
 class Dashboard extends Component {
 
@@ -30,7 +30,7 @@ class Dashboard extends Component {
         return (
             <div className="container">
            <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"dashboard.title"}/>
+               <h1 className="page__title">{counterpart.translate(`dashboard.title`)}</h1>
            </div>
                 <div className="card__list__none">
                     <Card mode="small">

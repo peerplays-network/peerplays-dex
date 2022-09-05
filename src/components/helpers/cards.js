@@ -3,10 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import Translate from "react-translate-component";
 import Grid from '@material-ui/core/Grid';
 import Link from "react-router-dom/es/Link";
+import counterpart from 'counterpart';
 
 const useStyles = makeStyles({
   paper: {
@@ -40,12 +39,10 @@ export default function TableCard({ className, tableHead, rows, link, onClick, p
               <Grid item xs={6} sm={6}>
                 <Box component="div" className={classes.tablehead} fontWeight="fontWeightBold">
                   {tdItem.translateTag
-                    ? <Translate
-                      key={`th-${tdId}`}
-                      content={`tableHead.${tdItem.translateTag}`}
-                      component="div"
-                      with={tdItem.translateParams}
-                    />
+                    ?
+                      <div key={`th-${tdId}`}>
+                        {counterpart.translate(`tableHead.${tdItem.translateTag}`, tdItem.translateParams)}
+                      </div> 
                     : <div
                       key={`th-${tdId}`}
                       className={`table__cell ${tdItem.params ? tdItem.params : ''}`}

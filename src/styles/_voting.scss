@@ -19,7 +19,7 @@
     .table__row {
       .vote__like {
         opacity: 0;
-        transition: $anim/2;
+        transition: calc($anim / 2);
         fill: $grey-blue;
       }
 

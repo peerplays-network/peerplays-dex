@@ -1,15 +1,16 @@
+import counterpart from "counterpart";
 import React from "react";
-import Translate from "react-translate-component";
 
 const Button = ({ className, tag, type = "button", onClick, disabled }) => (
-    <Translate
-        component="button"
+    <button 
         type={type}
         className={`${className ? className : ''}`}
-        content={`buttons.${tag}`}
         onClick={onClick}
         disabled={disabled}
-    />
+    >
+        {counterpart.translate(`buttons.${tag}`)}
+    </button>
+
 );
 
 export default Button;

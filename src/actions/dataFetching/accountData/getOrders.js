@@ -6,7 +6,7 @@ import {defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
 import ActionsBtn from "../../../components/helpers/buttons/actionsBtn";
 import {getAccountData} from "../../store";
-import Translate from 'react-translate-component';
+import counterpart from "counterpart";
 
 
 const defaultTableHead = [
@@ -49,7 +49,7 @@ export const getOrders = async (context) => {
 
     const {name, limit_orders} = context.props.data;
 
-    if(!limit_orders.length) return [];
+    if(!limit_orders || !limit_orders.length) return [];
 
     const isActiveUser = name === getAccountData().name;
 
@@ -75,7 +75,9 @@ export const getOrders = async (context) => {
             ? <div className="actions__wrapper">
                 <ActionsBtn
                     actionsList={[
-                        <button onClick={() => openWarning('limit_order_cancel', el.id)}><Translate className="" content={"tableInfo.limit_order_cancel.title"} /></button>
+                        <button onClick={() => openWarning('limit_order_cancel', el.id)}>
+                            <span>{counterpart.translate(`tableInfo.limit_order_cancel.title`)}</span>
+                        </button>
                     ]}
                 />
             </div>

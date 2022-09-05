@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import SearchForm from "../helpers/form/searchForm";
-import Translate from "react-translate-component";
 import Dropdown from "../helpers/form/dropdown";
 import SelectHeader from "../helpers/selectHeader";
 import {blockContent} from "../../actions/blockContent";
 import {clearLayout} from "../../dispatch/layoutDispatch";
 import {searchFuncs} from "../../actions/forms/globalSearch";
+import counterpart from 'counterpart';
 
 const searchTypes = ['users', 'blocks', 'tokens'];
 
@@ -43,17 +43,13 @@ class GlobalSearch extends Component{
                 </div>
                 <div className="global-search__filter">
                     <Dropdown
-                        btn={<SelectHeader text={<Translate content={`search.${this.state.searchType}`}/>}/>}
-                        list={searchTypes.map((searchType, id) => {
-                                if (this.state.searchType !== searchType)
-                                    return <Translate
-                                        key={id}
-                                        component="button"
-                                        content={`search.${searchType}`}
-                                        onClick={() => this.changeSearchType(searchType)}
-                                    />
-                            }
-                        )}
+                        btn={<SelectHeader text={<span>{counterpart.translate(`search.${this.state.searchType}`)}</span>} />}
+                        list={searchTypes.filter(s => s !== this.state.searchType).map((searchType, id) => <button 
+                            key={id}
+                            onClick={() => this.changeSearchType(searchType)}
+                        >
+                            {counterpart.translate(`search.${searchType}`)}
+                        </button>)}
                     />
                 </div>
                 <div className="global-search__result custom-scroll">

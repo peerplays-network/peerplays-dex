@@ -4,11 +4,11 @@ import {setLocale} from "../../actions/locale/setLocale";
 import Switcher from "../helpers/switcher";
 import {editStorage, getStorage} from "../../actions/storage";
 import CheckBox from "../helpers/checkbox";
-import Translate from "react-translate-component";
 import Dropdown from "../helpers/dropdown";
 import SelectHeader from "../helpers/selectHeader";
 import Input from "../helpers/input";
 import {faucetUrl} from "../../params/networkParams";
+import counterpart from 'counterpart';
 
 class GeneralSettings extends Component {
 
@@ -56,7 +56,7 @@ class GeneralSettings extends Component {
 
         return (
             <div className="settings">
-                <Translate content="general.interface" component="h2" />
+                <h2>{counterpart.translate(`general.interface`)}</h2>
                 <Dropdown
                     btn={<SelectHeader
                         labelTag="general.language"
@@ -77,14 +77,14 @@ class GeneralSettings extends Component {
                     selected={advancedMode}
                     handleChange={this.changeAdvancedMode}
                 />
-                <Translate content="general.notifications" component="h2" />
+                <h2>{counterpart.translate(`general.notifications`)}</h2>
                 <CheckBox
                     id="filter"
                     labelTag="general.transferNotifications"
                     value={notifications}
                     onChange={this.handleNotifications}
                 />
-                <Translate content="general.faucet" component="h2" />
+                <h2>{counterpart.translate(`general.faucet`)}</h2>
                 <Input
                     name="faucet"
                     labelTag="general.faucetURL"

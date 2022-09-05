@@ -1,7 +1,7 @@
 import React from "react";
 import {dbApi} from "../nodes";
 import {setAssets} from "../setAssets";
-import {IconLink} from "../../svg";
+import IconLink from "../../svg/link.svg";
 import {Link} from "react-router-dom";
 
 const newDateFormat = (date) => {

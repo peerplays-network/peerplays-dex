@@ -1,12 +1,10 @@
 import React from 'react';
 import GeneralSettings from "./generalSettings";
-import NodesSelect from "./nodesSelect";
 import Security from "./security";
-import Backup from "./backup";
-import Translate from "react-translate-component";
 import PageMenu from "../../helpers/pageMenu";
 import Membership from "./membership";
 import {connect} from "react-redux";
+import counterpart from 'counterpart';
 
 const settingsMenu = [
     {
@@ -29,7 +27,7 @@ const settingsMenu = [
 const Settings = ({account}) => (
     <div className="container page">
         <div className="page__header-wrapper">
-            <Translate content={'settings.title'} component="h1" className="page__title" />
+            <h1 className="page__title">{counterpart.translate(`settings.title`)}</h1>
         </div>
         <PageMenu items={account ? settingsMenu : settingsMenu.slice(0, settingsMenu.length - 1)} link={'/settings'} path={'/settings'} />
     </div>

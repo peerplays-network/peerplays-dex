@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {IconSearch} from "../../../svg";
+import IconSearch from "../../../svg/search.svg";
 import SearchForm from "../form/searchForm";
 
 class NotificationsSearch extends Component {

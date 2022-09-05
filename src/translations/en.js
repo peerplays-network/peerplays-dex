@@ -82,47 +82,47 @@ export const en = {
     "tableInfo": {
         "account_create": {
             "title": "Account Creation",
-            "description": "%(registrar)s registered the account %(user)s",
+            "description": "%(registrar)s, registered the account , %(user)s",
         },
         "account_update": {
             "title": "Account Updated",
-            "description": "%(user)s updated account data",
+            "description": "%(user)s, updated account data",
         },
         "account_upgrade": {
             "title": "Account Upgraded",
-            "description": "%(user)s upgraded account to lifetime member",
+            "description": "%(user)s, upgraded account to lifetime member",
         },
         "account_whitelist": {
             "title": "Account Whitelist",
-            "description": "%(issuer)s %(status)s the account %(listed)s"
+            "description": "%(issuer)s, %(status)s the account, %(listed)s"
         },
         "asset_claim_pool": {
             "title": "Claim asset fee pool",
-            "description": "%(issuer)s claimed %(claimed)s from %(asset)s fee pool"
+            "description": "%(issuer)s, claimed %(claimed)s from , %(asset)s , fee pool"
         },
         "asset_create": {
             "title": "Asset Create",
-            "description": "%(issuer)s created the asset %(assetName)s"
+            "description": "%(issuer)s, created the asset , %(assetName)s"
         },
         "asset_fund_fee_pool": {
             "title": "Fund Asset Fee Pool",
-            "description": "%(from)s funded %(symbol)s fee pool with %(amount)s"
+            "description": "%(from)s, funded %(symbol)s fee pool with %(amount)s"
         },
         "asset_issue": {
             "title": "Issue Asset",
-            "description": "%(issuer)s issued %(assetAmount)s to %(receiver)s"
+            "description": "%(issuer)s, issued %(assetAmount)s to , %(receiver)s"
         },
         "asset_update": {
             "title": "Update Asset",
-            "description": "%(issuer)s updated asset %(asset)s"
+            "description": "%(issuer)s, updated asset , %(asset)s"
         },
         "asset_update_issuer": {
             "title": "Update asset issuer",
-            "description": "%(issuer)s transferred rights for %(asset)s to %(newOwner)s"
+            "description": "%(issuer)s, transferred rights for , %(asset)s , to , %(newOwner)s"
         },
         "asset_update_feed_producers": {
             "title": "Update asset feed producers",
-            "description": "%(issuer)s updated the feed producers for the asset %(asset)s"
+            "description": "%(issuer)s, updated the feed producers for the asset , %(asset)s"
         },
         "balance_claim": {
             "title": "Balance claim",
@@ -130,15 +130,15 @@ export const en = {
         },
         "fill_order": {
             "title": "Order Filled",
-            "description": "%(user)s bought %(pays)s for %(receives)s at %(marketLink)s for order #%(id)s",
+            "description": "%(user)s, bought %(pays)s for %(receives)s at , %(marketLink)s , for order #%(id)s",
         },
         "limit_order_cancel": {
             "title": "Cancel Order",
-            "description": "%(user)s cancelled order #%(id)s",
+            "description": "%(user)s, cancelled order #%(id)s",
         },
         "limit_order_create": {
             "title": "Create Order",
-            "description": "%(creator)s placed order #%(id)s at %(marketLink)s to buy %(buy)s for %(sell)s",
+            "description": "%(creator)s, placed order #%(id)s at , %(marketLink)s , to buy %(buy)s for %(sell)s",
         },
         "proposal_create": {
             "title": "Proposal Create",
@@ -150,11 +150,11 @@ export const en = {
         },
         "receive": {
             "title": "Receive",
-            "description": "%(receiver)s received %(quantity)s from %(sender)s",
+            "description": "%(receiver)s, received %(quantity)s from , %(sender)s",
         },
         "send": {
             "title": "Send",
-            "description": "%(sender)s send %(quantity)s to %(receiver)s",
+            "description": "%(sender)s, send %(quantity)s to , %(receiver)s",
         },
         "transfer": {
             "title": "Transfer",
@@ -162,15 +162,15 @@ export const en = {
         },
         "vesting_balance_create":{
             "title": "Vesting GPOS",
-            "description": "%(user)s Vest %(quantity)s GPOS",
+            "description": "%(user)s, Vest %(quantity)s GPOS",
         },
         "vesting_balance_withdraw":{
             "title": "Withdraw GPOS",
-            "description": "%(user)s Withdraw %(quantity)s GPOS",
+            "description": "%(user)s, Withdraw %(quantity)s GPOS",
         },    
         "worker_create": {
             "title": "Worker Created",
-            "description": "%(user)s created a worker proposal with daily pay of %(dailyPay)s",
+            "description": "%(user)s, created a worker proposal with daily pay of %(dailyPay)s",
         },
     },
     "dashboard": {
@@ -309,7 +309,7 @@ export const en = {
         "buy": "Buy",
         "sell": "Sell",
         "fee": "Fee:",
-        "marketFee": "Market Fee (%(percent)s%):",
+        "marketFee": "Market Fee:",
         "balance": "Balance:"
     },
     "assets": {
@@ -408,8 +408,8 @@ export const en = {
             "none": "No Rewards"
         },
         "trans":"Transaction Completed",
-        "percent": "Qualified Reward %",
-        "potential": "Estimated Rake Reward %",
+        "percent": "Qualified Reward %%",
+        "potential": "Estimated Rake Reward %%",
         "next_vote": "Next vote update",
         "newGpos":"New GPOS Balance",
         "noGpos":"There is no available GPOS",
@@ -582,8 +582,8 @@ export const en = {
     },
     "membership": {
         "title": "Membership",
-        "upgradeTitle": "Upgrade for 80% Cashback",
-        "upgradeDesc": "Lifetime Members get 80% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
+        "upgradeTitle": "Upgrade for 80%% Cashback",
+        "upgradeDesc": "Lifetime Members get 80%% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
         "referralTitle": "Your referral link",
         "referralDesc": "Give this to link to people you want to refer to Peerplays DEX: %(link)s/?r=%(name)s",
         "allocationTitle": "Fee Allocation",
@@ -668,7 +668,7 @@ export const en = {
             "forcedSettlementPercent": "Forced Settlement Percent",
             "forcedSettlementMaxVolume": "Max Forced Settlement Volume (percent per hour)",
             "backingAsset": "Backing Asset",
-            "marketFee": "Market Fee (%)",
+            "marketFee": "Market Fee",
             "maxMarketFee": "Max Market Fee",
             "issueAmount": "Issue Amount",
             "condition": "Condition (max 60 characters)",

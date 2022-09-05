@@ -14,8 +14,8 @@ import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
 import { utils } from '../../../../utils';
 import { updateAccountAndLoginData } from '../../../../actions/account';
-import Translate from 'react-translate-component';
 import { dbApi } from '../../../../actions/nodes';
+import counterpart from 'counterpart';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -180,26 +180,24 @@ class SendModal extends Component {
                                         />
                                         <div className="quantity-wrapper mt-2">
                                             <div>
-                                                <Translate className="" content={"field.labels.fee"} />{data.fee} {data.feeAsset}
+                                                <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                                {data.fee} {data.feeAsset}
                                             </div>
                                             <div>
                                                 {transactionError && transactionError !== "" ? 
                                                     <span className="clr--negative">
-                                                        <Translate className="" content={`errors.${transactionError}`} />
+                                                        <span>{counterpart.translate(`errors.${transactionError}`)}</span>
                                                     </span> 
                                                 : ""}
                                             </div>
-                                            {/*<Dropdown*/}
-                                            {/*btn={<SelectHeader*/}
-                                            {/*text={form.state.data.feeAsset}*/}
-                                            {/*className="with-bg"*/}
-                                            {/*/>}*/}
-                                            {/*list={userTokens.map(e => <button onClick={() => form.handleChange(e.symbol, 'feeAsset')} type="button">{e.symbol}</button>)}*/}
-                                            {/*/>*/}
                                         </div>
                                     </div>
                                     <div className="modal__bottom">
-                                        {sended && <h3 className="clr--positive"><Translate className="" content={`success.transCompleted`} /></h3>}
+                                        {sended && 
+                                            <h3 className="clr--positive">
+                                                <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                            </h3>
+                                        }
                                         <Close/>
                                         <Submit tag="send"/>
                                     </div>

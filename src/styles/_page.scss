@@ -44,7 +44,7 @@
       width: 0;
       height: 2px;
       background: $blue-dark;
-      transition: $anim / 2;
+      transition: calc($anim / 2);
     }
     &.active{
       color: $blue;

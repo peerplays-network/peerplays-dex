@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TitleWrapper from "./titleWrapper";
-import {Caret} from "../../svg";
+import IconCaret from "../../svg/caret.svg";
 
 class AccordeonItem extends Component{
     state = {
@@ -18,7 +18,7 @@ class AccordeonItem extends Component{
             <div className={`accordeon-item${open ? ' open' : ''}`}>
                 <button className="accordeon-item__title" onClick={this.handleClick}>
                     <TitleWrapper title={titleTag} />
-                    <Caret />
+                    <IconCaret />
                 </button>
                 <div className="accordeon-item__content">
                     {children}

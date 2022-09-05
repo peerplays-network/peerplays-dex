@@ -1,11 +1,11 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import { getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {generateSidechainAddress} from "../../../actions/forms/generateSidechainAddress";
 import { setSidechainAccounts } from "../../../dispatch/setAccount";
 import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class GenerateAddress extends Component {
     state = {
@@ -90,13 +90,20 @@ class GenerateAddress extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        {sended && <Translate component="span" className="clr--positive" content={"success.sidechainGenerated"}/>}
+                                        {sended &&
+                                            <span className="clr--positive">
+                                                {counterpart.translate(`success.sidechainGenerated`)}
+                                            </span>                                         
+                                        }
                                         {transactionError && transactionError !== "" ? 
                                             <span className="clr--negative">
-                                                <Translate className="" content={`errors.${transactionError}`} />
+                                                {counterpart.translate(`errors.${transactionError}`)}
                                             </span> 
-                                            : ""}
-                                        <Translate className="btn-round btn-round--send" component="button" type="submit" content={"buttons.generate"}/>
+                                            : ""
+                                        }
+                                        <button className="btn-round btn-round--send" type="submit">
+                                            {counterpart.translate(`buttons.generate`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

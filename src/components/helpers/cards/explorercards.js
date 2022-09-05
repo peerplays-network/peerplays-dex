@@ -1,11 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Translate from "react-translate-component";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import counterpart from 'counterpart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +32,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.current_block"} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.current_block`)}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.head_block_number}
@@ -45,7 +44,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.supply"} with={{ currency: props.coreAsset.symbol }} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.supply`, {currency: props.coreAsset.symbol})}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.current_supply}
@@ -57,7 +56,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.active_witnesses"} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.active_witnesses`)}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.active_witnesses.length}
@@ -69,7 +68,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.confirmation_time"} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.confirmation_time`)}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.avgTime.toFixed(2)}
@@ -81,7 +80,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.last_irreversible"} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.last_irreversible`)}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.last_irreversible_block_num}
@@ -93,7 +92,7 @@ export default function Explorercards(props) {
           <Card className="explorer__cards">
             <CardContent className={classes.paper}>
               <Typography component="h5" variant="h4">
-                <Translate content={"blockchain.blockchain.stealth_supply"} with={{ currency: props.coreAsset.symbol }} component="div" />
+                <div>{counterpart.translate(`blockchain.blockchain.stealth_supply`, {currency: props.coreAsset.symbol})}</div>
               </Typography>
               <Typography variant="h5" color="textSecondary">
                 {props.confidential_supply}

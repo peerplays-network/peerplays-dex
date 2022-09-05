@@ -1,6 +1,8 @@
+import counterpart from 'counterpart';
 import React from 'react';
-import Translate from "react-translate-component";
-import {IconConnectedNode, IconNode} from "../../svg";
+import IconConnectedNode from "../../svg/nodeConnected.svg";
+import IconNode from "../../svg/node.svg";
+
 import ActionsBtn from "./buttons/actionsBtn";
 
 const Node = ({data, handleActivation}) => (
@@ -22,11 +24,15 @@ const Node = ({data, handleActivation}) => (
             <span className={`node__group-title clr--${data.connectTime !== 0 && data.connectTime < 500 ? 'positive' : 'negative'}`}>
                 {data.connectTime}ms
             </span>
-            <Translate content="nodes.latency" className="node__group-subtitle" />
+            <span className="node__group-subtitle">
+                {counterpart.translate(`nodes.latency`)}
+            </span>
         </div>
         <div className="node__group">
             <span className="node__group-title">{data.user.name}</span>
-            <Translate content="nodes.operator" className="node__group-subtitle" />
+            <span className="node__group-subtitle">
+                {counterpart.translate(`nodes.operator`)}
+            </span>
         </div>
         <ActionsBtn
             actionsList={[

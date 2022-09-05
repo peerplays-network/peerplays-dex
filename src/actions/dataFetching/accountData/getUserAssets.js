@@ -4,7 +4,7 @@ import {formAssetData} from "../../assets";
 import {dispatchSendModal} from "../../forms/dispatchSendModal";
 import {defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
-import { IconSend} from "../../../svg";
+import IconSend from "../../../svg/send.svg";
 import {getAccountData} from "../../store";
 
 const basicTableHead = [
