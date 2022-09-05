@@ -57,8 +57,7 @@ class QuickSellBuy extends Component {
 
     handleTransfer = () => {
         const context = this;
-        this.setState({ defaultData: false, sended: true }, () => {
-            this.setBasicData();
+        this.setState({ sended: true }, () => {
             setTimeout(() => context.setState({sended: false}), 5000)
         });
         
@@ -71,7 +70,7 @@ class QuickSellBuy extends Component {
 
     render() {
         const {defaultData, userTokens, sended, assets} = this.state;
-
+        
         if (!defaultData) return <span/>;
 
         return (

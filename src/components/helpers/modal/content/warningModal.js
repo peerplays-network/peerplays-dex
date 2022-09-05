@@ -5,6 +5,7 @@ import ModalButton from "../../buttons/modalButton";
 import {clearLayout} from "../../../../dispatch/layoutDispatch";
 import {defaultTrx} from "../../../../actions/forms";
 import counterpart from "counterpart";
+import { updateAccountAndLoginData } from '../../../../actions/account';
 
 class WarningModal extends Component{
 
@@ -19,7 +20,8 @@ class WarningModal extends Component{
         defaultTrx({trx, password, keyType})
             .then(result => { 
                 if(result.success) {
-                    clearLayout();   
+                    clearLayout(); 
+                    updateAccountAndLoginData();
                 } else {
                     if(result.transactionError && result.transactionError !== "") {
                         this.setState({ errors: result.transactionError, disabled: false })
