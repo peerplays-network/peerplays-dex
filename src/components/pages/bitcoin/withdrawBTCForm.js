@@ -67,7 +67,7 @@ class WithdrawBTCForm extends Component {
 							<Fragment>
 								<div className="input__row">
 									<Input
-										style={{"display": "none"}}
+										wrapperStyle={{"display": "none"}}
 										name="from"
 										onChange={form.handleChange}
 										error={errors}
@@ -91,7 +91,7 @@ class WithdrawBTCForm extends Component {
 								</div>
 								<div className="input__row">
 									<Input
-										style={{"display": "none"}}
+										wrapperStyle={{"display": "none"}}
 										name="to"
 										disabled
 										onChange={form.handleChange}
@@ -100,7 +100,7 @@ class WithdrawBTCForm extends Component {
 									/>
 									
 									<Input
-										style={{"display": "none"}}
+										wrapperStyle={{"display": "none"}}
 										name="quantityAsset"
 										disabled
 										onChange={form.handleChange}

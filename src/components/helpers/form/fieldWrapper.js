@@ -13,6 +13,7 @@ const FieldWrapper = (props) => {
         comment,
         className,
         style = {},
+        wrapperStyle = {},
         formData,
         children
     } = props;
@@ -21,7 +22,7 @@ const FieldWrapper = (props) => {
     const error = formData ? formData.state.errors : (props.error || {});
 
     return (
-        <div className="label__wrapper">
+        <div className="label__wrapper" style={wrapperStyle}>
             <label htmlFor={id ? id : name} className={`field ${className}${error[name] ? ' error' : ''}${hideLabel ? ' without-label' : ''}`} style={style}>
                 { children }
                 { !hideLabel && 

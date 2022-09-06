@@ -179,6 +179,7 @@ class BuyForm extends Component{
                 handleResult={this.handleResult}
                 orderConfirmation
                 keyType="active"
+                className="form--buy"
             >
                 {
                     form => {

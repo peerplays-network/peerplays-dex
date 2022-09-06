@@ -88,7 +88,7 @@ class HiveTransactions extends Component {
                                                 <Fragment>
                                                     <div className="input__row">
                                                         <Input
-                                                            style={{"display": "none"}}
+                                                            wrapperStyle={{"display": "none"}}
                                                             name="from"
                                                             onChange={form.handleChange}
                                                             error={errors}
@@ -112,7 +112,7 @@ class HiveTransactions extends Component {
                                                     </div>
                                                     <div className="input__row">
                                                         <Input
-                                                            style={{"display": "none"}}
+                                                            wrapperStyle={{"display": "none"}}
                                                             name="to"
                                                             disabled
                                                             onChange={form.handleChange}
