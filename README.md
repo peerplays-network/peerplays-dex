@@ -33,7 +33,7 @@ DEFAULT_QUOTE=''
 # Full URL to the blockchain's faucet
 FAUCET_URL=''
 
-# Full URL to your DEX instance
+# Full URL to your mainnet DEX instance
 DEX_URL=''
 
 # Chain ID of the blockchain
