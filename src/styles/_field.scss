@@ -1,3 +1,9 @@
+.label__wrapper {
+  display: flex; 
+  flex-direction: column;
+  width: 100%;
+}
+
 .field{
   width: 100%;
   min-height: 5.5rem;
@@ -92,7 +98,7 @@
     transition: $anim;
     transform: translateY(-50%);
   }
-  &__comment, &__error{
+  &__comment{
     position: absolute;
     top: 100%;
     left: 0;
@@ -104,6 +110,7 @@
   }
   &__error{
     color: $negative;
+    font-size: $fzSM;
   }
   textarea{
     resize: none;
