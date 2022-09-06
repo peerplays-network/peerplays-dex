@@ -7,7 +7,7 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 
     .number {
       width: 196px;
@@ -64,6 +64,9 @@
    label {
     margin-right: 3rem;
   }
+  .label__wrapper:not(:last-child) {
+    margin-right: 3rem;
+  }
   
 }
 
@@ -72,7 +75,7 @@
   margin: 0 1rem;
 
   .input__row {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   label, .dropdown {
@@ -83,7 +86,7 @@
     width: 100%;
   }
 
-  label:not(:last-child), .dropdown:not(:last-child) {
+  .label__wrapper:not(:last-child), .dropdown:not(:last-child) {
     margin-right: 3rem;
 
     .field, .with_hint {

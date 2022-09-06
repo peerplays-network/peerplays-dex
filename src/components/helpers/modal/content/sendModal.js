@@ -173,7 +173,7 @@ class SendModal extends Component {
                                             id="modalSendMemo"
                                             name="memo"
                                             maxLength={MEMO_MAX_LENGTH}
-                                            comment={true}
+                                            //comment={true}
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
