@@ -22,8 +22,8 @@ export const authByLogin = async ({login, password, remember, isWhaleVault}, res
     } else {
         if (window.whalevault) {
             const res = await window.whalevault.promiseRequestPubKeys("dex", `ppy:${login}`)
-            const pubKeys = res.result[`ppy:${login}`];
             if(res.success){
+                const pubKeys = res.result[`ppy:${login}`];
                 if(Object.keys(pubKeys).length){
                     const checkWhaleVaultKeys = loginData.checkWhaleVaultPubKeys(pubKeys, accData);
                     if(!checkWhaleVaultKeys){
