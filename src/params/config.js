@@ -6,6 +6,7 @@ const {
   DEX_URL,
   DEFAULT_CHAIN_ID,
   BLOCKCHAIN_ENDPOINTS,
+  GOOGLE_TAG_MANAGER_ID,
 } = process.env;
 
 /**
@@ -71,7 +72,14 @@ const Config = {
    * @type {string}
    * @memberof Config
    */
-  dexUrl: DEX_URL
+  dexUrl: DEX_URL,
+  /**
+   * Represents the google tag manager ID for QA and Production build.
+   *
+   * @type {string}
+   * @memberof Config
+   */
+   googleTagManagerId: GOOGLE_TAG_MANAGER_ID
 };
 
 export default Config;

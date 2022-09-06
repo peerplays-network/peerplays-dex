@@ -41,6 +41,9 @@ DEFAULT_CHAIN_ID=''
 
 # Blockchain API endpoints (websocket)
 BLOCKCHAIN_ENDPOINTS=''
+
+# Google tag manager ID (Use this in QA or production build)
+GOOGLE_TAG_MANAGER_ID=''
 ```
 
 ## Starting after installation and ENV configuration
