@@ -72,6 +72,7 @@ class FundTheFeePool extends Component {
                                             error={errors}
                                             value={data}
                                             disabled
+                                            wrapperStyle={{marginRight: "3rem"}}
                                         />
                                         <Input
                                             type="number"
@@ -80,7 +81,6 @@ class FundTheFeePool extends Component {
                                             name="quantity"
                                             value={data}
                                             error={errors}
-                                            className="asset-action__quantity"
                                             onChange={form.handleChange}
                                             onKeyPress={(e) => {
                                                 if (!utils.isNumberKey(e)) {
