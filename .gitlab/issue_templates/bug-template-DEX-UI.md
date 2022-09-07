@@ -30,12 +30,19 @@
 - 
 
 OS :
+
 Browser (Google Chrome):
+
 Browser (Firefox): 
+
 DEX-UI release or git commit hash:
+
 Bitcoin version: <!-- mandaotory for environments with Bitcoin SONs -->
+
 Hive version :   <!-- mandaotory for environments with Hive SONs>
+
 <!-- git commit hash must be used only if a release version is not available due to special cases>
+
 
 <!--- Provide a general summary of the issue in the Title above -->
 
