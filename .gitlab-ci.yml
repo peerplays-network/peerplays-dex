@@ -41,6 +41,7 @@ build_dev:
     paths:
       - dist/
     expire_in: 2 weeks
+  when: manual
   only:
     - branches
   tags:
@@ -68,7 +69,6 @@ build_prod:
     expire_in: 2 weeks
   only:
     - branches
-  when: manual
   tags:
     - docker
 
@@ -84,6 +84,7 @@ docker_build:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -f dev.Dockerfile -t $IMAGE .
     - docker push $IMAGE
+  when: manual
 
 
 deploy_review:
