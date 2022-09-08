@@ -46,6 +46,32 @@ build_dev:
   tags:
     - docker
 
+build_prod:
+  # node docker image on which this would be run
+  image: node:14.16.1-alpine3.13
+  stage: build
+  script:
+    - apk update && apk add g++ make nasm git libtool autoconf automake libpng-dev pkgconfig
+    - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
+    - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
+    - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
+    - echo "DEX_URL='$PROD_DEX_URL'" >> .env
+    - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
+    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
+    - npm install
+    - npm run build
+  artifacts:
+    reports:
+      dast: gl-dast-report.json
+    paths:
+      - dist/
+    expire_in: 2 weeks
+  only:
+    - branches
+  when: manual
+  tags:
+    - docker
+
 docker_build:
   image: docker:stable
   stage: build
@@ -109,6 +135,20 @@ deployToDev:
     manual
   tags:
     - dex1
+
+deployToStaging:
+  stage: deploy
+  dependencies:
+    - build_prod
+  script:
+    - rm -rf $DEV_DEPLOY_DIR/*
+    - cp -R dist/* $DEV_DEPLOY_DIR
+  environment:
+    name: staging
+    url: https://dex-staging.peerplays.download
+  tags:
+    - staging
+
 
 sonarcloud-check:
  image:
