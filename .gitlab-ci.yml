@@ -113,6 +113,7 @@ deployToDev:
 deployToStaging:
   stage: deploy
   script:
+    - cat ${DEV_DEPLOY_DIR}
     - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
     - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
     - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
@@ -121,8 +122,8 @@ deployToStaging:
     - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
     - npm install
     - npm run build
-    - rm $DEV_DEPLOY_DIR/*
-    - cp -R dist/* $DEV_DEPLOY_DIR
+    - rm ${DEV_DEPLOY_DIR}/*
+    - cp -R dist/* ${DEV_DEPLOY_DIR}
   environment:
     name: staging
     url: https://dex-staging.peerplays.download
