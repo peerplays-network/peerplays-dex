@@ -113,7 +113,6 @@ deployToDev:
 deployToStaging:
   stage: deploy
   script:
-    - sudo apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
     - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
     - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
