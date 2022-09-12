@@ -139,9 +139,16 @@ deployToDev:
 
 deployToStaging:
   stage: deploy
-  dependencies:
-    - build_prod
   script:
+    - apk update && apk add g++ make nasm git libtool autoconf automake libpng-dev pkgconfig
+    - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
+    - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
+    - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
+    - echo "DEX_URL='$PROD_DEX_URL'" >> .env
+    - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
+    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
+    - npm install
+    - npm run build
     - rm -rf $DEV_DEPLOY_DIR/*
     - cp -R dist/* $DEV_DEPLOY_DIR
   environment:
@@ -149,7 +156,6 @@ deployToStaging:
     url: https://dex-staging.peerplays.download
   tags:
     - staging
-
 
 sonarcloud-check:
  image:
