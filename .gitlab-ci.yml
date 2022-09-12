@@ -113,6 +113,9 @@ deployToDev:
 deployToStaging:
   stage: deploy
   script:
+    - rm example.env
+    - rm irona.env
+    - rm MAINNET.env
     - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
     - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
     - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
