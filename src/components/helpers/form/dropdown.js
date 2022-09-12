@@ -65,13 +65,14 @@ class Dropdown extends Component {
                 }
             </Fragment>
         }
+        console.log(className)
 
         return (
             <div className={`dropdown ${className ? className : ''} ${position ? position : ''}`}>
                 <button className="dropdown__btn-wrapper" onClick={this.open} type="button">
                     {btn}
                 </button>
-                <div className={`dropdown__body${list.length ? ' custom-scroll' : ''}`}>
+                <div className={`dropdown__body${list.length ? ' custom-scroll' : ''} ${className ? className : ''}`}>
                     {content}
                 </div>
                 {comment
