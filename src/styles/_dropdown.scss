@@ -96,7 +96,7 @@
 .top-center{
   > .dropdown__body{
     top: 0;
-    left: 50%;
+    left: -30%;
     transform: translate(-50%, -10%);
   }
   &.open{
@@ -120,9 +120,16 @@
     }
   }
 }
-@media(min-width:320px){
+@media(max-width:500px){
   .dropdown__item{
     margin-top: -6px;
+  }
+  .top-center{
+    > .dropdown__body{
+      top: 0;
+      left: -60%;
+      transform: translate(-50%, -10%);
+    }
   }
 }
 
