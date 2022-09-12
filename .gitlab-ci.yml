@@ -121,7 +121,7 @@ deployToStaging:
     - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
     - npm install
     - npm run build
-    - rm -rf $DEV_DEPLOY_DIR/*
+    - rm $DEV_DEPLOY_DIR/*
     - cp -R dist/* $DEV_DEPLOY_DIR
   environment:
     name: staging
