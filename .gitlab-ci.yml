@@ -138,6 +138,7 @@ deployToDev:
     - dex1
 
 deployToStaging:
+  image: node:14.16.1-alpine3.13
   stage: deploy
   script:
     - apk update && apk add g++ make nasm git libtool autoconf automake libpng-dev pkgconfig
