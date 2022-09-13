@@ -57,7 +57,8 @@ class QuickSellBuy extends Component {
 
     handleTransfer = () => {
         const context = this;
-        this.setState({ sended: true }, () => {
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData();
             setTimeout(() => context.setState({sended: false}), 5000)
         });
         
