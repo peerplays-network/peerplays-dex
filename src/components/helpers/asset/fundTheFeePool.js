@@ -45,7 +45,7 @@ class FundTheFeePool extends Component {
     render() {
         const title = this.props.title;
         const {defaultData, sended} = this.state;
-
+        const basicAsset = getBasicAsset()
         if (!defaultData) return <span/>;
 
         return (
@@ -87,6 +87,8 @@ class FundTheFeePool extends Component {
                                                   e.preventDefault();
                                                 }
                                             }}
+                                            precision={basicAsset.precision}
+                                            min={0}
                                         />
                                     </div>
                                     <div className="btn__row">
