@@ -636,7 +636,7 @@ export const ru = {
             "hiveCurrency": "Выберите валюту",
             "quantity": "количество",
             "memo": "записка",
-            "fee": "плата",
+            "fee": "плата: ",
             "gateFee": "Плата за ворота",
             "newWorkerName": "Имя работника",
             "dailyPay": "Ежедневная оплата (TEST)",

@@ -2,13 +2,14 @@ import {getBasicAsset, getStore} from "../store";
 import {trxBuilder} from "./trxBuilder";
 import {getDefaultFee} from "./getDefaultFee";
 import { getAssetBySymbol } from "../assets";
+import { roundNum } from "../roundNum";
 
 export const assetFundFeePool = async (data, result) => {
     const {loginData, accountData} = getStore();
     const basicAsset = getBasicAsset();
     const from = accountData.id;
     const poolAsset = await getAssetBySymbol(data.poolAssetSymbol)
-    const amount = data.quantity * (10 ** basicAsset.precision)
+    const amount = roundNum(data.quantity * (10 ** basicAsset.precision)) 
 
     const trx = {
         type: 'asset_fund_fee_pool',

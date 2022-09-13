@@ -121,19 +121,19 @@
   }
 }
 
-.dropdown__body{
-  &.custom-scroll{
-  &.cancel__button{
-    left: -30%;
+.dropdown__body {
+  &.custom-scroll { 
+    &.cancel__button {
+      left: -30%;
     }
   }
 }
 
-@media(max-width:500px){
-  .dropdown__body{
-    &.custom-scroll{
-    &.cancel__button{
-      left: -60%;
+@media(max-width:500px) {
+  .dropdown__body {
+    &.custom-scroll {
+      &.cancel__button {
+        left: -60%;
       }
     }
   }
