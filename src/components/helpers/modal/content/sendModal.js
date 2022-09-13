@@ -162,7 +162,7 @@ class SendModal extends Component {
                                                 type="text"
                                                 onChange={form.handleChange}
                                                 error={errors}
-                                                className="quantity-wrapper dropdown"
+                                                className="quantity-wrapper"
                                                 hideLabel={true}
                                                 value={data}
                                                 defaultVal = {data}
