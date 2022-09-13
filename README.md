@@ -33,7 +33,7 @@ DEFAULT_QUOTE=''
 # Full URL to the blockchain's faucet
 FAUCET_URL=''
 
-# Full URL to your mainnet DEX instance
+# Full URL to your mainnet DEX instance (It has to be always https://market.peerplays.com)
 DEX_URL=''
 
 # Chain ID of the blockchain
