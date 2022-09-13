@@ -90,6 +90,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  .label__wrapper:not(:last-child) {
+    margin-right: 3rem;
+  }
   .dropdown{
     min-width: 12.2rem;
     width: fit-content;
