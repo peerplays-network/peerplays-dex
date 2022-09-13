@@ -36,7 +36,7 @@ const VestGPOS = (props) => {
 				creator: accountData.id,
 				owner: accountData.id,
 				amount: {
-					amount: vestAmount * (10 ** precision),
+					amount: Math.round(vestAmount * (10 ** precision)),
 					asset_id: symbol_id
 				},
 				asset_symbol: symbol,

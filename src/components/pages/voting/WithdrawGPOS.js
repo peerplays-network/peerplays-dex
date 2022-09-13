@@ -39,7 +39,7 @@ const WithdrawGPOS = (props) => {
 					vesting_balance: gposBalances[0].id,
 					owner: accountData.id,
 					amount: {
-						amount: withdrawAmount * (10 ** precision),
+						amount: Math.round(withdrawAmount * (10 ** precision)),
 						asset_id: symbol_id
 					},
 				}

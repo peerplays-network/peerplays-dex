@@ -70,7 +70,7 @@ export const transfer = async (data) => {
     }
 
     const amount = {
-        amount: data.quantity * (10 ** asset.precision),
+        amount: Math.round(data.quantity * (10 ** asset.precision)),
         asset_id: asset.id
     };
 
@@ -86,6 +86,7 @@ export const transfer = async (data) => {
             memo: memoObject
         }
     };
+    console.log("trx", trx)
     try {
         const trxResult = await trxBuilder([trx], [activeKey]);
         if(trxResult){
