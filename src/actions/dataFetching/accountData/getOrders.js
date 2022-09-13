@@ -79,6 +79,7 @@ export const getOrders = async (context) => {
                             <span>{counterpart.translate(`tableInfo.limit_order_cancel.title`)}</span>
                         </button>
                     ]}
+                    className="cancel__button"
                 />
             </div>
             : false;
