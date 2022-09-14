@@ -26,7 +26,7 @@ build_dev:
   image: node:16.17.0
   stage: build
   script:
-    - apt update && apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    - sudo apt update && sudo apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - echo "DEFAULT_TOKEN='$DEV_TOKEN'" >> .env
     - echo "DEFAULT_QUOTE='$DEV_QUOTE'" >> .env
     - echo "FAUCET_URL='$DEV_FAUCET'" >> .env
@@ -50,7 +50,7 @@ build_dev:
 build_prod:
   stage: build
   script:
-    - apt update && apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - cat $PROD_TOKEN
     - cat $PROD_QUOTE
     - cat $PROD_FAUCET
