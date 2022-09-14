@@ -51,12 +51,12 @@ build_prod:
   stage: build
   script:
     - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
-    - cat $PROD_TOKEN
-    - cat $PROD_QUOTE
-    - cat $PROD_FAUCET
-    - cat $STAGING_DEX_URL
-    - cat $PROD_CHAIN_ID
-    - cat $PROD_BLOCKCHAIN_ENDPOINTS
+    - echo $PROD_TOKEN
+    - echo $PROD_QUOTE
+    - echo $PROD_FAUCET
+    - echo $STAGING_DEX_URL
+    - echo $PROD_CHAIN_ID
+    - echo $PROD_BLOCKCHAIN_ENDPOINTS
     - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
     - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
     - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
