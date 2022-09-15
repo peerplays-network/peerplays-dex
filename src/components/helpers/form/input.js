@@ -21,7 +21,7 @@ const Input = (props) => {
         if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
              return e.preventDefault()
         }
-        if (type === 'password' && charCode === 32 ){
+        if (charCode === 32 || (type === 'password' && charCode === 32)){
             return e.preventDefault()
        }
         }
@@ -41,7 +41,6 @@ const Input = (props) => {
                 onKeyPress={e => isNumberKey(e,type)}
                 onChange={e => onChange ? onChange(e.target.value, name) : e.preventDefault()}
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
-                min={0}
                 placeholder=" "
                 min={min}
                 className="field__input"

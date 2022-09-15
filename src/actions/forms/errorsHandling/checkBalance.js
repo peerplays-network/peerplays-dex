@@ -1,9 +1,9 @@
 import {getAccountData} from "../../store";
 
 export const checkAmountToSell = ({type, buyAsset, sellAsset, amount_to_receive, amount_to_sell}) => {
-    if(!amount_to_sell) {
-      return 'required';
-    } else {
+  if(!amount_to_sell) {
+    return 'required';
+  } else {
       if(isNaN(amount_to_sell)){
         return 'isNan';
       }
@@ -25,13 +25,15 @@ export const checkAmountToSell = ({type, buyAsset, sellAsset, amount_to_receive,
     }
 }
 
-export const checkAmountToReceive = ({type, buyAsset, sellAsset, amount_to_sell, amount_to_receive}) => {
-
+export const checkAmountToReceive = async ({type, buyAsset, sellAsset, amount_to_sell, amount_to_receive}) => {
   if(!amount_to_receive) {
     return 'required';
   } else {
     if(isNaN(amount_to_receive)){
       return 'isNan';
+    }
+    if(amount_to_receive <= 0) {
+      return 'isZero';
     }
     if(type === 'sell') {
       const userAsset = getAccountData().assets.find(el => el.symbol === buyAsset);
@@ -40,7 +42,9 @@ export const checkAmountToReceive = ({type, buyAsset, sellAsset, amount_to_sell,
       } else {
         return userAsset.setPrecision() >= amount_to_receive ? false : 'isNotEnough';
       }
-    } 
+    }
+    if(amount_to_receive >= 10 ** 8)
+      return 'isTooBig'
     return false;
   }
 }
@@ -51,7 +55,9 @@ export const checkPrice = ({price}) => {
   } else {
     if(isNaN(price)){
       return 'isNan';
-    } 
+    }
+    if (price >= 10 ** 8)
+      return 'isTooBig'
     return false;
   }
 }
