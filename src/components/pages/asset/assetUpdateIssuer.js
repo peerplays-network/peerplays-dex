@@ -63,10 +63,11 @@ class AssetUpdateIssuer extends Component {
                       defaultData={defaultData}
                       handleResult={this.handleAssetUpdateIssuer}
                       needPassword
+                      keyType="owner"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return(
                                 <Fragment>
                                     <FieldWithHint
@@ -77,9 +78,14 @@ class AssetUpdateIssuer extends Component {
                                         errors={errors}
                                     />
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Change</button>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.quantityAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
+                                        <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.change}`} /></button>
                                     </div>
                                 </Fragment>
                             )

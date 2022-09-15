@@ -7,6 +7,7 @@ import { formAccount } from '../../../actions/account';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { getStore,getAccountData, getBasicAsset , getFees} from '../../../actions/store';
 import {updateAccount} from "../../../dispatch/setAccount";
+import { utils } from '../../../utils';
 
 
 
@@ -17,6 +18,7 @@ const VestGPOS = (props) => {
 	const [fee, setFee] = useState(0);
 	const [sended, setSended] = useState(false);
 	const [changes, setChanges] = useState(false);
+	const [error, setError] = useState("");
 
 	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
 		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
@@ -50,23 +52,37 @@ const VestGPOS = (props) => {
 			}
 		};
 		
-		getPassword(password => {
-			const activeKey = loginData.formPrivateKey(password, 'active');
+		getPassword((password, keyType) => {
+			let activeKey = '';
+			if(keyType === 'password') {
+				activeKey = loginData.formPrivateKey(password, 'active');
+			} else if(keyType === 'active') {
+				activeKey = loginData.formPrivateKey(password);
+			} else if(keyType === 'whaleVault') {
+				activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+			}
 			trxBuilder([trx], [activeKey]).then(async() => {
 				setSended(true)
 				getAssets();
 				setVestAmount(0);
 				updateAccount(await formAccount(account.name));
 				setTimeout(() => setSended(false), 5000)
+			}).catch(e => {
+				setError(e.message.split(":")[0].replace(/\s+/g,"_"))
+				setTimeout(() => setError(""), 5000)
 			});
-		});
+		}, 'active');
 		setChanges(false)
 	};
 
 	const handlChange = (value)=>{
 		setVestAmount(value)
-		setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		if(value > 0){
+			setFee(getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision))
+		}else{
+			setFee(0)
 		}
+}
 
 
 	return (
@@ -103,6 +119,11 @@ const VestGPOS = (props) => {
 					max={accBalance > getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) ? accBalance - getFees().vesting_balance_create.fee/(10 ** getBasicAsset().precision) : 0}
 					onChange={(value) => handlChange(value)}
 					value={vestAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(vestAmount == null || vestAmount == 0)) ? "block" : "none" }}>
@@ -117,8 +138,9 @@ const VestGPOS = (props) => {
 					</div>
 				</div>
 			</CardContent>
-			<div className="info__row">
-			<span>Fee: {fee} TEST</span>
+			<div className="info__row margin">
+			<span>Fee: {fee} {getBasicAsset().symbol}</span>
+			{error && <span className="clr--negative"><Translate className="" content={`errors.${error}`} /></span>}
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >

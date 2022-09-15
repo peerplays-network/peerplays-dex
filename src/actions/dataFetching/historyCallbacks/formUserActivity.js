@@ -1,7 +1,7 @@
 import React from "react";
 import {ChainTypes} from "peerplaysjs-lib";
 import {getUserName} from "../../account/getUserName";
-import {formAssetData} from "../../assets";
+import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
 import {formDate} from "../../formDate";
@@ -11,13 +11,14 @@ import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
 
+
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
     let history = context.props.data.history;
-
-    if (!history.length) return [];
-
-    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+  
+    if (!history || !history.length) return [];
+    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 32 || el.op[0] === 33 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+    
 
     return Promise.all(history.map(async el => {
       const fee = el.op[1].fee;
@@ -35,19 +36,13 @@ export const formUserActivity = async (context) => {
       };
     }));
 };
-const handleTransactionClick = async (user, operation) => {
-
-    const operationData = operation.op[1];
-    
-    if (Object.keys(operationData).includes("memo") && !(/111111111111111111111/.test(operationData.memo.from)) && !(/111111111111111111111/.test(operationData.memo.to))) {
-        getPassword(password => {
-            setModal(<TransactionModal user={user} blockNum={operation.block_num}
-                trxNum={operation.trx_in_block} password={password}/>)
-        });
-    }
-    else {
-        setModal(<TransactionModal user={user} blockNum={operation.block_num}
-            trxNum={operation.trx_in_block} />)
+const handleTransactionClick = async (user, operation) => {     
+    if(Object.keys(operation.op[1]).includes("memo") && operation.op[1].memo.message.slice(0, 8) !== "00000000") {
+        getPassword((password, keyType) => {
+            setModal(<TransactionModal user={user} operation={operation} password={password} keyType={keyType}/>)
+        }, "memo");
+    } else {
+        setModal(<TransactionModal user={user}  operation={operation}/>)
     }
 }
 
@@ -85,6 +80,20 @@ const formAdditionalInfo = {
         registrar: await formUserLink(registrar, notification),
         user: await formUserLink(name, notification)
     }),
+    'vesting_balance_create': async (notification, {creator, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(creator, notification),
+            quantity: amountAsset.toString()
+        })
+    },
+    'vesting_balance_withdraw': async (notification, {owner, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(owner, notification),
+            quantity: amountAsset.toString()
+        })
+    },
     'account_upgrade': async (notification, {account_to_upgrade}) => ({
         user: await formUserLink(account_to_upgrade, notification)
     }),
@@ -141,11 +150,12 @@ const formAdditionalInfo = {
         }
     },
     "asset_fund_fee_pool": async (notification, {from_account, asset_id, amount}) => {
-        const asset = await formAssetData({asset_id, amount});
-
+        const basicAsset = getBasicAsset();
+        const asset = await formAssetData({asset_id: basicAsset.id, amount});
+        const feePoolAsset = await getAssetById(asset_id)
         return {
             from: await formUserLink(from_account, notification),
-            symbol: asset.symbol,
+            symbol: feePoolAsset.symbol,
             amount: asset.toString()
         }
     },

@@ -1,6 +1,7 @@
 import {TransactionHelper} from "peerplaysjs-lib";
 import {getAccountData, getBasicAsset, getFees, getStore} from "../store";
 import {Asset} from "../../classes";
+import { dbApi } from "../nodes";
 
 const defaultNonce = TransactionHelper.unique_nonce_uint64();
 
@@ -53,7 +54,9 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
 
     let feeAmount = basicAsset.setPrecision(false, rawFee);
 
-    if(memo && memo.length > 0){
+    const emptyMemoRegex = /^\s+$/;
+
+    if(memo && memo.length > 0 && !emptyMemoRegex.test(memo)){
         const rawAdditional = feeData.price_per_kbyte;
         const memoLength = JSON.stringify(account.keys.memo).length;
         const helperLength = JSON.stringify(defaultNonce).length;
@@ -69,7 +72,7 @@ const calculateFee = (type, errVariable, quantity, assetName, memo) => {
     return result;
 };
 
-const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
+const calculateLimitOrderFee = async (orderType = 'buy', amount_to_sell, sellAsset, amount_to_receive, buyAsset) => {
     const val = amount_to_sell==''?'': Number(amount_to_sell);
     const val2 = amount_to_receive == undefined ?'': Number(amount_to_receive)
     const result = {
@@ -143,6 +146,21 @@ const calculateLimitOrderFee = (orderType = 'buy', amount_to_sell, sellAsset, am
     }
     if(usersBasicAsset.setPrecision() < amountToPay) result.feeErr = 'isNotEnough';
    
+    let buyMarketFeePercent = 0;
+    let sellMarketFeePercent = 0;
+
+    const allAssets = await dbApi('list_assets', ['', 100])
+    const sellToken = allAssets.find(asset => asset.symbol === sellAsset)
+    const buyToken = allAssets.find(asset => asset.symbol === buyAsset)
+    if (sellToken.symbol !== basicAsset.symbol) {
+        sellMarketFeePercent = sellToken.options.market_fee_percent / 100;
+    }
+    if (buyToken.symbol !== basicAsset.symbol) {
+        buyMarketFeePercent = buyToken.options.market_fee_percent / 100;
+    }
+    result.sellMarketFeePercent = sellMarketFeePercent
+    result.buyMarketFeePercent = buyMarketFeePercent
+
     return result;
 }
 const calculateWithdrawFee = data => {

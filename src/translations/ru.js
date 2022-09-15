@@ -10,12 +10,14 @@ export const ru = {
         "sidechainAccounts": "Учетные записи боковых цепей"
     },
     "tableHead": {
+        "Price_per_KByte": "Цена за килобайт",
         "asset": "актив",
         "available": "доступный",
-        "priceWithToken": "Цена (%(token)s)",
+        "quote_asset": "Котировать актив",
+        "priceWithToken": "Цена",
         "amountWithToken": "Сумма (%(token)s)",
         "change": "Изменение (24h)",
-        "volume": "объем (asset/%(token)s)",
+        "volume": "объем",
         "valueWithToken": "Значение (%(token)s)",
         "value": "ценность",
         "actions": "Действия",
@@ -40,8 +42,8 @@ export const ru = {
         "weight": "вес",
         "webpage": "Веб-страница",
         "operation": "операция",
-        "standardFee": "Стандартная плата (bitUSD)",
-        "memberFee": "Плата за участие (bitUSD)",
+        "standardFee": "Стандартная плата",
+        "memberFee": "Плата за участие",
         "blockID": "Идентификатор блока",
         "date": "дата",
         "witness": "свидетель",
@@ -81,6 +83,14 @@ export const ru = {
         "account_create": {
             "title": "Создание учетной записи",
             "description": "%(registrar)s зарегистрированный счет %(user)s"
+        },
+        "vesting_balance_create":{
+            "title": "Вестинг GPOS",
+            "description": "%(user)s Жилет %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Отзывать GPOS",
+            "description": "%(user)s Отзывать %(quantity)s GPOS",
         },
         "send": {
             "title": "Отправить",
@@ -239,7 +249,7 @@ export const ru = {
         },
         "fundTheFeePool": {
             "title": "Фонд Плата бассейн",
-            "text": "Любой желающий может добавить к балансу пула гонорара"
+            "text": "Любой желающий может добавить в %(poolAsset)s пул комиссий баланс с основным активом. Эта сумма будет добавлена к пулу комиссий %(poolAsset)s на основе базового обменного курса %(poolAsset)s."
         },
         "claimFeePoolBalance": {
             "title": "Остаток пула сборов претензии",
@@ -287,6 +297,7 @@ export const ru = {
     "exchange": {
         "title": "обмен",
         "price": "Текущая цена",
+        "fee": "Платеж",
         "change": "Изменение (24h)",
         "value": "объем (24h)",
         "feed": "Цена корма",
@@ -341,7 +352,11 @@ export const ru = {
         "title": "информация"
     },
     "actions": {
-        "title": "Действия"
+        "title": "Действия",
+        "fund":"ФОНД",
+        "claim":"требовать",
+        "publish":"публиковать",
+        "change":"сдача",
     },
     "assetUpdate": {
         "title": "обновлять",
@@ -598,6 +613,9 @@ export const ru = {
     },
     "field": {
         "labels": {
+            "loginPassword": "Пароль или закрытый ключ (мы рекомендуем использовать кошелек WhaleVault Web 3.0)",
+            "transactionPassword": "пароль или ключ %(keyType)s",
+            "publicMemo": "Memo (это общедоступно)",
             "sellAmount": "Сумма продажи",
             "buyAmount": "Сумма покупки",
             "login": "логин",
@@ -678,7 +696,8 @@ export const ru = {
             "local": "Местный кошелек (продвинутый)"
         },
         "checkboxes": {
-            "remember": "Запоми меня"
+            "remember": "Запоми меня",
+            "whaleVault": "Используйте расширение WhaleVault"
         },
         "upload": {
             "file": "Ключевой файл (%(fileSize)s)"
@@ -693,7 +712,16 @@ export const ru = {
         "noAcc": "Не удалось найти эту учетную запись",
         "noKey": "Не удалось найти этот ключ",
         "wrongPass": "Пароль неправильный",
+        "wrongKey": "Wrong key has been used",
+        "user_cancel": "Запрос был отменен пользователем",
+        "missing_required_active_authority": "отсутствуют необходимые активные полномочия",
+        "notAddedToWhaleVault": "Эта учетная запись не добавлена в whaleVault",
+        "wrongKeysAddedToWhale": "Добавленные ключи в whaleVault неверны",
+        "whaleVaultConnectionError": "Не удается отправить запрос в whaleVault",
+        "whaleNotInstalled": "WhaleVault не установлен",
         "required": "Это поле не требуется.",
+        "invalid_public_key": "Предоставленный открытый ключ неверен",
+        "invalid_address": "Предоставленный адрес не подходит для вашей сети биткойн",
         "invalidKey":"Неправильный ключ.",
         "isNan": "Сумма - это не число.",
         "requiredQuantity": "Требуется количество.",
@@ -729,8 +757,10 @@ export const ru = {
         "conditionLength": "Состояние слишком длинное",
         "resolutionError": "Выберите другую дату",
         "remainIssueNotEnough": "Оставшегося количества предложения недостаточно для выпуска",
-        "sonError": "Ошибка на стороне сервера!! Попробуйте позже.",
+        "sonError": "Сеть сыновей сейчас недоступна!! Попробуйте позже.",
         "keyExists": "Ключ уже существует.",
+        "assetsShouldBeTEST": "Один из активов должен быть TEST",
+        "assetsShouldBePPY": "Один из активов должен быть PPY",
         "newAcc": {
             "noCapital": "Имя учетной записи не должно содержать заглавных букв",
             "longer": "Имя учетной записи должно быть длиннее",
@@ -773,6 +803,20 @@ export const ru = {
         "brain": "Мозговой ключ",
     },
     "modal": {
+        "recive":{
+            "fee":"платеж",
+            "registrar":"регистратор",
+            "referrer":"реферер",
+            "referrer_percent":"процент реферала",
+            "name":"имя",
+            "owner":"владелец",
+            "active":"активный",
+            "options":"опции",
+            "seller":"продавец",
+            "amount_to_sell":"сумма_для_продажи",
+            "min_to_receive":"мин_до_получать",
+            "expiration":"истечение срока",
+        },
         "send": {
             "title": "Отправить"
         },
@@ -796,11 +840,19 @@ export const ru = {
             "aboutLogin": "Выбранное вами имя учетной записи должно быть уникальным, поскольку оно будет публично зарегистрировано в цепочке блоков и будет вашим идентификатором для любых транзакций, которые вы совершаете.",
             "referrer": "Обратите внимание, что вы создадите новую учетную запись со ссылкой, предоставленной %(referrer)s"
         },
+        "backupPassword": {
+            "title": "Сделайте резервную копию ваших ключей",
+            "forgetPassword": "ВАЖНО: Если вы забудете свой пароль, вы не сможете получить доступ к своей учетной записи, мы не сможем сбросить или восстановить ваш пароль!",
+            "keyDetails": "ВАЖНО: Чем чаще вы используете пароль или ключ, тем больше вероятность того, что они будут скомпрометированы. Вот почему Peerplays использует иерархическую систему ключей, чтобы обеспечить вашу безопасность. Вам выдаются три ключа с разными разрешениями. Например, ключ memo имеет ограниченный набор разрешений для шифрования и расшифровки личных сообщений. Вам нужно быть более осторожным со своим активным ключом, поскольку у него есть разрешения на выполнение действий, связанных с кошельком.",
+            "keepSafe": "ВАЖНО: Загрузите и сохраните свои ключи и пароль.",
+            "WhaleVaultImport": "Вы можете импортировать эти ключи в расширение WhaleVault и использовать их для входа или подписи ваших транзакций.",
+            "download": "Скачать, перейти к приборной панели"
+        },
         "login": {
             "title": "Войти"
         },
         "unlock": {
-            "title": "Разблокировать профиль для %(login)s"
+            "title": "Ваш ключ %(keyType)s необходим"
         },
         "binRestore": {
             "title": "Восстановить аккаунт из .bin файла"
@@ -844,6 +896,7 @@ export const ru = {
         }
     },
     "buttons": {
+        "Asset":"Актив",
         "ping": "гудение",
         "clear": "Четкий список",
         "sendFunds": "Отправить средства",

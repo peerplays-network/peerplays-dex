@@ -6,6 +6,7 @@ import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
 import { getBasicAsset, getStore, getFees } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
+import { utils } from '../../../utils';
 
 const WithdrawGPOS = (props) => {
 	const { loginData, accountData } = getStore();
@@ -16,6 +17,10 @@ const WithdrawGPOS = (props) => {
 	const [withdrawDisabled, setWithdrawDisabled] = useState(false);
 	const [changes, setChanges] = useState(false);
 	const [language, setLanguage] = useState( localeFromStorage() )
+	const [error, setError] = useState("");
+
+	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
+		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
 	const SubmitGposWithdrawal = () => {
 		setWithdrawDisabled(true)
@@ -39,16 +44,26 @@ const WithdrawGPOS = (props) => {
 					},
 				}
 			};
-			getPassword(password => {
-				const activeKey = loginData.formPrivateKey(password, 'active');
+			getPassword((password, keyType) => {
+				let activeKey = '';
+				if(keyType === 'password') {
+					activeKey = loginData.formPrivateKey(password, 'active');
+				} else if(keyType === 'active') {
+					activeKey = loginData.formPrivateKey(password);
+				} else if(keyType === 'whaleVault') {
+					activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+				}
+				
 				trxBuilder([trx], [activeKey]).then(() => {
 					getAssets();
 					setWithdrawAmount(0);
 					setWithdrawDisabled(false);
 				}).catch(e => {
+					setError(e.message.split(":")[0].replace(/\s+/g,"_"))
+					setTimeout(() => setError(""), 5000)
 					setWithdrawDisabled(false)
 				});
-			});
+			}, 'active');
 		}).catch(e => {
 			setWithdrawDisabled(false)
 		})
@@ -56,7 +71,11 @@ const WithdrawGPOS = (props) => {
 
 	const handlChange = (value)=>{
 		setWithdrawAmount(value)
-			setFee(getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision))
+			if(value > 0){
+				setFee(getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision))
+			}else{
+				setFee(0)
+			}
 		
 	}
 
@@ -89,10 +108,15 @@ const WithdrawGPOS = (props) => {
 					type="number"
 					className="field__input form-control cpointer"
 					min={0}
-					max={availableGpos > getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) ? availableGpos - getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) : 0}
+					max={accBalance > getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) ? availableGpos  : 0}
 					precision={getBasicAsset().precision}
 					onChange={(value) => handlChange(value)}
 					value={withdrawAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
 				<div style={{ marginTop: 12, color: "#ff444a", display: ( changes &&(availableGpos == undefined || availableGpos == null || availableGpos <= 0) ) ? "block" : "none" }}>
@@ -107,9 +131,10 @@ const WithdrawGPOS = (props) => {
 				</div>
 				</div>
 			</CardContent>
-			<div className="info__row">
-			<span>Fee: {fee} TEST</span>
+			<div className="info__row margin">
+			<span>Fee: {fee} {getBasicAsset().symbol}</span>
 			{sended && <span className="clr--positive"><Translate content={"voting.trans"} /></span>}
+			{error && <span className="clr--negative"><Translate content={`errors.${error}`} /></span>}
 		  </div>
 			<CardActions style={{justifyContent:"end"}} >
 				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}><Translate className="" content={"voting.Withdraw"} /></button>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { utils } from '../../../utils';
 import FieldWrapper from "./fieldWrapper";
 
 const Input = (props) => {
 
+    const BROWSER_INPUT_MAX_LENGTH = 300
     const {
         id,
         name = '',
@@ -10,21 +12,12 @@ const Input = (props) => {
         disabled = false,
         formData,
         onKeyPress,
+        onBlur,
+        precision,
         min,
-        onBlur
     } = props;
 
     let onChange = formData ? formData.handleChange : props.onChange;
-
-    let isNumberKey = (e,type)=>{
-        var charCode = (e.which) ? e.which : e.keyCode
-        if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
-             return e.preventDefault()
-        }
-        if (charCode === 32 || (type === 'password' && charCode === 32)){
-            return e.preventDefault()
-       }
-        }
 
     if(disabled) onChange = '';
 
@@ -38,13 +31,34 @@ const Input = (props) => {
                 defaultValue={value[name]}
                 type={type}
                 disabled={disabled}
-                onKeyPress={e => isNumberKey(e,type)}
-                onChange={e => onChange ? onChange(e.target.value, name) : e.preventDefault()}
+                onKeyPress={onKeyPress ? (e) => {
+                    if(e.target.value.length > BROWSER_INPUT_MAX_LENGTH) {
+                        e.preventDefault()
+                    } else {
+                        onKeyPress(e)
+                    }
+                } : (e) => {
+                    if(e.target.value.length > BROWSER_INPUT_MAX_LENGTH) {
+                        e.preventDefault()
+                    }
+                }}         
+                onChange={onChange ? (e) => {
+                    if(precision && precision !== "" &&
+                        Number(e.target.value) > 0 &&
+                        String(e.target.value).split(".")[1] &&
+                        String(e.target.value).split(".")[1].length > Number(precision)) {
+                        e.target.value = utils.roundNum(e.target.value, Number(precision));
+                        onChange(utils.roundNum(e.target.value, Number(precision)), name)
+                    } 
+                    onChange(e.target.value, name)
+                } : (e) => {
+                    e.preventDefault()
+                }}
                 onBlur={e => onBlur ? onBlur(e.target.value, name) : e.preventDefault()}
-                placeholder=" "
+                placeholder=""
                 min={min}
                 className="field__input"
-                autoComplete="off"
+                autoComplete="new-password"
             />
         </FieldWrapper>
     );

@@ -10,12 +10,14 @@ export const en = {
         "sidechainAccounts": "Sidechain Accounts"
     },
     "tableHead": {
+        "Price_per_KByte": "Price per KByte",
         "asset": "Asset",
         "available": "Available",
-        "priceWithToken": "Price (%(token)s)",
+        "quote_asset": "Quote asset",
+        "priceWithToken": "Price",
         "amountWithToken": "Amount (%(token)s)",
         "change": "Change (24h)",
-        "volume": "Volume (asset/%(token)s)",
+        "volume": "Volume",
         "valueWithToken": "Value (%(token)s)",
         "value": "Value",
         "actions": "Actions",
@@ -40,8 +42,8 @@ export const en = {
         "weight": "Weight",
         "webpage": "Webpage",
         "operation": "Operation",
-        "standardFee": "Standard Fee (bitUSD)",
-        "memberFee": "Member Fee (bitUSD)",
+        "standardFee": "Standard Fee",
+        "memberFee": "Member Fee",
         "blockID": "Block ID",
         "date": "Date",
         "blockTimestamp": "Time",
@@ -81,6 +83,14 @@ export const en = {
         "account_create": {
             "title": "Account Creation",
             "description": "%(registrar)s registered the account %(user)s",
+        },
+        "vesting_balance_create":{
+            "title": "Vesting GPOS",
+            "description": "%(user)s Vest %(quantity)s GPOS",
+        },
+        "vesting_balance_withdraw":{
+            "title": "Withdraw GPOS",
+            "description": "%(user)s Withdraw %(quantity)s GPOS",
         },
         "send": {
             "title": "Send",
@@ -239,7 +249,7 @@ export const en = {
         },
         "fundTheFeePool": {
             "title": "Fund The Fee Pool",
-            "text": "Anyone can add to the fee pool balance"
+            "text": "Anyone can add to the %(poolAsset)s fee pool balance the with core asset. This amount will be added to the %(poolAsset)s fee pool based on %(poolAsset)s core exchange rate"
         },
         "claimFeePoolBalance": {
             "title": "Claim fee pool balance",
@@ -341,7 +351,11 @@ export const en = {
         "title": "Info"
     },
     "actions": {
-        "title": "Actions"
+        "title": "Actions",
+        "fund":"FUND",
+        "claim":"claim",
+        "publish":"publish",
+        "change":"change",
     },
     "assetUpdate": {
         "title": "Update",
@@ -567,7 +581,7 @@ export const en = {
         "upgradeTitle": "Upgrade for 80% Cashback",
         "upgradeDesc": "Lifetime Members get 80% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
         "referralTitle": "Your referral link",
-        "referralDesc": "Give this to link to people you want to refer to BitShares: %(link)s/?r=%(name)s",
+        "referralDesc": "Give this to link to people you want to refer to Peerplays DEX: %(link)s/?r=%(name)s",
         "allocationTitle": "Fee Allocation",
         "allocationDesc": "Every time < %(name)s > pays a transaction fee, that fee is divided among several different accounts",
         "network": "Network",
@@ -594,6 +608,9 @@ export const en = {
     },
     "field": {
         "labels": {
+            "loginPassword": "Password or a Private key (We recommend using Whalevault Web 3.0 wallet)",
+            "transactionPassword": "password or %(keyType)s key",
+            "publicMemo": "Memo (this is public)",
             "sellAmount": "Sell amount",
             "buyAmount": "Buy amount",
             "login": "Login",
@@ -674,7 +691,8 @@ export const en = {
             "local": "Local wallet (advanced)"
         },
         "checkboxes": {
-            "remember": "Remember me"
+            "remember": "Remember me",
+            "whaleVault": "Use WhaleVault extension"
         },
         "upload": {
             "file": "Key File (%(fileSize)s)"
@@ -689,7 +707,16 @@ export const en = {
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
+        "wrongKey": "Wrong key has been used",
+        "user_cancel": "Request was canceled by the user",
+        "missing_required_active_authority": "missing required active authority",
+        "notAddedToWhaleVault":"This account is not added to whaleVault",
+        "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
+        "whaleVaultConnectionError": "Can not Send Request to whaleVault",
+        "whaleNotInstalled": "WhaleVault is not installed",
         "required": "This field is required.",
+        "invalid_public_key": "Provided public key is not correct",
+        "invalid_address": "Provided address is not correct for your bitcoin network",
         "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
         "isTooBig": "Value is too big.",
@@ -726,8 +753,10 @@ export const en = {
         "conditionLength": "Condition is too long",
         "resolutionError": "Select another date",
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
-        "sonError": "Server side error!! Try again later.",
+        "sonError": "Sons network is not available now!! Try again later.",
         "keyExists": "Key already exists.",
+        "assetsShouldBeTEST": "One of the assets should be TEST",
+        "assetsShouldBePPY": "One of the assets should be PPY",
         "newAcc": {
             "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
@@ -770,6 +799,20 @@ export const en = {
         "brain": "Brain Key",
     },
     "modal": {
+        "recive":{
+            "fee":"fee",
+            "registrar":"registrar",
+            "referrer":"referrer",
+            "referrer_percent":"referrer_percent",
+            "name":"name",
+            "owner":"owner",
+            "active":"active",
+            "options":"options",
+            "seller":"seller",
+            "amount_to_sell":"amount_to_sell",
+            "min_to_receive":"min_to_receive",
+            "expiration":"expiration",
+        },
         "send": {
             "title": "Send"
         },
@@ -795,11 +838,19 @@ export const en = {
             "referrerError": "There is no account with %(referrer)s name",
             "referrerMembership": "%(referrer)s must be either a lifetime or annual subscriber."
         },
+        "backupPassword": {
+            "title": "Backup your keys",
+            "forgetPassword": "IMPORTANT: If you forget your password you will be unable to access your account, we cannot reset or restore your password!",
+            "keyDetails": "IMPORTANT: Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
+            "keepSafe": "IMPORTANT: Please download and keep safe your keys and password.",
+            "whaleVaultImport": "You can import these keys inside the WhaleVault extension and use them to login or sign your transactions",
+            "download": "Download & take me to dashboard"
+        },
         "login": {
             "title": "Log in"
         },
         "unlock": {
-            "title": "Unlock Profile for %(login)s"
+            "title": "Your %(keyType)s key is needed"
         },
         "binRestore": {
             "title": "Restore account from .bin file"
@@ -843,6 +894,8 @@ export const en = {
         }
     },
     "buttons": {
+        "Asset":"Asset",
+        "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
         "sendFunds": "Send Funds",
@@ -872,6 +925,7 @@ export const en = {
         "newContact": "+ New Contact",
         "update": "Update",
         "generate": "Generate",
+
     },
     "emptyPage": {
         "default": "No data",

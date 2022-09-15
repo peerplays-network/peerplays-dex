@@ -7,6 +7,7 @@ import {getAccountData, getBasicAsset, getFees} from "../../../actions/store/ind
 import {dbApi} from "../../../actions/nodes/index";
 import {publishFeed} from "../../../actions/forms/publishFeed";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
 
 class PublishFeed extends Component {
     state = {
@@ -72,10 +73,11 @@ class PublishFeed extends Component {
                       action={publishFeed}
                       handleResult={this.handlePublishFeed}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -93,6 +95,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -101,6 +108,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -109,6 +121,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -117,11 +134,21 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                    <span><Translate className="" content={`exchange.fee`} />: {data.fee} {data.feeAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
                                         <button type="submit" className="btn-round btn-round--fund">Publish</button>
                                     </div>
                                 </Fragment>

@@ -6,6 +6,7 @@ import Input from "../form/input";
 import Form from "../form/form";
 import {claimFeePoolBalance} from "../../../actions/forms/сlaimFeePoolBalance";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
 
 class ClaimFeePoolBalance extends Component {
     state = {
@@ -56,10 +57,11 @@ class ClaimFeePoolBalance extends Component {
                       action={claimFeePoolBalance}
                       handleResult={this.handleClaimFeePoolBalance}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <Input
@@ -71,11 +73,21 @@ class ClaimFeePoolBalance extends Component {
                                         error={errors}
                                         className="asset-action"
                                         onChange={form.handleChange}
+                                        onKeyPress={(e) => {
+                                            if (!utils.isNumberKey(e)) {
+                                              e.preventDefault();
+                                            }
+                                        }}
                                     />
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Claim</button>
+                                        <span><Translate className="" content={"tableHead.fee"} />: {data.fee} {data.quantityAsset}</span>
+                                        {sended && <span className="clr--positive"><Translate className="" content={`success.transCompleted`} /></span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <Translate className="" content={`errors.${transactionError}`} />
+                                            </span> 
+                                            : ""}
+                                        <button type="submit" className="btn-round btn-round--fund"><Translate className="" content={`actions.claim`} /></button>
                                     </div>
                                 </Fragment>
                             )

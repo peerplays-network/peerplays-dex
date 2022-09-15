@@ -10,6 +10,8 @@ import Submit from "../decoration/submit";
 import ModalWarning from "../decoration/modalWarning";
 import {clearLayout} from "../../../../dispatch";
 import {getStore, getGlobals} from "../../../../actions/store";
+import { utils } from '../../../../utils';
+import Translate from 'react-translate-component';
 
 const createWorker = async (data, result) => {
 
@@ -47,15 +49,30 @@ const createWorker = async (data, result) => {
         }
     };
 
-    const activeKey = loginData.formPrivateKey(data.password, 'active');
-    const trxResult = await trxBuilder([trx], [activeKey]);
+    const password = data.password;
+    const keyType = data.keyType;
+    let activeKey = '';
 
-    if(trxResult){
-        result.success = true;
-        result.callbackData = trxResult;
+    if(keyType === 'password') {
+        activeKey = loginData.formPrivateKey(password, 'active');
+    } else if(keyType === 'active') {
+        activeKey = loginData.formPrivateKey(password);
+    } else if(keyType === 'whaleVault') {
+        activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
     }
 
-    return result;
+    try {
+        const trxResult = await trxBuilder([trx], [activeKey]);
+        if(trxResult){
+            result.success = true;
+            result.callbackData = trxResult;
+        }
+        return result;
+    } catch(e) {
+        result.transactionError = e.message.split(":")[0].replace(/\s+/g,"_");
+        return result;
+    }   
+
 };
 
 class AddNewWorker extends Component {
@@ -66,6 +83,7 @@ class AddNewWorker extends Component {
 
     componentDidMount(){
         const defaultData = {
+            keyType: this.props.keyType,
             password: this.props.password,
             dateBegin: new Date(new Date().getTime() + 1000*60*60*24),
             dateEnd: new Date(new Date().getTime() + 1000*60*60*24*366),
@@ -127,6 +145,11 @@ class AddNewWorker extends Component {
                                     onChange={form.handleChange}
                                     error={form.state.errors}
                                     value={form.state.data}
+                                    onKeyPress={(e) => {
+                                        if (!utils.isNumberKey(e)) {
+                                          e.preventDefault();
+                                        }
+                                    }}
                                 />
                                 <Input
                                     name="website"
@@ -140,6 +163,13 @@ class AddNewWorker extends Component {
                                     error={form.state.errors}
                                     value={form.state.data}
                                 />
+                            </div>
+                            <div className="info__row">
+                                {form.state.transactionError && form.state.transactionError !== "" ? 
+                                    <span className="clr--negative">
+                                        <Translate className="" content={`errors.${form.state.transactionError}`} />
+                                    </span> 
+                                    : ""}
                             </div>
                             <div className="modal__bottom">
                                 <Close />

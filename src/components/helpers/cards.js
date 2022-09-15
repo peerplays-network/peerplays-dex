@@ -34,7 +34,7 @@ export default function TableCard({ className, tableHead, rows, link, onClick, p
   return (
     <Card className="cardsTable">
       {rows.map((trItem, trId) => (
-        <Grid key={`tr-${trId}`} style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px' }}>
+        <Grid key={`tr-${trId}`} className="position" style={{ borderRadius: '10px', border: 'ridge', marginTop: '2px' }}>
           {tableHead.map((tdItem, tdId) => (
             <Grid container className={classes.paper} key={`td-${tdId}`}>
               <Grid item xs={6} sm={6}>
@@ -54,7 +54,8 @@ export default function TableCard({ className, tableHead, rows, link, onClick, p
               </Grid>
               <Grid item xs={6} sm={6} className="table__row">
                 <Typography component="div" className={classes.tabledata} key={`td-${tdId}`}>
-                  {trItem[tdItem.key]}
+                  {/* {trItem[tdItem.key]} */}
+                  {tdItem.key == 'value'?trItem[tdItem.key] == "Infinity"? 0:trItem[tdItem.key] : tdItem.key == 'url'?trItem[tdItem.key] == ''?'No Url Available':trItem[tdItem.key]:trItem[tdItem.key]}
                 </Typography>
               </Grid>
 
