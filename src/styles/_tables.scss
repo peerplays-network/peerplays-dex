@@ -16,6 +16,9 @@
   &__row:hover{
     .actions__on-hover{
       opacity: 1;
+      button{width: 250px;
+        display: flex;
+        justify-content: right;}
     }
   }
   &__cell{
@@ -25,7 +28,7 @@
     border-bottom: 1px solid $grey-light;
   }
   &__link{
-    width: 80%;
+    width: 95.6%;
     height: 4.5rem;
     position: absolute;
     top: auto;

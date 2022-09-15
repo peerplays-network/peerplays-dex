@@ -140,15 +140,17 @@ class SendModal extends Component {
                                                 error={errors}
                                                 value={data}
                                             />
-                                            <FieldWithHint
-                                                name="quantityAsset"
+                                            <Input
                                                 id="model"
-                                                method={getUserAssetsList}
+                                                name="quantityAsset"
+                                                type="text"
+                                                onChange={form.handleChange}
+                                                error={errors}
+                                                className="quantity-wrapper dropdown"
                                                 hideLabel={true}
-                                                handleChange={form.handleChange}
-                                                errors={errors}
+                                                value={data}
                                                 defaultVal = {data}
-                                                readOnly={true}
+                                                disabled={true}
                                             />
                                         </div>
                                         <Textarea

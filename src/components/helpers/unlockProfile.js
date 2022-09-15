@@ -6,18 +6,28 @@ import {setModal} from "../../dispatch/layoutDispatch";
 
 class UnlockProfile extends Component{
 
+    state = {
+        lock:false,
+    };
+
     lockProfile = (e) => {
         e.preventDefault();
+        this.setState({lock:false})
         setTimeout(() => this.props.loginData.removePassword(), 0);
     };
 
+    
+
     unlockProfile = (e) => {
         this.props.closeDropdown(e);
-        setModal(<PasswordCheck />)
+        const callback = (e)=>{
+            if(e){ this.setState({lock:!this.lock}) }
+        }
+        setModal(<PasswordCheck callback={callback}/>)
     };
 
-    render(){
-        return this.props.loginData.password
+    render(){ 
+        return this.state.lock
             ? <button onClick={this.lockProfile}><IconUnlocked /></button>
             : <button onClick={this.unlockProfile}><IconLocked /></button>
     }

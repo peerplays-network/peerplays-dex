@@ -35,7 +35,7 @@ class FieldWithHint extends Component{
     handleChange = (val, name) => {
         let {data, timeout} = this.state;
         data[name] = val;
-
+        this.setState({dropdown :!this.state.dropdown})
         if(timeout) clearTimeout(timeout);
 
         if(!val) {
@@ -76,6 +76,11 @@ class FieldWithHint extends Component{
         this.close(data);
     };
 
+    toggleDropdown = ()=>{
+        this.setState({dropdown :!this.state.dropdown})
+    }
+
+
     render(){
 
         const {name, hideLabel, labelParams, className, errors,id, readOnly} = this.props;
@@ -84,7 +89,7 @@ class FieldWithHint extends Component{
         const hasHints = !!hints.length;
 
         return(
-            <div className={`dropdown dropdown--with-hint ${hasHints && 'open'}`}>
+            <div className={`dropdown dropdown--with-hint ${hasHints && this.state.dropdown && 'open'}`}>
                 <ControlledInput
                     name={name}
                     id={id}
@@ -98,7 +103,7 @@ class FieldWithHint extends Component{
                     readOnly={readOnly}
                     {...this.props}
                 />
-                <Caret className='field__caret' />
+                <Caret className='field__caret' onClick={()=>this.toggleDropdown()}/>
                 { errors && errors[name] && <Translate content={`errors.${errors[name]}`} className="field__error" /> }
                 <div className="dropdown__body custom-scroll">
                     {hasHints && hints.map(e => (

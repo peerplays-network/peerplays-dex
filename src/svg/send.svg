@@ -1,14 +1,3 @@
-<svg width="22" height="18" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <defs>
-        <path d="M3.51 6.03l7.51 3.22-7.52-1 .01-2.22zm7.5 8.72L3.5 17.97v-2.22l7.51-1zM1.51 3l-.01 7 15 2-15 2 .01 7 20.99-9L1.51 3z"
-              id="send"/>
-    </defs>
-    <g transform="translate(-1 -3)" fill="none" fill-rule="evenodd">
-        <mask id="sendMask" fill="#fff">
-            <use xlink:href="#send"/>
-        </mask>
-        <g class="mask" mask="url(#sendMask)" fill="#647090">
-            <path d="M0 0h24v24H0z"/>
-        </g>
-    </g>
+<svg width="22" height="18" viewBox="0 0 42 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.02 36L42 18L0.02 0L0 14L30 18L0 22L0.02 36Z" fill="#009EE6"/>
 </svg>

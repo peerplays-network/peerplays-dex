@@ -113,3 +113,9 @@
 .sellHint{
   padding-left: 30px;
 }
+
+@media (max-width:850px){
+  .field__error{
+    font-size: 10px !important;
+  }
+}

@@ -2,6 +2,7 @@ import React, {Component, Fragment} from 'react';
 import Form from "../form/form";
 import UserBalance from "./userBalance";
 import ControlledInput from "../form/controlledInput";
+import Input from "../form/input";
 import {sellBuy} from "../../../actions/forms";
 import {roundNum} from "../../../actions/roundNum";
 import Translate from "react-translate-component";
@@ -146,21 +147,23 @@ class BuyForm extends Component{
 
                         return (
                             <Fragment>
-                                <ControlledInput
+                                <Input
                                     id={`${type}-price`}
                                     name="price"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.price"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
                                     onChange={handleChange}
                                     value={data}
-                                    error={errors} 
+                                    error={errors}
                                 />
-                                <ControlledInput
+                                <Input
                                     id={`${type}-receive`}
                                     name="amount_to_receive"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.quantity"
                                     labelParams={{token: defaultData.buyAsset}}
                                     className="with-border"
@@ -168,10 +171,11 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                 />
-                                <ControlledInput
+                                <Input
                                     id={`${type}-sell`}
                                     name="amount_to_sell"
                                     type="number"
+                                    min={0}
                                     labelTag="exchangeForm.total"
                                     labelParams={{token: defaultData.sellAsset}}
                                     className="with-border"
@@ -179,7 +183,9 @@ class BuyForm extends Component{
                                     value={data}
                                     error={errors}
                                     readOnly={true}
+                                    style={{cursor:"text"}}
                                 />
+                               
                                 <div className="exchange-form__info-wrapper">
                                     <div className="exchange-form__info">
                                         <Translate content="exchange.fee" />

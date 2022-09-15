@@ -13,9 +13,9 @@ export const checkNewLogin = async ({newLogin}) => {
         accErr = defaultErrors.indexOf('Account name should ');
         segmentErr = defaultErrors.indexOf('Each account segment should ');
     }
-
     if(accErr > -1) return defaultAccsErrs['accsErr'][defaultErrors.substr(19,)];
-    if(segmentErr > -1) return defaultAccsErrs['segmentErr'][segmentErr.substr(27,)];
+    if(segmentErr > -1) return defaultAccsErrs['segmentErr'][defaultErrors.substr(27,)];
+
     if(!ChainValidation.is_cheap_name(newLogin)) return 'newAcc.notCheap';
 
     const inUse = await dbApi('get_account_by_name', [newLogin]);

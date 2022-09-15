@@ -30,7 +30,7 @@ class OrderConfirmationModel extends Component {
         Price: `${info.price} ${info.sellAsset}`,
         Quantity: `${info.amount_to_receive} ${info.buyAsset}`,
         Fee: `${info.fee} ${info.feeAsset}`,
-        Total: `${info.amount_to_sell} ${info.sellAsset}`,
+        Total: `${+info.amount_to_sell} ${info.sellAsset}`,
         Balance: this.getBalance(info),
     });
 
