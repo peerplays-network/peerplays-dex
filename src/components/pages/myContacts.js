@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Translate from "react-translate-component";
 import {ContactItem} from "../helpers/contactItem";
-import {IconBlackList, IconStar, IconTrash} from "../../svg";
+import IconBlackList from "../../svg/blackList.svg";
+import IconStar from "../../svg/star.svg";
+import IconTrash from "../../svg/trash.svg";
 import Switcher from "../helpers/switcher";
 import {ActionsPanel} from "../helpers/actionsPanel";
 import RoundButton from "../helpers/buttons/roundButton";
@@ -14,6 +15,7 @@ import {updateAccount} from "../../dispatch/setAccount";
 import SaveChangesCard from "../helpers/saveChangesCard";
 import {getPassword} from "../../actions/forms";
 import {saveChanges} from "../../actions/forms/saveChanges";
+import counterpart from 'counterpart';
 
 class MyContacts extends Component {
     state = {
@@ -111,11 +113,11 @@ class MyContacts extends Component {
         this.setState({changeLog: []});
     };
 
-    handleSave = () => getPassword(password => {
-        saveChanges(this.props.account.contacts, password, this.state.changeLog).then(e => {
+    handleSave = () => getPassword((password, keyType) => {
+        saveChanges(this.props.account.contacts, password, keyType, this.state.changeLog).then(e => {
             if (e) this.setState({changeLog: []});
         });
-    });
+    }, 'active');
 
     render() {
         const {showBlackList, fee, changeLog} = this.state;
@@ -128,7 +130,7 @@ class MyContacts extends Component {
         return (
             <div className="container page">
                 <div className="page__header-wrapper">
-                    <Translate component="h1" className="page__title" content="contacts.myContacts"/>
+                    <h1 className="page__title">{counterpart.translate(`contacts.myContacts`)}</h1>
                 </div>
                 <div className="contacts__info">
                     <div className="contacts__count">

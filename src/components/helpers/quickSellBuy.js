@@ -3,58 +3,75 @@ import Input from "./form/input";
 import Form from "./form/form";
 import {sellBuy} from "../../actions/forms";
 import {defaultQuote, defaultToken} from "../../params/networkParams";
-import {getAccountData} from "../../actions/store";
+import {getAccountData, getBasicAsset} from "../../actions/store";
 import {dbApi} from "../../actions/nodes";
 import FieldWithHint from "./form/fieldWithHint";
 import except from "../../actions/assets/exceptAssetList";
+import { utils } from '../../utils';
+import counterpart from 'counterpart';
+
 
 const getAssetsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
 
-const getUserAssetsList = async (symbol) => (
-    getAccountData().assets
-        .filter(item?item.name.includes(symbol):[])
-        .map(item => item.name)
-);
+const getUserAssetsList = async (symbol) =>  {
+    if(getAccountData().assets && getAccountData().assets.length > 0) {
+        return getAccountData().assets
+        .filter(item => item ? item.symbol : [])
+        .map(item => item.symbol)
+    } else {
+        return [defaultToken]
+    }
+};
 
 class QuickSellBuy extends Component {
     state = {
         defaultData: false,
         userTokens: false,
-        sended: false
+        sended: false,
+        assets: false,
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets});
+        })
+        this.setBasicData();
+    }
+
+    setBasicData = () => {
         const userTokens = getAccountData().assets.map(e => e.symbol);
+        const basicAsset = getBasicAsset().symbol;
         const defaultData = {
-            sellAsset: userTokens.length ? userTokens[0] : defaultToken,
+            sellAsset: userTokens && userTokens.length ? userTokens[0] : defaultToken,
             buyAsset: defaultQuote,
+            feeAsset: basicAsset,
             fee: 0,
             amount_to_sell: 0,
             amount_to_receive: 0
         };
 
-        this.setState({userTokens, defaultData});
-    }
+        this.setState({ userTokens, defaultData });
+    };
 
 
-    handleTransfer = (data) => {
+    handleTransfer = () => {
         const context = this;
-        this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
-        window.location.reload();
+        this.setState({ defaultData: false, sended: true }, () => {
+            this.setBasicData();
+            setTimeout(() => context.setState({sended: false}), 5000)
+        });
+        
         if(this.props.update) {
             this.props.update();
         }
-        Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        ",textarea:not(:disabled):not([readonly])")).forEach(
-            (input) => input.value = ""
-        );
-        
     };
 
-    render() {
-        const {defaultData, userTokens, sended} = this.state;
+  
 
+    render() {
+        const {defaultData, userTokens, sended, assets} = this.state;
+        
         if (!defaultData) return <span/>;
 
         return (
@@ -63,28 +80,36 @@ class QuickSellBuy extends Component {
                     type={'limit_order_create'}
                     className="form__sell-buy"
                     defaultData={defaultData}
-                    requiredFields={['amount_to_sell', 'amount_to_receive', 'asset_to_sell', 'buyAsset']}
+                    requiredFields={['amount_to_sell', 'amount_to_receive', 'sellAsset', 'buyAsset']}
                     action={sellBuy}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="input__row">
                                         <Input
                                             name="amount_to_sell"
+                                            labelTag="field.labels.sellAmount"
                                             type="number"
-                                            hideLabel={true}
+                                            min={0}
                                             onChange={form.handleChange}
                                             error={errors}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.sellAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
-                                            name="asset_to_sell"
+                                            name="sellAsset"
                                             method={getUserAssetsList}
                                             hideLabel={true}
                                             handleChange={form.handleChange}
@@ -92,19 +117,28 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             defaultHints={userTokens}
                                             readOnly={true}
+                                            hint={'asset'}
+
                                         />
-                                        </div>
+   
                                     </div>
                                     <div className="input__row">
                                         <Input
                                             name="amount_to_receive"
+                                            labelTag="field.labels.buyAmount"
                                             type="number"
-                                            hideLabel={true}
                                             onChange={form.handleChange}
                                             error={errors}
+                                            min={0}
                                             defaultVal={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.buyAsset).precision}
                                         />
-                                        <div className="sellHint">
+
                                         <FieldWithHint
                                             name="buyAsset"
                                             method={getAssetsList}
@@ -113,16 +147,25 @@ class QuickSellBuy extends Component {
                                             defaultVal={data}
                                             errors={errors}
                                             readOnly={true}
+                                            hint={'asset'}
                                         />
-                                        </div>
+
                                     </div>
                                     <div className="info__row">
-                                        <span>Fee: {data.fee} {data.sellAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        <span className='clr--margin'>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && <span className="clr--positive">{counterpart.translate(`voting.trans`)}</span>}
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
+                                            </span> 
+                                            : ""}
                                     </div>
                                     <div className="btn__row">
                                         <button className="btn-round btn-round--buy" onClick={form.submit}>
-                                            Buy
+                                            <span>{counterpart.translate(`quickSellBuy.buy`)}</span>
                                         </button>
                                     </div>
                                 </Fragment>

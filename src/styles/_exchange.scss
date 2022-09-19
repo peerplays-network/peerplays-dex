@@ -7,6 +7,7 @@
   border-bottom: 2px solid #E2E4ED;
   box-sizing: border-box;
   color: #3C476C;
+
   background-color: $white;
   &__selector{
     position: relative;
@@ -164,6 +165,7 @@
   display: flex;
   justify-content: space-between;
   padding: .8rem 0 .8rem 1.6rem;
+  
   &__types {
     display: flex;
   }
@@ -266,4 +268,17 @@
     color: $dark-light;
     font-family: $secondary-font;
   }
+}
+
+@media(max-width:767px){
+  .pair-stats{
+    overflow: scroll ;
+  }
+}
+
+@media only screen and (min-width:600px) and (max-width:991px){
+  .order-filters{
+     display: block;
+  }
+ 
 }

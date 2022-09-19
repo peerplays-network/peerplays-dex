@@ -2,7 +2,6 @@ import React, {Component, Fragment} from "react";
 import Table from "../../helpers/table";
 import {Card} from "../../helpers/card";
 import {CardHeader} from "../../helpers/cardHeader";
-import Translate from "react-translate-component";
 import { updateAllBlockchainData } from '../../../actions/dataFetching/getGlobalData';
 import Explorercards from '../../helpers/cards/explorercards';
 import TableCard from "../../helpers/cards";

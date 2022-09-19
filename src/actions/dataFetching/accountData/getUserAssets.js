@@ -2,13 +2,10 @@ import React from 'react';
 import {roundNum} from "../../roundNum";
 import {formAssetData} from "../../assets";
 import {dispatchSendModal} from "../../forms/dispatchSendModal";
-import {defaultQuote} from "../../../params/networkParams";
+import {defaultToken} from "../../../params/networkParams";
 import {dbApi} from "../../nodes";
-import {IconBuy, IconDeposit, IconSend} from "../../../svg";
+import IconSend from "../../../svg/send.svg";
 import {getAccountData} from "../../store";
-import {setModal} from "../../../dispatch";
-import WithdrawModal from "../../../components/helpers/modal/content/withdrawModal";
-import {getPassword} from "../../forms";
 
 const basicTableHead = [
     {
@@ -21,11 +18,14 @@ const basicTableHead = [
         params: 'align-right fit-content'
     },
     {
+        key: 'quoteAsset',
+        translateTag: 'quote_asset',
+        params: 'align-right fit-content'
+
+    },
+    {
         key: 'latest',
         translateTag: 'priceWithToken',
-        translateParams: {
-            token: defaultQuote
-        },
         params: 'align-right fit-content'
     },
     {
@@ -34,11 +34,8 @@ const basicTableHead = [
         params: 'fit-content'
     },
     {
-        key: 'value',
-        translateTag: 'valueWithToken',
-        translateParams: {
-            token: defaultQuote
-        },
+        key: 'volume',
+        translateTag: 'volume',
         params: 'align-right fit-content'
     },
     {
@@ -87,37 +84,37 @@ export const getUserAssets = async (context) => {
 
     const {name, assets} = context.props.data;
 
-    if(!assets.length) return [];
+    if(!assets || !assets.length) return [];
 
     const userLogged = getAccountData().name;
     const isActiveUser = userLogged && userLogged === name;
     const tableHead = userLogged ? basicTableHead : basicTableHead.slice(0, basicTableHead.length - 1);
 
     // And now we form asset data for table
-
     const rows = await Promise.all(assets.map(async el => {
         const asset = isActiveUser ? el : await formAssetData(el);
 
         const symbol = asset.symbol;
         const available = asset.setPrecision();
 
-        let latest, percent_change;
+        let latest = 0, percent_change = 0, volume = 0;
 
-        if(symbol === defaultQuote) {
-          latest = 0;
-          percent_change = 0;
-        } else {
-          const tickerData = await dbApi('get_ticker', [symbol, defaultQuote]);
-          latest= tickerData.latest;
-          percent_change = tickerData.percent_change;
+        if(symbol !== defaultToken) {
+            try{
+                const tickerData = await dbApi('get_ticker', [symbol, defaultToken]);
+                if(tickerData) {
+                    latest= roundNum(tickerData.latest, asset.precision);
+                    percent_change = tickerData.percent_change;
+                    volume = roundNum(tickerData.quote_volume, 3)
+                } 
+            } catch(e){}
         }
 
-        const change = !percent_change || percent_change == 0 ? `0%` : percent_change > 0 ? `+${percent_change}%` : `-${percent_change}%`;
-        const value = roundNum(available / latest);
+        const change = !percent_change || percent_change == 0 ? `0%` : percent_change > 0 ? `+${percent_change}%` : `${percent_change}%`;
 
         const actions = userLogged && formActions(symbol, name, isActiveUser);
 
-        return{ symbol, available, latest, change, value, actions };
+        return{ symbol, available, latest, change, volume, actions, quoteAsset: defaultToken };
     }));
 
     return { tableHead, rows, isActiveUser };

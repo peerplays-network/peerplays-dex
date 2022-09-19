@@ -1,5 +1,13 @@
+ const convertUTCDateToLocalDate = (date) => {
+    const newDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60 * 1000
+    );
+    return newDate;
+ };
+  
 export const formDate = (date, pattern = ['date', 'month', 'year']) => {
-    const newDate = String(new Date(date)).split(' ');
+    const localDate = convertUTCDateToLocalDate(new Date(date));
+    const newDate = String(localDate).split(" ");
     const dateObj = {
         date: newDate[2],
         month: newDate[1],

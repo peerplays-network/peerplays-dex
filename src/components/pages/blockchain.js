@@ -1,12 +1,12 @@
 import React from 'react';
 import {NavLink, Route, Switch} from "react-router-dom";
 import Tbd from "./tbd";
-import Translate from "react-translate-component";
 import Witnesses from "./blockchain/witnesses";
 import Committee from "./blockchain/committee";
 import Fees from "./blockchain/fees";
 import Explorer from "./blockchain/explorer";
 import Assets from "./blockchain/assets";
+import counterpart from 'counterpart';
 
 const blockchainMenu = [
     {
@@ -30,10 +30,6 @@ const blockchainMenu = [
         component: Committee
     },
     {
-        link: '/markets',
-        tag: 'markets',
-    },
-    {
         link: '/fees',
         tag: 'fees',
         component: Fees
@@ -43,19 +39,20 @@ const blockchainMenu = [
 const Blockchain = () => (
     <div className="container page">
         <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"blockchain.title"}/>
+            <h1 className="page__title">{counterpart.translate(`blockchain.title`)}</h1>
         </div>
         <div className="page__menu">
             {
                 blockchainMenu.map((el, id) => (
-                    <Translate
-                        key={id}
-                        content={`blockchain.${el.tag}.title`}
-                        component={NavLink}
+                    <NavLink 
+                        key={id} 
                         to={`/blockchain${el.link}`}
                         className="page__menu-item"
                         exact
-                    />
+                    >
+                        {counterpart.translate(`blockchain.${el.tag}.title`)}
+                    </NavLink>
+
                 ))
             }
         </div>

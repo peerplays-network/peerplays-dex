@@ -1,5 +1,5 @@
+import counterpart from 'counterpart';
 import React, {Component, Fragment} from 'react';
-import Translate from "react-translate-component";
 import NewPermission from "./newPermission";
 
 class AddPermission extends Component{
@@ -44,7 +44,7 @@ class AddPermission extends Component{
                         handleDelete={this.handleDelete}
                     />
                 ))}
-                <Translate content="permissions.add" component="button" className="btn-round" onClick={this.addPerm} />
+                <button className="btn-round" onClick={this.addPerm}>{counterpart.translate(`permissions.add`)}</button>
             </div>
         )
     }

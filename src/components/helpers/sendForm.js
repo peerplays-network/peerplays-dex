@@ -6,6 +6,10 @@ import Textarea from "./form/textarea";
 import {defaultToken} from "../../params/networkParams";
 import {getAccountData, getBasicAsset} from "../../actions/store";
 import FieldWithHint from "./form/fieldWithHint";
+import { utils } from '../../utils';
+import { dbApi } from '../../actions/nodes';
+import counterpart, { translate } from 'counterpart';
+
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -25,10 +29,14 @@ class SendForm extends Component {
     state = {
         sended: false,
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const userTokens = user.assets;
         const startAsset = userTokens.length ? userTokens[0].symbol : defaultToken;
@@ -50,21 +58,15 @@ class SendForm extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
         if(this.props.update) {
             this.props.update();
         }
-
-        // Array.from(document.querySelectorAll("input:not(:disabled):not([readonly]):not([type=hidden])" +
-        // ",textarea:not(:disabled):not([readonly])")).forEach(
-        //     (input) => input.value = ""
-        // );
     };
 
-    render() {
-        const {sended, defaultData, userTokens} = this.state;
+   render() {
+        const {sended, defaultData, userTokens, assets} = this.state;
 
         if (!defaultData) return <span/>;
 
@@ -78,10 +80,11 @@ class SendForm extends Component {
                     action={transfer}
                     handleResult={this.handleTransfer}
                     needPassword
+                    keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -99,17 +102,34 @@ class SendForm extends Component {
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
+                                            min={0}
                                         />
                                     </div>
                                     <div className="input__row">
-                                        <FieldWithHint
-                                            name="to"
-                                            method={getSymbolsList}
-                                            handleChange={form.handleChange}
-                                            errors={errors}
-                                            defaultHints={data.contacts}
-                                            defaultVal = {data}
-                                        />
+                                     {
+                                          data.contacts && data.contacts.length > 0 ? 
+                                          <FieldWithHint
+                                              name="to"
+                                              handleChange={form.handleChange}
+                                              errors={errors}
+                                              defaultHints={data.contacts}
+                                              defaultVal = {data}
+                                          />
+                                          :
+                                          <Input
+                                              name="to"
+                                              type="text"
+                                              onChange={form.handleChange}
+                                              error={errors}
+                                              value={data}
+                                          />
+                                    }
                                     <FieldWithHint
                                                 name="quantityAsset"
                                                 method={getUserAssetsList}
@@ -125,17 +145,28 @@ class SendForm extends Component {
                                         <Textarea   
                                             name="memo"
                                             maxLength={MEMO_MAX_LENGTH}
-                                            comment={true}
                                             className="memo"
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
+                                            labelTag="field.labels.publicMemo"
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--send">SEND</button>
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>{data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span>
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                {counterpart.translate(`errors.${transactionError}`)}
+                                            </span> 
+                                            : ""}
+                                        <button type="submit" className="btn-round btn-round--send">
+                                            {counterpart.translate(`block.send.title`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

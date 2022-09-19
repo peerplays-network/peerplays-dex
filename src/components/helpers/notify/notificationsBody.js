@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import Translate from "react-translate-component";
 import ActionsBtn from "../buttons/actionsBtn";
 import NotificationsItem from "./notificationsItem";
 import NoData from "../noData";
 import NotificationsSearch from "./notificationsSearch";
 import {clearAllNotifications} from "../../../actions/notifications";
 import Button from "../buttons/button";
+import counterpart from 'counterpart';
 
 class NotificationsBody extends Component {
     handleSearch = (value) => {
@@ -28,7 +28,7 @@ class NotificationsBody extends Component {
         return (
             <div className="notify">
                 <div className="notify__header">
-                    <Translate content="layout.notifications" component="h2" className="notify__title" />
+                    <h2 className="notify__title">{counterpart.translate(`layout.notifications`)}</h2>
                     {hasData
                         && <div className="notify__actions">
                             <NotificationsSearch handleSearch={this.handleSearch} />

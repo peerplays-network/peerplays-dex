@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { NavLink, Route, Switch } from "react-router-dom";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
 import VotingPage from "./voting/votingPage";
 import VotingWorkers from "./voting/votingWorkers";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ import SaveChangesCard from "../helpers/saveChangesCard";
 import { getPassword, updateAccount } from "../../actions/forms";
 import { dbApi } from "../../actions/nodes";
 import { clearVotes } from "../../dispatch/votesDispatch";
-import { getAccountData } from "../../actions/store";
+import { getAccountData, getBasicAsset } from "../../actions/store";
 import VestGPOS from './voting/VestGPOS';
 import WithdrawGPOS from './voting/WithdrawGPOS';
 import { getAsset } from '../../actions/assets/getAsset';
@@ -24,7 +24,7 @@ import {getGlobalData} from "../../actions/dataFetching/getGlobalData";
 import {setAccount, setSidechainAccounts} from "../../dispatch/setAccount";
 import {setGlobals, setMaintenance} from "../../dispatch";
 import {setNotifications} from "../../dispatch/notificationsDispatch";
-
+import { utils } from '../../utils';
 
 
 const tableHeadWitnesses = [
@@ -50,11 +50,12 @@ const tableHeadWitnesses = [
     },
     {
         key: 'total_votes',
-        translateTag: 'votes',
+        translateTag: 'voteCount',
         params: 'align-right fit-content'
     },
     {
         key: 'vote_icon',
+        translateTag: 'votes',
         params: 'align-center fit-content content-padding'
     }
 ];
@@ -106,7 +107,7 @@ const Voting = (props) => {
     const [availableGpos, setAvailableGpos] = useState(0);
     const [gposPerformance, setGposPerformance] = useState(0);
     const [estimatedRakeReward, setEstimatedRakeReward] = useState(0);
-    const [gposPerfString, setGposPerfString] = useState("");
+    const [gposPerfString, setGposPerfString] = useState("voting.performance.none");
     const [precision, setPrecision] = useState(0);
     const [symbol, setSymbol] = useState("");
     const [symbol_id, setSymbol_id] = useState("");
@@ -188,9 +189,11 @@ const Voting = (props) => {
         var utcNowMS = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds(), now.getUTCMilliseconds()).getTime();
         var nextMtMS = new Date(maintenance.nextMaintenance).getTime();
         var _mt = Math.floor((nextMtMS - utcNowMS) / 1000 / 60);
-        var _ms = Math.floor((nextMtMS - utcNowMS - 60 * 1000 * _mt) / 1000);
+        var _hr = parseInt(_mt/60)
+        var _ms = Math.floor((nextMtMS - utcNowMS) / 1000);
+        var _mmt = "";
         if (nextMtMS <= utcNowMS) {
-            _mt = "0 Minute 0 Second";
+            _mmt = "0 Minute 0 Second";
             getGlobalData()
                 .then(({userData, globalData, notifications, lastBlockData}) => {
                     if(userData) {
@@ -211,19 +214,22 @@ const Voting = (props) => {
                 });
         } else {
             if (_mt === 0) {
-                _mt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
-            } else if (_mt === 1) {
-                _mt = _mt + " Minute " + _ms + " Seconds"
-            } else {
-                _mt = _mt + " Minutes " + _ms + " Seconds"
+                _mmt = Math.floor((nextMtMS - utcNowMS) / 1000) + ' Seconds'
+            } else if (_hr === 0) {
+                _mmt = _mt + " Minute " +(_ms -(_mt*60)) + " Seconds"
+            }else  if(_hr > 0){
+                _mmt = _hr + " Hours " + (_mt-(_hr*60) ) + " Minutes " + (_ms -(_mt*60))+ " Seconds"
+            }
+             else {
+                _mmt = _mt + " Minutes " + _ms + " Seconds"
             }
         }
-        setGposSubPeriodStr(_mt)
+        setGposSubPeriodStr(_mmt)
     }
     useEffect(() => {
         setNewVotes(props.account.votes.map(el => el.vote_id))
     }, [props.account])
-    const saveResult = (password) => {
+    const saveResult = (password, keyType) => {
         setSaveLoading(true);
         let user = getAccountData();
         dbApi('get_account_by_name', [user.name]).then(e => {
@@ -238,7 +244,12 @@ const Voting = (props) => {
             new_options.num_witness = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 1).length;
             new_options.num_committee = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 0).length;
             new_options.num_son = currentVotes.filter((vote) => parseInt(vote.split(':')[0]) === 3).length;
-            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password).then(async () => {
+            updateAccount({ new_options, extensions: { value: { update_last_voting_time: true } } }, password, keyType).then(async () => {
+                updateReduxAccount(await formAccount(user.name))
+                clearVotes();
+                setSaveLoading(false);
+            }).catch(async(e) => {
+                toast.error(counterpart.translate(`errors.${e.message.toLowerCase().split(":")[0].replace(/\s+/g,"_")}`))
                 updateReduxAccount(await formAccount(user.name))
                 clearVotes();
                 setSaveLoading(false);
@@ -257,10 +268,10 @@ const Voting = (props) => {
     const handleSave = () => {
         let user = getAccountData();
         if (user.assets[0].amount / 100000 < 20) {
-            return toast.error('Insufficient test balance.')
+            return toast.error(`Insufficient ${getBasicAsset().symbol} balance.`)
         }
         if (totalGpos > 0) {
-            getPassword(saveResult)
+            getPassword(saveResult, 'active')
 
         } else {
             toast.error('You need to Vest some GPOS balance first')
@@ -269,9 +280,9 @@ const Voting = (props) => {
     if (!account) return <NeedToLogin tag={'empty.login'} />;
     return (
         <div className="container page">
-              <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"vesting.title"}/>
-        </div>
+            <div className="page__header-wrapper">
+                <h1 className="page__title">{counterpart.translate(`voting.vestingTitle`)}</h1>
+            </div>
             <div>
                 <Grid container spacing={1}>
                     <Grid item xs={12} sm={6}>
@@ -286,31 +297,39 @@ const Voting = (props) => {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6} md={3}>
                         <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.performance.title' />
-                            <CardContent >
-                                <Translate component="div" content={gposPerfString} />
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.performance.title`)}
+                            </div>
+                            <CardContent>
+                                <div>{counterpart.translate(`${gposPerfString}`)}</div>
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
                         <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.percent' />
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.percent`)}
+                            </div>
                             <CardContent>
                                 {gposPerformance}%
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.potential' />
+                        <Card>
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.potential`)}
+                            </div>
                             <CardContent>
                                 {`${estimatedRakeReward}%`}
                             </CardContent>
                         </Card>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <Card >
-                            <Translate className="card__title" style={{paddingTop:"20px"}} component="div" content='voting.next_vote' />
+                        <Card>
+                            <div className="card__title" style={{paddingTop:"20px"}}>
+                                {counterpart.translate(`voting.next_vote`)}
+                            </div>
                             <CardContent>
                                 {gposSubPeriodStr}
                             </CardContent>
@@ -321,19 +340,19 @@ const Voting = (props) => {
             </div>
 
             <div className="page__header-wrapper">
-                <Translate className="page__title" component="h1" content="voting.title" />
+                <h1 className="page__title">{counterpart.translate(`voting.votingTitle`)}</h1>
             </div>
             <div className="page__menu">
                 {
                     votingMenu.map((el, id) => (
-                        <Translate
-                            key={id}
-                            content={`voting.${el.tag}.title`}
-                            component={NavLink}
-                            to={`/voting${el.link}`}
+                        <NavLink 
+                            key={id} 
+                            to={`/voting-vesting${el.link}`}
                             className="page__menu-item"
                             exact
-                        />
+                        >
+                            {counterpart.translate(`voting.${el.tag}.title`)}
+                        </NavLink>
                     ))
                 }
             </div>
@@ -343,7 +362,7 @@ const Voting = (props) => {
                         votingMenu.map((el, id) => (
                             <Route
                                 key={id}
-                                path={`/voting${el.link}`}
+                                path={`/voting-vesting${el.link}`}
                                 render={() => el.render(account, props.data, cancelVotes, { setNewVotes, newVotes })}
                                 exact
                             />
@@ -352,7 +371,7 @@ const Voting = (props) => {
                 </Switch>
             </div>
             <SaveChangesCard
-                show={newVotes.length !== props.account.votes.length}
+                show={!utils.isArrayEqual(newVotes, props.account.votes.map(vote => vote.vote_id)) }
                 fee={props.data.update_fee}
                 cancelFunc={reset}
                 saveFunc={handleSave}

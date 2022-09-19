@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../table";
 import NoData from "../noData";
+import TableCard from "../../helpers/cards";
 
 const HistoryBook = ({data}) => {
     if(!data || !data.rows) return <NoData />;
@@ -11,6 +12,7 @@ const HistoryBook = ({data}) => {
                 tableHead={data.tableHead}
                 rows={data.rows}
             />
+            <TableCard tableHead={data.tableHead} rows={data.rows}/>
         </div>
     )
 };

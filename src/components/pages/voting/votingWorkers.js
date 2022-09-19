@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {IconCheckBlue} from "../../../svg";
+import IconCheckBlue from "../../../svg/check_blue.svg";
 import Table from "../../helpers/table";
 import AddNewWorker from "../../helpers/modal/content/addNewWorker";
 import {getPassword} from "../../../actions/forms";
@@ -102,7 +102,7 @@ class VotingWorkers extends Component {
         });
     };
 
-    dispatchWorkerCreation = () => getPassword(password => setModal(<AddNewWorker password={password} />));
+    dispatchWorkerCreation = () => getPassword((password, keyType) => setModal(<AddNewWorker keyType={keyType} password={password} />), 'active');
 
     render() {
         const {workers} = this.state;

@@ -1,5 +1,6 @@
 import React from 'react';
-import {IconMore, IconWarning} from "../../svg";
+import IconMore from "../../svg/more.svg";
+import IconWarning from "../../svg/warning.svg";
 import Avatar from "./avatar";
 
 const notificationsList = [{

@@ -2,7 +2,7 @@ import {getUserName} from "../../account";
 import {assetToString} from "../../assets";
 import React from "react";
 import {dbApi} from "../../nodes";
-import Translate from "react-translate-component";
+import counterpart from "counterpart";
 
 export const formPermissionHistory = history => Promise.all(history.map(async el => {
     const {account, fee} = el.op[1];
@@ -17,8 +17,8 @@ export const formPermissionHistory = history => Promise.all(history.map(async el
 
     return {
         id: el.id,
-        type: <Translate content={"tableInfo.account_update.title"} component="a" className="operation positive"/>,
-        desc: <Translate content={"tableInfo.account_update.description"} with={{user}}/>,
+        type: <a className="operation positive">{counterpart.translate(`tableInfo.account_update.title`)}</a>,
+        desc: <span>{counterpart.translate(`tableInfo.account_update.description`, {user: user})}</span>,
         fee: await assetToString(fee),
         time: timestamp
     };

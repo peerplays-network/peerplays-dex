@@ -12,6 +12,10 @@ import ModalTitle from "../decoration/modalTitle";
 import Submit from "../decoration/submit";
 import {getBasicAsset} from "../../../../actions/store";
 import FieldWithHint from "../../form/fieldWithHint";
+import { utils } from '../../../../utils';
+import { updateAccountAndLoginData } from '../../../../actions/account';
+import { dbApi } from '../../../../actions/nodes';
+import counterpart from 'counterpart';
 
 const getSymbolsList = async (symbol) => (
     getAccountData().contacts
@@ -31,11 +35,15 @@ class SendModal extends Component {
     state = {
         sended: false,
         defaultData: false,
-        userTokens: false
+        userTokens: false,
+        assets: false
     };
 
     componentDidMount() {
-        const {defaultFrom, defaultTo, defaultToken, password} = this.props;
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
+        const {defaultFrom, defaultTo, defaultToken, password, keyType} = this.props;
         const contacts = getAccountData().contacts.filter(item => item.type !== 2).map(item => item.name);
         const userTokens = getAccountData().assets;
 
@@ -45,6 +53,7 @@ class SendModal extends Component {
         const defaultData = {
             from: defaultFrom || '',
             to: defaultTo || '',
+            keyType: keyType,
             password: password,
             quantityAsset: startAsset,
             fee: 0,
@@ -59,15 +68,16 @@ class SendModal extends Component {
         this.setState({sended: true}, () => {
         });
 
+        updateAccountAndLoginData();
+
         setTimeout(() => {
             clearLayout();
-            window.location.reload();
         }, 1000);
     };
 
     render() {
 
-        const {defaultData, userTokens, sended} = this.state;
+        const {defaultData, userTokens, sended, assets} = this.state;
 
         if (!userTokens) return <span/>;
 
@@ -84,7 +94,7 @@ class SendModal extends Component {
                     {
                         form => {
 
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             
                             return (
                                 <Fragment>
@@ -139,42 +149,55 @@ class SendModal extends Component {
                                                 onChange={form.handleChange}
                                                 error={errors}
                                                 value={data}
+                                                onKeyPress={(e) => {
+                                                    if (!utils.isNumberKey(e)) {
+                                                      e.preventDefault();
+                                                    }
+                                                }}
+                                                precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                             />
-                                            <FieldWithHint
-                                                name="quantityAsset"
+                                            <Input
                                                 id="model"
-                                                method={getUserAssetsList}
+                                                name="quantityAsset"
+                                                type="text"
+                                                onChange={form.handleChange}
+                                                error={errors}
+                                                className="quantity-wrapper"
                                                 hideLabel={true}
-                                                handleChange={form.handleChange}
-                                                errors={errors}
+                                                value={data}
                                                 defaultVal = {data}
-                                                readOnly={true}
+                                                disabled={true}
                                             />
                                         </div>
                                         <Textarea
                                             id="modalSendMemo"
                                             name="memo"
                                             maxLength={MEMO_MAX_LENGTH}
-                                            comment={true}
+                                            //comment={true}
                                             onChange={form.handleChange}
                                             error={errors}
                                             value={data}
                                         />
                                         <div className="quantity-wrapper mt-2">
                                             <div>
-                                                Fee: {data.fee} {data.feeAsset}
+                                                <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                                {data.fee} {data.feeAsset}
                                             </div>
-                                            {/*<Dropdown*/}
-                                            {/*btn={<SelectHeader*/}
-                                            {/*text={form.state.data.feeAsset}*/}
-                                            {/*className="with-bg"*/}
-                                            {/*/>}*/}
-                                            {/*list={userTokens.map(e => <button onClick={() => form.handleChange(e.symbol, 'feeAsset')} type="button">{e.symbol}</button>)}*/}
-                                            {/*/>*/}
+                                            <div>
+                                                {transactionError && transactionError !== "" ? 
+                                                    <span className="clr--negative">
+                                                        <span>{counterpart.translate(`errors.${transactionError}`)}</span>
+                                                    </span> 
+                                                : ""}
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="modal__bottom">
-                                        {sended && <h3 className="clr--positive">Transaction Completed</h3>}
+                                        {sended && 
+                                            <h3 className="clr--positive">
+                                                <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                            </h3>
+                                        }
                                         <Close/>
                                         <Submit tag="send"/>
                                     </div>

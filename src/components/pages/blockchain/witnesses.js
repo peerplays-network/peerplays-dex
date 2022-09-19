@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from "react";
-import Translate from "react-translate-component";
 import {getWitnesses} from "../../../actions/getWitnesses";
 import Table from "../../helpers/table";
 import {Card} from "../../helpers/card";
 import { updateAllBlockchainData } from '../../../actions/dataFetching/getGlobalData';
 import TableCard from "../../helpers/cards";
 import Witnesscards from '../../helpers/cards/witnesscards';
+import counterpart from "counterpart";
 
 const tableHead = [
     {
@@ -36,11 +36,6 @@ const tableHead = [
         key: 'total_votes',
         translateTag: 'votes',
         params: 'align-right fit-content'
-    },
-    {
-        key: 'signing_key',
-        translateTag: 'key',
-        params: 'align-center fit-content content-padding'
     }
 ];
 
@@ -91,7 +86,7 @@ class Witnesses extends Component {
                 {
                     active &&
                     <Fragment>
-                        <Translate className="table__title" component="div" content={"blockchain.witnesses.active"}/>
+                        <div className="table__title">{counterpart.translate(`blockchain.witnesses.active`)}</div>
                         <Table
                             tableHead={tableHead}
                             rows={active}
@@ -103,7 +98,7 @@ class Witnesses extends Component {
                 {
                     pending &&
                     <Fragment>
-                        <Translate className="table__title" component="div" content={"blockchain.witnesses.pending"}/>
+                        <div className="table__title">{counterpart.translate(`blockchain.witnesses.pending`)}</div>
                         <Table
                             tableHead={tableHead}
                             rows={pending}

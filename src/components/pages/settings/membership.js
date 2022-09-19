@@ -2,13 +2,13 @@ import React from "react";
 import RoundButton from "../../helpers/buttons/roundButton";
 import Link from "react-router-dom/es/Link";
 import {connect} from "react-redux";
-import Translate from "react-translate-component";
 import {openWarning} from "../../../actions/openWarning";
 import {getGlobals} from "../../../actions/store";
 import {Asset} from "../../../classes";
 import {MembershipTitle} from "../../helpers/membershipTitle";
 import PendingFees from "../../helpers/pendingFees";
 import {testnetCheck} from "../../../params/networkParams";
+import counterpart from "counterpart";
 
 const allocationKeys = ['network', 'reviewer', 'registrar', 'referrer', 'expiration'];
 
@@ -41,7 +41,7 @@ const Membership = ({account}) => {
                     return (
                         <div key={id} className="statistic">
                             <div className="statistic__key">
-                                <Translate content={`membership.${key}`} className="statistic__title" />
+                                <span className="statistic__title" >{counterpart.translate(`membership.${key}`)}</span>
                                 {item.user && <Link to={`/user/${item.user}`} className="statistic__link">{item.user}</Link>}
                             </div>
                             <span className="statistic__value">
@@ -55,13 +55,13 @@ const Membership = ({account}) => {
                 <MembershipTitle title="statistics" />
                 <div className="statistic">
                     <div className="statistic__key">
-                        <Translate content="membership.totalFee" className="statistic__title" />
+                        <span className="statistic__title">{counterpart.translate(`membership.totalFee`)}</span>
                     </div>
                     <span className="statistic__value">{feesPaid}</span>
                 </div>
             </div>
             <PendingFees name={name} />
-            <MembershipTitle title="vestingTitle" subtitle="vestingDesc" />
+            <MembershipTitle title="vestingTitle" subtitle="vestingDesc" subtitleData={{symbol: feeAsset.symbol}} />
         </div>
     );
 }

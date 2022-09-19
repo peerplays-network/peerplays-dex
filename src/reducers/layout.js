@@ -10,7 +10,7 @@ const reducer = (state = defaultData, {type, payload}) => {
         case 'SET_MENU':
             return {...defaultData, overlay: true, menu: true};
         case 'SET_MODAL':
-            return {...defaultData, overlay: true, modal: payload};
+            return {...defaultData, overlay: true, modal: payload };
         case 'SET_SEARCH':
             return {...defaultData, globalSearch: true};
         case 'CLEAR_LAYOUT':

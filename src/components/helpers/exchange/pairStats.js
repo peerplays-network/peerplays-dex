@@ -1,8 +1,8 @@
 import React, {Component, Fragment} from 'react';
-import Translate from "react-translate-component";
-import {Caret} from "../../../svg/index";
+import IconCaret from "../../../svg/caret.svg";
 import ChangePair from "../modal/content/changePair";
 import {setModal} from "../../../dispatch/layoutDispatch";
+import counterpart from 'counterpart';
 
 class PairStats extends Component{
 
@@ -22,7 +22,7 @@ class PairStats extends Component{
                     <button className="pair-stats__selector" onClick={this.changePair}>
                         <span className="pair-stats__base">{quote.symbol}</span>
                         <span className="pair-stats__quote"> / {base.symbol}</span>
-                        <Caret className='field__caret'/>
+                        <IconCaret className='field__caret'/>
                     </button>
                     {data && items.filter(el => data[el]).map(el => {
 
@@ -40,11 +40,7 @@ class PairStats extends Component{
                                 <div className={`pair-stats__value${additionalClass}`}>
                                     {val} {asset && <span className="pair-stats__item-asset">{asset}</span>}
                                 </div>
-                                <Translate
-                                    content={`exchange.${el}`}
-                                    component="div"
-                                    className="pair-stats__item-title"
-                                />
+                                <div className="pair-stats__item-title">{counterpart.translate(`exchange.${el}`)}</div>
                             </div>
                         )
                     })}

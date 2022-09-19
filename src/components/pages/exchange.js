@@ -7,12 +7,11 @@ import BuyForm from "../helpers/exchange/buyForm";
 import HistoryBook from "../helpers/exchange/historyBook";
 import UserOrdersHistory from "../helpers/exchange/userOrdersHistory";
 import NoData from "../helpers/noData";
-//import TradingViewWrapper from "../helpers/tradingViewWrapper";
 import { connect } from "react-redux";
 import { clearExchangeData, loadExchangeData } from "../../dispatch/exchangeData";
-import Translate from "react-translate-component";
 import Grid from '@material-ui/core/Grid';
-
+import { updateAccountAndLoginData } from '../../actions/account';
+import counterpart from 'counterpart';
 class Exchange extends Component {
 
     state = {
@@ -56,8 +55,8 @@ class Exchange extends Component {
         return (
             <Fragment>
                 <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"exchange.title"}/>
-        </div>
+                    <h1 className="page__title">{counterpart.translate(`exchange.title`)}</h1>
+                </div>
                 <PairStats pair={pair} data={stats} history={this.props.history} />
 
                 <Grid container >
@@ -65,7 +64,7 @@ class Exchange extends Component {
                         <div className="exchangse">
                             <div className="">
                                 <Tabs head={['orderBook', 'history']}>
-                                    <OrderBook data={orderBook} handleRowClick={this.handleOrderClick} />
+                                    <OrderBook data={orderBook} />
                                     <HistoryBook data={globalHistory} />
                                 </Tabs>
                             </div>
@@ -80,19 +79,23 @@ class Exchange extends Component {
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={3} style={{ padding: '10px 10px 10px 10px'}}>
-                        <Translate content="exchange.buy" className="exchange-form__title" component="div" />
+                        <div className="exchange-form__title">
+                            {counterpart.translate(`exchange.buy`)}
+                        </div>
                         <BuyForm
                             type="buy"
                             pair={pair}
                             defaultData={fieldParams}
+                            update={updateAccountAndLoginData}
                         />
                     </Grid>
                     <Grid item xs={12} sm={3} className="exchange__center" style={{ padding: '10px 10px 10px 10px'}}>
-                        <Translate content="exchange.sell" className="exchange-form__title" component="div" />
+                        <div className="exchange-form__title">{counterpart.translate(`exchange.sell`)}</div>
                         <BuyForm
                             type="sell"
                             pair={pair}
                             defaultData={fieldParams}
+                            update={updateAccountAndLoginData}
                         />
                     </Grid>
                 </Grid>

@@ -1,10 +1,11 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import { getBasicAsset } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {generateSidechainAddress} from "../../../actions/forms/generateSidechainAddress";
 import { setSidechainAccounts } from "../../../dispatch/setAccount";
+import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class GenerateAddress extends Component {
     state = {
@@ -35,8 +36,8 @@ class GenerateAddress extends Component {
         }))
         
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
+        updateAccountAndLoginData();
     };
 
 
@@ -55,10 +56,11 @@ class GenerateAddress extends Component {
                         action={generateSidechainAddress}
                         handleResult={this.handleAddressGenerated}
                         needPassword
+                        keyType="active"
                     >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
 
                             return (
                                 <Fragment>
@@ -88,11 +90,20 @@ class GenerateAddress extends Component {
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee.amount ? data.fee.amount : '0'} {data.feeAsset}</span>
-                                        {sended && <span className="clr--positive">Sidechain address has been generated.</span>}
-                                        {errors === "ERROR" && <span className="clr--negative">Server side error!! Try again.</span>}
-                                        {errors === "DUPLICATE" && <h3 className="clr--negative">Key already exists.</h3>}
-                                        <button type="submit" className="btn-round btn-round--send">GENERATE</button>
+                                        {sended &&
+                                            <span className="clr--positive">
+                                                {counterpart.translate(`success.sidechainGenerated`)}
+                                            </span>                                         
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                {counterpart.translate(`errors.${transactionError}`)}
+                                            </span> 
+                                            : ""
+                                        }
+                                        <button className="btn-round btn-round--send" type="submit">
+                                            {counterpart.translate(`buttons.generate`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

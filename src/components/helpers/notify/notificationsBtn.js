@@ -1,5 +1,5 @@
 import React from "react";
-import {IconNotify} from "../../../svg/";
+import IconNotify from "../../../svg/notifications.svg";
 import {connect} from "react-redux";
 
 const NotificationsBtn = ({notifications}) => (

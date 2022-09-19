@@ -1,6 +1,6 @@
 export const blockContent = (bool) => {
     const body = document.body;
-
+    document.getElementsByClassName('search__field')[0].value = '';
     if(bool){
         const scroll = window.scrollY;
         body.style.top = '-' + scroll + 'px';

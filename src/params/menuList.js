@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-    IconAssets,
-    IconBlockchain,
-    IconBookOpen,
-    IconDashboard,
-    IconExchange, 
-    IconSettings,
-    IconVoting
-} from "../svg/index";
+import IconAssets from '../svg/assets.svg'
+import IconBlockchain from '../svg/blockchain.svg'
+import IconBookOpen from '../svg/book-open.svg'
+import IconDashboard from '../svg/dashboard.svg'
+import IconExchange from '../svg/exchange.svg'
+import Iconwithdrawal from '../svg/withdrawal.svg'
+import IconVoting from '../svg/voting.svg'
+import IconSettings from '../svg/settings.svg'
 
 export const menuList = [
     {
@@ -31,7 +30,7 @@ export const menuList = [
         icon: <IconBlockchain />,
     },
     {
-        link: '/voting',
+        link: '/voting-vesting',
         tag: 'voting',
         icon: <IconVoting />,
     },
@@ -46,8 +45,8 @@ export const menuList = [
         icon: <IconBookOpen/>,
     },
     {
-        link: '/hive',
+        link: '/hive-hbd',
         tag: 'hive',
-        icon: <IconBookOpen/>,
+        icon: <Iconwithdrawal/>,
     }
 ];

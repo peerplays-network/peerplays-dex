@@ -115,9 +115,33 @@
   }
   &.open{
     > .dropdown__body{
-      transform: translate(-95%, 0);
+      transform: translate(-95%, 0);  
       width: 400px;
     }
+  }
+}
+
+.dropdown__body {
+  &.custom-scroll { 
+    &.cancel__button {
+      left: -30%;
+    }
+  }
+}
+
+@media(max-width:500px) {
+  .dropdown__body {
+    &.custom-scroll {
+      &.cancel__button {
+        left: -60%;
+      }
+    }
+  }
+}
+
+@media(min-width:320px){
+  .dropdown__item{
+    margin-top: -6px;
   }
 }
 

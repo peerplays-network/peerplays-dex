@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {connect} from "react-redux";
 import Dropdown from "../helpers/form/dropdown";
 import UserData from "../helpers/userData";
-import {IconSearch} from "../../svg";
+import IconSearch from "../../svg/search.svg";
 import Notifications from "../helpers/notify/notifications";
 import Avatar from "../helpers/avatar";
 import LogIn from "../helpers/modal/content/logIn";
@@ -11,11 +11,12 @@ import Button from "../helpers/buttons/button";
 
 const Header = ({account, history, sidechainAccounts}) => (
     <header>
+        { account ?  
         <button className="header__burger" onClick={openMenu}>
             <span></span>
             <span></span>
             <span></span>
-        </button>
+        </button> : <div></div> }
         <div className="header__user-data">
             <button onClick={openSearch}><IconSearch /></button>
             {!account

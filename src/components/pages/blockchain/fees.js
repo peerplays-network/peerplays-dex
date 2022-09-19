@@ -10,7 +10,7 @@ const tableHead = [
     },
     {
         key: 'price_per_kbyte',
-        translateTag: 'type',
+        translateTag: 'Price_per_KByte',
         params: 'fit-content'
     },
     {

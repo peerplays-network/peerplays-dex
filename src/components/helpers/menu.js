@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react';
 import {menuList} from "../../params/menuList";
 import {NavLink} from "react-router-dom";
-import Translate from "react-translate-component";
 import {connect} from "react-redux";
 import {store} from "../../index";
-import { IconLogo } from '../../svg';
+import IconLogo  from '../../svg/logo.svg';
+import counterpart from 'counterpart';
 
 const closeMenu = () => {
     [
@@ -23,7 +23,7 @@ const Menu = (props) => (
                 <Fragment key={id}>
                     <NavLink className="menu__item" exact to={el.link} onClick={closeMenu}>
                         <span className="menu__icon-wrapper">{el.icon}</span>
-                        <Translate content={`${el.tag}.title`} />
+                        <span>{counterpart.translate(`${el.tag}.title`)}</span>
                     </NavLink>
                     { (id + 1) % 3 === 0 && id !== 8 && <div className="menu__separator" />}
                 </Fragment>

@@ -10,11 +10,14 @@ export const en = {
         "sidechainAccounts": "Sidechain Accounts"
     },
     "tableHead": {
+        "Price_per_KByte": "Price per KByte",
         "asset": "Asset",
         "available": "Available",
-        "priceWithToken": "Price (%(token)s)",
+        "quote_asset": "Quote asset",
+        "priceWithToken": "Price",
         "amountWithToken": "Amount (%(token)s)",
         "change": "Change (24h)",
+        "volume": "Volume",
         "valueWithToken": "Value (%(token)s)",
         "value": "Value",
         "actions": "Actions",
@@ -29,17 +32,18 @@ export const en = {
         "lastBlock": "Last Block",
         "missingBlock": "Missing Block",
         "votes": "Votes",
+        "voteCount":"Vote Count",
         "key": "Key",
         "time": "Time",
-        "type": "Price (kbyte)",
+        "type": "Activity",
         "info": "Info",
         "id": "ID",
         "fee": "Fee",
         "weight": "Weight",
         "webpage": "Webpage",
         "operation": "Operation",
-        "standardFee": "Standard Fee (bitUSD)",
-        "memberFee": "Member Fee (bitUSD)",
+        "standardFee": "Standard Fee",
+        "memberFee": "Member Fee",
         "blockID": "Block ID",
         "date": "Date",
         "blockTimestamp": "Time",
@@ -56,7 +60,7 @@ export const en = {
         "ratio": "Ratio",
         "callPrice": "Call Price",
         "expiration": "Expiration",
-        "kill": "Delete",
+        "cancel": "Cancel",
         "param": "%(param)s",
         "total": "Total (%(token)s)",
         "name_description": "Name / Description",
@@ -78,84 +82,96 @@ export const en = {
     "tableInfo": {
         "account_create": {
             "title": "Account Creation",
-            "description": "%(registrar)s registered the account %(user)s",
-        },
-        "send": {
-            "title": "Send",
-            "description": "%(sender)s send %(quantity)s to %(receiver)s",
-        },
-        "receive": {
-            "title": "Receive",
-            "description": "%(receiver)s received %(quantity)s from %(sender)s",
-        },
-        "limit_order_create": {
-            "title": "Create Order",
-            "description": "%(creator)s placed order #%(id)s at %(marketLink)s to buy %(buy)s for %(sell)s",
-        },
-        "limit_order_cancel": {
-            "title": "Cancel Order",
-            "description": "%(user)s cancelled order #%(id)s",
-        },
-        "fill_order": {
-            "title": "Order Filled",
-            "description": "%(user)s bought %(pays)s for %(receives)s at %(marketLink)s for order #%(id)s",
+            "description": "%(registrar)s, registered the account , %(user)s",
         },
         "account_update": {
             "title": "Account Updated",
-            "description": "%(user)s updated account data",
+            "description": "%(user)s, updated account data",
         },
         "account_upgrade": {
             "title": "Account Upgraded",
-            "description": "%(user)s upgraded account to lifetime member",
+            "description": "%(user)s, upgraded account to lifetime member",
         },
-        "worker_create": {
-            "title": "Worker Created",
-            "description": "%(user)s created a worker proposal with daily pay of %(dailyPay)s",
+        "account_whitelist": {
+            "title": "Account Whitelist",
+            "description": "%(issuer)s, %(status)s the account, %(listed)s"
         },
-        "proposal_create": {
-            "title": "Proposal Create",
-            "description": ""
+        "asset_claim_pool": {
+            "title": "Claim asset fee pool",
+            "description": "%(issuer)s, claimed %(claimed)s from , %(asset)s , fee pool"
+        },
+        "asset_create": {
+            "title": "Asset Create",
+            "description": "%(issuer)s, created the asset , %(assetName)s"
+        },
+        "asset_fund_fee_pool": {
+            "title": "Fund Asset Fee Pool",
+            "description": "%(from)s, funded %(symbol)s fee pool with %(amount)s"
+        },
+        "asset_issue": {
+            "title": "Issue Asset",
+            "description": "%(issuer)s, issued %(assetAmount)s to , %(receiver)s"
+        },
+        "asset_update": {
+            "title": "Update Asset",
+            "description": "%(issuer)s, updated asset , %(asset)s"
+        },
+        "asset_update_issuer": {
+            "title": "Update asset issuer",
+            "description": "%(issuer)s, transferred rights for , %(asset)s , to , %(newOwner)s"
+        },
+        "asset_update_feed_producers": {
+            "title": "Update asset feed producers",
+            "description": "%(issuer)s, updated the feed producers for the asset , %(asset)s"
         },
         "balance_claim": {
             "title": "Balance claim",
             "description": ""
         },
+        "fill_order": {
+            "title": "Order Filled",
+            "description": "%(user)s, bought %(pays)s for %(receives)s at , %(marketLink)s , for order #%(id)s",
+        },
+        "limit_order_cancel": {
+            "title": "Cancel Order",
+            "description": "%(user)s, cancelled order #%(id)s",
+        },
+        "limit_order_create": {
+            "title": "Create Order",
+            "description": "%(creator)s, placed order #%(id)s at , %(marketLink)s , to buy %(buy)s for %(sell)s",
+        },
+        "proposal_create": {
+            "title": "Proposal Create",
+            "description": ""
+        },
+        "proposal_update": {
+            "title": "Proposal Update",
+            "description": ""
+        },
+        "receive": {
+            "title": "Receive",
+            "description": "%(receiver)s, received %(quantity)s from , %(sender)s",
+        },
+        "send": {
+            "title": "Send",
+            "description": "%(sender)s, send %(quantity)s to , %(receiver)s",
+        },
         "transfer": {
             "title": "Transfer",
             "description": ""
         },
-        "asset_fund_fee_pool": {
-            "title": "Fund Asset Fee Pool",
-            "description": "%(from)s funded %(symbol)s fee pool with %(amount)s"
+        "vesting_balance_create":{
+            "title": "Vesting GPOS",
+            "description": "%(user)s, Vest %(quantity)s GPOS",
         },
-        "account_whitelist": {
-            "title": "Account Whitelist",
-            "description": "%(issuer)s %(status)s the account %(listed)s"
+        "vesting_balance_withdraw":{
+            "title": "Withdraw GPOS",
+            "description": "%(user)s, Withdraw %(quantity)s GPOS",
+        },    
+        "worker_create": {
+            "title": "Worker Created",
+            "description": "%(user)s, created a worker proposal with daily pay of %(dailyPay)s",
         },
-        "asset_create": {
-            "title": "Asset Create",
-            "description": "%(issuer)s created the asset %(assetName)s"
-        },
-        "asset_issue": {
-            "title": "Issue Asset",
-            "description": "%(issuer)s issued %(assetAmount)s to %(receiver)s"
-        },
-        "asset_update": {
-            "title": "Update Asset",
-            "description": "%(issuer)s updated asset %(asset)s"
-        },
-        "asset_claim_pool": {
-            "title": "Claim asset fee pool",
-            "description": "%(issuer)s claimed %(claimed)s from %(asset)s fee pool"
-        },
-        "asset_update_issuer": {
-            "title": "Update asset issuer",
-            "description": "%(issuer)s transferred rights for %(asset)s to %(newOwner)s"
-        },
-        "asset_update_feed_producers": {
-            "title": "Update asset feed producers",
-            "description": "%(issuer)s updated the feed producers for the asset %(asset)s"
-        }
     },
     "dashboard": {
         "title": "Dashboard",
@@ -237,7 +253,7 @@ export const en = {
         },
         "fundTheFeePool": {
             "title": "Fund The Fee Pool",
-            "text": "Anyone can add to the fee pool balance"
+            "text": "Anyone can add to the %(poolAsset)s fee pool balance the with core asset. This amount will be added to the %(poolAsset)s fee pool based on %(poolAsset)s core exchange rate"
         },
         "claimFeePoolBalance": {
             "title": "Claim fee pool balance",
@@ -286,14 +302,14 @@ export const en = {
         "title": "Exchange",
         "price": "Current Price",
         "change": "Change (24h)",
-        "value": "Value (24h)",
+        "value": "Volume (24h)",
         "feed": "Feed Price",
         "limit": "Call Limit",
         "margin": "Margin Call",
         "buy": "Buy",
         "sell": "Sell",
         "fee": "Fee:",
-        "marketFee": "Market Fee (%(percent)s%):",
+        "marketFee": "Market Fee:",
         "balance": "Balance:"
     },
     "assets": {
@@ -339,7 +355,11 @@ export const en = {
         "title": "Info"
     },
     "actions": {
-        "title": "Actions"
+        "title": "Actions",
+        "fund":"FUND",
+        "claim":"claim",
+        "publish":"publish",
+        "change":"change",
     },
     "assetUpdate": {
         "title": "Update",
@@ -360,6 +380,10 @@ export const en = {
     },
     "voting": {
         "title": "Voting & Vesting",
+        "vestingTitle": "Vesting",
+        "votingTitle": "Voting",
+        "Vest":"Vest",
+        "Withdraw":"Withdraw",
         "workers": {
             "title": "Workers"
         },
@@ -383,8 +407,9 @@ export const en = {
             "crit": "Critical Low",
             "none": "No Rewards"
         },
-        "percent": "Qualified Reward %",
-        "potential": "Estimated Rake Reward %",
+        "trans":"Transaction Completed",
+        "percent": "Qualified Reward %%",
+        "potential": "Estimated Rake Reward %%",
         "next_vote": "Next vote update",
         "newGpos":"New GPOS Balance",
         "noGpos":"There is no available GPOS",
@@ -412,7 +437,7 @@ export const en = {
             "title": "Generate Bitcoin Address"
         },
         "updateAddress": {
-            "title": "Update Bitcoin Address"
+            "title": "UPDATE BITCOIN WITHDRAW ADDRESS"
         }
     },
     "hive": {
@@ -557,10 +582,10 @@ export const en = {
     },
     "membership": {
         "title": "Membership",
-        "upgradeTitle": "Upgrade for 80% Cashback",
-        "upgradeDesc": "Lifetime Members get 80% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
+        "upgradeTitle": "Upgrade for 80%% Cashback",
+        "upgradeDesc": "Lifetime Members get 80%% cashback on every transaction fee they pay and qualify to earn referral income from users they register with or refer to the network. A Lifetime Membership is just %(fee)s.",
         "referralTitle": "Your referral link",
-        "referralDesc": "Give this to link to people you want to refer to BitShares: %(link)s/?r=%(name)s",
+        "referralDesc": "Give this to link to people you want to refer to Peerplays DEX: %(link)s/?r=%(name)s",
         "allocationTitle": "Fee Allocation",
         "allocationDesc": "Every time < %(name)s > pays a transaction fee, that fee is divided among several different accounts",
         "network": "Network",
@@ -573,7 +598,7 @@ export const en = {
         "pendingTitle": "Pending Fees",
         "pendingDesc": "Fees paid by < %(name)s > are divided among the network, referrers, and registrars once every maintenance interval (%(interval)s seconds). The next maintenance time is %(nextMaintenance)s.",
         "vestingTitle": "Vesting Fees",
-        "vestingDesc": "Most fees are made available immediately, but fees over 100 TEST (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
+        "vestingDesc": "Most fees are made available immediately, but fees over 100 %(symbol)s (such as those paid to upgrade your membership or register a premium account name) must vest for a total of 90 days."
     },
     "search": {
         "users": "Users",
@@ -587,6 +612,11 @@ export const en = {
     },
     "field": {
         "labels": {
+            "loginPassword": "Password or a Private key (We recommend using Whalevault Web 3.0 wallet)",
+            "transactionPassword": "password or %(keyType)s key",
+            "publicMemo": "Memo (this is public)",
+            "sellAmount": "Sell amount",
+            "buyAmount": "Buy amount",
             "login": "Login",
             "publicName": "Public Name",
             "brainkey": "Brainkey",
@@ -601,7 +631,7 @@ export const en = {
             "hiveCurrency": "Select currency",
             "quantity": "Quantity",
             "memo": "Memo",
-            "fee": "Fee",
+            "fee": "Fee: ",
             "gateFee": "Gate Fee",
             "newWorkerName": "Worker Name",
             "dailyPay": "Daily Pay (TEST)",
@@ -638,7 +668,7 @@ export const en = {
             "forcedSettlementPercent": "Forced Settlement Percent",
             "forcedSettlementMaxVolume": "Max Forced Settlement Volume (percent per hour)",
             "backingAsset": "Backing Asset",
-            "marketFee": "Market Fee (%)",
+            "marketFee": "Market Fee",
             "maxMarketFee": "Max Market Fee",
             "issueAmount": "Issue Amount",
             "condition": "Condition (max 60 characters)",
@@ -665,7 +695,8 @@ export const en = {
             "local": "Local wallet (advanced)"
         },
         "checkboxes": {
-            "remember": "Remember me"
+            "remember": "Remember me",
+            "whaleVault": "Use WhaleVault extension"
         },
         "upload": {
             "file": "Key File (%(fileSize)s)"
@@ -676,15 +707,27 @@ export const en = {
         "withdrawError":"The withdraw amount should be greater than 0",
         "Notexceed":"Value cannot exceed",
         "sendYourself": "You can\'t transfer tokens for yourself",
+        "sonNotAvailable": "SON network is not available now",
         "noAcc": "Failed to find this account",
         "noKey": "Failed to find this key",
         "wrongPass": "Password is wrong",
+        "wrongKey": "Wrong key has been used",
+        "user_cancel": "Request was canceled by the user",
+        "missing_required_active_authority": "missing required active authority",
+        "notAddedToWhaleVault":"This account is not added to whaleVault",
+        "wrongKeysAddedToWhale": "Added keys to whaleVault are not correct",
+        "whaleVaultConnectionError": "Can not Send Request to whaleVault",
+        "whalevault_not_installed": "WhaleVault is not installed. Please install WhaleVault extension and reload the app",
         "required": "This field is required.",
+        "invalid_public_key": "Provided public key is not correct",
+        "invalid_address": "Provided address is not correct for your bitcoin network",
+        "invalidKey":"Invalid key.",
         "requiredQuantity": "Quantity is required.",
+        "isTooBig": "Value is too big.",
         "isNan": "Amount is not a number.",
         "isNull": "You can't send a null.",
-        "isEmptyBalance": "You don't have token to pay fee.",
-        "isEmptyMarketBalance": "You don't have token to pay market fee.",
+        "isEmptyBalance": "You don't have balance to pay fee.",
+        "isEmptyMarketBalance": "You don't have balance to pay market fee.",
         "nullWeight": "Can\'t be null",
         "isNotEnough": "Balance is not enough.",
         "isZero": "Quantity should be greater than 0.",
@@ -698,6 +741,7 @@ export const en = {
         "needPassword": "Please, enter password first",
         "passwordsNotMatch": "Passwords don't match",
         "passwordLength": "Password should be at least 12 characters long",
+        "passwordNoBlank": "Password should not contain blank space",
         "usedWorkerName": "Worker name is already in use.",
         "beginFromToday": "Beginning date must start from today",
         "wrongEndDate": "End date must be after beginning",
@@ -713,19 +757,24 @@ export const en = {
         "conditionLength": "Condition is too long",
         "resolutionError": "Select another date",
         "remainIssueNotEnough": "Remain amount of supply isn't enough to issue",
+        "sonError": "Sons network is not available now!! Try again later.",
+        "keyExists": "Key already exists.",
+        "assetsShouldBeTEST": "One of the assets should be TEST",
+        "assetsShouldBePPY": "One of the assets should be PPY",
         "newAcc": {
+            "noCapital": "Account name should not contain capital letters",
             "longer": "Account name should be longer",
             "shorter": "Account name should be shorter",
-            "firstLetter": "Account name should start with a letter",
-            "noSpecials": "Account name should have only letters, digits, or dashes",
+            "firstLetter": "Account name should start with a small letter",
+            "noSpecials": "Account name should have only small letters, digits, or dashes",
             "oneDash": "Account name should have only one dash in a row",
             "lastSymbol": "Account name should end with a letter or digit",
             "notCheap": "This is a premium name which is not supported by this faucet. Please enter a regular name containing least one dash, a number or no vowels.",
             "inUse": "Account is already in use."
         },
         "newAccSegment": {
-            "firstLetter": "Each account segment should start with a letter",
-            "noSpecials": "Each account segment should have only letters, digits, or dashes",
+            "firstLetter": "Each account segment should start with a small letter",
+            "noSpecials": "Each account segment should have only small letters, digits, or dashes",
             "oneDash": "Each account segment should have only one dash in a row",
             "lastSymbol": "Each account segment should end with a letter or digit",
         },
@@ -739,6 +788,11 @@ export const en = {
             "symbols": "Asset name should contain only letters numbers and perhaps a dot."
         }
     },
+    "success":{
+        "transCompleted": "Transaction Completed",
+        "sidechainUpdated": "Sidechain address update running through secure cross-chain consensus processes. Estimated wait based on current Bitcoin network load: 60 min (updates are underway to optimize this).",
+        "sidechainGenerated": "Sidechain address generation running through secure cross-chain consensus processes. Estimated wait based on current Bitcoin network load: 60 min (updates are underway to optimize this).",
+    },
     "tabs": {
         "orderBook": "Order Book",
         "history": "History",
@@ -749,6 +803,20 @@ export const en = {
         "brain": "Brain Key",
     },
     "modal": {
+        "recive":{
+            "fee":"fee",
+            "registrar":"registrar",
+            "referrer":"referrer",
+            "referrer_percent":"referrer_percent",
+            "name":"name",
+            "owner":"owner",
+            "active":"active",
+            "options":"options",
+            "seller":"seller",
+            "amount_to_sell":"amount_to_sell",
+            "min_to_receive":"min_to_receive",
+            "expiration":"expiration",
+        },
         "send": {
             "title": "Send"
         },
@@ -774,11 +842,19 @@ export const en = {
             "referrerError": "There is no account with %(referrer)s name",
             "referrerMembership": "%(referrer)s must be either a lifetime or annual subscriber."
         },
+        "backupPassword": {
+            "title": "Backup your keys",
+            "forgetPassword": "IMPORTANT: If you forget your password you will be unable to access your account, we cannot reset or restore your password!",
+            "keyDetails": "IMPORTANT: Any password or key is more likely to get compromised the more it is used. That's why Peerplays uses a hierarchical key system to keep you safe. You are issued with three keys which have different permissions. For example, the memo Key has a limited set of permissions for encrypting and decrypting private messages. You'll need to be more careful with your Active Key since it has permissions to perform wallet related actions.",
+            "keepSafe": "IMPORTANT: Please download and keep safe your keys and password.",
+            "whaleVaultImport": "You can import these keys inside the WhaleVault extension and use them to login or sign your transactions",
+            "download": "Download & take me to dashboard"
+        },
         "login": {
             "title": "Log in"
         },
         "unlock": {
-            "title": "Unlock Profile for %(login)s"
+            "title": "Your %(keyType)s key is needed"
         },
         "binRestore": {
             "title": "Restore account from .bin file"
@@ -822,6 +898,8 @@ export const en = {
         }
     },
     "buttons": {
+        "Asset":"Asset",
+        "downloadAndDashboard": "Download & take me to dashboard",
         "ping": "Ping",
         "clear": "Clear List",
         "sendFunds": "Send Funds",
@@ -849,6 +927,9 @@ export const en = {
         "showAdditionalData": "Show Additional Data",
         "hideAdditionalData": "Hide Additional Data",
         "newContact": "+ New Contact",
+        "update": "Update",
+        "generate": "Generate",
+
     },
     "emptyPage": {
         "default": "No data",

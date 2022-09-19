@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import Translate from "react-translate-component";
 import {editStorage, getStorage} from "../../../actions/storage/index";
 import Dropdown from "../../helpers/form/dropdown";
 import SelectHeader from "../../helpers/selectHeader";
 import {deleteCookie, getCookie, setCookie} from "../../../actions/cookie";
+import { getStore } from "../../../actions/store";
+import counterpart from "counterpart";
 
 class Security extends Component{
     state = {
@@ -12,16 +13,16 @@ class Security extends Component{
 
     changeLock = (e) => {
 
-        const password = getCookie('password');
+        const {loginData} = getStore();
         const walletLock = Number(e.target.innerText);
         const result = {walletLock};
 
         editStorage('settings', result);
 
-        if(password && walletLock === 0){
-            deleteCookie('password');
-        } else if(password){
-            setCookie('password', password);
+        if(loginData.password && walletLock === 0){
+            loginData.removePassword();
+        } else if(loginData.password){
+            loginData.savePassword(loginData.password, loginData.type)
         }
 
         this.setState(result);
@@ -35,16 +36,13 @@ class Security extends Component{
         return(
             <div className="security">
                 <div className="security__item">
-                    <Translate content="security.lock" component="h2" />
+                    <h2>{counterpart.translate(`security.lock`)}</h2>
                     <Dropdown
                         btn={<SelectHeader labelTag="security.lockLabel" text={walletLock} />}
                         list={list.map((e, id) => <button key={id} onClick={this.changeLock}>{e}</button>)}
                     />
                 </div>
-                {/* <div className="security__item">
-                    <Translate content="security.password" component="h2" />
-                    <Translate content="global.tbd" className="security__tbd" />
-                </div> */}
+               
             </div>
         )
     }
