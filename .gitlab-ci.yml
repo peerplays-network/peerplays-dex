@@ -47,24 +47,19 @@ build_dev:
     - docker
 
 # builds production app
-build_prod:
-  stage: build
-  script:
-    - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
-    - echo $PROD_TOKEN
-    - echo $PROD_QUOTE
-    - echo $PROD_FAUCET
-    - echo $STAGING_DEX_URL
-    - echo $PROD_CHAIN_ID
-    - echo $PROD_BLOCKCHAIN_ENDPOINTS
-    - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
-    - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
-    - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
-    - echo "DEX_URL='$STAGING_DEX_URL'" >> .env
-    - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
-    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
-    - npm install
-    - npm run build
+#build_prod:
+#  stage: build
+#  script:
+#    - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+#    - echo $PROD_BLOCKCHAIN_ENDPOINTS
+#    - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
+#    - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
+#    - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
+#    - echo "DEX_URL='$STAGING_DEX_URL'" >> .env
+#    - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
+#    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
+#    - npm install
+#    - npm run build
   artifacts:
     reports:
       dast: gl-dast-report.json
@@ -145,10 +140,17 @@ deployToDev:
 
 deployToStaging:
   stage: deploy
-  dependencies:
-    - build_prod
   script:
     - rm $DEV_DEPLOY_DIR/* || true
+    - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    - echo "DEFAULT_TOKEN='$PROD_TOKEN'" >> .env
+    - echo "DEFAULT_QUOTE='$PROD_QUOTE'" >> .env
+    - echo "FAUCET_URL='$PROD_FAUCET'" >> .env
+    - echo "DEX_URL='$STAGING_DEX_URL'" >> .env
+    - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
+    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
+    - npm install
+    - npm run build
     - cp -R dist/* $DEV_DEPLOY_DIR
   environment:
     name: staging
