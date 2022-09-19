@@ -120,6 +120,19 @@
       border-radius: 0.25rem;
     }
   }
+
+  &--hive-withdraw {
+    min-height: 352px;
+    width: 640px;
+    padding: 20px 20px 40px 20px;
+    .card__title{
+      margin-left: 0;
+    }
+    .form__send .field {
+      min-height: 6.5rem;
+      border-radius: 0.25rem;
+    }
+  }
   
   &--full{
     width: 90%;
