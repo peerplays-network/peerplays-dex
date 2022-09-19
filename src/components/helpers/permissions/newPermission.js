@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Input from "../form/input";
 import {dbApi} from "../../../actions/nodes";
-import {IconCross} from "../../../svg";
+import IconCross from "../../../svg/cross.svg";
 
 const checkKey = async (val, type, prevKeys) => {
     if(val === '') return '';

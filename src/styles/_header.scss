@@ -47,11 +47,15 @@ header{
     display: block;
     margin: 0 1.75rem 0 2.55rem;
     color: #3C476C;
+    overflow-wrap: anywhere;
+    @media(max-width:500px){
+      font-size: 1.1rem;
+    }
   }
 }
 
 .drop-user{
-  width: 30rem;
+  min-width: 30rem;
   padding: 2.1rem 3.2rem 4.3rem;
   border-radius: 4px;
   box-sizing: border-box;
@@ -64,6 +68,10 @@ header{
   &__name{
     font-size: $fzXLG;
     color: #3C476C;
+    overflow-wrap: anywhere;
+    @media(max-width:500px){
+      font-size: 1.5rem;
+    }
   }
   &__user-actions{
     display: flex;

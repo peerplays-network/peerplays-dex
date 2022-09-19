@@ -1,12 +1,12 @@
 import React, {Component, Fragment} from "react";
 import {CardHeader} from "../cardHeader";
-import Translate from "react-translate-component";
 import Form from "../form/form";
 import Input from "../form/input";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store/index";
-import {dbApi} from "../../../actions/nodes/index";
 import {publishFeed} from "../../../actions/forms/publishFeed";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
+import counterpart from "counterpart";
 
 class PublishFeed extends Component {
     state = {
@@ -64,7 +64,7 @@ class PublishFeed extends Component {
         return(
             <div className="card card--action__big">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`)}</div>
                 <Form className="asset-action__content"
                       type={'asset_publish_feed'}
                       defaultData={defaultData}
@@ -72,10 +72,11 @@ class PublishFeed extends Component {
                       action={publishFeed}
                       handleResult={this.handlePublishFeed}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -93,6 +94,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -101,6 +107,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action forceSettlementPrice"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -109,6 +120,11 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             type="number"
@@ -117,11 +133,29 @@ class PublishFeed extends Component {
                                             error={errors}
                                             className="asset-action small"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">
+                                                <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                            </span>
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
+                                            </span> 
+                                            : ""
+                                        }
                                         <button type="submit" className="btn-round btn-round--fund">Publish</button>
                                     </div>
                                 </Fragment>

@@ -13,6 +13,7 @@ import {additionalPermissions, defaultPermissions} from "../../../params/permiss
 import SwitchersGroup from "../../helpers/form/switchersGroup";
 import Switcher from "../../helpers/switcher";
 import AccountUpdateList from "../../helpers/accountUpdateList";
+import { utils } from '../../../utils';
 
 const getDefaultFormData = async context => {
     const assetData = context.props.data;
@@ -164,26 +165,51 @@ const AssetUpdate = ({data}) => {
                                             name="feedInMinutes"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             name="minNumberOfFeeds"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             name="forcedSettlementDelay"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             name="forcedSettlementPercent"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             name="forcedSettlementMaxVolume"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <FieldWithHint
                                             name="backingAsset"
@@ -220,11 +246,21 @@ const AssetUpdate = ({data}) => {
                                             name="marketFee"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                         <Input
                                             name="maxMarketFee"
                                             type="number"
                                             formData={form}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                 }

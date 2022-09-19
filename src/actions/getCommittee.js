@@ -2,7 +2,7 @@ import React from "react";
 import {dbApi} from "./nodes";
 import {Link} from "react-router-dom";
 import {setAssets} from "./setAssets";
-import {IconLink} from "../svg";
+import IconLink from "../svg/link.svg";
 
 export const getCommittee = async () => {
     const committeeID = await dbApi('lookup_committee_member_accounts', ['', 100]).then(e => e);

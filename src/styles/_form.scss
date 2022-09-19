@@ -32,10 +32,13 @@ form{
   }
 }
 
-.form{
-  > .field, > .dropdown--with-hint{
-    margin-bottom: 4rem;
+.form--buy{
+  > .label__wrapper, > .dropdown--with-hint{
+    margin-bottom: 2rem;
   }
+}
+
+.form{
   .with-hint{
     margin-bottom: 4rem !important;
   }
@@ -131,4 +134,9 @@ form{
       overflow: unset;
     }
   }
+}
+
+.copy__container {
+  display: flex;
+  align-items: center;
 }

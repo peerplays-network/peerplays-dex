@@ -11,10 +11,21 @@ const ControlledInput = (props) => {
         onFocus,
         onBlur,
         formData,
-        readOnly
+        readOnly,
+        min,
     } = props;
 
     let onChange = formData ? formData.handleChange : props.onChange;
+    
+    let isNumberKey = (e,type)=>{
+        var charCode = (e.which) ? e.which : e.keyCode
+        if (type === 'number' && (charCode === 43 || charCode === 45 || charCode === 101)){
+             return e.preventDefault()
+        }
+        if (type === 'password' && charCode === 32 ){
+            return e.preventDefault()
+       }
+        }
 
     if(disabled) onChange = '';
 
@@ -28,6 +39,7 @@ const ControlledInput = (props) => {
                 defaultValue={value[name] || ''}
                 type={type}
                 disabled={disabled}
+                onKeyPress={e => isNumberKey(e,type)}
                 onFocus={e => onFocus ? onFocus(e.target.value, name) : e.preventDefault()}
                 onChange={e => onChange ? onChange(e.target.value, name) : e.preventDefault()}
                 onClick={e => onChange ? onChange(e.target.value, name) : e.preventDefault()}
@@ -35,6 +47,7 @@ const ControlledInput = (props) => {
                 placeholder=" "
                 className="field__input"
                 autoComplete="off"
+                min={min}
                 readOnly={readOnly}
             />
         </FieldWrapper>

@@ -1,12 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import Translate from "react-translate-component";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
+import {formDate} from "../../../actions/formDate";
+import counterpart from 'counterpart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,6 +25,9 @@ export default function Witnesscards(props) {
     const classes = useStyles();
     const { active, blockchainData, currentWitness } = props;
 
+    let nextMaintenanceTime = '';
+    if (blockchainData) nextMaintenanceTime = formDate(blockchainData.next_maintenance_time, ['date', 'month', 'year', 'time']);
+
     return (
         <div className={classes.root}>
             <Grid container spacing={2}>
@@ -33,7 +35,7 @@ export default function Witnesscards(props) {
                     <Card className="witness__cards">
                         <CardContent className={classes.paper}>
                             <Typography component="h5" variant="h4">
-                                <Translate component="div" content={"blockchain.blockchain.active_witnesses"} />
+                                <div>{counterpart.translate(`blockchain.blockchain.active_witnesses`)}</div>
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
                                 {active.length}
@@ -45,7 +47,7 @@ export default function Witnesscards(props) {
                     {currentWitness && <Card className="witness__cards">
                         <CardContent className={classes.paper}>
                             <Typography component="h5" variant="h4">
-                                <Translate component="div" content={"blockchain.witnesses.currentWitness"} />
+                                <div>{counterpart.translate(`blockchain.witnesses.currentWitness`)}</div>
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
                                 {currentWitness.name}
@@ -57,7 +59,7 @@ export default function Witnesscards(props) {
                     {currentWitness && <Card className="witness__cards">
                         <CardContent className={classes.paper}>
                             <Typography component="h5" variant="h4">
-                                <Translate component="div" content={"blockchain.witnesses.totalMissed"} />
+                                <div>{counterpart.translate(`blockchain.witnesses.totalMissed`)}</div>
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
                                 {currentWitness.total_missed}
@@ -69,7 +71,7 @@ export default function Witnesscards(props) {
                     {blockchainData && <Card className="witness__cards">
                         <CardContent className={classes.paper}>
                             <Typography component="h5" variant="h4">
-                                <Translate component="div" content={"blockchain.witnesses.remainingBudget"} with={{ currency: blockchainData.coreAsset.symbol }} />
+                                <div>{counterpart.translate(`blockchain.witnesses.remainingBudget`, { currency: blockchainData.coreAsset.symbol })}</div>
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
                                 {blockchainData.witness_budget}
@@ -81,10 +83,10 @@ export default function Witnesscards(props) {
                     {blockchainData && <Card className="witness__cards">
                         <CardContent className={classes.paper}>
                             <Typography component="h5" variant="h4">
-                                <Translate component="div" content={"blockchain.witnesses.nextVoteUpdate"} />
+                                <div>{counterpart.translate(`blockchain.witnesses.nextVoteUpdate`)}</div>
                             </Typography>
                             <Typography variant="h5" color="textSecondary">
-                                {new Date(blockchainData.next_maintenance_time).toLocaleString()}
+                                {nextMaintenanceTime}
                             </Typography>
                         </CardContent>
                     </Card>}

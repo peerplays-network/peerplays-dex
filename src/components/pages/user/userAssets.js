@@ -6,12 +6,12 @@ import TableCard from "../../helpers/cards";
 
 const UserAssets = ({data}) => (
     <div>
-    <Table
-        tableHead={data.tableHead}
-        rows={data.rows}
-        link={{ path: '/asset/', key: 'symbol' }}
-    />
-    <TableCard tableHead={data.tableHead} rows={data.rows} link={{ path: '/asset/', key: 'symbol' }}/>
+        <Table
+            tableHead={data.tableHead}
+            rows={data.rows}
+            link={{ path: '/asset/', key: 'symbol' }}
+        />
+        <TableCard tableHead={data.tableHead} rows={data.rows} link={{ path: '/asset/', key: 'symbol' }}/>
     </div>
     
 );

@@ -1,13 +1,16 @@
 import React, {Component,  Fragment} from "react";
-import Translate from "react-translate-component";
 import { Card } from "../../helpers/card";
 import { CardHeader } from "../../helpers/cardHeader";
-import Grid from '@material-ui/core/Grid';
-import {  getAccountData, getBasicAsset } from "../../../actions/store";
+import {  getAccountData, getBasicAsset, getStore } from "../../../actions/store";
 import Form from "../../helpers/form/form";
 import Input from "../../helpers/form/input";
 import {transfer} from "../../../actions/forms"
 import FieldWithHint from "../../helpers/form/fieldWithHint";
+import { utils } from "../../../utils";
+import {  updateAccountAndLoginData } from "../../../actions/account";
+import { dbApi } from "../../../actions/nodes";
+import counterpart from "counterpart";
+
 
 
 const getHiveAssetsList = async (symbol) => {
@@ -19,9 +22,15 @@ class HiveTransactions extends Component {
     state = {
         sended: false,
         defaultData: false,
+        assets: false
     };
 
+    update = updateAccountAndLoginData
+
     componentDidMount() {
+        dbApi('list_assets', ['', 100]).then(assets => {
+            this.setState({assets})
+        })
         const user = getAccountData();
         const startAsset = 'HIVE';
         const basicAsset = getBasicAsset().symbol;
@@ -40,23 +49,20 @@ class HiveTransactions extends Component {
 
     handleTransfer = (data) => {
         const context = this;
-        window.location.reload();
         this.setState({sended: true}, () => setTimeout(() => context.setState({sended: false}), 5000));
 
-        if(this.props.update) {
-            this.props.update();
-        }
+        this.update();
     };
 
 
     render() {
-        const {sended, defaultData} = this.state;
+        const {sended, defaultData, assets} = this.state;
 
         if (!defaultData) return <span/>;
         return (
             <div className="container">
                 <div className="page__header-wrapper">
-                    <Translate className="page__title" component="h1" content={"hive.title"}/>
+                    <h1 className="page__title">{counterpart.translate(`hive.title`)}</h1>
                 </div>
                 <div>
                     <div className="graphs" style={{justifyContent: "center"}}>
@@ -72,16 +78,17 @@ class HiveTransactions extends Component {
                                         action={transfer}
                                         handleResult={this.handleTransfer}
                                         needPassword
+                                        keyType="active"
                                     >
                                     {
                                         form => {
-                                            const {errors, data} = form.state;
+                                            const {errors, data, transactionError} = form.state;
                 
                                             return (
                                                 <Fragment>
                                                     <div className="input__row">
                                                         <Input
-                                                            style={{"display": "none"}}
+                                                            wrapperStyle={{"display": "none"}}
                                                             name="from"
                                                             onChange={form.handleChange}
                                                             error={errors}
@@ -95,11 +102,17 @@ class HiveTransactions extends Component {
                                                             onChange={form.handleChange}
                                                             error={errors}
                                                             value={data}
+                                                            onKeyPress={(e) => {
+                                                                if (!utils.isNumberKey(e)) {
+                                                                  e.preventDefault();
+                                                                }
+                                                            }}
+                                                            precision={assets && assets.find(asset => asset.symbol === data.quantityAsset).precision}
                                                         />
                                                     </div>
                                                     <div className="input__row">
                                                         <Input
-                                                            style={{"display": "none"}}
+                                                            wrapperStyle={{"display": "none"}}
                                                             name="to"
                                                             disabled
                                                             onChange={form.handleChange}
@@ -128,9 +141,25 @@ class HiveTransactions extends Component {
                                                         />
                                                     </div>
                                                     <div className="btn__row">
-                                                        <span>Fee: {data.fee} {data.feeAsset}</span>
-                                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                                        <button type="submit" className="btn-round btn-round--send">Withdraw</button>
+                                                        <span>
+                                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                                            {data.fee} {data.feeAsset}
+                                                        </span>
+                                                        {sended &&
+                                                            <span className="clr--positive">{counterpart.translate(`success.transCompleted`)}</span> 
+                                                        }
+                                                        {transactionError && transactionError !== "" ? 
+                                                            <span className="clr--negative">
+                                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
+                                                            </span> 
+                                                            : ""
+                                                        }
+                                                        <button 
+                                                            className="btn-round btn-round--send"
+                                                            type="submit"
+                                                        >
+                                                            {counterpart.translate(`buttons.withdraw`)}
+                                                        </button>
                                                     </div>
                                                 </Fragment>
                                             )

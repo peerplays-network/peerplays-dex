@@ -1,10 +1,11 @@
 import React, {Component, Fragment} from "react";
 import Input from "../../helpers/form/input";
 import {CardHeader} from "../../helpers/cardHeader";
-import Translate from "react-translate-component";
 import Form from "../../helpers/form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
+import { utils } from "../../../utils";
+import counterpart from "counterpart";
 
 class FundTheFeePool extends Component {
     state = {
@@ -43,7 +44,7 @@ class FundTheFeePool extends Component {
         return (
             <div className="card card--action">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`)}</div>
                 <Form className="asset-action__content"
                       type={'asset_fund_fee_pool'}
                       defaultData={defaultData}
@@ -51,10 +52,11 @@ class FundTheFeePool extends Component {
                       action={assetFundFeePool}
                       handleResult={this.handleFundTheFeePool}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -63,6 +65,7 @@ class FundTheFeePool extends Component {
                                             error={errors}
                                             value={data}
                                             disabled
+                                            wrapperStyle={{marginRight: "3rem"}}
                                         />
                                         <Input
                                             type="number"
@@ -71,14 +74,33 @@ class FundTheFeePool extends Component {
                                             name="quantity"
                                             value={data}
                                             error={errors}
-                                            className="asset-action__quantity"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Fund</button>
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended &&
+                                            <span className="clr--positive">
+                                                {counterpart.translate(`success.transCompleted`)}
+                                            </span>
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                {counterpart.translate(`errors.${transactionError}`)}
+                                            </span> 
+                                            : ""
+                                        }
+                                        <button type="submit" className="btn-round btn-round--fund">
+                                            {counterpart.translate(`actions.fund`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

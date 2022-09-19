@@ -1,7 +1,4 @@
 import React from 'react';
-import {menuList} from "../../params/menuList";
-import {NavLink} from "react-router-dom";
-import Translate from "react-translate-component";
 import {connect} from "react-redux";
 import {store} from "../../index";
 

@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import { Sidechains } from "../../params/networkParams";
 import ActionsBtn from "./buttons/actionsBtn";
@@ -9,9 +8,9 @@ import { removeStorageItem } from "../../actions/storage";
 import { dispatchSendModal } from "../../actions/forms/dispatchSendModal";
 import UnlockProfile from "./unlockProfile";
 import Button from "./buttons/button";
-import RoundButton from "./buttons/roundButton";
 import { dispatchGenerateAddress } from '../../actions/forms/dispatchGenerateAddress';
-import {IconCopy} from "../../svg";
+import IconCopy from "../../svg/copy.svg";
+import counterpart from "counterpart";
 
 
 const UserData = (props) => {
@@ -88,32 +87,20 @@ const UserData = (props) => {
                 ))}
             </div>
             <div className="drop-user__sidechain-address">
-                <Translate content="layout.sidechainAccounts" component="h3" className="drop-user__wallets-title" />
+                <h3 className="drop-user__wallets-title">
+                    {counterpart.translate(`layout.sidechainAccounts`)}
+                </h3>
                {Sidechains.map((el) => (
                     sidechainAddresses[el] != undefined ? <div className="drop-user__sidechain-address-item" key={el}><span>{el}&nbsp;: </span><input className="input" defaultValue={sidechainAddresses[el]} disabled/><button onClick={() => copyToClip(sidechainAddresses[el])}> <span style={{color:"green", fontSize:'10px'}}>{copyed?sidechainAddresses[el] == ''?'Blank value':'Copied':''}</span> <IconCopy/></button></div> : ''
                 ))}
             </div>
-            {/* <Translate content="layout.switchAccount" component="h3" className="drop-user__wallets-title" />
-                <div className="drop-user__wallets">
-                    {
-                        userWallets.map((el, id) => (
-                            <div key={id} className="drop-user__wallet">
-                                <h4 className="drop-user__wallet-name">{el.name}</h4>
-                                <span className="drop-user__wallet-quantity">{el.asset.quantity} {el.asset.name}</span>
-                            </div>
-                        ))
-                    }
-                </div>
-                <button className="btn-round btn-round--light-blue drop-user__add">
-                    <IconCross />
-                </button> */}
         </div>
     )
 }
 
 const mapStateToProps = (state) => ({
     data: state.accountData,
-    sidechainAccounts: state.sidechainAccounts
+    sidechainAccounts: state.accountData.sidechainAccounts
 });
 
 export default connect(mapStateToProps)(UserData);

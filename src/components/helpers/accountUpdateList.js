@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Link from "react-router-dom/es/Link";
-import {IconCross} from "../../svg";
+import IconCross from "../../svg/cross.svg";
 import Table from "./table";
 
 const defaultTableHead = [

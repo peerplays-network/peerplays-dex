@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {formDate} from "../../actions/formDate";
-import Translate from "react-translate-component";
 import Dropdown from "./form/dropdown";
 import SelectHeader from "./selectHeader";
+import counterpart from "counterpart";
 
 class BackupItem extends Component {
 
@@ -28,24 +28,25 @@ class BackupItem extends Component {
 
         return(
             <div className="backup__item">
-                <Translate content={`${translate}.title`} component="h2" />
+                <h2>{counterpart.translate(`${translate}.title`)}</h2>
                 <Dropdown
                     btn={<SelectHeader
                         labelTag={`${translate}.selectTitle`}
-                        text={<Translate content={`${translateWithType}.text`} />}
+                        text={<span>{counterpart.translate(`${translateWithType}.text`)}</span>}
                     />}
                     list={actionsList.map((e, id) => (
-                        <Translate
-                            key={id}
-                            component="button"
-                            content={`${translate}.${e.type}.text`}
-                            onClick={() => this.changeBackup(e)}
-                        />
+                        <button key={id} onClick={() => this.changeBackup(e)}>
+                            {counterpart.translate(`${translate}.${e.type}.text`)}
+                        </button>
                     ))}
-                    comment={showComment && <Translate content={lastBackup ? `${translate}.lastBackup` : `${translate}.needBackup`} lastBackup={lastBackup && formDate(lastBackup)} />}
+                    comment={showComment && 
+                        <span>
+                            {lastBackup ? counterpart.translate(`${translate}.lastBackup`) : counterpart.translate(`${translate}.needBackup`)}
+                        </span>
+                    }
                 />
-                <Translate content={`${translateWithType}.desc`} className="backup__desc" component="p" />
-                <Translate content={`${translate}.title`} component="button" className="btn-round" onClick={selectedItem.action} />
+                <p className="backup__desc">{counterpart.translate(`${translateWithType}.desc`)}</p>
+                <button className="btn-round" onClick={selectedItem.action} >{counterpart.translate(`${translate}.title`)}</button>
             </div>
         )
     }

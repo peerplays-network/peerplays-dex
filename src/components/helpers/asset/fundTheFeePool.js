@@ -1,11 +1,13 @@
 import React, {Component, Fragment} from "react";
 import Input from "../form/input";
 import {CardHeader} from "../cardHeader";
-import Translate from "react-translate-component";
 import Form from "../form/form";
 import {getAccountData, getBasicAsset} from "../../../actions/store/index";
 import {assetFundFeePool} from "../../../actions/forms/assetFundFeePool";
 import {fetchAssetData} from "../../../actions/dataFetching";
+import { utils } from "../../../utils";
+import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class FundTheFeePool extends Component {
     state = {
@@ -18,13 +20,14 @@ class FundTheFeePool extends Component {
         const user = getAccountData();
         const userTokens = user.assets;
         const basicAsset = getBasicAsset();
-        const symbol = this.props.symbol;
+        const poolAssetSymbol = this.props.symbol
         const defaultData = {
             from: user.name,
-            quantityAsset: symbol,
+            quantityAsset: basicAsset.symbol,
             fee: 0,
             feeAsset: basicAsset.symbol,
-            quantity: ''
+            quantity: '',
+            poolAssetSymbol: poolAssetSymbol
         };
 
         this.setState({userTokens, defaultData});
@@ -34,6 +37,7 @@ class FundTheFeePool extends Component {
         const context = this;
         this.setState({sended: true}, () => {
             fetchAssetData();
+            updateAccountAndLoginData();
             setTimeout(() => context.setState({sended: false}), 5000)
         });
     };
@@ -41,13 +45,13 @@ class FundTheFeePool extends Component {
     render() {
         const title = this.props.title;
         const {defaultData, sended} = this.state;
-
+        const basicAsset = getBasicAsset()
         if (!defaultData) return <span/>;
 
         return (
-            <div className="card card--action">
+            <div className="card card--action cardresponsivediv">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`, {poolAsset: this.props.symbol})}</div>
                 <Form className="asset-action__content"
                       type={'asset_fund_fee_pool'}
                       defaultData={defaultData}
@@ -55,10 +59,11 @@ class FundTheFeePool extends Component {
                       action={assetFundFeePool}
                       handleResult={this.handleFundTheFeePool}
                       needPassword
+                      keyType="active"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return (
                                 <Fragment>
                                     <div className="asset-action__row">
@@ -67,6 +72,7 @@ class FundTheFeePool extends Component {
                                             error={errors}
                                             value={data}
                                             disabled
+                                            wrapperStyle={{marginRight: "3rem"}}
                                         />
                                         <Input
                                             type="number"
@@ -75,14 +81,34 @@ class FundTheFeePool extends Component {
                                             name="quantity"
                                             value={data}
                                             error={errors}
-                                            className="asset-action__quantity"
                                             onChange={form.handleChange}
+                                            onKeyPress={(e) => {
+                                                if (!utils.isNumberKey(e)) {
+                                                  e.preventDefault();
+                                                }
+                                            }}
+                                            precision={basicAsset.precision}
+                                            min={0}
                                         />
                                     </div>
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Fund</button>
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>
+                                            {data.fee} {data.feeAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">
+                                                <span>{counterpart.translate(`success.transCompleted`)}</span>
+                                            </span>
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                <span>{counterpart.translate(`errors.${transactionError}`)}</span>
+                                            </span> 
+                                            : ""}
+                                       <button type="submit" className="btn-round btn-round--fund">
+                                           <span>{counterpart.translate(`actions.fund`)}</span>
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

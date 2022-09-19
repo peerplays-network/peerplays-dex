@@ -1,7 +1,8 @@
 import React from "react";
 import {dbApi} from "./nodes";
 import {Link} from "react-router-dom";
-import {IconKey, IconLink} from "../svg";
+import IconLink from '../svg/link.svg';
+import IconKey from '../svg/key.svg'
 import {setAssets} from "./setAssets";
 
 export const getWitnesses = async () => {

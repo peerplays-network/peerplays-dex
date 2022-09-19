@@ -4,6 +4,8 @@ import {updateSidechainAddress} from "../../../actions/forms/updateSidechainAddr
 import {setSidechainAccounts} from '../../../dispatch/setAccount';
 import Form from "../../helpers/form/form";
 import { getBasicAsset } from "../../../actions/store";
+import { updateAccountAndLoginData } from "../../../actions/account";
+import counterpart from "counterpart";
 
 class UpdateAddress extends Component {
     state = {
@@ -35,8 +37,8 @@ class UpdateAddress extends Component {
             }))
         }))
         const context = this;
-        window.location.reload();
         this.setState({updated: true}, () => setTimeout(() => context.setState({updated: false}), 5000));
+        updateAccountAndLoginData();
     };
     
     render() {
@@ -52,10 +54,12 @@ class UpdateAddress extends Component {
                     requiredFields={['withdrawPublicKey', 'withdrawAddress']}
                     action={updateSidechainAddress}
                     handleResult={this.handleAddressUpdated}
-                    needPassword>
+                    needPassword
+                    keyType="active"
+                >
                 {
                     form => {
-                        const {errors, data} = form.state;
+                        const {errors, data, transactionError} = form.state;
                         return (
                             <Fragment>                            
                                 <Input 
@@ -71,13 +75,22 @@ class UpdateAddress extends Component {
                                     error={errors}
                                     value={data}/>
                                 <div className="info__row">
-                                    <span>Fee: {data.fee} {data.feeAsset}</span>
-                                    {errors === "ERROR" && <span className="clr--negative">Server side error!! Try again.</span>}
-                                    {errors === "DUPLICATE" && <h3 className="clr--negative">Key already exists.</h3>}
-                                    {updated && <span className="clr--positive">Sidechain address has been updated.</span>}
+                                    <span>
+                                        {counterpart.translate(`field.labels.fee`)} {data.fee} {data.feeAsset}
+                                    </span>
+                                    {updated &&
+                                        <span className="clr--positive">{counterpart.translate(`success.sidechainUpdated`)}</span> 
+                                    }
+                                    {transactionError && transactionError !== "" ? 
+                                        <span className="clr--negative">
+                                            {counterpart.translate(`errors.${transactionError}`)}
+                                        </span> 
+                                        : ""}
                                 </div>
                                 <div className="btn__row">
-                                    <button type="submit"  className="btn-round btn-round--buy">Update</button>
+                                    <button className="btn-round btn-round--buy" type="submit">
+                                        {counterpart.translate(`buttons.update`)}
+                                    </button>
                                 </div>
                             </Fragment>
                         )

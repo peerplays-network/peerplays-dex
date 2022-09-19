@@ -1,16 +1,17 @@
 import React, {Component, Fragment} from 'react';
 import FieldWithHint from "../../form/fieldWithHint";
 import {dbApi} from "../../../../actions/nodes/index";
-import {IconPairChange} from "../../../../svg/index";
+import IconPairChange from "../../../../svg/pairChange.svg";
 import {getStorage} from "../../../../actions/storage/index";
 import Dropdown from "../../form/dropdown";
 import SelectHeader from "../../selectHeader";
 import Close from "../decoration/close";
 import {clearLayout} from "../../../../dispatch/index";
 import ModalTitle from "../decoration/modalTitle";
-import Translate from "react-translate-component";
 import ModalButton from "../../buttons/modalButton";
 import except from "../../../../actions/assets/exceptAssetList";
+import { defaultToken } from '../../../../params/networkParams';
+import counterpart from 'counterpart';
 
 const getSymbolsList = async () => dbApi('list_assets', ['', 100])
     .then(result => result.filter(e => !except.includes(e.symbol)).map(e => e.symbol));
@@ -30,7 +31,8 @@ class ChangePair extends Component{
             quote: quote.symbol
         };
         const storageData = getStorage('exchanges');
-        const selectedPair = storageData.active.split('_').join(' / ');
+        const selectedPair = storageData.list.length < 2 ?storageData.active.split('_').join(' / '):storageData.list[1].split('_').join(' / ');
+        
         const recentPairs = storageData.list;
         this.setState({pair, selectedPair, recentPairs})
     }
@@ -38,15 +40,32 @@ class ChangePair extends Component{
     handlePairChange = (val, name) => {
         const pair = this.state.pair;
         pair[name] = val;
-        this.setState({pair, errors: false});
-
-        if(pair.quote === pair.base) {
-          this.setState({
-            errors: {
-              base: 'sameAsset'
-            }
-          });
+        if(name == 'quote'&& this.state.pair.quote != defaultToken)
+        { 
+        const pair = {
+            base:defaultToken,
+            quote: this.state.pair.quote
+        };
+            this.setState({pair, errors: false});
         }
+        if(name === 'base'&& this.state.pair.base != defaultToken)
+        {
+        const pair = {
+            base:this.state.pair.base,
+            quote: defaultToken,
+        };
+            this.setState({pair, errors: false});
+        }
+        setTimeout(() => {
+            if(this.state.pair.quote === this.state.pair.base) {
+                this.setState({
+                  errors: {
+                    base: 'sameAsset'
+                  }
+                });
+              }
+        }, 1000);
+       
     };
 
     SetPair = (val,name)=>{
@@ -71,7 +90,6 @@ class ChangePair extends Component{
         const pair = `${quote}_${base}`;
         clearLayout();
         this.props.history.push(`/exchange/${pair}`);
-        window.location.reload();
     };
 
     selectOldPair = (selectedPair) => {
@@ -117,7 +135,8 @@ class ChangePair extends Component{
                             />
                         </div>
                     }
-                    <Translate content="modal.pairSelect.recent" component="h3" className="pair-selector__subtitle" />
+                    <h3 className="pair-selector__subtitle">{counterpart.translate(`modal.pairSelect.recent`)}</h3>
+                   
                     <Dropdown
                         btn={<SelectHeader
                             text={selectedPair}

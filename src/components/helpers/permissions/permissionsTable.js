@@ -1,12 +1,11 @@
 import React, {Component, Fragment} from "react";
 import Table from "../table";
 import Dropdown from "../form/dropdown";
-import SelectHeader from "../selectHeader";
-import Translate from "react-translate-component";
 import ActionsBtn from "../buttons/actionsBtn";
 import AddPermission from "./addPermission";
 import PermissionTitle from "./permissionTitle";
 import PermissionsCards from "../../helpers/permissionsCards";
+import counterpart from "counterpart";
 
 const tableBasic = {
     key: 'key',
@@ -152,7 +151,7 @@ class PermissionTable extends Component{
                 <div className="permissions__header">
                     <PermissionTitle type={type} />
                     {isNotMemo && <div className="permissions__filter-wrapper">
-                        <Translate content='permissions.threshold' />
+                        <span>{counterpart.translate(`permissions.threshold`)}</span>
                         <Dropdown
                             btn={<SelectHeader
                                 text={tableType.tag}

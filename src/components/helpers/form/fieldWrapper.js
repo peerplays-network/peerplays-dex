@@ -1,5 +1,5 @@
+import counterpart from 'counterpart';
 import React from 'react';
-import Translate from "react-translate-component";
 
 const FieldWrapper = (props) => {
 
@@ -13,6 +13,7 @@ const FieldWrapper = (props) => {
         comment,
         className,
         style = {},
+        wrapperStyle = {},
         formData,
         children
     } = props;
@@ -21,13 +22,19 @@ const FieldWrapper = (props) => {
     const error = formData ? formData.state.errors : (props.error || {});
 
     return (
-        <label htmlFor={id ? id : name} className={`field ${className}${error[name] ? ' error' : ''}${hideLabel ? ' without-label' : ''}`} style={style}>
-            { children }
-            { !hideLabel && <Translate content={labelTag ? labelTag : `field.labels.${name}`} with={labelParams} className={`field__label${value[name] ? ' squeezed' : ''}`} /> }
-            { error[name] && <Translate content={`errors.${error[name]}`} className="field__error" /> }
-            { comment && !error[name] && <Translate content={`field.comments.${name}`} with={commentParams} className="field__comment" /> }
-            <span className="field__border" />
-        </label>
+        <div className="label__wrapper" style={wrapperStyle}>
+            <label htmlFor={id ? id : name} className={`field ${className}${error[name] ? ' error' : ''}${hideLabel ? ' without-label' : ''}`} style={style}>
+                { children }
+                { !hideLabel && 
+                    <span className={`field__label${value[name] ? ' squeezed' : ''}`}>
+                        {counterpart.translate(`${labelTag ? labelTag : `field.labels.${name}`}`, labelParams)}
+                    </span> 
+                }
+                { comment && !error[name] && <span className="field__comment">{counterpart.translate(`field.comments.${name}`, commentParams)}</span>  }
+                <span className="field__border" />
+            </label>
+            { error[name] && <span className="field__error">{counterpart.translate(`errors.${error[name]}`)}</span> }
+        </div>
     );
 };
 

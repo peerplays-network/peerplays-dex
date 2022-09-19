@@ -10,7 +10,7 @@ apt-get install build-essential nasm
 
 ## Installation
 
-Node v14+ is required and it can be installed using nvm following these [installation steps](https://github.com/nvm-sh/nvm#installing-and-updating).
+Node v16+ is required and it can be installed using nvm following these [installation steps](https://github.com/nvm-sh/nvm#installing-and-updating).
 ```
 npm install
 ```
@@ -33,7 +33,7 @@ DEFAULT_QUOTE=''
 # Full URL to the blockchain's faucet
 FAUCET_URL=''
 
-# Full URL to your DEX instance
+# Full URL to your mainnet DEX instance (It has to be always https://market.peerplays.com)
 DEX_URL=''
 
 # Chain ID of the blockchain
@@ -41,6 +41,9 @@ DEFAULT_CHAIN_ID=''
 
 # Blockchain API endpoints (websocket)
 BLOCKCHAIN_ENDPOINTS=''
+
+# Google tag manager ID (Use this in QA or production build)
+GOOGLE_TAG_MANAGER_ID=''
 ```
 
 ## Starting after installation and ENV configuration

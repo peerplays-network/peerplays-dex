@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import { CardHeader } from "../helpers/cardHeader";
 import { Card } from "../helpers/card";
@@ -13,29 +12,14 @@ import GraphMyAssets from "../helpers/graphMyAssets";
 import TableMyAssets from "../helpers/tableMyAssets"
 import NeedToLogin from "../helpers/needToLogin";
 import UserActivity from './user/userActivity'
-import { getStoragedAccount, formAccount } from '../../actions/account';
-import { setAccount } from '../../dispatch/setAccount';
-import CloudAccount from '../../classes/cloudAccount';
+import { updateAccountAndLoginData } from '../../actions/account';
 import Grid from '@material-ui/core/Grid';
 import UserAssets from "../pages/user/userAssets";
+import counterpart from 'counterpart';
 
 class Dashboard extends Component {
 
-    update = async () => {
-        const account = getStoragedAccount();
-        let userData = false;
-
-        if (account.type) {
-            userData = await formAccount(account.name);
-        }
-
-        if (userData) {
-            setAccount({
-                loginData: new CloudAccount(),
-                accountData: userData
-            });
-        }
-    }
+    update = updateAccountAndLoginData
 
     render() {
         if (!this.props.account) return <NeedToLogin pageName={'dashboard'} />;
@@ -46,7 +30,7 @@ class Dashboard extends Component {
         return (
             <div className="container">
            <div className="page__header-wrapper">
-            <Translate className="page__title" component="h1" content={"dashboard.title"}/>
+               <h1 className="page__title">{counterpart.translate(`dashboard.title`)}</h1>
            </div>
                 <div className="card__list__none">
                     <Card mode="small">

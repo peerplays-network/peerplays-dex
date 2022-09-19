@@ -4,8 +4,8 @@ import {dbApi} from "../../actions/nodes";
 import dataFetch from "./dataFetch";
 import TransferItem from "./transferItem";
 import {transactionParser} from "../../actions/transactionParser";
-import Translate from "react-translate-component";
 import {ChainTypes} from "peerplaysjs-lib";
+import counterpart from 'counterpart';
 
 const getType = opNumber => {
     const operationsIndexes = Object.values(ChainTypes.operations);
@@ -27,7 +27,7 @@ const fetchFunc = async (context) => {
             const info = await transactionParser(item.operations[0][1]).then(e => e);
 
             transaction.push({
-                type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
+                type: <div className="operation positive">{counterpart.translate(`${basicTag}.title`)}</div>,
                 info
             })
         })
@@ -51,21 +51,25 @@ class Block extends Component {
         const transaction = this.props.data.transaction;
 
         return (
-            <div className="container">
-                <BlockHeader num={this.props.data.blockNum} data={[this.props.data.dataBlock]}/>
-                {
-                    transaction.map((item, index) =>
-                        <div className="operation__block" key={index}>
-                            <div className="header">
-                                <div className="number">#{index}</div>
-                                {item.type}
+            <div className="block-container">
+                <div className="global-search__card card">
+                    <BlockHeader  num={this.props.data.blockNum} data={this.props.data.dataBlock}/>
+                </div>
+                <div>
+                    {
+                        transaction.map((item, index) =>
+                            <div className="operation__block card" key={index}>
+                                <div className="header">
+                                    <div className="number">#{index}</div>
+                                    {item.type}
+                                </div>
+                                {
+                                    item.info.map((item, i) => <TransferItem data={item} key={i}/>)
+                                }
                             </div>
-                            {
-                                item.info.map((item, i) => <TransferItem data={item} key={i}/>)
-                            }
-                        </div>
-                    )
-                }
+                        )
+                    }
+                </div>
             </div>
         )
     }

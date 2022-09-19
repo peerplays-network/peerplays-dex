@@ -1,13 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import dataFetch from "../../dataFetch";
-import {dbApi} from "../../../../actions/nodes/index";
-import Translate from "react-translate-component";
-import BlockHeader from "../../blockHeader";
 import {transactionParser} from "../../../../actions/transactionParser";
 import TransferItem from "../../transferItem";
 import {ChainTypes} from "peerplaysjs-lib";
-import {clearLayout} from "../../../../dispatch/index";
 import Close from "../decoration/close";
+import counterpart from 'counterpart';
 
 const getType = opNumber => {
     const operationsIndexes = Object.values(ChainTypes.operations);
@@ -17,34 +14,31 @@ const getType = opNumber => {
 };
 
 const fetchFunc = async (context) => {
-    const {blockNum, trxNum, password} = context.props;
-    const dataBlock = await dbApi('get_block', [blockNum]).then(e => e);
+    const {operation, password} = context.props;
+    const {trx_in_block, block_num} = operation;
 
-    const type = getType(dataBlock.transactions[trxNum].operations[0][0]);
+    const type = getType(operation.op[0]);
 
     const basicTag = `tableInfo.${type}`;
-    const operation = dataBlock.transactions[trxNum].operations[0][1];
-    const info = await transactionParser(operation, password).then(e => e);
+    const operationData = operation.op[1] 
+    operationData.type = type
 
+    const info = await transactionParser(operationData, password, true).then(e => e);
     return {
-        dataBlock,
-        type: <Translate content={`${basicTag}.title`} component="div" className="operation positive"/>,
+        type: <div className="operation positive">{counterpart.translate(`${basicTag}.title`)}</div>,
         info,
-        blockNum,
-        trxNum
+        blockNum: block_num,
+        trxNum: trx_in_block
     }
 };
 
 class TransactionModal extends Component {
 
-    componentDidMount() {
-    }
-
     render() {
         return (
             <Fragment>
                 <div className="modal__header">
-                    <h1>Block #{this.props.blockNum}</h1>
+                    <h1>Block #{this.props.data.blockNum}</h1>
                 </div>
                 <div className="operation__block">
                     <div className="header">

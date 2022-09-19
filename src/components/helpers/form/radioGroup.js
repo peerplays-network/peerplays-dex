@@ -1,6 +1,6 @@
+import counterpart from 'counterpart';
 import React, {Component} from 'react';
 import {Radio} from "../radio";
-import Translate from "react-translate-component";
 
 class RadioGroup extends Component{
 
@@ -19,7 +19,7 @@ class RadioGroup extends Component{
                         key={elem}
                         name={name}
                         value={elem}
-                        text={<Translate content={`field.radio.${elem}`} />}
+                        text={<span>{counterpart.translate(`field.radio.${elem}`)}</span>}
                         defaultChecked={id === 0}
                         callback={this.handleChange}
                     />

@@ -1,6 +1,6 @@
+import counterpart from 'counterpart';
 import React from 'react';
-import Translate from "react-translate-component";
 
-const Tbd = () => <Translate content="global.tbd" className="tbd" />;
+const Tbd = () => <span className="tbd">{counterpart.translate(`global.tbd`)}</span>
 
 export default Tbd; 

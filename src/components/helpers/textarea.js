@@ -1,5 +1,5 @@
+import counterpart from 'counterpart';
 import React from 'react';
-import Translate from "react-translate-component";
 
 const Textarea = ({
   name = '',
@@ -21,9 +21,9 @@ const Textarea = ({
             placeholder=" "
             className="field__input"
         />
-        { labelTag && <Translate content={labelTag} className={`field__label${value[name] ? ' squeezed' : ''}`} /> }
-        { error[name] && <Translate content={`errors.${error[name]}`} className="field__error" /> }
-        { comment && !error[name] && <Translate content={comment} className="field__comment" /> }
+        { labelTag && <span className={`field__label${value[name] ? ' squeezed' : ''}`}>{counterpart.translate(`${labelTag}`)}</span> }
+        { error[name] && <span className="field__error">{counterpart.translate(`errors.${error[name]}`)}</span> }
+        { comment && !error[name] && <span className="field__comment">{counterpart.translate(`${comment}`)}</span> }
     </label>
 );
 

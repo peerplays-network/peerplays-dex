@@ -20,7 +20,7 @@ button{
   font-size: $fzMD;
   border: 0;
   padding: 0;
-  transition: $anim/2;
+  transition: calc($anim / 2);
   &:hover{
     cursor: pointer;
   }
@@ -62,7 +62,7 @@ a{
     width: 100%;
     background-color: $dark;
     opacity: 0;
-    transition: $anim/2;
+    transition: calc($anim/2);
   }
   &:hover:after {
     opacity: 1;
@@ -92,7 +92,7 @@ svg .mask{
 }
 
 .title{
-  margin-bottom: 2rem;
+  // margin-bottom: 2rem;
   &__text{
     font-family: $secondary-font;
     font-size: $fzXLG;
@@ -166,6 +166,9 @@ svg .mask{
     font-size: $fzSM;
     line-height: 1.6rem;
   }
+  &__marginBottom{
+    margin-bottom: 32px;
+  }
 }
 
 .warning{
@@ -208,10 +211,16 @@ svg .mask{
     b {
       border: none !important;
       border-color: transparent !important;
+      &:hover {
+        background-color: #a49898 !important;
+      }
     }
   }
 }
 
 .input-cus-style span b{
   background:transparent !important;
+}
+.display-none{
+  display: none;
 }

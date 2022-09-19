@@ -1,18 +1,26 @@
 import { Card, CardActions, CardContent } from '@material-ui/core';
 import React, { useState } from 'react';
 import NumericInput from 'react-numeric-input';
-import Translate from 'react-translate-component';
 import { getPassword, trxBuilder } from '../../../actions/forms';
 import { dbApi } from '../../../actions/nodes';
-import { getStore } from '../../../actions/store';
+import { getBasicAsset, getStore, getFees } from '../../../actions/store';
 import { localeFromStorage } from '../../../actions/locale/localeFromStorage';
+import { utils } from '../../../utils';
+import counterpart from 'counterpart';
 
 const WithdrawGPOS = (props) => {
 	const { loginData, accountData } = getStore();
 	const { symbol_id, precision, symbol, totalGpos, availableGpos, getAssets } = props;
 	const [withdrawAmount, setWithdrawAmount] = useState(0);
+	const [fee, setFee] = useState(0);
+	const [sended, setSended] = useState(false);
 	const [withdrawDisabled, setWithdrawDisabled] = useState(false);
+	const [changes, setChanges] = useState(false);
 	const [language, setLanguage] = useState( localeFromStorage() )
+	const [error, setError] = useState("");
+
+	const accBalance = accountData.assets && accountData.assets.length > 0 && accountData.assets.find(asset => asset.id === getBasicAsset().id) ? 
+		accountData.assets.find(asset => asset.id === getBasicAsset().id).amount / (10 ** getBasicAsset().precision) : 0;
 
 	const SubmitGposWithdrawal = () => {
 		setWithdrawDisabled(true)
@@ -31,45 +39,66 @@ const WithdrawGPOS = (props) => {
 					vesting_balance: gposBalances[0].id,
 					owner: accountData.id,
 					amount: {
-						amount: withdrawAmount * (10 ** precision),
+						amount: Math.round(withdrawAmount * (10 ** precision)),
 						asset_id: symbol_id
 					},
 				}
 			};
-			getPassword(password => {
-				const activeKey = loginData.formPrivateKey(password, 'active');
+			getPassword((password, keyType) => {
+				let activeKey = '';
+				if(keyType === 'password') {
+					activeKey = loginData.formPrivateKey(password, 'active');
+				} else if(keyType === 'active') {
+					activeKey = loginData.formPrivateKey(password);
+				} else if(keyType === 'whaleVault') {
+					activeKey = {whaleVaultInfo:{keyType:"active", account: accountData.name}}
+				}
+				
 				trxBuilder([trx], [activeKey]).then(() => {
 					getAssets();
 					setWithdrawAmount(0);
 					setWithdrawDisabled(false);
 				}).catch(e => {
+					setError(e.message.toLowerCase().split(":")[0].replace(/\s+/g,"_"))
+					setTimeout(() => setError(""), 5000)
 					setWithdrawDisabled(false)
 				});
-			});
+			}, 'active');
 		}).catch(e => {
 			setWithdrawDisabled(false)
 		})
 	}
+
+	const handlChange = (value)=>{
+		setWithdrawAmount(value)
+			if(value > 0){
+				setFee(getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision))
+			}else{
+				setFee(0)
+			}
+		
+	}
+
+
 	return (
 		<Card mode="widget" >
 			<div className="card__title" style={{ paddingTop:"20px" , borderTopLeftRadius:"10px" , borderTopRightRadius:"10px"}}>
-			<Translate content={"voting.powerDown"} />
+			<span>{counterpart.translate(`voting.powerDown`)}</span>
 			</div>
 			<CardContent >
 				<div style={{ marginBottom: 12 }}>
 					<div style={{ display: "inline-block", width: "50%" }}>
 						<div style={{ background: "#f0f0f0", margin: 4, padding: 12 }}>
-						<Translate content={"voting.openGpos"} />: <strong >{totalGpos} {symbol}</strong>
+							<span>{counterpart.translate(`voting.openGpos`)}</span> : <strong >{totalGpos} {symbol}</strong>
 						</div>
 					</div>
 					<div style={{ display: "inline-block", width: "50%" }}>
 						<div style={{ background: "#f0f0f0", margin: 4, padding: 12 }}>
-						<Translate content={"voting.availableGpos"} />:<strong> {availableGpos} {symbol}</strong>
+							<span>{counterpart.translate(`voting.availableGpos`)}</span>: <strong> {availableGpos} {symbol}</strong>
 						</div>
 					</div>
-					</div>
-
-				<Translate style={{ fontWeight:"bold",margin:"10px",display:"block"}} content='withdraw.title' />
+				</div>
+				<span style={{ fontWeight:"bold",margin:"10px",display:"block"}}>{counterpart.translate(`withdraw.title`)}</span>
 				<div className='input-cus-style'>
 				<NumericInput
 					strict={true}
@@ -78,27 +107,53 @@ const WithdrawGPOS = (props) => {
 					type="number"
 					className="field__input form-control cpointer"
 					min={0}
-					max={availableGpos}
-					precision={accountData.assets[0].precision}
-					onChange={(value) => setWithdrawAmount(value)}
+					max={accBalance > getFees().vesting_balance_withdraw.fee/(10 ** getBasicAsset().precision) ? availableGpos  : 0}
+					precision={getBasicAsset().precision}
+					onChange={(value) => handlChange(value)}
 					value={withdrawAmount}
+					onKeyPress={(e) => {
+						if (!utils.isNumberKey(e)) {
+						  e.preventDefault();
+						}
+					}}
 				/>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (availableGpos == undefined || availableGpos == null || availableGpos <= 0) ? "block" : "none" }}>
-					<Translate  className="" content={"voting.noGpos"} />
+				<div style={{ marginTop: 12, color: "#ff444a", display: ( changes &&(availableGpos == undefined || availableGpos == null || availableGpos <= 0) ) ? "block" : "none" }}>
+					<span>{counterpart.translate(`voting.noGpos`)}</span>
 				</div>
-				<div style={{ marginTop: 12, color: "#ff444a", display: (withdrawAmount == undefined || withdrawAmount == null || withdrawAmount <= 0) ? "block" : "none" }}>
-					<Translate  className="" content={"errors.withdrawError"} /> 
+				<div style={{ marginTop: 12, color: "#ff444a", display: (changes &&(withdrawAmount == undefined || withdrawAmount == null || withdrawAmount <= 0)) ? "block" : "none" }}>
+					<span>{counterpart.translate(`errors.withdrawError`)}</span>
 				</div>
 				<div style={{ marginTop: 12 }}  className="input-cus-style">
 				<div style={{padding:"0 10px"}}>
-				<Translate  className="" content={"voting.newGpos"} /> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong>
+					<span>{counterpart.translate(`voting.newGpos`)}</span> : <strong style={{padding:"0 10px"}}>{totalGpos - withdrawAmount} {symbol}</strong>
 				</div>
 				</div>
 			</CardContent>
-
+			<div className="info__row margin">
+				<span>
+					<span>{counterpart.translate(`field.labels.fee`)}</span>
+					{fee} {getBasicAsset().symbol}
+				</span>
+			{sended &&
+				<span className="clr--positive">
+					{counterpart.translate(`voting.trans`)}
+				</span>
+			}
+			{error && 
+				<span className="clr--negative">
+					{counterpart.translate(`errors.${error}`)}
+				</span>
+			}
+		  </div>
 			<CardActions style={{justifyContent:"end"}} >
-				<button disabled={withdrawDisabled} className="btn-round btn-round--buy " onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? "" : SubmitGposWithdrawal()}}>Withdraw</button>
+				<button 
+					disabled={withdrawDisabled} 
+					className="btn-round btn-round--buy" 
+					onClick={() => {(availableGpos <= 0 || withdrawAmount <= 0) ? setChanges(true) : SubmitGposWithdrawal()}}
+				>
+					{counterpart.translate(`voting.Withdraw`)}
+				</button>
 			</CardActions>
 		</Card>
 	)

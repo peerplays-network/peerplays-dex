@@ -1,53 +1,68 @@
-import React from "react";
+import React, {Fragment}  from "react";
 import {ChainTypes} from "peerplaysjs-lib";
 import {getUserName} from "../../account/getUserName";
-import {formAssetData} from "../../assets";
+import {formAssetData, getAssetById} from "../../assets";
 import {dbApi} from "../../nodes";
 import {Link} from "react-router-dom";
 import {formDate} from "../../formDate";
-import Translate from "react-translate-component";
 import TransactionModal from "../../../components/helpers/modal/content/transanctionModal";
 import {setModal} from "../../../dispatch";
 import {getBasicAsset} from "../../store";
 import { getPassword } from "../../forms";
+import counterpart from "counterpart";
+
+const addLinkComponent = (linkString, index) => {
+    const trimedLink = linkString.replace(/\s/g, "");
+    const text = trimedLink.substring(
+        trimedLink.indexOf("=") + 1,
+        trimedLink.lastIndexOf("]")
+    );
+    const link = trimedLink.substring(
+        trimedLink.indexOf(":") + 1,
+        trimedLink.lastIndexOf("=")
+    );
+    return <Link key={index} to={`${link}`}>{text}</Link>;
+}
+
 
 export const formUserActivity = async (context) => {
     const user = context.props.data.id;
     let history = context.props.data.history;
-
-    if (!history.length) return [];
-
-    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+  
+    if (!history || !history.length) return [];
+    history = history.filter(el => el.op[0] >= 0 && el.op[0] <= 8 || el.op[0] === 32 || el.op[0] === 33 || el.op[0] === 34 || el.op[0] === 10 || el.op[0] === 11 || el.op[0] === 13 || el.op[0] === 14 || el.op[0] === 16);
+    
 
     return Promise.all(history.map(async el => {
       const fee = el.op[1].fee;
 
-      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp));
+      const time = await dbApi('get_block_header', [el.block_num]).then(block => formDate(block.timestamp, ['date', 'month', 'year', 'time']));
       const {type, info} = await formInfoColumn(user, el);
       const feeAsset = await formAssetData(fee);
-
+      let separatedInfo = info.props.children.split(",");
+      separatedInfo = separatedInfo.map((part, index) => {
+        if (part.includes("link")) {
+            return addLinkComponent(part, index);
+          } else {
+            return <span key={index}>{part}</span>;
+          }
+      })
       return {
           id: el.id,
           fee: feeAsset.toString(),
           type,
-          info,
+          info: <>{separatedInfo.map(info => info)}</>,
           time
       };
     }));
 };
-const handleTransactionClick = async (user, operation) => {
-
-    const operationData = operation.op[1];
-    
-    if (Object.keys(operationData).includes("memo") && !(/111111111111111111111/.test(operationData.memo.from)) && !(/111111111111111111111/.test(operationData.memo.to))) {
-        getPassword(password => {
-            setModal(<TransactionModal user={user} blockNum={operation.block_num}
-                trxNum={operation.trx_in_block} password={password}/>)
-        });
-    }
-    else {
-        setModal(<TransactionModal user={user} blockNum={operation.block_num}
-            trxNum={operation.trx_in_block} />)
+const handleTransactionClick = async (user, operation) => {     
+    if(Object.keys(operation.op[1]).includes("memo") && operation.op[1].memo.message.slice(0, 8) !== "00000000") {
+        getPassword((password, keyType) => {
+            setModal(<TransactionModal user={user} operation={operation} password={password} keyType={keyType}/>)
+        }, "memo");
+    } else {
+        setModal(<TransactionModal user={user}  operation={operation}/>)
     }
 }
 
@@ -55,10 +70,11 @@ const formInfoColumn = async (user, operation) => {
     const {type, data} = await formTrxInfo(user, operation);
     const basicTag = `tableInfo.${type}`;
     return {
-        type: <Translate content={`${basicTag}.title`} component="a"
-            onClick={() => handleTransactionClick(user, operation)}
-            className="operation positive" />,
-        info: <Translate content={`${basicTag}.description`} with={data} />
+        type: 
+            <a onClick={() => handleTransactionClick(user, operation)} className="operation positive">
+                {counterpart.translate(`${basicTag}.title`)}
+            </a>,
+        info: <span>{counterpart.translate(`${basicTag}.description`, data)}</span>,
     };
 };
 
@@ -85,6 +101,20 @@ const formAdditionalInfo = {
         registrar: await formUserLink(registrar, notification),
         user: await formUserLink(name, notification)
     }),
+    'vesting_balance_create': async (notification, {creator, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(creator, notification),
+            quantity: amountAsset.toString()
+        })
+    },
+    'vesting_balance_withdraw': async (notification, {owner, amount}) => {
+        const amountAsset = await formAssetData(amount);
+        return ({
+            user: await formUserLink(owner, notification),
+            quantity: amountAsset.toString()
+        })
+    },
     'account_upgrade': async (notification, {account_to_upgrade}) => ({
         user: await formUserLink(account_to_upgrade, notification)
     }),
@@ -141,11 +171,12 @@ const formAdditionalInfo = {
         }
     },
     "asset_fund_fee_pool": async (notification, {from_account, asset_id, amount}) => {
-        const asset = await formAssetData({asset_id, amount});
-
+        const basicAsset = getBasicAsset();
+        const asset = await formAssetData({asset_id: basicAsset.id, amount});
+        const feePoolAsset = await getAssetById(asset_id)
         return {
             from: await formUserLink(from_account, notification),
-            symbol: asset.symbol,
+            symbol: feePoolAsset.symbol,
             amount: asset.toString()
         }
     },
@@ -200,7 +231,7 @@ const formAdditionalInfo = {
 };
 
 const getAuthor = userID => getUserName(userID);
-const formLink = (url, text, linkID) => <Link to={`/${url}/${linkID || text}`}>{text}</Link>;
+const formLink = (url, text, linkID) => `[link:/${url}/${linkID || text}=${text}]`;
 const formAssetLink = async (assetID, notification) => {
     const asset = await formAssetData({id: assetID});
     return notification ? asset.symbol : formLink('asset', asset.symbol);

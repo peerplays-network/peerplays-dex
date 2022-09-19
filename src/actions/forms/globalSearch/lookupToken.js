@@ -9,7 +9,7 @@ import {getBasicAsset} from "../../store";
 
 export const lookupToken = async val => {
     val = val.toUpperCase();
-    let result = await dbApi('list_assets', [val, 20]).then(list => Promise.all(list.map(async (el, id) => {
+    let result = await dbApi('list_assets', [val, 20]).then(list => Promise.all(list.filter(e => e.symbol.includes(val)).map(async (el, id) => {
         const dynamicData = await getDynamicData(el.dynamic_asset_data_id);
 
         const baseAsset = await formAssetData(el);

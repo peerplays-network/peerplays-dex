@@ -53,7 +53,7 @@
       opacity: 0;
       transform: scale(0);
       background-color: $grey;
-      transition: $anim/2 all ease-in-out;
+      transition: calc($anim / 2) all ease-in-out;
     }
   }
 }

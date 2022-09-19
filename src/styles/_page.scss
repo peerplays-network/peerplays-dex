@@ -44,7 +44,7 @@
       width: 0;
       height: 2px;
       background: $blue-dark;
-      transition: $anim / 2;
+      transition: calc($anim / 2);
     }
     &.active{
       color: $blue;
@@ -90,6 +90,9 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  .label__wrapper:not(:last-child) {
+    margin-right: 3rem;
+  }
   .dropdown{
     min-width: 12.2rem;
     width: fit-content;

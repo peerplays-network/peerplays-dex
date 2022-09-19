@@ -1,11 +1,11 @@
 import React, {Component, Fragment} from "react";
 import {CardHeader} from "../../helpers/cardHeader";
-import Translate from "react-translate-component";
 import {getAccountData, getBasicAsset, getFees} from "../../../actions/store";
 import FieldWithHint from "../../helpers/form/fieldWithHint";
 import {dbApi} from "../../../actions/nodes";
 import Form from "../../helpers/form/form";
 import {assetUpdateIssuer} from "../../../actions/forms/assetUpdateIssuer";
+import counterpart from "counterpart";
 
 const getSymbolsList = async (symbol) => dbApi('lookup_accounts', [symbol, 5])
     .then(result => result.map(e => e[0]));
@@ -55,7 +55,7 @@ class AssetUpdateIssuer extends Component {
         return (
             <div className="card card--action">
                 <CardHeader title={`block.${title}.title`}/>
-                <Translate component="div" className="card__comment" content={`block.${title}.text`}/>
+                <div className="card__comment">{counterpart.translate(`block.${title}.text`)}</div>
                 <Form className="asset-action__content"
                       type={'asset_update_issuer'}
                       requiredFields={['assetOwner']}
@@ -63,10 +63,11 @@ class AssetUpdateIssuer extends Component {
                       defaultData={defaultData}
                       handleResult={this.handleAssetUpdateIssuer}
                       needPassword
+                      keyType="owner"
                 >
                     {
                         form => {
-                            const {errors, data} = form.state;
+                            const {errors, data, transactionError} = form.state;
                             return(
                                 <Fragment>
                                     <FieldWithHint
@@ -77,9 +78,23 @@ class AssetUpdateIssuer extends Component {
                                         errors={errors}
                                     />
                                     <div className="btn__row">
-                                        <span>Fee: {data.fee} {data.quantityAsset}</span>
-                                        {sended && <span className="clr--positive">Transaction Completed</span>}
-                                        <button type="submit" className="btn-round btn-round--fund">Change</button>
+                                        <span>
+                                            <span>{counterpart.translate(`field.labels.fee`)}</span>{data.fee} {data.quantityAsset}
+                                        </span>
+                                        {sended && 
+                                            <span className="clr--positive">
+                                                {counterpart.translate(`success.transCompleted`)}
+                                            </span>
+                                        }
+                                        {transactionError && transactionError !== "" ? 
+                                            <span className="clr--negative">
+                                                {counterpart.translate(`errors.${transactionError}`)}
+                                            </span> 
+                                            : ""
+                                        }
+                                        <button type="submit" className="btn-round btn-round--fund">
+                                            {counterpart.translate(`actions.change`)}
+                                        </button>
                                     </div>
                                 </Fragment>
                             )

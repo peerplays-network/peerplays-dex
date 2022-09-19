@@ -83,7 +83,7 @@
     padding: 1.6rem;
     font-size: $fzSM;
     border-bottom: 1px solid $grey-light;
-    transition: $anim  / 2;
+    transition: calc($anim / 2);
     z-index: 1;
     .avatar{
       width: 4rem;
