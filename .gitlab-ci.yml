@@ -153,6 +153,8 @@ deployToStaging:
     - npm install
     - npm run build
     - cp -R dist/* $DEV_DEPLOY_DIR
+  when: 
+     manual
   environment:
     name: staging
     url: https://dex-staging.peerplays.download
