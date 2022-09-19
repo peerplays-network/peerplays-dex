@@ -60,19 +60,19 @@ build_dev:
 #    - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
 #    - npm install
 #    - npm run build
-  artifacts:
-    reports:
-      dast: gl-dast-report.json
-    paths:
-      - dist/*
-      - .env
-    expire_in: 2 weeks
-  only:
-    - branches
-    - develop
-    - master
-  tags:
-    - staging
+  #artifacts:
+   # reports:
+    #  dast: gl-dast-report.json
+    #paths:
+     # - dist/*
+      #- .env
+    #expire_in: 2 weeks
+  #only:
+   # - branches
+    #- develop
+    #- master
+  #tags:
+   # - staging
 
 docker_build:
   image: docker:stable
@@ -149,6 +149,8 @@ deployToStaging:
     - echo "DEX_URL='$STAGING_DEX_URL'" >> .env
     - echo "DEFAULT_CHAIN_ID='$PROD_CHAIN_ID'" >> .env
     - echo "BLOCKCHAIN_ENDPOINTS='$PROD_BLOCKCHAIN_ENDPOINTS'" >> .env
+    - cat MAINNET.env
+    - cat .env
     - npm install
     - npm run build
     - cp -R dist/* $DEV_DEPLOY_DIR
