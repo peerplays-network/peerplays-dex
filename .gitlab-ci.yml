@@ -134,7 +134,7 @@ deployToStaging:
   stage: deploy
   dependencies: [build_prod]
   script:
-    - rm -rf $DEV_DEPLOY_DIR/* || true
+    - rm -rf $DEV_DEPLOY_DIR* || true
     - cp -R dist/* $DEV_DEPLOY_DIR
   when: 
      manual
