@@ -65,8 +65,8 @@ build_prod:
     reports:
       dast: gl-dast-report.json
     paths:
-      - dist/*
-      - .env
+      - dist/
+      - node_modules/
     expire_in: 2 weeks
   only:
     - branches
