@@ -48,10 +48,9 @@ build_dev:
 
 # builds production app
 build_prod:
-  image: node:16.17.0
   stage: build
   script:
-    - apk update && apk install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    - apt update && apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - cp MAINNET.env .env
     - npm install
     - npm run build
@@ -66,7 +65,7 @@ build_prod:
     - develop
     - master
   tags:
-    - docker
+    - staging
 
 docker_build:
   image: docker:stable
