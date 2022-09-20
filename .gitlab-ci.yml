@@ -21,37 +21,38 @@ stages:
   - dast
 
 # builds development app
-build_dev:
+#build_dev:
   # node docker image on which this would be run
-  image: node:16.17.0
-  stage: build
-  script:
-    - apk update && apk install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
-    - echo "DEFAULT_TOKEN='$DEV_TOKEN'" >> .env
-    - echo "DEFAULT_QUOTE='$DEV_QUOTE'" >> .env
-    - echo "FAUCET_URL='$DEV_FAUCET'" >> .env
-    - echo "DEX_URL='$DEV_DEX_URL'" >> .env
-    - echo "DEFAULT_CHAIN_ID='$DEV_CHAIN_ID'" >> .env
-    - echo "BLOCKCHAIN_ENDPOINTS='$DEV_BLOCKCHAIN_ENDPOINTS'" >> .env
-    - npm install
-    - npm run build
-  artifacts:
-    reports:
-      dast: gl-dast-report.json
-    paths:
-      - dist/
-    expire_in: 2 weeks
-  only:
-    - branches
-  tags:
-    - docker
+ # image: node:16.17.0
+  #stage: build
+  #script:
+    #- apk update && apk install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    #- echo "DEFAULT_TOKEN='$DEV_TOKEN'" >> .env
+    #- echo "DEFAULT_QUOTE='$DEV_QUOTE'" >> .env
+    #- echo "FAUCET_URL='$DEV_FAUCET'" >> .env
+    #- echo "DEX_URL='$DEV_DEX_URL'" >> .env
+    #- echo "DEFAULT_CHAIN_ID='$DEV_CHAIN_ID'" >> .env
+    #- echo "BLOCKCHAIN_ENDPOINTS='$DEV_BLOCKCHAIN_ENDPOINTS'" >> .env
+    #- npm install
+    #- npm run build
+  #artifacts:
+   # reports:
+    #  dast: gl-dast-report.json
+    #paths:
+    #  - dist/
+    #expire_in: 2 weeks
+  #only:
+  #  - branches
+  #tags:
+  #  - docker
 
 # builds production app
 build_prod:
   stage: build
   script:
-    - apt update && apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
+    - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - npm install
+    - cp MAINNET.env .env
     - npm run build
   artifacts:
     reports:
@@ -82,7 +83,7 @@ docker_build:
 deploy_review:
   stage: review
   dependencies:
-    - build_dev
+   # - build_dev
   script: 
     - if [ -d "$QA_DEPLOY_DIR" ]; then rm -rf $QA_DEPLOY_DIR/*; else exit 1; fi
     - if [ -d "$QA_DEPLOY_DIR" ]; then cp -R dist/* $QA_DEPLOY_DIR; else exit 1; fi 
@@ -117,16 +118,16 @@ stop_review_app:
     - dex-deploy-review
   when: manual
 
-deployToDev:
-  stage: deploy
-  dependencies: [build_dev]
-  script: 
-    - rm -rf $DEV_DEPLOY_DIR/*
-    - cp -R dist/* $DEV_DEPLOY_DIR
-  when:
-    manual
-  tags:
-    - dex1
+#deployToDev:
+#  stage: deploy
+#  dependencies: [build_dev]
+#  script: 
+#    - rm -rf $DEV_DEPLOY_DIR/*
+#    - cp -R dist/* $DEV_DEPLOY_DIR
+#  when:
+#    manual
+#  tags:
+#    - dex1
 
 deployToStaging:
   stage: deploy
