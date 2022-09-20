@@ -51,7 +51,6 @@ build_prod:
   stage: build
   script:
     - apt update && apt install g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
-    - cp MAINNET.env .env
     - npm install
     - npm run build
   artifacts:
