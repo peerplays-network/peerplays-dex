@@ -53,6 +53,7 @@ build_prod:
     - sudo apt update && sudo apt install -y g++ make nasm git libtool autoconf automake libpng-dev build-essential nasm
     - npm install
     - cp MAINNET.env .env
+    - cat .env
     - npm run build
   artifacts:
     reports:
